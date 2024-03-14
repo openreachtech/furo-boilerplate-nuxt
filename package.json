@@ -11,5 +11,8 @@
     "boilerplate"
   ],
   "author": "ORT inc.",
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "devDependencies": {
+    "eslint": "^8.57.0"
+  }
 }
