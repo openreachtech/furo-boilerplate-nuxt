@@ -18,5 +18,8 @@
     "vue": "^3.4.21",
     "vue-server-renderer": "^2.7.16",
     "vue-template-compiler": "^2.7.16"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3"
   }
 }
