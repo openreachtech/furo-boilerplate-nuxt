@@ -1,6 +1,6 @@
 <!-- layouts/default.vue -->
 <template>
-  <header>I am Header</header>
+  <TheHeader />
   <main>
     <NuxtPage />
   </main>
@@ -38,20 +38,6 @@ body {
 body {
   min-height: 100dvh;
   position: relative;
-}
-
-header {
-  position: fixed;
-  top: 0;
-
-  width: 100dvw;
-  height: var(--size-header-height);
-
-  display: grid;
-  place-items: center;
-
-  background-color: rgba(0, 255, 0, .5);
-  color: #000;
 }
 
 main {
