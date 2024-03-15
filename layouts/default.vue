@@ -4,7 +4,7 @@
   <main>
     <NuxtPage />
   </main>
-  <footer>I am Footer</footer>
+  <TheFooter />
 </template>
 
 <script>
@@ -46,16 +46,5 @@ main {
   padding-top: var(--size-header-height);
 
   border: .5rem #000 solid;
-}
-
-footer {
-  width: 100dvw;
-  height: var(--size-footer-height);
-
-  display: grid;
-  place-items: center;
-
-  background-color: rgba(0, 0, 255, .5);
-  color: #fff;
 }
 </style>
