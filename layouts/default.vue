@@ -1,9 +1,7 @@
 <!-- layouts/default.vue -->
 <template>
   <TheHeader />
-  <main>
-    <NuxtPage />
-  </main>
+  <TheMain />
   <TheFooter />
 </template>
 
@@ -33,18 +31,11 @@ body {
   --size-footer-height: 10rem;
 }
 
-/* Layout Style */
+/* Layout */
 
 body {
   min-height: 100dvh;
   position: relative;
 }
 
-main {
-  min-height: calc(100dvh - var(--size-footer-height));
-
-  padding-top: var(--size-header-height);
-
-  border: .5rem #000 solid;
-}
 </style>
