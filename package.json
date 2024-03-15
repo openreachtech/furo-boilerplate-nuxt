@@ -11,5 +11,12 @@
     "boilerplate"
   ],
   "author": "ORT inc.",
-  "license": "UNLICENSED"
+  "license": "UNLICENSED",
+  "dependencies": {
+    "core-js": "^3.36.0",
+    "nuxt": "^3.10.3",
+    "vue": "^3.4.21",
+    "vue-server-renderer": "^2.7.16",
+    "vue-template-compiler": "^2.7.16"
+  }
 }
