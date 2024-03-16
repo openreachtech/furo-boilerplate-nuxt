@@ -17,7 +17,6 @@ export default [
 
   ...compat.extends(
     '@nuxtjs',
-    'jest',
     'plugin:nuxt/recommended'
   ),
 
