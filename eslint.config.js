@@ -88,6 +88,7 @@ export default [
           functions: 'never',
         },
       ],
+      'vue/no-multiple-template-root': 'off', // 'error',
     },
   },
 ]
