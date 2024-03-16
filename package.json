@@ -1,0 +1,46 @@
+{
+  "name": "@openreachtech/furo-boilerplate",
+  "version": "0.0.0",
+  "description": "furo boilerplate as starting to develop frontend",
+  "main": "index.js",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "start": "nuxt start",
+    "l": "npm run lint",
+    "lint": "eslint .",
+    "test": "jest --forceExit --maxWorkers=5"
+  },
+  "type": "module",
+  "keywords": [
+    "furo",
+    "boilerplate"
+  ],
+  "author": "ORT inc.",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "core-js": "^3.36.0",
+    "nuxt": "^3.10.3",
+    "vue": "^3.4.21",
+    "vue-server-renderer": "^2.7.16",
+    "vue-template-compiler": "^2.7.16"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.23.10",
+    "@babel/preset-env": "^7.24.0",
+    "@nuxtjs/eslint-config": "^12.0.0",
+    "@nuxtjs/eslint-module": "^4.1.0",
+    "@types/jest": "^29.5.12",
+    "@vue/test-utils": "^2.4.5",
+    "@vue/vue3-jest": "^29.2.6",
+    "babel-core": "^6.26.3",
+    "babel-jest": "^29.7.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-jest": "^27.9.0",
+    "eslint-plugin-nuxt": "^4.0.0",
+    "eslint-plugin-vue": "^9.23.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0"
+  }
+}
