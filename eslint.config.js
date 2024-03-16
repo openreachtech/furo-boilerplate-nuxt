@@ -4,7 +4,6 @@ import {
   FlatCompat,
 } from '@eslint/eslintrc'
 
-
 const compat = new FlatCompat()
 
 /**
@@ -17,7 +16,7 @@ export default [
 
   ...compat.extends(
     '@nuxtjs',
-    'jest',
+    'plugin:jest/recommended',
     'plugin:nuxt/recommended'
   ),
 
@@ -90,6 +89,7 @@ export default [
           functions: 'never',
         },
       ],
+      'vue/no-multiple-template-root': 'off', // 'error',
     },
   },
 ]
