@@ -12,9 +12,14 @@ export default {
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/$1',
     '^~/(.*)$': '<rootDir>/$1',
-    '^vue$': 'vue/dist/vue.common.js',
   },
   testEnvironment: 'jsdom',
+  testEnvironmentOptions: {
+    customExportConditions: [
+      'node',
+      'node-addons',
+    ],
+  },
   transform: {
     '^.+\\.js$': 'babel-jest',
     '.*\\.(vue)$': '@vue/vue3-jest',
