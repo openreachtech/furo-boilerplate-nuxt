@@ -709,3 +709,206 @@ describe('BaseGraphqlPayload', () => {
     })
   })
 })
+
+describe('BaseGraphqlPayload', () => {
+  describe('#generateFetchRequestOptions()', () => {
+    const queryTemplate = `
+                query {
+                  curriculums(input: $input) {
+                    curriculums {
+                      id
+                      title
+                    }
+                  }
+                }`
+
+    describe('to be return object', () => {
+      describe('for headers property', () => {
+        describe('to be instanceof Headers', () => {
+          const cases = [
+            {
+              params: {
+                options: {},
+                input: {
+                  curriculumId: 20001,
+                },
+              },
+            },
+            {
+              params: {
+                options: {
+                  headers: new Headers({
+                    'X-APP-ACCESS-KEY': 'access-key-of-our-application',
+                  }),
+                },
+                input: {
+                  curriculumId: 20002,
+                },
+              },
+            },
+          ]
+
+          test.each(cases)('input: $params.input', ({ params }) => {
+            const payload = new BaseGraphqlPayload({
+              queryTemplate,
+            })
+
+            const actual = payload.generateFetchRequestOptions(params)
+
+            expect(actual.headers)
+              .toBeInstanceOf(Headers)
+          })
+        })
+
+        describe('to be set return value of #buildHeaders()', () => {
+          const cases = [
+            {
+              params: {
+                options: {},
+                input: {
+                  curriculumId: 20001,
+                },
+              },
+              expected: new Headers({
+                'Content-Type': 'application/json',
+              }),
+            },
+            {
+              params: {
+                options: {
+                  headers: new Headers({
+                    'X-APP-ACCESS-KEY': 'access-key-of-our-application',
+                  }),
+                },
+                input: {
+                  curriculumId: 20002,
+                },
+              },
+              expected: new Headers({
+                'Content-Type': 'application/json',
+                'X-APP-ACCESS-KEY': 'access-key-of-our-application',
+              }),
+            },
+          ]
+
+          test.each(cases)('input: $params.input', ({ params, expected }) => {
+            const payload = new BaseGraphqlPayload({
+              queryTemplate,
+            })
+
+            const actual = payload.generateFetchRequestOptions(params)
+
+            expect(actual)
+              .toHaveProperty('headers', expected)
+          })
+        })
+      })
+
+      describe('for body property', () => {
+        describe('to be set JSON string generated from #generateQuery()', () => {
+          const cases = [
+            {
+              params: {
+                options: {},
+                input: {
+                  curriculumId: 20001,
+                },
+              },
+              expected: '{"query":"\\n                query {\\n                  curriculums(input: {\\"curriculumId\\":20001}) {\\n                    curriculums {\\n                      id\\n                      title\\n                    }\\n                  }\\n                }"}',
+            },
+            {
+              params: {
+                options: {},
+                input: {
+                  curriculumId: 20002,
+                },
+              },
+              expected: '{"query":"\\n                query {\\n                  curriculums(input: {\\"curriculumId\\":20002}) {\\n                    curriculums {\\n                      id\\n                      title\\n                    }\\n                  }\\n                }"}',
+            },
+          ]
+
+          test.each(cases)('input: $params.input', ({ params, expected }) => {
+            const payload = new BaseGraphqlPayload({
+              queryTemplate,
+            })
+
+            const actual = payload.generateFetchRequestOptions(params)
+
+            expect(actual.body)
+              .toBe(expected)
+          })
+        })
+      })
+
+      describe('for extra property', () => {
+        describe('to be set by options parameter', () => {
+          const cases = [
+            {
+              params: {
+                input: {
+                  curriculumId: 20001,
+                },
+                options: {
+                  mode: 'cors',
+                },
+              },
+              expected: {
+                mode: 'cors',
+              },
+            },
+            {
+              params: {
+                input: {
+                  curriculumId: 20002,
+                },
+                options: {
+                  credentials: 'include',
+                },
+              },
+              expected: {
+                credentials: 'include',
+              },
+            },
+            {
+              params: {
+                input: {
+                  curriculumId: 20003,
+                },
+                options: {
+                  cache: 'no-cache',
+                },
+              },
+              expected: {
+                cache: 'no-cache',
+              },
+            },
+            {
+              params: {
+                input: {
+                  curriculumId: 20004,
+                },
+                options: {
+                  redirect: 'follow',
+                },
+              },
+              expected: {
+                redirect: 'follow',
+              },
+            },
+          ]
+
+          test.each(cases)('options: $params.options', ({ params, expected }) => {
+            const payload = new BaseGraphqlPayload({
+              queryTemplate,
+            })
+
+            const actual = payload.generateFetchRequestOptions(params)
+
+            expect(actual)
+              .toMatchObject(expected)
+          })
+        })
+      })
+    })
+  })
+})
