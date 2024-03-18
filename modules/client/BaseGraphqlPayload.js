@@ -33,6 +33,37 @@ export default class BaseGraphqlPayload {
   }
 
   /**
+   * Generate fetch request options.
+   *
+   * @param {{
+   *   options: RequestInit // Extra options of RequestInit.
+   *   input: object | null
+   * }} params - Parameters.
+   * @returns {RequestInit} Instance of RequestInit.
+   */
+  generateFetchRequestOptions ({
+    options,
+    input,
+  }) {
+    const headers = this.buildHeaders({
+      headers: options.headers || new Headers(), // NOTE: When use ?? instead of ||, it will cause an error by ESLint.
+    })
+
+    const query = this.generateQuery({
+      input,
+    })
+    const body = JSON.stringify({
+      query,
+    })
+
+    return {
+      ...options,
+      headers,
+      body,
+    }
+  }
+
+  /**
    * Generate query.
    *
    * @param {{
