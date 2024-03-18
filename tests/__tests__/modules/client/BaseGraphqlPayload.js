@@ -575,3 +575,137 @@ describe('BaseGraphqlPayload', () => {
     })
   })
 })
+
+describe('BaseGraphqlPayload', () => {
+  describe('#buildHeaders()', () => {
+    const queryTemplate = `
+      query pickUpForumTopics {
+        pickUpForumTopics {
+          pickUpForumTopics {
+            id
+            forumCategory {
+              id
+              name
+            }
+            name
+            descriptionHtml
+            proposer {
+              customerId
+              username
+              avatarUrl
+              customerRoles {
+                id
+                name
+              }
+            }
+            proposedAt
+            editedAt
+            totalForumPost
+            latestForumPostPostedAt
+          }
+        }
+      }
+    `
+
+    describe('to be instance of Headers for Fetch API', () => {
+      const cases = [
+        {
+          params: {
+            headers: new Headers(),
+          },
+        },
+        {
+          params: {
+            headers: new Headers({
+              'Content-Type': 'application/json',
+              'X-APP-ACCESS-KEY': 'access-key-of-our-application',
+            }),
+          },
+        },
+        {
+          params: {
+            headers: new Headers({
+              'Content-Type': 'application/json',
+            }),
+          },
+        },
+        {
+          params: {
+            headers: new Headers({
+              'Content-Type': 'ext/html',
+            }),
+          },
+        },
+      ]
+
+      test.each(cases)('Content-Type: $params.headers', ({ params }) => {
+        const payload = new BaseGraphqlPayload({
+          queryTemplate,
+        })
+
+        const actual = payload.buildHeaders(params)
+
+        expect(actual)
+          .toBeInstanceOf(Headers)
+      })
+    })
+
+    describe('to set "Content-Type" as "application/json"', () => {
+      const cases = [
+        {
+          params: {
+            headers: new Headers(),
+          },
+          expected: new Headers({
+            'Content-Type': 'application/json',
+          }),
+        },
+        {
+          params: {
+            headers: new Headers({
+              'Content-Type': 'application/json',
+              'X-APP-ACCESS-KEY': 'access-key-of-our-application',
+            }),
+          },
+          expected: new Headers({
+            'Content-Type': 'application/json',
+            'X-APP-ACCESS-KEY': 'access-key-of-our-application',
+          }),
+        },
+        {
+          params: {
+            headers: new Headers({
+              'Content-Type': 'application/json',
+            }),
+          },
+          expected: new Headers({
+            'Content-Type': 'application/json',
+          }),
+        },
+        {
+          params: {
+            headers: new Headers({
+              'Content-Type': 'ext/html',
+              'X-APP-SECRET-KEY': 'secret-key-of-our-application',
+            }),
+          },
+          expected: new Headers({
+            'Content-Type': 'application/json',
+            'X-APP-SECRET-KEY': 'secret-key-of-our-application',
+          }),
+        },
+      ]
+
+      test.each(cases)('Content-Type: $params.headers', ({ params, expected }) => {
+        const payload = new BaseGraphqlPayload({
+          queryTemplate,
+        })
+
+        const actual = payload.buildHeaders(params)
+
+        expect(actual)
+          .toEqual(expected)
+      })
+    })
+  })
+})
