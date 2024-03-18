@@ -157,7 +157,7 @@ describe('BaseGraphqlPayload', () => {
         const querySpy = jest.spyOn(BaseGraphqlPayload, 'query', 'get')
           .mockReturnValue(params.queryTemplate)
 
-        const actual = BaseGraphqlPayload.create(params)
+        const actual = BaseGraphqlPayload.create()
 
         expect(actual)
           .toBeInstanceOf(BaseGraphqlPayload)
@@ -239,7 +239,7 @@ describe('BaseGraphqlPayload', () => {
         const DerivedClass = ConstructorSpyGenerator.create({ jest })
           .generateSpyKitClass(BaseGraphqlPayload)
 
-        DerivedClass.create(params)
+        DerivedClass.create()
 
         expect(DerivedClass.__spy__)
           .toHaveBeenCalledWith(expected)
