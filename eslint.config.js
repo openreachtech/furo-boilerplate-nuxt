@@ -89,6 +89,9 @@ export default [
           functions: 'never',
         },
       ],
+      'jest/no-identical-title': [
+        'off', // 'error'
+      ],
       'vue/no-multiple-template-root': 'off', // 'error',
     },
   },
