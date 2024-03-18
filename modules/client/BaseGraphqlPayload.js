@@ -11,6 +11,17 @@ export default class BaseGraphqlPayload {
   }
 
   /**
+   * Factory method.
+   *
+   * @returns {BaseGraphqlPayload} Instance of this class.
+   */
+  static create () {
+    return new this({
+      queryTemplate: this.query,
+    })
+  }
+
+  /**
    * get: query.
    *
    * @abstract
