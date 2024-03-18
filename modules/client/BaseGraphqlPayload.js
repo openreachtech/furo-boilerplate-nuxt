@@ -31,6 +31,27 @@ export default class BaseGraphqlPayload {
   static get query () {
     throw new Error('this function must be inherited')
   }
+
+  /**
+   * Generate query.
+   *
+   * @param {{
+   *   input: any
+   * }} params
+   * @returns {string} Fulfilled query.
+   */
+  generateQuery ({
+    input = null,
+  } = {}) {
+    if (!input) {
+      return this.queryTemplate
+    }
+
+    const inputSlot = JSON.stringify(input)
+
+    return this.queryTemplate
+      .replace('$input', inputSlot)
+  }
 }
 
 /**
