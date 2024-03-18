@@ -73,3 +73,14 @@ describe('BaseGraphqlPayload', () => {
     })
   })
 })
+
+describe('BaseGraphqlPayload', () => {
+  describe('.get:query', () => {
+    test('to throw Error', () => {
+      const expected = 'this function must be inherited'
+
+      expect(() => BaseGraphqlPayload.query)
+        .toThrow(expected)
+    })
+  })
+})
