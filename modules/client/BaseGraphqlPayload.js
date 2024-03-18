@@ -52,6 +52,25 @@ export default class BaseGraphqlPayload {
     return this.queryTemplate
       .replace('$input', inputSlot)
   }
+
+  /**
+   * Build headers.
+   *
+   * @param {{
+   *   headers: Headers
+   * }} params - Parameters.
+   * @returns {Headers} Instance of Headers.
+   */
+  buildHeaders ({
+    headers,
+  }) {
+    headers.set(
+      'Content-Type',
+      'application/json'
+    )
+
+    return headers
+  }
 }
 
 /**
