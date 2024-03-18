@@ -685,7 +685,7 @@ describe('BaseGraphqlPayload', () => {
         {
           params: {
             headers: new Headers({
-              'Content-Type': 'ext/html',
+              'Content-Type': 'text/html',
               'X-APP-SECRET-KEY': 'secret-key-of-our-application',
             }),
           },
