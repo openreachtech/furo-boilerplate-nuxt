@@ -8,10 +8,12 @@ export default class BaseGraphqlCapsule {
     rawResponse,
     payload,
     input,
+    result,
   }) {
     this.rawResponse = rawResponse
     this.payload = payload
     this.input = input
+    this.result = result
   }
 
   /**
@@ -30,6 +32,10 @@ export default class BaseGraphqlCapsule {
  *   rawResponse: Response
  *   payload: BaseGraphqlPayload
  *   input: object | null
+ *   result: null | {
+ *     data?: object
+ *     errors?: Array<object>
+ *   }
  * }} BaseGraphqlCapsuleParams
  */
 
