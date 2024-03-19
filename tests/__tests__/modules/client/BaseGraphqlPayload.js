@@ -799,7 +799,12 @@ describe('BaseGraphqlPayload', () => {
             const actual = payload.generateFetchRequestOptions(params)
 
             expect(actual)
-              .toHaveProperty('headers', expected)
+              .toHaveProperty('headers', expect.any(Headers))
+
+            expect([...actual.headers.entries()])
+              .toEqual(
+                expect.arrayContaining([...expected.entries()])
+              )
           })
         })
       })
@@ -908,6 +913,123 @@ describe('BaseGraphqlPayload', () => {
               .toMatchObject(expected)
           })
         })
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlPayload', () => {
+  describe('#createFetchRequest()', () => {
+    describe('to be instance of Request', () => {
+      const queryTemplate = `
+        query {
+          curriculums(input: $input) {
+            curriculums {
+              id
+              title
+            }
+          }
+        }
+      `
+
+      const cases = [
+        {
+          params: {
+            url: 'https://api.example.com/graphql-customer',
+            options: {},
+            input: {
+              curriculumId: 20001,
+            },
+          },
+        },
+        {
+          params: {
+            url: 'https://api.example.com/graphql-admin',
+            options: {
+              headers: new Headers({
+                'X-APP-ACCESS-KEY': 'access-key-of-our-application',
+              }),
+            },
+            input: {
+              curriculumId: 20002,
+            },
+          },
+        },
+      ]
+
+      test.each(cases)('url: $params.url', ({ params }) => {
+        const payload = new BaseGraphqlPayload({
+          queryTemplate,
+        })
+
+        const actual = payload.createFetchRequest(params)
+
+        expect(actual)
+          .toBeInstanceOf(Request)
+      })
+    })
+
+    describe('to equal Request value', () => {
+      const queryTemplate = `
+        query {
+          curriculums(input: $input) {
+            curriculums {
+              id
+              title
+            }
+          }
+        }
+      `
+
+      const cases = [
+        {
+          params: {
+            url: 'https://api.example.com/graphql-customer',
+            options: {},
+            input: {
+              curriculumId: 20001,
+            },
+          },
+          expected: new Request('https://api.example.com/graphql-customer', {
+            method: 'POST',
+            headers: new Headers({
+              'Content-Type': 'application/json',
+            }),
+            body: '{"query":"\\n        query {\\n          curriculums(input: {\\"curriculumId\\":20001}) {\\n            curriculums {\\n              id\\n              title\\n            }\\n          }\\n        }"}',
+          }),
+        },
+        {
+          params: {
+            url: 'https://api.example.com/graphql-admin',
+            options: {
+              headers: new Headers({
+                'X-APP-ACCESS-KEY': 'access-key-of-our-application',
+              }),
+            },
+            input: {
+              curriculumId: 20002,
+            },
+          },
+          expected: new Request('https://api.example.com/graphql-admin', {
+            method: 'POST',
+            headers: new Headers({
+              'Content-Type': 'application/json',
+              'X-APP-ACCESS-KEY': 'access-key-of-our-application',
+            }),
+            body: '{"query":"\\n        query {\\n          curriculums(input: {\\"curriculumId\\":20002}) {\\n            curriculums {\\n              id\\n              title\\n            }\\n          }\\n        }"}',
+          }),
+        },
+      ]
+
+      test.each(cases)('url: $params.url', ({ params }) => {
+        const payload = new BaseGraphqlPayload({
+          queryTemplate,
+        })
+
+        const actual = payload.createFetchRequest(params)
+
+        expect(actual)
+          .toBeInstanceOf(Request)
       })
     })
   })
