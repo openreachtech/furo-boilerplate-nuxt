@@ -1,3 +1,7 @@
+import {
+  ConstructorSpyGenerator,
+} from '@openreachtech/renchan-test-tools'
+
 import BaseGraphqlCapsule from '@/modules/client/BaseGraphqlCapsule'
 import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
 
@@ -112,6 +116,105 @@ describe('BaseGraphqlCapsule', () => {
           expect(actual)
             .toHaveProperty('input', params.input)
         })
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlCapsule', () => {
+  describe('.create()', () => {
+    describe('to be instance of own class', () => {
+      const cases = [
+        {
+          params: {
+            rawResponse: new Response(),
+            payload: new BaseGraphqlPayload({
+              queryTemplate: `
+                query {
+                  customer {
+                    id
+                  }
+                }
+              `,
+            }),
+            input: {
+              id: 10001,
+            },
+          },
+        },
+        {
+          params: {
+            rawResponse: new Response(),
+            payload: new BaseGraphqlPayload({
+              queryTemplate: `
+                query {
+                  admin {
+                    id
+                  }
+                }
+              `,
+            }),
+            input: {
+              id: 10002,
+            },
+          },
+        },
+      ]
+
+      test.each(cases)('input: $params.input', ({ params }) => {
+        const actual = BaseGraphqlCapsule.create(params)
+
+        expect(actual)
+          .toBeInstanceOf(BaseGraphqlCapsule)
+      })
+    })
+
+    describe('to call constructor', () => {
+      const cases = [
+        {
+          params: {
+            rawResponse: new Response(),
+            payload: new BaseGraphqlPayload({
+              queryTemplate: `
+                query {
+                  customer {
+                    id
+                  }
+                }
+              `,
+            }),
+            input: {
+              id: 10001,
+            },
+          },
+        },
+        {
+          params: {
+            rawResponse: new Response(),
+            payload: new BaseGraphqlPayload({
+              queryTemplate: `
+                query {
+                  admin {
+                    id
+                  }
+                }
+              `,
+            }),
+            input: {
+              id: 10002,
+            },
+          },
+        },
+      ]
+
+      test.each(cases)('input: $params.input', ({ params }) => {
+        const DerivedClass = ConstructorSpyGenerator.create({ jest })
+          .generateSpyKitClass(BaseGraphqlCapsule)
+
+        DerivedClass.create(params)
+
+        expect(DerivedClass.__spy__)
+          .toHaveBeenCalledWith(params)
       })
     })
   })
