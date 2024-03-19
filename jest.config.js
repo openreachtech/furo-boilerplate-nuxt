@@ -13,6 +13,9 @@ export default {
     '^@/(.*)$': '<rootDir>/$1',
     '^~/(.*)$': '<rootDir>/$1',
   },
+  setupFiles: [
+    './jest/setup.js',
+  ],
   testEnvironment: 'jsdom',
   testEnvironmentOptions: {
     customExportConditions: [
