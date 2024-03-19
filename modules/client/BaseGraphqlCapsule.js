@@ -13,6 +13,16 @@ export default class BaseGraphqlCapsule {
     this.payload = payload
     this.input = input
   }
+
+  /**
+   * Factory method.
+   *
+   * @param {BaseGraphqlCapsuleFactoryParams} params - Parameters of factory method.
+   * @returns {BaseGraphqlCapsule} Instance of this class.
+   */
+  static create (params) {
+    return new this(params)
+  }
 }
 
 /**
@@ -21,4 +31,8 @@ export default class BaseGraphqlCapsule {
  *   payload: BaseGraphqlPayload
  *   input: object | null
  * }} BaseGraphqlCapsuleParams
+ */
+
+/**
+ * @typedef {BaseGraphqlCapsuleParams} BaseGraphqlCapsuleFactoryParams
  */
