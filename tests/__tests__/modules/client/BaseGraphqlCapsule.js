@@ -303,3 +303,115 @@ describe('BaseGraphqlCapsule', () => {
     })
   })
 })
+
+describe('BaseGraphqlCapsule', () => {
+  describe('.extractResult()', () => {
+    describe('when Response.json() returns result', () => {
+      const response = new Response()
+
+      const cases = [
+        {
+          params: {
+            result: {
+              data: {
+                customer: {
+                  id: 10001,
+                },
+              },
+            },
+          },
+          expected: {
+            result: {
+              data: {
+                customer: {
+                  id: 10001,
+                },
+              },
+            },
+            error: null,
+          },
+        },
+        {
+          params: {
+            result: {
+              errors: [
+                {
+                  message: 'error message-01',
+                },
+                {
+                  message: 'error message-02',
+                },
+              ],
+            },
+          },
+          expected: {
+            result: {
+              errors: [
+                {
+                  message: 'error message-01',
+                },
+                {
+                  message: 'error message-02',
+                },
+              ],
+            },
+            error: null,
+          },
+        },
+      ]
+
+      test.each(cases)('result: $params.result', async ({ params, expected }) => {
+        const jsonSpy = jest.spyOn(response, 'json')
+          .mockResolvedValue(params.result)
+
+        const actual = await BaseGraphqlCapsule.extractResult({
+          response,
+        })
+
+        expect(actual)
+          .toEqual(expected)
+
+        jsonSpy.mockRestore()
+      })
+    })
+
+    describe('when Response.json() throws error', () => {
+      const response = new Response()
+
+      const cases = [
+        {
+          params: {
+            error: new Error('SyntaxError: Unexpected end of input'),
+          },
+          expected: {
+            result: null,
+            error: new Error('SyntaxError: Unexpected end of input'),
+          },
+        },
+        {
+          params: {
+            error: new Error('Unknown error'),
+          },
+          expected: {
+            result: null,
+            error: new Error('Unknown error'),
+          },
+        },
+      ]
+
+      test.each(cases)('result: $params.result', async ({ params, expected }) => {
+        const jsonSpy = jest.spyOn(response, 'json')
+          .mockRejectedValue(params.error)
+
+        const actual = await BaseGraphqlCapsule.extractResult({
+          response,
+        })
+
+        expect(actual)
+          .toEqual(expected)
+
+        jsonSpy.mockRestore()
+      })
+    })
+  })
+})
