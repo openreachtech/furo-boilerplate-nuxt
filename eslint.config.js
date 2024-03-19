@@ -21,6 +21,14 @@ export default [
   ),
 
   {
+    languageOptions: {
+      parserOptions: {
+        ecmaVersion: 'latest',
+      },
+    },
+  },
+
+  {
     ignores: [
       '**/.nuxt/**',
       '**/dist/**',
