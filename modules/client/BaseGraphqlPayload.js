@@ -33,6 +33,33 @@ export default class BaseGraphqlPayload {
   }
 
   /**
+   * Create fetch request.
+   *
+   * @param {{
+   *   url: URL
+   *   options?: RequestInit
+   *   input?: object | null
+   * }} params - Parameters.
+   * @returns {Request} Instance of fetch request.
+   * @public
+   */
+  createFetchRequest ({
+    url,
+    options = {},
+    input = null,
+  }) {
+    const builtOptions = this.generateFetchRequestOptions({
+      options,
+      input,
+    })
+
+    return new Request(
+      url,
+      builtOptions
+    )
+  }
+
+  /**
    * Generate fetch request options.
    *
    * @param {{
@@ -57,6 +84,7 @@ export default class BaseGraphqlPayload {
     })
 
     return {
+      method: 'POST',
       ...options,
       headers,
       body,
