@@ -25,6 +25,17 @@ export default class BaseGraphqlCapsule {
   static create (params) {
     return new this(params)
   }
+
+  /**
+   * Check to have content.
+   *
+   * @returns {boolean | *} true: has content.
+   */
+  hasContent () {
+    return this.result
+      ?.data
+      ?? false
+  }
 }
 
 /**
