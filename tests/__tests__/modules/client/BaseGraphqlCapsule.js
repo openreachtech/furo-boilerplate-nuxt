@@ -33,6 +33,7 @@ describe('BaseGraphqlCapsule', () => {
             rawResponse: params.response,
             payload: mockPayload,
             input: null,
+            result: null,
           }
 
           const actual = new BaseGraphqlCapsule(args)
@@ -77,6 +78,7 @@ describe('BaseGraphqlCapsule', () => {
             rawResponse: mockResponse,
             payload: params.payload,
             input: null,
+            result: null,
           }
 
           const actual = new BaseGraphqlCapsule(args)
@@ -109,12 +111,60 @@ describe('BaseGraphqlCapsule', () => {
             rawResponse: mockResponse,
             payload: mockPayload,
             input: params.input,
+            result: null,
           }
 
           const actual = new BaseGraphqlCapsule(args)
 
           expect(actual)
             .toHaveProperty('input', params.input)
+        })
+      })
+
+      describe('#result', () => {
+        /**
+         * @type {BaseGraphqlCapsuleParams}
+         */
+        const cases = [
+          {
+            params: {
+              result: {
+                data: {
+                  customer: {
+                    id: 10001,
+                  },
+                },
+              },
+            },
+          },
+          {
+            params: {
+              result: {
+                errors: [
+                  {
+                    message: 'error message-01',
+                  },
+                  {
+                    message: 'error message-02',
+                  },
+                ],
+              },
+            },
+          },
+        ]
+
+        test.each(cases)('result: $params.result', ({ params }) => {
+          const args = {
+            rawResponse: mockResponse,
+            payload: mockPayload,
+            input: null,
+            result: params.result,
+          }
+
+          const actual = new BaseGraphqlCapsule(args)
+
+          expect(actual)
+            .toHaveProperty('result', params.result)
         })
       })
     })
@@ -140,6 +190,13 @@ describe('BaseGraphqlCapsule', () => {
             input: {
               id: 10001,
             },
+            result: {
+              data: {
+                customer: {
+                  id: 10001,
+                },
+              },
+            },
           },
         },
         {
@@ -156,6 +213,16 @@ describe('BaseGraphqlCapsule', () => {
             }),
             input: {
               id: 10002,
+            },
+            result: {
+              errors: [
+                {
+                  message: 'error message-01',
+                },
+                {
+                  message: 'error message-02',
+                },
+              ],
             },
           },
         },
@@ -186,6 +253,13 @@ describe('BaseGraphqlCapsule', () => {
             input: {
               id: 10001,
             },
+            result: {
+              data: {
+                customer: {
+                  id: 10001,
+                },
+              },
+            },
           },
         },
         {
@@ -202,6 +276,16 @@ describe('BaseGraphqlCapsule', () => {
             }),
             input: {
               id: 10002,
+            },
+            result: {
+              errors: [
+                {
+                  message: 'error message-01',
+                },
+                {
+                  message: 'error message-02',
+                },
+              ],
             },
           },
         },
