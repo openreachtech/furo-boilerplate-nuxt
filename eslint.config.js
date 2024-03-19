@@ -92,6 +92,27 @@ export default [
       'jest/no-identical-title': [
         'off', // 'error'
       ],
+      'operator-linebreak': [
+        'error',
+        'before', // 'after'
+        {
+          overrides: { // replace all from default
+            '=': 'after',
+            '+=': 'after',
+            '-=': 'after',
+            '*=': 'after',
+            '/=': 'after',
+            '%=': 'after',
+            '**=': 'after',
+            '<<=': 'after',
+            '>>=': 'after',
+            '>>>=': 'after',
+            '&=': 'after',
+            '|=': 'after',
+            '^=': 'after',
+          },
+        },
+      ],
       'vue/no-multiple-template-root': 'off', // 'error',
     },
   },
