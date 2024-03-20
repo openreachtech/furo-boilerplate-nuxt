@@ -79,6 +79,30 @@ export default class BaseGraphqlCapsule {
   }
 
   /**
+   * Get error message.
+   *
+   * @returns {string | null} Error message.
+   */
+  getErrorMessage () {
+    if (this.hasNetworkError()) {
+      return 'Network error' // TODO: resolve embedded text
+    }
+
+    if (this.hasJsonParseError()) {
+      return 'JSON parse error' // TODO: resolve embedded text
+    }
+
+    if (!this.hasQueryError()) {
+      return null
+    }
+
+    return this.extractErrors()
+      .at(0)
+      ?.message
+      ?? 'Unknown error' // TODO: resolve embedded text
+  }
+
+  /**
    * Extract errors from #result.
    *
    * @returns {Array<object>} Array of errors.
