@@ -64,6 +64,15 @@ export default class BaseGraphqlLauncher {
   }
 
   /**
+   * get: Endpoint URL.
+   *
+   * @returns {string} Endpoint URL.
+   */
+  get endpointUrl () {
+    return this.config.ENDPOINT_URL
+  }
+
+  /**
    * Create payload.
    *
    * @returns {import('./BaseGraphqlPayload')} Instance of Payload.
