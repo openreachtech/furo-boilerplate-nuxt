@@ -38,6 +38,17 @@ export default class BaseGraphqlCapsule {
   }
 
   /**
+   * Check to have error.
+   *
+   * @returns {BooleanLike} true: has error.
+   */
+  hasError () {
+    return this.hasQueryError()
+      || this.hasNetworkError()
+      || this.hasJsonParseError()
+  }
+
+  /**
    * Check to have query error.
    *
    * @returns {BooleanLike} true: has query error.
