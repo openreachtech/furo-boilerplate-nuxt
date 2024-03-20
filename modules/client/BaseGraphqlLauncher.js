@@ -32,6 +32,17 @@ export default class BaseGraphqlLauncher {
   }
 
   /**
+   * get: Capsule class.
+   *
+   * @abstract
+   * @returns {typeof import('./BaseGraphqlCapsule')} Capsule class.
+   * @throws {Error} This function must be inherited.
+   */
+  static get Capsule () {
+    throw new Error('this function must be inherited')
+  }
+
+  /**
    * get: Constructor from instance.
    *
    * @returns {typeof BaseGraphqlLauncher} Constructor of the instance.
