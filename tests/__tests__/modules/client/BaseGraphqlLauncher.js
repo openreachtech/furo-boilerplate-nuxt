@@ -94,3 +94,33 @@ describe('BaseGraphqlLauncher', () => {
     })
   })
 })
+
+describe('BaseGraphqlLauncher', () => {
+  describe('#get:Ctor', () => {
+    describe('to be own class', () => {
+      const cases = [
+        {
+          params: {
+            config: {
+              ENDPOINT_URL: 'http://example.com/graphql-customer',
+            },
+          },
+        },
+        {
+          params: {
+            config: {
+              ENDPOINT_URL: 'http://example.com/graphql-admin',
+            },
+          },
+        },
+      ]
+
+      test.each(cases)('ENDPOINT_URL: $params.config.ENDPOINT_URL', ({ params }) => {
+        const launcher = BaseGraphqlLauncher.create(params)
+
+        expect(launcher.Ctor)
+          .toBe(BaseGraphqlLauncher)
+      })
+    })
+  })
+})
