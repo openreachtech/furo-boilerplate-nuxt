@@ -200,3 +200,14 @@ describe('BaseGraphqlLauncher', () => {
     })
   })
 })
+
+describe('BaseGraphqlLauncher', () => {
+  describe('.get:fetch', () => {
+    test('to be fixed value', () => {
+      const actual = BaseGraphqlLauncher.fetch
+
+      expect(actual)
+        .toBe(fetch) // same reference
+    })
+  })
+})
