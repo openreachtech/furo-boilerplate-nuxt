@@ -70,10 +70,71 @@ describe('BaseGraphqlPayload', () => {
         ]
 
         test.each(cases)('queryTemplate: $params.queryTemplate', ({ params }) => {
-          const actual = new BaseGraphqlPayload(params)
+          const args = {
+            queryTemplate: params.queryTemplate,
+            input: null,
+          }
+          const actual = new BaseGraphqlPayload(args)
 
           expect(actual)
             .toHaveProperty('queryTemplate', params.queryTemplate)
+        })
+      })
+
+      describe('#input', () => {
+        const cases = [
+          {
+            params: {
+              input: {
+                id: 10001,
+              },
+            },
+          },
+          {
+            params: {
+              input: {
+                id: 10002,
+              },
+            },
+          },
+          {
+            params: {
+              input: null,
+            },
+          },
+        ]
+
+        test.each(cases)('queryTemplate: $params.queryTemplate', ({ params }) => {
+          const queryTemplate = `
+            query {
+              curriculums(input: $input) {
+                curriculums {
+                  id
+                  title
+                  description
+                  thumbnailUrl
+                  postedAt
+                }
+                pagination {
+                  limit
+                  offset
+                  sort {
+                    targetColumn
+                    orderBy
+                  }
+                  totalRecords
+                }
+              }
+            }
+          `
+          const args = {
+            queryTemplate,
+            input: params.input,
+          }
+          const actual = new BaseGraphqlPayload(args)
+
+          expect(actual)
+            .toHaveProperty('input', params.input)
         })
       })
     })
@@ -97,6 +158,7 @@ describe('BaseGraphqlPayload', () => {
       const cases = [
         {
           params: {
+            input: null,
             queryTemplate: `
               query pickUpForumTopics {
                 pickUpForumTopics {
@@ -129,6 +191,9 @@ describe('BaseGraphqlPayload', () => {
         },
         {
           params: {
+            input: {
+              id: 10001,
+            },
             queryTemplate: `
               query {
                 curriculums(input: $input) {
@@ -155,11 +220,14 @@ describe('BaseGraphqlPayload', () => {
         },
       ]
 
-      test.each(cases)('queryTemplate: $params.queryTemplate', ({ params }) => {
+      test.each(cases)('input: $params.input', ({ params }) => {
         const querySpy = jest.spyOn(BaseGraphqlPayload, 'query', 'get')
           .mockReturnValue(params.queryTemplate)
 
-        const actual = BaseGraphqlPayload.create()
+        const args = {
+          input: params.input,
+        }
+        const actual = BaseGraphqlPayload.create(args)
 
         expect(actual)
           .toBeInstanceOf(BaseGraphqlPayload)
@@ -172,6 +240,7 @@ describe('BaseGraphqlPayload', () => {
       const cases = [
         {
           params: {
+            input: null,
             queryTemplate: `
               query pickUpForumTopics {
                 pickUpForumTopics {
@@ -204,6 +273,9 @@ describe('BaseGraphqlPayload', () => {
         },
         {
           params: {
+            input: {
+              id: 10001,
+            },
             queryTemplate: `
               query {
                 curriculums(input: $input) {
@@ -230,9 +302,13 @@ describe('BaseGraphqlPayload', () => {
         },
       ]
 
-      test.each(cases)('queryTemplate: $params.queryTemplate', ({ params }) => {
+      test.each(cases)('input: $params.input', ({ params }) => {
         const expected = {
           queryTemplate: params.queryTemplate,
+          input: params.input,
+        }
+        const args = {
+          input: params.input,
         }
 
         const querySpy = jest.spyOn(BaseGraphqlPayload, 'query', 'get')
@@ -241,7 +317,7 @@ describe('BaseGraphqlPayload', () => {
         const DerivedClass = ConstructorSpyGenerator.create({ jest })
           .generateSpyKitClass(BaseGraphqlPayload)
 
-        DerivedClass.create()
+        DerivedClass.create(args)
 
         expect(DerivedClass.__spy__)
           .toHaveBeenCalledWith(expected)
@@ -251,11 +327,28 @@ describe('BaseGraphqlPayload', () => {
     })
 
     describe('to throw on called directly', () => {
-      test('to throw error', () => {
-        const expected = 'this function must be inherited'
+      describe('to throw error', () => {
+        const cases = [
+          {
+            params: {
+              input: {
+                id: 10001,
+              },
+            },
+          },
+          {
+            params: {
+              input: null,
+            },
+          },
+        ]
 
-        expect(() => BaseGraphqlPayload.create())
-          .toThrow(expected)
+        test.each(cases)('input: $params.input', ({ params }) => {
+          const expected = 'this function must be inherited'
+
+          expect(() => BaseGraphqlPayload.create(params))
+            .toThrow(expected)
+        })
       })
     })
   })
@@ -328,10 +421,17 @@ describe('BaseGraphqlPayload', () => {
       describe.each(cases)('queryTemplate: $params.queryTemplate', ({ params }) => {
         const args = [
           {
-            input: {},
+            input: {
+              id: 10001,
+            },
           },
           {
-            input: {},
+            input: {
+              id: 10002,
+            },
+          },
+          {
+            input: null,
           },
         ]
 
@@ -341,11 +441,11 @@ describe('BaseGraphqlPayload', () => {
           const querySpy = jest.spyOn(BaseGraphqlPayload, 'query', 'get')
             .mockReturnValue(params.queryTemplate)
 
-          const payload = BaseGraphqlPayload.create()
-
-          const actual = payload.generateQuery({
+          const payload = BaseGraphqlPayload.create({
             input,
           })
+
+          const actual = payload.generateQuery()
 
           expect(actual)
             .toBe(expected)
@@ -353,7 +453,7 @@ describe('BaseGraphqlPayload', () => {
           querySpy.mockRestore()
         })
 
-        test('with no input', () => {
+        test('with no args of .create()', () => {
           const expected = params.queryTemplate
 
           const querySpy = jest.spyOn(BaseGraphqlPayload, 'query', 'get')
@@ -562,11 +662,11 @@ describe('BaseGraphqlPayload', () => {
           const querySpy = jest.spyOn(BaseGraphqlPayload, 'query', 'get')
             .mockReturnValue(params.queryTemplate)
 
-          const payload = BaseGraphqlPayload.create()
-
-          const actual = payload.generateQuery({
+          const payload = BaseGraphqlPayload.create({
             input,
           })
+
+          const actual = payload.generateQuery()
 
           expect(actual)
             .toBe(expected)
@@ -643,6 +743,7 @@ describe('BaseGraphqlPayload', () => {
       test.each(cases)('Content-Type: $params.headers', ({ params }) => {
         const payload = new BaseGraphqlPayload({
           queryTemplate,
+          input: null,
         })
 
         const actual = payload.buildHeaders(params)
@@ -701,6 +802,7 @@ describe('BaseGraphqlPayload', () => {
       test.each(cases)('Content-Type: $params.headers', ({ params, expected }) => {
         const payload = new BaseGraphqlPayload({
           queryTemplate,
+          input: null,
         })
 
         const actual = payload.buildHeaders(params)
@@ -753,9 +855,13 @@ describe('BaseGraphqlPayload', () => {
           test.each(cases)('input: $params.input', ({ params }) => {
             const payload = new BaseGraphqlPayload({
               queryTemplate,
+              input: params.input,
             })
+            const args = {
+              options: params.options,
+            }
 
-            const actual = payload.generateFetchRequestOptions(params)
+            const actual = payload.generateFetchRequestOptions(args)
 
             expect(actual.headers)
               .toBeInstanceOf(Headers)
@@ -796,9 +902,13 @@ describe('BaseGraphqlPayload', () => {
           test.each(cases)('input: $params.input', ({ params, expected }) => {
             const payload = new BaseGraphqlPayload({
               queryTemplate,
+              input: params.input,
             })
+            const args = {
+              options: params.options,
+            }
 
-            const actual = payload.generateFetchRequestOptions(params)
+            const actual = payload.generateFetchRequestOptions(args)
 
             expect(actual)
               .toHaveProperty('headers', expect.any(Headers))
@@ -837,9 +947,13 @@ describe('BaseGraphqlPayload', () => {
           test.each(cases)('input: $params.input', ({ params, expected }) => {
             const payload = new BaseGraphqlPayload({
               queryTemplate,
+              input: params.input,
             })
+            const args = {
+              options: params.options,
+            }
 
-            const actual = payload.generateFetchRequestOptions(params)
+            const actual = payload.generateFetchRequestOptions(args)
 
             expect(actual.body)
               .toBe(expected)
@@ -907,9 +1021,13 @@ describe('BaseGraphqlPayload', () => {
           test.each(cases)('options: $params.options', ({ params, expected }) => {
             const payload = new BaseGraphqlPayload({
               queryTemplate,
+              input: params.input,
             })
+            const args = {
+              options: params.options,
+            }
 
-            const actual = payload.generateFetchRequestOptions(params)
+            const actual = payload.generateFetchRequestOptions(args)
 
             expect(actual)
               .toMatchObject(expected)
@@ -962,9 +1080,14 @@ describe('BaseGraphqlPayload', () => {
       test.each(cases)('url: $params.url', ({ params }) => {
         const payload = new BaseGraphqlPayload({
           queryTemplate,
+          input: params.input,
         })
+        const args = {
+          url: params.url,
+          options: params.options,
+        }
 
-        const actual = payload.createFetchRequest(params)
+        const actual = payload.createFetchRequest(args)
 
         expect(actual)
           .toBeInstanceOf(Request)
@@ -1026,9 +1149,14 @@ describe('BaseGraphqlPayload', () => {
       test.each(cases)('url: $params.url', ({ params }) => {
         const payload = new BaseGraphqlPayload({
           queryTemplate,
+          input: params.input,
         })
+        const args = {
+          url: params.url,
+          options: params.options,
+        }
 
-        const actual = payload.createFetchRequest(params)
+        const actual = payload.createFetchRequest(args)
 
         expect(actual)
           .toBeInstanceOf(Request)
