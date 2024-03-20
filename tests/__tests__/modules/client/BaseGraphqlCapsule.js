@@ -920,3 +920,129 @@ describe('BaseGraphqlCapsule', () => {
     })
   })
 })
+
+describe('BaseGraphqlCapsule', () => {
+  describe('#getErrorMessage()', () => {
+    const mockResponse = new Response()
+    const mockPayload = new BaseGraphqlPayload({
+      queryTemplate: `
+        query {
+          customer {
+            id
+          }
+        }
+      `,
+    })
+
+    describe('when has error', () => {
+      const cases = [
+        // on network error
+        {
+          params: {
+            rawResponse: null,
+            result: null,
+          },
+          expected: 'Network error',
+        },
+        // on JSON parse error
+        {
+          params: {
+            rawResponse: mockResponse,
+            result: null,
+          },
+          expected: 'JSON parse error',
+        },
+        // on query error
+        {
+          params: {
+            rawResponse: mockResponse,
+            result: {
+              errors: [
+                {
+                  message: 'error message-01',
+                },
+                {
+                  message: 'error message-02',
+                },
+              ],
+            },
+          },
+          expected: 'error message-01',
+        },
+        {
+          params: {
+            rawResponse: mockResponse,
+            result: {
+              errors: [
+                {
+                  message: 'error message-03',
+                },
+              ],
+            },
+          },
+          expected: 'error message-03',
+        },
+        {
+          params: {
+            rawResponse: mockResponse,
+            result: {
+              errors: [],
+            },
+          },
+          expected: 'Unknown error',
+        },
+      ]
+
+      test.each(cases)('rawResponse: $params.rawResponse; result: $params.result', ({ params, expected }) => {
+        const args = {
+          rawResponse: params.rawResponse,
+          payload: mockPayload,
+          input: null,
+          result: params.result,
+        }
+        const capsule = new BaseGraphqlCapsule(args)
+
+        const actual = capsule.getErrorMessage()
+
+        expect(actual)
+          .toBe(expected)
+      })
+    })
+
+    describe('when has no error', () => {
+      const cases = [
+        {
+          params: {
+            result: {
+              data: {
+                customer: {
+                  id: 10001,
+                },
+              },
+            },
+          },
+        },
+        {
+          params: {
+            result: {},
+          },
+        },
+      ]
+
+      test.each(cases)('result: $params.result', ({ params }) => {
+        const args = {
+          rawResponse: mockResponse,
+          payload: mockPayload,
+          input: null,
+          result: params.result,
+        }
+        const capsule = new BaseGraphqlCapsule(args)
+
+        const actual = capsule.getErrorMessage()
+
+        expect(actual)
+          .toBeNull()
+      })
+    })
+  })
+})
