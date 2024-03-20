@@ -211,3 +211,35 @@ describe('BaseGraphqlLauncher', () => {
     })
   })
 })
+
+describe('BaseGraphqlLauncher', () => {
+  describe('#get:endpointUrl', () => {
+    const cases = [
+      {
+        params: {
+          config: {
+            ENDPOINT_URL: 'http://example.com/graphql-customer',
+          },
+        },
+        expected: 'http://example.com/graphql-customer',
+      },
+      {
+        params: {
+          config: {
+            ENDPOINT_URL: 'http://example.com/graphql-admin',
+          },
+        },
+        expected: 'http://example.com/graphql-admin',
+      },
+    ]
+
+    test.each(cases)('ENDPOINT_URL: $params.config.ENDPOINT_URL', ({ params, expected }) => {
+      const launcher = BaseGraphqlLauncher.create(params)
+
+      const actual = launcher.endpointUrl
+
+      expect(actual)
+        .toBe(expected)
+    })
+  })
+})
