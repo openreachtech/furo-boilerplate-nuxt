@@ -55,6 +55,7 @@ describe('BaseGraphqlCapsule', () => {
                     }
                   }
                 `,
+                input: null,
               }),
             },
           },
@@ -68,6 +69,7 @@ describe('BaseGraphqlCapsule', () => {
                     }
                   }
                 `,
+                input: null,
               }),
             },
           },
@@ -186,6 +188,9 @@ describe('BaseGraphqlCapsule', () => {
                   }
                 }
               `,
+              input: {
+                id: 10001,
+              },
             }),
             input: {
               id: 10001,
@@ -210,6 +215,9 @@ describe('BaseGraphqlCapsule', () => {
                   }
                 }
               `,
+              input: {
+                id: 10002,
+              },
             }),
             input: {
               id: 10002,
@@ -249,6 +257,9 @@ describe('BaseGraphqlCapsule', () => {
                   }
                 }
               `,
+              input: {
+                id: 10001,
+              },
             }),
             input: {
               id: 10001,
@@ -273,6 +284,9 @@ describe('BaseGraphqlCapsule', () => {
                   }
                 }
               `,
+              input: {
+                id: 10002,
+              },
             }),
             input: {
               id: 10002,
@@ -315,6 +329,7 @@ describe('BaseGraphqlCapsule', () => {
           }
         }
       `,
+      input: null,
     })
 
     describe('to has content (truthy)', () => {
@@ -411,6 +426,7 @@ describe('BaseGraphqlCapsule', () => {
           }
         }
       `,
+      input: null,
     })
 
     describe('to has errors (truthy)', () => {
@@ -504,6 +520,7 @@ describe('BaseGraphqlCapsule', () => {
           }
         }
       `,
+      input: null,
     })
 
     describe('to has no rawResponse (truthy)', () => {
@@ -569,6 +586,7 @@ describe('BaseGraphqlCapsule', () => {
           }
         }
       `,
+      input: null,
     })
 
     describe('when has rawResponse', () => {
@@ -708,6 +726,7 @@ describe('BaseGraphqlCapsule', () => {
           }
         }
       `,
+      input: null,
     })
 
     describe('to has error (truthy)', () => {
@@ -813,6 +832,7 @@ describe('BaseGraphqlCapsule', () => {
           }
         }
       `,
+      input: null,
     })
 
     describe('when existing errors', () => {
@@ -932,6 +952,7 @@ describe('BaseGraphqlCapsule', () => {
           }
         }
       `,
+      input: null,
     })
 
     describe('when has error', () => {
@@ -1058,6 +1079,7 @@ describe('BaseGraphqlCapsule', () => {
           }
         }
       `,
+      input: null,
     })
 
     describe('when has content', () => {
