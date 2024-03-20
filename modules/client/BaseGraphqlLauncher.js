@@ -21,6 +21,18 @@ export default class BaseGraphqlLauncher {
   }
 
   /**
+   * Fetch function.
+   *
+   * @returns {(
+   *   input: URL | RequestInfo,
+   *   init?: RequestInit
+   * ) => Promise<Response>} fetch function.
+   */
+  static get fetch () {
+    return fetch
+  }
+
+  /**
    * get: Payload class.
    *
    * @abstract
