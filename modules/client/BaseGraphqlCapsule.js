@@ -112,6 +112,21 @@ export default class BaseGraphqlCapsule {
       ?.errors
       ?? []
   }
+
+  /**
+   * Extract content from #result.
+   *
+   * @returns {object | null} Content.
+   */
+  extractContent () {
+    if (this.hasError()) {
+      return null
+    }
+
+    return this.result
+      ?.data
+      ?? null
+  }
 }
 
 /**
