@@ -50,6 +50,17 @@ export default class BaseGraphqlLauncher {
   get Ctor () {
     return this.constructor
   }
+
+  /**
+   * Create payload.
+   *
+   * @returns {import('./BaseGraphqlPayload')} Instance of Payload.
+   */
+  createPayload () {
+    return this.Ctor
+      .Payload
+      .create()
+  }
 }
 
 /**
