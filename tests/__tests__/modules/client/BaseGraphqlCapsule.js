@@ -399,3 +399,97 @@ describe('BaseGraphqlCapsule', () => {
     })
   })
 })
+
+describe('BaseGraphqlCapsule', () => {
+  describe('#hasQueryError()', () => {
+    const mockResponse = new Response()
+    const mockPayload = new BaseGraphqlPayload({
+      queryTemplate: `
+        query {
+          customer {
+            id
+          }
+        }
+      `,
+    })
+
+    describe('to has errors (truthy)', () => {
+      const cases = [
+        {
+          params: {
+            result: {
+              errors: [
+                {
+                  message: 'error message-01',
+                },
+                {
+                  message: 'error message-02',
+                },
+              ],
+            },
+          },
+        },
+        {
+          params: {
+            result: {
+              // Even if empty array, it is considered as query error.
+              // Because it is not a normal response, not network error and not json parse error.
+              errors: [],
+            },
+          },
+        },
+      ]
+
+      test.each(cases)('result: $params.result', ({ params }) => {
+        const args = {
+          rawResponse: mockResponse,
+          payload: mockPayload,
+          input: null,
+          result: params.result,
+        }
+        const capsule = new BaseGraphqlCapsule(args)
+
+        const actual = capsule.hasQueryError()
+
+        expect(actual)
+          .toBeTruthy()
+      })
+    })
+
+    describe('to has no errors (falsy)', () => {
+      const cases = [
+        {
+          params: {
+            result: {
+              data: {
+                customer: {
+                  id: 10001,
+                },
+              },
+            },
+          },
+        },
+        {
+          params: {
+            result: null, // network error or json parse error, etc.
+          },
+        },
+      ]
+
+      test.each(cases)('result: $params.result', ({ params }) => {
+        const args = {
+          rawResponse: mockResponse,
+          payload: mockPayload,
+          input: null,
+          result: params.result,
+        }
+        const capsule = new BaseGraphqlCapsule(args)
+
+        const actual = capsule.hasQueryError()
+
+        expect(actual)
+          .toBeFalsy()
+      })
+    })
+  })
+})
