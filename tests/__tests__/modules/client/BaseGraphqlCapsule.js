@@ -32,7 +32,6 @@ describe('BaseGraphqlCapsule', () => {
           const args = {
             rawResponse: params.response,
             payload: mockPayload,
-            input: null,
             result: null,
           }
 
@@ -79,7 +78,6 @@ describe('BaseGraphqlCapsule', () => {
           const args = {
             rawResponse: mockResponse,
             payload: params.payload,
-            input: null,
             result: null,
           }
 
@@ -87,39 +85,6 @@ describe('BaseGraphqlCapsule', () => {
 
           expect(actual)
             .toHaveProperty('payload', params.payload)
-        })
-      })
-
-      describe('#input', () => {
-        const cases = [
-          {
-            params: {
-              input: {
-                id: 10001,
-              },
-            },
-          },
-          {
-            params: {
-              input: {
-                id: 10002,
-              },
-            },
-          },
-        ]
-
-        test.each(cases)('input: $params.input', ({ params }) => {
-          const args = {
-            rawResponse: mockResponse,
-            payload: mockPayload,
-            input: params.input,
-            result: null,
-          }
-
-          const actual = new BaseGraphqlCapsule(args)
-
-          expect(actual)
-            .toHaveProperty('input', params.input)
         })
       })
 
@@ -159,7 +124,6 @@ describe('BaseGraphqlCapsule', () => {
           const args = {
             rawResponse: mockResponse,
             payload: mockPayload,
-            input: null,
             result: params.result,
           }
 
@@ -192,9 +156,6 @@ describe('BaseGraphqlCapsule', () => {
                 id: 10001,
               },
             }),
-            input: {
-              id: 10001,
-            },
             result: {
               data: {
                 customer: {
@@ -219,9 +180,6 @@ describe('BaseGraphqlCapsule', () => {
                 id: 10002,
               },
             }),
-            input: {
-              id: 10002,
-            },
             result: {
               errors: [
                 {
@@ -236,7 +194,7 @@ describe('BaseGraphqlCapsule', () => {
         },
       ]
 
-      test.each(cases)('input: $params.input', ({ params }) => {
+      test.each(cases)('result: $params.result', ({ params }) => {
         const actual = BaseGraphqlCapsule.create(params)
 
         expect(actual)
@@ -261,9 +219,6 @@ describe('BaseGraphqlCapsule', () => {
                 id: 10001,
               },
             }),
-            input: {
-              id: 10001,
-            },
             result: {
               data: {
                 customer: {
@@ -288,9 +243,6 @@ describe('BaseGraphqlCapsule', () => {
                 id: 10002,
               },
             }),
-            input: {
-              id: 10002,
-            },
             result: {
               errors: [
                 {
@@ -305,7 +257,7 @@ describe('BaseGraphqlCapsule', () => {
         },
       ]
 
-      test.each(cases)('input: $params.input', ({ params }) => {
+      test.each(cases)('result: $params.result', ({ params }) => {
         const DerivedClass = ConstructorSpyGenerator.create({ jest })
           .generateSpyKitClass(BaseGraphqlCapsule)
 
@@ -362,7 +314,6 @@ describe('BaseGraphqlCapsule', () => {
         const args = {
           rawResponse: mockResponse,
           payload: mockPayload,
-          input: null,
           result: params.result,
         }
         const capsule = new BaseGraphqlCapsule(args)
@@ -401,7 +352,6 @@ describe('BaseGraphqlCapsule', () => {
         const args = {
           rawResponse: mockResponse,
           payload: mockPayload,
-          input: null,
           result: params.result,
         }
         const capsule = new BaseGraphqlCapsule(args)
@@ -460,7 +410,6 @@ describe('BaseGraphqlCapsule', () => {
         const args = {
           rawResponse: mockResponse,
           payload: mockPayload,
-          input: null,
           result: params.result,
         }
         const capsule = new BaseGraphqlCapsule(args)
@@ -496,7 +445,6 @@ describe('BaseGraphqlCapsule', () => {
         const args = {
           rawResponse: mockResponse,
           payload: mockPayload,
-          input: null,
           result: params.result,
         }
         const capsule = new BaseGraphqlCapsule(args)
@@ -536,7 +484,6 @@ describe('BaseGraphqlCapsule', () => {
         const args = {
           rawResponse: params.rawResponse,
           payload: mockPayload,
-          input: null,
           result: null,
         }
         const capsule = new BaseGraphqlCapsule(args)
@@ -561,7 +508,6 @@ describe('BaseGraphqlCapsule', () => {
         const args = {
           rawResponse: params.rawResponse,
           payload: mockPayload,
-          input: null,
           result: null,
         }
         const capsule = new BaseGraphqlCapsule(args)
@@ -603,7 +549,6 @@ describe('BaseGraphqlCapsule', () => {
           const args = {
             rawResponse: mockResponse,
             payload: mockPayload,
-            input: null,
             result: params.result,
           }
           const capsule = new BaseGraphqlCapsule(args)
@@ -648,7 +593,6 @@ describe('BaseGraphqlCapsule', () => {
           const args = {
             rawResponse: mockResponse,
             payload: mockPayload,
-            input: null,
             result: params.result,
           }
           const capsule = new BaseGraphqlCapsule(args)
@@ -700,7 +644,6 @@ describe('BaseGraphqlCapsule', () => {
           const args = {
             rawResponse: null,
             payload: mockPayload,
-            input: null,
             result: params.result,
           }
           const capsule = new BaseGraphqlCapsule(args)
@@ -767,7 +710,6 @@ describe('BaseGraphqlCapsule', () => {
         const args = {
           rawResponse: params.rawResponse,
           payload: mockPayload,
-          input: null,
           result: params.result,
         }
 
@@ -806,7 +748,6 @@ describe('BaseGraphqlCapsule', () => {
         const args = {
           rawResponse: params.rawResponse,
           payload: mockPayload,
-          input: null,
           result: params.result,
         }
 
@@ -881,7 +822,6 @@ describe('BaseGraphqlCapsule', () => {
         const args = {
           rawResponse: mockResponse,
           payload: mockPayload,
-          input: null,
           result: params.result,
         }
         const capsule = new BaseGraphqlCapsule(args)
@@ -925,7 +865,6 @@ describe('BaseGraphqlCapsule', () => {
         const args = {
           rawResponse: params.rawResponse,
           payload: mockPayload,
-          input: null,
           result: params.result,
         }
         const capsule = new BaseGraphqlCapsule(args)
@@ -1018,7 +957,6 @@ describe('BaseGraphqlCapsule', () => {
         const args = {
           rawResponse: params.rawResponse,
           payload: mockPayload,
-          input: null,
           result: params.result,
         }
         const capsule = new BaseGraphqlCapsule(args)
@@ -1054,7 +992,6 @@ describe('BaseGraphqlCapsule', () => {
         const args = {
           rawResponse: mockResponse,
           payload: mockPayload,
-          input: null,
           result: params.result,
         }
         const capsule = new BaseGraphqlCapsule(args)
@@ -1122,7 +1059,6 @@ describe('BaseGraphqlCapsule', () => {
         const args = {
           rawResponse: mockResponse,
           payload: mockPayload,
-          input: null,
           result: params.result,
         }
         const capsule = new BaseGraphqlCapsule(args)
@@ -1175,7 +1111,6 @@ describe('BaseGraphqlCapsule', () => {
         const args = {
           rawResponse: params.rawResponse,
           payload: mockPayload,
-          input: null,
           result: params.result,
         }
         const capsule = new BaseGraphqlCapsule(args)
