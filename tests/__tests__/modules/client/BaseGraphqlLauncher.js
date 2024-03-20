@@ -3,6 +3,7 @@ import {
 } from '@openreachtech/renchan-test-tools'
 
 import BaseGraphqlLauncher from '@/modules/client/BaseGraphqlLauncher'
+import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
 
 describe('BaseGraphqlLauncher', () => {
   describe('constructor', () => {
@@ -139,6 +140,63 @@ describe('BaseGraphqlLauncher', () => {
     test('to throw', () => {
       expect(() => BaseGraphqlLauncher.Capsule)
         .toThrow('this function must be inherited')
+    })
+  })
+})
+
+describe('BaseGraphqlLauncher', () => {
+  describe('#createPayload()', () => {
+    const config = {
+      ENDPOINT_URL: 'http://example.com/graphql-customer',
+    }
+
+    describe('to be instance of Payload', () => {
+      const cases = [
+        {
+          params: {
+            Payload: class CustomerPayload extends BaseGraphqlPayload {
+              /** @inheritdoc */
+              static get query () {
+                return `query {
+                  customer (input: $input) {
+                    id
+                  }
+                }`
+              }
+            },
+          },
+        },
+        {
+          params: {
+            Payload: class AdminPayload extends BaseGraphqlPayload {
+              /** @inheritdoc */
+              static get query () {
+                return `query {
+                  admin (input: $input) {
+                    id
+                  }
+                }`
+              }
+            },
+          },
+        },
+      ]
+
+      test.each(cases)('Payload: $params.Payload.name', ({ params }) => {
+        const PayloadSpy = jest.spyOn(BaseGraphqlLauncher, 'Payload', 'get')
+          .mockReturnValue(params.Payload)
+
+        const launcher = BaseGraphqlLauncher.create({
+          config,
+        })
+
+        const payload = launcher.createPayload()
+
+        expect(payload)
+          .toBeInstanceOf(params.Payload)
+
+        PayloadSpy.mockRestore()
+      })
     })
   })
 })
