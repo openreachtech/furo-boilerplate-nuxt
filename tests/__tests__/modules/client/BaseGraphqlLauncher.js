@@ -4,6 +4,7 @@ import {
 
 import BaseGraphqlLauncher from '@/modules/client/BaseGraphqlLauncher'
 import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
+import BaseGraphqlCapsule from '~/modules/client/BaseGraphqlCapsule'
 
 describe('BaseGraphqlLauncher', () => {
   describe('constructor', () => {
@@ -196,6 +197,45 @@ describe('BaseGraphqlLauncher', () => {
           .toBeInstanceOf(params.Payload)
 
         PayloadSpy.mockRestore()
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlLauncher', () => {
+  describe('#createCapsule()', () => {
+    const config = {
+      ENDPOINT_URL: 'http://example.com/graphql-customer',
+    }
+
+    describe('to be instance of Capsule', () => {
+      const cases = [
+        {
+          params: {
+            Capsule: class CustomerCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+        {
+          params: {
+            Capsule: class AdminCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+      ]
+
+      test.each(cases)('Capsule: $params.Capsule.name', ({ params }) => {
+        const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
+          .mockReturnValue(params.Capsule)
+
+        const launcher = BaseGraphqlLauncher.create({
+          config,
+        })
+
+        const capsule = launcher.createCapsule()
+
+        expect(capsule)
+          .toBeInstanceOf(params.Capsule)
+
+        CapsuleSpy.mockRestore()
       })
     })
   })
