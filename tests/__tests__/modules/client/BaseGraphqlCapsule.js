@@ -696,3 +696,108 @@ describe('BaseGraphqlCapsule', () => {
     })
   })
 })
+
+describe('BaseGraphqlCapsule', () => {
+  describe('#hasError()', () => {
+    const mockResponse = new Response()
+    const mockPayload = new BaseGraphqlPayload({
+      queryTemplate: `
+        query {
+          customer {
+            id
+          }
+        }
+      `,
+    })
+
+    describe('to has error (truthy)', () => {
+      const cases = [
+        // query error
+        {
+          params: {
+            rawResponse: mockResponse,
+            result: {
+              errors: [
+                {
+                  message: 'error message-01',
+                },
+                {
+                  message: 'error message-02',
+                },
+              ],
+            },
+          },
+        },
+        // network error
+        {
+          params: {
+            rawResponse: null,
+            result: null,
+          },
+        },
+        // JSON parse error
+        {
+          params: {
+            rawResponse: mockResponse,
+            result: null,
+          },
+        },
+      ]
+
+      test.each(cases)('rawResponse: $params.rawResponse; result: $params.result', ({ params }) => {
+        const args = {
+          rawResponse: params.rawResponse,
+          payload: mockPayload,
+          input: null,
+          result: params.result,
+        }
+
+        const capsule = new BaseGraphqlCapsule(args)
+
+        const actual = capsule.hasError()
+
+        expect(actual)
+          .toBeTruthy()
+      })
+    })
+
+    describe('to has no error (falsy)', () => {
+      const cases = [
+        {
+          params: {
+            rawResponse: mockResponse,
+            result: {
+              data: {
+                customer: {
+                  id: 10001,
+                },
+              },
+            },
+          },
+        },
+        {
+          params: {
+            rawResponse: mockResponse,
+            result: {},
+          },
+        },
+      ]
+
+      test.each(cases)('rawResponse: $params.rawResponse; result: $params.result', ({ params }) => {
+        const args = {
+          rawResponse: params.rawResponse,
+          payload: mockPayload,
+          input: null,
+          result: params.result,
+        }
+
+        const capsule = new BaseGraphqlCapsule(args)
+
+        const actual = capsule.hasError()
+
+        expect(actual)
+          .toBeFalsy()
+      })
+    })
+  })
+})
