@@ -82,6 +82,32 @@ export default class BaseGraphqlLauncher {
       .Payload
       .create()
   }
+
+  /**
+   * Create instance of capsule with result.
+   *
+   * @param {{
+   *   rawResponse: Response
+   *   payload: import('./BaseGraphqlPayload')
+   *   result: object
+   * }} params - Parameters.
+   * @returns
+   */
+  createResultCapsule ({
+    rawResponse,
+    payload,
+    result,
+  }) {
+    const args = {
+      rawResponse,
+      payload,
+      result,
+    }
+
+    return this.Ctor
+      .Capsule
+      .create(args)
+  }
 }
 
 /**
