@@ -133,3 +133,12 @@ describe('BaseGraphqlLauncher', () => {
     })
   })
 })
+
+describe('BaseGraphqlLauncher', () => {
+  describe('.get:Capsule', () => {
+    test('to throw', () => {
+      expect(() => BaseGraphqlLauncher.Capsule)
+        .toThrow('this function must be inherited')
+    })
+  })
+})
