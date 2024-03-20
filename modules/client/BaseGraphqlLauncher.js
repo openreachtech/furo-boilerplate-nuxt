@@ -21,6 +21,17 @@ export default class BaseGraphqlLauncher {
   }
 
   /**
+   * get: Payload class.
+   *
+   * @abstract
+   * @returns {typeof import('./BaseGraphqlPayload')} Payload class.
+   * @throws {Error} This function must be inherited.
+   */
+  static get Payload () {
+    throw new Error('this function must be inherited')
+  }
+
+  /**
    * get: Constructor from instance.
    *
    * @returns {typeof BaseGraphqlLauncher} Constructor of the instance.
