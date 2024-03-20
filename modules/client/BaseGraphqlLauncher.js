@@ -61,6 +61,17 @@ export default class BaseGraphqlLauncher {
       .Payload
       .create()
   }
+
+  /**
+   * Create capsule.
+   *
+   * @returns {import('./BaseGraphqlCapsule')} Instance of Capsule.
+   */
+  createCapsule () {
+    return this.Ctor
+      .Capsule
+      .create()
+  }
 }
 
 /**
