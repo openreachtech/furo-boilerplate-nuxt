@@ -47,6 +47,15 @@ export default class BaseGraphqlCapsule {
       ?.errors
       ?? false
   }
+
+  /**
+   * Check to have network error.
+   *
+   * @returns {BooleanLike} true: has network error.
+   */
+  hasNetworkError () {
+    return this.rawResponse === null
+  }
 }
 
 /**
