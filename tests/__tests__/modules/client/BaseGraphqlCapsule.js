@@ -557,3 +557,142 @@ describe('BaseGraphqlCapsule', () => {
     })
   })
 })
+
+describe('BaseGraphqlCapsule', () => {
+  describe('#hasJsonParseError()', () => {
+    const mockResponse = new Response()
+    const mockPayload = new BaseGraphqlPayload({
+      queryTemplate: `
+        query {
+          customer {
+            id
+          }
+        }
+      `,
+    })
+
+    describe('when has rawResponse', () => {
+      describe('to has no result (truthy)', () => {
+        const cases = [
+          {
+            params: {
+              result: null,
+            },
+          },
+        ]
+
+        test.each(cases)('result: $params.result', ({ params }) => {
+          const args = {
+            rawResponse: mockResponse,
+            payload: mockPayload,
+            input: null,
+            result: params.result,
+          }
+          const capsule = new BaseGraphqlCapsule(args)
+
+          const actual = capsule.hasJsonParseError()
+
+          expect(actual)
+            .toBeTruthy()
+        })
+      })
+
+      describe('to has result (falsy)', () => {
+        const cases = [
+          {
+            params: {
+              result: {
+                data: {
+                  customer: {
+                    id: 10001,
+                  },
+                },
+              },
+            },
+          },
+          {
+            params: {
+              result: {
+                errors: [
+                  {
+                    message: 'error message-01',
+                  },
+                  {
+                    message: 'error message-02',
+                  },
+                ],
+              },
+            },
+          },
+        ]
+
+        test.each(cases)('result: $params.result', ({ params }) => {
+          const args = {
+            rawResponse: mockResponse,
+            payload: mockPayload,
+            input: null,
+            result: params.result,
+          }
+          const capsule = new BaseGraphqlCapsule(args)
+
+          const actual = capsule.hasJsonParseError()
+
+          expect(actual)
+            .toBeFalsy()
+        })
+      })
+    })
+
+    describe('when has no rawResponse', () => {
+      describe('to be falsy always', () => {
+        const cases = [
+          {
+            params: {
+              result: null,
+            },
+          },
+          {
+            params: {
+              result: {
+                data: {
+                  customer: {
+                    id: 10001,
+                  },
+                },
+              },
+            },
+          },
+          {
+            params: {
+              result: {
+                errors: [
+                  {
+                    message: 'error message-01',
+                  },
+                  {
+                    message: 'error message-02',
+                  },
+                ],
+              },
+            },
+          },
+        ]
+
+        test.each(cases)('result: $params.result', ({ params }) => {
+          const args = {
+            rawResponse: null,
+            payload: mockPayload,
+            input: null,
+            result: params.result,
+          }
+          const capsule = new BaseGraphqlCapsule(args)
+
+          const actual = capsule.hasJsonParseError()
+
+          expect(actual)
+            .toBeFalsy()
+        })
+      })
+    })
+  })
+})

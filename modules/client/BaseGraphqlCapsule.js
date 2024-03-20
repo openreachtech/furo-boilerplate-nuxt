@@ -56,6 +56,16 @@ export default class BaseGraphqlCapsule {
   hasNetworkError () {
     return this.rawResponse === null
   }
+
+  /**
+   * Check to have JSON parse error.
+   *
+   * @returns {BooleanLike} true: has JSON parse error.
+   */
+  hasJsonParseError () {
+    return this.rawResponse
+      && !this.result
+  }
 }
 
 /**
