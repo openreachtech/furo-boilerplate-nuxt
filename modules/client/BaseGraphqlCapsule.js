@@ -29,7 +29,7 @@ export default class BaseGraphqlCapsule {
   /**
    * Check to have content.
    *
-   * @returns {boolean | *} true: has content.
+   * @returns {BooleanLike} true: has content.
    */
   hasContent () {
     return this.result
@@ -52,4 +52,8 @@ export default class BaseGraphqlCapsule {
 
 /**
  * @typedef {BaseGraphqlCapsuleParams} BaseGraphqlCapsuleFactoryParams
+ */
+
+/**
+ * @typedef {*} BooleanLike
  */
