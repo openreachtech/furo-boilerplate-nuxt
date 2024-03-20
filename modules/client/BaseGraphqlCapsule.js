@@ -36,6 +36,17 @@ export default class BaseGraphqlCapsule {
       ?.data
       ?? false
   }
+
+  /**
+   * Check to have query error.
+   *
+   * @returns {BooleanLike} true: has query error.
+   */
+  hasQueryError () {
+    return this.result
+      ?.errors
+      ?? false
+  }
 }
 
 /**
