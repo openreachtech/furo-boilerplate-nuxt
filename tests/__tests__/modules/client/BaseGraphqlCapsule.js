@@ -303,3 +303,99 @@ describe('BaseGraphqlCapsule', () => {
     })
   })
 })
+
+describe('BaseGraphqlCapsule', () => {
+  describe('#hasContent()', () => {
+    const mockResponse = new Response()
+    const mockPayload = new BaseGraphqlPayload({
+      queryTemplate: `
+        query {
+          customer {
+            id
+          }
+        }
+      `,
+    })
+
+    describe('to has content (truthy)', () => {
+      const cases = [
+        {
+          params: {
+            result: {
+              data: {
+                customer: {
+                  id: 10001,
+                },
+              },
+            },
+          },
+        },
+        {
+          params: {
+            result: {
+              data: {
+                customer: {
+                  id: 10002,
+                },
+              },
+            },
+          },
+        },
+      ]
+
+      test.each(cases)('result: $params.result', ({ params }) => {
+        const args = {
+          rawResponse: mockResponse,
+          payload: mockPayload,
+          input: null,
+          result: params.result,
+        }
+        const capsule = new BaseGraphqlCapsule(args)
+
+        const actual = capsule.hasContent()
+
+        expect(actual)
+          .toBeTruthy()
+      })
+    })
+
+    describe('to has no content (falsy)', () => {
+      const cases = [
+        {
+          params: {
+            result: {
+              errors: [
+                {
+                  message: 'error message-01',
+                },
+                {
+                  message: 'error message-02',
+                },
+              ],
+            },
+          },
+        },
+        {
+          params: {
+            result: null, // network error or json parse error, etc.
+          },
+        },
+      ]
+
+      test.each(cases)('result: $params.result', ({ params }) => {
+        const args = {
+          rawResponse: mockResponse,
+          payload: mockPayload,
+          input: null,
+          result: params.result,
+        }
+        const capsule = new BaseGraphqlCapsule(args)
+
+        const actual = capsule.hasContent()
+
+        expect(actual)
+          .toBeFalsy()
+      })
+    })
+  })
+})
