@@ -124,3 +124,12 @@ describe('BaseGraphqlLauncher', () => {
     })
   })
 })
+
+describe('BaseGraphqlLauncher', () => {
+  describe('.get:Payload', () => {
+    test('to throw', () => {
+      expect(() => BaseGraphqlLauncher.Payload)
+        .toThrow('this function must be inherited')
+    })
+  })
+})
