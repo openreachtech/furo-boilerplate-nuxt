@@ -493,3 +493,67 @@ describe('BaseGraphqlCapsule', () => {
     })
   })
 })
+
+describe('BaseGraphqlCapsule', () => {
+  describe('#hasNetworkError()', () => {
+    const mockPayload = new BaseGraphqlPayload({
+      queryTemplate: `
+        query {
+          customer {
+            id
+          }
+        }
+      `,
+    })
+
+    describe('to has no rawResponse (truthy)', () => {
+      const cases = [
+        {
+          params: {
+            rawResponse: null,
+          },
+        },
+      ]
+
+      test.each(cases)('rawResponse: $params.rawResponse', ({ params }) => {
+        const args = {
+          rawResponse: params.rawResponse,
+          payload: mockPayload,
+          input: null,
+          result: null,
+        }
+        const capsule = new BaseGraphqlCapsule(args)
+
+        const actual = capsule.hasNetworkError()
+
+        expect(actual)
+          .toBeTruthy()
+      })
+    })
+
+    describe('to has rawResponse (falsy)', () => {
+      const cases = [
+        {
+          params: {
+            rawResponse: new Response(),
+          },
+        },
+      ]
+
+      test.each(cases)('rawResponse: $params.rawResponse', ({ params }) => {
+        const args = {
+          rawResponse: params.rawResponse,
+          payload: mockPayload,
+          input: null,
+          result: null,
+        }
+        const capsule = new BaseGraphqlCapsule(args)
+
+        const actual = capsule.hasNetworkError()
+
+        expect(actual)
+          .toBeFalsy()
+      })
+    })
+  })
+})
