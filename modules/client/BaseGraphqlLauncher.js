@@ -19,6 +19,15 @@ export default class BaseGraphqlLauncher {
   static create (params) {
     return new this(params)
   }
+
+  /**
+   * get: Constructor from instance.
+   *
+   * @returns {typeof BaseGraphqlLauncher} Constructor of the instance.
+   */
+  get Ctor () {
+    return this.constructor
+  }
 }
 
 /**
