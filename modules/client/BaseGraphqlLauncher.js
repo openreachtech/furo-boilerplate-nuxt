@@ -36,7 +36,7 @@ export default class BaseGraphqlLauncher {
    * get: Payload class.
    *
    * @abstract
-   * @returns {typeof import('./BaseGraphqlPayload')} Payload class.
+   * @returns {typeof import('./BaseGraphqlPayload').default} Payload class.
    * @throws {Error} This function must be inherited.
    */
   static get Payload () {
