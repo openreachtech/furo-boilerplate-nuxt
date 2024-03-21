@@ -73,6 +73,29 @@ export default class BaseGraphqlLauncher {
   }
 
   /**
+   * Create fetch request.
+   *
+   * @param {{
+   *   input: object | null
+   *   options: RequestInit
+   * }} params - Parameters.
+   * @returns {Request} Instance of fetch request.
+   */
+  createFetchRequest ({
+    input,
+    options,
+  }) {
+    const payload = this.createPayload({
+      input,
+    })
+
+    return payload.createFetchRequest({
+      url: this.endpointUrl,
+      options,
+    })
+  }
+
+  /**
    * Create payload.
    *
    * @param {{
