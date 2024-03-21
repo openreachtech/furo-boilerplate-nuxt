@@ -165,6 +165,9 @@ describe('BaseGraphqlLauncher', () => {
                 }`
               }
             },
+            input: {
+              id: 10001,
+            },
           },
         },
         {
@@ -179,22 +182,33 @@ describe('BaseGraphqlLauncher', () => {
                 }`
               }
             },
+            input: null,
           },
         },
       ]
 
       test.each(cases)('Payload: $params.Payload.name', ({ params }) => {
+        const expected = {
+          input: params.input,
+        }
+
         const PayloadSpy = jest.spyOn(BaseGraphqlLauncher, 'Payload', 'get')
           .mockReturnValue(params.Payload)
+        const createSpy = jest.spyOn(params.Payload, 'create')
 
         const launcher = BaseGraphqlLauncher.create({
           config,
         })
 
-        const payload = launcher.createPayload()
+        const payload = launcher.createPayload({
+          input: params.input,
+        })
 
         expect(payload)
           .toBeInstanceOf(params.Payload)
+
+        expect(createSpy)
+          .toHaveBeenCalledWith(expected)
 
         PayloadSpy.mockRestore()
       })
