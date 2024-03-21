@@ -750,6 +750,9 @@ describe('BaseGraphqlPayload', () => {
 
         expect(actual)
           .toBeInstanceOf(Headers)
+        expect(actual)
+          .not
+          .toBe(params.headers) // not same reference
       })
     })
 
@@ -809,6 +812,9 @@ describe('BaseGraphqlPayload', () => {
 
         expect(actual)
           .toEqual(expected)
+        expect(actual)
+          .not
+          .toBe(params.headers) // not same reference
       })
     })
   })

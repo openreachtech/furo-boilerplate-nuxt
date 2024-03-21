@@ -120,12 +120,14 @@ export default class BaseGraphqlPayload {
   buildHeaders ({
     headers,
   }) {
-    headers.set(
+    const buildHeaders = new Headers(headers)
+
+    buildHeaders.set(
       'Content-Type',
       'application/json'
     )
 
-    return headers
+    return buildHeaders
   }
 }
 
