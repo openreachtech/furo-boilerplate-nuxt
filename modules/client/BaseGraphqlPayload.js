@@ -7,9 +7,11 @@ export default class BaseGraphqlPayload {
   constructor ({
     queryTemplate,
     input,
+    options,
   }) {
     this.queryTemplate = queryTemplate
     this.input = input
+    this.options = options
   }
 
   /**
@@ -20,10 +22,12 @@ export default class BaseGraphqlPayload {
    */
   static create ({
     input = null,
+    options = {},
   } = {}) {
     return new this({
       queryTemplate: this.query,
       input,
+      options,
     })
   }
 
@@ -135,11 +139,13 @@ export default class BaseGraphqlPayload {
  * @typedef {{
  *   queryTemplate: string
  *   input: object | null
+ *   options?: RequestInit
  * }} BaseGraphqlPayloadParams
  */
 
 /**
  * @typedef {{
  *   input?: object | null
+ *   options?: RequestInit
  * }} BaseGraphqlPayloadFactoryParams
  */
