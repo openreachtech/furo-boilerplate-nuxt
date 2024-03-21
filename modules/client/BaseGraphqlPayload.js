@@ -6,18 +6,24 @@ export default class BaseGraphqlPayload {
    */
   constructor ({
     queryTemplate,
+    input,
   }) {
     this.queryTemplate = queryTemplate
+    this.input = input
   }
 
   /**
    * Factory method.
    *
+   * @param {BaseGraphqlPayloadFactoryParams} params - Parameters of factory method.
    * @returns {BaseGraphqlPayload} Instance of this class.
    */
-  static create () {
+  static create ({
+    input = null,
+  } = {}) {
     return new this({
       queryTemplate: this.query,
+      input,
     })
   }
 
@@ -38,7 +44,6 @@ export default class BaseGraphqlPayload {
    * @param {{
    *   url: URL
    *   options?: RequestInit
-   *   input?: object | null
    * }} params - Parameters.
    * @returns {Request} Instance of fetch request.
    * @public
@@ -46,11 +51,10 @@ export default class BaseGraphqlPayload {
   createFetchRequest ({
     url,
     options = {},
-    input = null,
   }) {
     const builtOptions = this.generateFetchRequestOptions({
       options,
-      input,
+      input: this.input,
     })
 
     return new Request(
@@ -64,20 +68,18 @@ export default class BaseGraphqlPayload {
    *
    * @param {{
    *   options: RequestInit // Extra options of RequestInit.
-   *   input: object | null
    * }} params - Parameters.
    * @returns {RequestInit} Instance of RequestInit.
    */
   generateFetchRequestOptions ({
     options,
-    input,
   }) {
     const headers = this.buildHeaders({
       headers: options.headers || new Headers(), // NOTE: When use ?? instead of ||, it will cause an error by ESLint.
     })
 
     const query = this.generateQuery({
-      input,
+      input: this.input,
     })
     const body = JSON.stringify({
       query,
@@ -94,19 +96,14 @@ export default class BaseGraphqlPayload {
   /**
    * Generate query.
    *
-   * @param {{
-   *   input: any
-   * }} params
    * @returns {string} Fulfilled query.
    */
-  generateQuery ({
-    input = null,
-  } = {}) {
-    if (!input) {
+  generateQuery () {
+    if (!this.input) {
       return this.queryTemplate
     }
 
-    const inputSlot = JSON.stringify(input)
+    const inputSlot = JSON.stringify(this.input)
 
     return this.queryTemplate
       .replace('$input', inputSlot)
@@ -135,5 +132,12 @@ export default class BaseGraphqlPayload {
 /**
  * @typedef {{
  *   queryTemplate: string
+ *   input: object | null
  * }} BaseGraphqlPayloadParams
+ */
+
+/**
+ * @typedef {{
+ *   input?: object | null
+ * }} BaseGraphqlPayloadFactoryParams
  */
