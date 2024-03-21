@@ -415,6 +415,12 @@ describe('BaseGraphqlLauncher', () => {
               }
             },
           },
+          expected: {
+            headers: new Headers({
+              'content-type': 'application/json',
+              'x-access-key': 'access-key-01',
+            }),
+          },
         },
         {
           params: {
@@ -436,10 +442,16 @@ describe('BaseGraphqlLauncher', () => {
               }
             },
           },
+          expected: {
+            headers: new Headers({
+              'content-type': 'application/json',
+              'x-access-key': 'access-key-02',
+            }),
+          },
         },
       ]
 
-      test.each(cases)('url: $params.url', ({ params }) => {
+      test.each(cases)('url: $params.url', ({ params, expected }) => {
         const PayloadSpy = jest.spyOn(BaseGraphqlLauncher, 'Payload', 'get')
           .mockReturnValue(params.Payload)
 
@@ -460,9 +472,13 @@ describe('BaseGraphqlLauncher', () => {
         expect(actual)
           .toHaveProperty('url', params.url)
         expect(actual)
-          .toHaveProperty('headers', params.options.headers)
-        expect(actual)
           .toHaveProperty('method', 'POST')
+
+        // NOTE: Can not use toHaveProperty() for Headers instance.
+        expect([...actual.headers.entries()])
+          .toEqual(
+            expect.arrayContaining([...expected.headers.entries()])
+          )
 
         PayloadSpy.mockRestore()
       })
