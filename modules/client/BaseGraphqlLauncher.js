@@ -36,7 +36,7 @@ export default class BaseGraphqlLauncher {
    * get: Payload class.
    *
    * @abstract
-   * @returns {typeof import('./BaseGraphqlPayload')} Payload class.
+   * @returns {typeof import('./BaseGraphqlPayload').default} Payload class.
    * @throws {Error} This function must be inherited.
    */
   static get Payload () {
@@ -47,7 +47,7 @@ export default class BaseGraphqlLauncher {
    * get: Capsule class.
    *
    * @abstract
-   * @returns {typeof import('./BaseGraphqlCapsule')} Capsule class.
+   * @returns {typeof import('./BaseGraphqlCapsule').default} Capsule class.
    * @throws {Error} This function must be inherited.
    */
   static get Capsule () {
