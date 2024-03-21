@@ -1,3 +1,6 @@
+import JsonParseErrorGraphqlCapsule from '@/modules/client/capsules/JsonParseErrorGraphqlCapsule'
+import NetworkErrorGraphqlCapsule from '@/modules/client/capsules/NetworkErrorGraphqlCapsule'
+
 export default class BaseGraphqlLauncher {
   /**
    * Constructor.
@@ -70,6 +73,51 @@ export default class BaseGraphqlLauncher {
    */
   get endpointUrl () {
     return this.config.ENDPOINT_URL
+  }
+
+  /**
+   * Launch query.
+   *
+   * @public
+   * @param {{
+   *   input: object | null
+   *   options: RequestInit
+   * }} Params - Parameters.
+   * @returns {Promise<import('./BaseGraphqlCapsule').default>} Promise of instance of capsule.
+   */
+  async launchQuery ({
+    input,
+    options = {},
+  }) {
+    const payload = this.createPayload({
+      input,
+    })
+
+    const response = await this.invokeFetchQuery({
+      payload,
+      options,
+    })
+    if (response === null) {
+      return NetworkErrorGraphqlCapsule.create({
+        payload,
+      })
+    }
+
+    const result = await this.generateFetchResult({
+      response,
+    })
+    if (result === null) {
+      return JsonParseErrorGraphqlCapsule.create({
+        rawResponse: response,
+        payload,
+      })
+    }
+
+    return this.createResultCapsule({
+      rawResponse: response,
+      payload,
+      result,
+    })
   }
 
   /**
