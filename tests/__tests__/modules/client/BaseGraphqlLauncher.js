@@ -467,3 +467,83 @@ describe('BaseGraphqlLauncher', () => {
     })
   })
 })
+
+describe('BaseGraphqlLauncher', () => {
+  describe('#invokeFetchQuery()', () => {
+    describe('to return response', () => {
+      const graphqlConfig = {
+        ENDPOINT_URL: 'http://example.com/graphql-customer',
+      }
+
+      const cases = [
+        {
+          params: {
+            request: new Request('http://example.com/graphql-customer'),
+          },
+        },
+        {
+          params: {
+            request: new Request('http://example.com/graphql-admin'),
+          },
+        },
+      ]
+
+      test.each(cases)('request: $params.request.request', async ({ params }) => {
+        const responseTally = new Response()
+
+        const fetchSpy = jest.spyOn(globalThis, 'fetch')
+          .mockResolvedValue(responseTally)
+
+        const launcher = BaseGraphqlLauncher.create({
+          config: graphqlConfig,
+        })
+
+        const actual = await launcher.invokeFetchQuery(params)
+
+        expect(actual)
+          .toBe(responseTally) // same instance
+        expect(fetchSpy)
+          .toHaveBeenCalledWith(params.request)
+
+        fetchSpy.mockRestore()
+      })
+    })
+
+    describe('to throw on fetch', () => {
+      const graphqlConfig = {
+        ENDPOINT_URL: 'http://example.com/graphql-customer',
+      }
+
+      const cases = [
+        {
+          params: {
+            request: new Request('http://example.com/graphql-customer'),
+          },
+        },
+        {
+          params: {
+            request: new Request('http://example.com/graphql-admin'),
+          },
+        },
+      ]
+
+      test.each(cases)('request: $params.request.request', async ({ params }) => {
+        const fetchSpy = jest.spyOn(globalThis, 'fetch')
+          .mockRejectedValue(new Error('Network Error'))
+
+        const launcher = BaseGraphqlLauncher.create({
+          config: graphqlConfig,
+        })
+
+        const actual = await launcher.invokeFetchQuery(params)
+
+        expect(actual)
+          .toBeNull()
+        expect(fetchSpy)
+          .toHaveBeenCalledWith(params.request)
+
+        fetchSpy.mockRestore()
+      })
+    })
+  })
+})
