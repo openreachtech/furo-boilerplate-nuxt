@@ -547,3 +547,168 @@ describe('BaseGraphqlLauncher', () => {
     })
   })
 })
+
+describe('BaseGraphqlLauncher', () => {
+  describe('#generateFetchResult()', () => {
+    describe('to be parsed JSON object', () => {
+      const cases = [
+        {
+          params: {
+            response: new Response(`{
+              "data": {
+                "customer": {
+                  "id": 10001
+                }
+              }
+            }`),
+          },
+          expected: {
+            data: {
+              customer: {
+                id: 10001,
+              },
+            },
+          },
+        },
+        {
+          params: {
+            response: new Response(`{
+              "data": {
+                "customer": {
+                  "id": 10002
+                }
+              }
+            }`),
+          },
+          expected: {
+            data: {
+              customer: {
+                id: 10002,
+              },
+            },
+          },
+        },
+        {
+          params: {
+            response: new Response(`{
+              "errors": [
+                {
+                  "message": "Error message 01"
+                },
+                {
+                  "message": "Error message 02"
+                }
+              ]
+            }`),
+          },
+          expected: {
+            errors: [
+              {
+                message: 'Error message 01',
+              },
+              {
+                message: 'Error message 02',
+              },
+            ],
+          },
+        },
+        {
+          params: {
+            response: new Response(`{
+              "errors": [
+                {
+                  "message": "Error message 03"
+                }
+              ]
+            }`),
+          },
+          expected: {
+            errors: [
+              {
+                message: 'Error message 03',
+              },
+            ],
+          },
+        },
+      ]
+
+      test.each(cases)('response: $params.response', async ({ params, expected }) => {
+        const launcher = BaseGraphqlLauncher.create({
+          config: {
+            ENDPOINT_URL: 'http://example.com/graphql-customer',
+          },
+        })
+
+        const actual = await launcher.generateFetchResult(params)
+
+        expect(actual)
+          .toEqual(expected)
+      })
+    })
+
+    describe('on JSON parsed error', () => {
+      const cases = [
+        {
+          params: {
+            response: new Response(`{
+              "data": {
+                "customer": {
+                  "id": 10001
+                }
+              }
+            }}`), // ERROR: last } is doubled
+          },
+        },
+        {
+          params: {
+            response: new Response(`{
+              "data": {
+                "customer": {
+                  "id": 10002
+                }
+              }
+            }}`), // ERROR: last } is doubled
+          },
+        },
+        {
+          params: {
+            response: new Response(`{
+              "errors": [
+                {
+                  "message": "Error message 01"
+                },
+                {
+                  "message": "Error message 02"
+                }
+              ]
+            }}`), // ERROR: last } is doubled
+          },
+        },
+        {
+          params: {
+            response: new Response(`{
+              "errors": [
+                {
+                  "message": "Error message 03"
+                }
+              ]
+            }}`), // ERROR: last } is doubled
+          },
+        },
+      ]
+
+      test.each(cases)('response: $params.response', async ({ params }) => {
+        const launcher = BaseGraphqlLauncher.create({
+          config: {
+            ENDPOINT_URL: 'http://example.com/graphql-admin',
+          },
+        })
+
+        const actual = await launcher.generateFetchResult(params)
+
+        expect(actual)
+          .toBeNull()
+      })
+    })
+  })
+})
