@@ -471,77 +471,199 @@ describe('BaseGraphqlLauncher', () => {
 describe('BaseGraphqlLauncher', () => {
   describe('#invokeFetchQuery()', () => {
     describe('to return response', () => {
-      const graphqlConfig = {
-        ENDPOINT_URL: 'http://example.com/graphql-customer',
-      }
+      const customerQueryTemplate = `
+        query {
+          customer {
+            id
+          }
+        }
+      }`
+      const adminQueryTemplate = `
+        query {
+          admin {
+            id
+          }
+        }
+      `
 
       const cases = [
         {
           params: {
-            request: new Request('http://example.com/graphql-customer'),
+            endpointUrl: 'http://example.com/graphql-customer',
+            payload: new BaseGraphqlPayload({
+              queryTemplate: customerQueryTemplate,
+            }),
+            options: {
+              headers: new Headers({
+                'x-access-key': 'access-key-01',
+              }),
+            },
+          },
+          tally: {
+            request: new Request('http://example.com/graphql-customer', {
+              method: 'POST',
+              headers: new Headers({
+                'content-type': 'application/json',
+                'x-access-key': 'access-key-01',
+              }),
+              body: JSON.stringify({
+                query: customerQueryTemplate,
+              }),
+            }),
           },
         },
         {
           params: {
-            request: new Request('http://example.com/graphql-admin'),
+            endpointUrl: 'http://example.com/graphql-admin',
+            payload: new BaseGraphqlPayload({
+              queryTemplate: adminQueryTemplate,
+            }),
+            options: {
+              headers: new Headers({
+                'content-type': 'application/json',
+                'x-access-key': 'access-key-02',
+              }),
+            },
+          },
+          tally: {
+            request: new Request('http://example.com/graphql-admin', {
+              method: 'POST',
+              headers: new Headers({
+                'content-type': 'application/json',
+                'x-access-key': 'access-key-02',
+              }),
+              body: JSON.stringify({
+                query: adminQueryTemplate,
+              }),
+            }),
           },
         },
       ]
 
-      test.each(cases)('request: $params.request.request', async ({ params }) => {
+      test.each(cases)('endpointUrl: $params.request.endpointUrl', async ({ params, tally }) => {
         const responseTally = new Response()
 
+        const createFetchRequestSpy = jest.spyOn(params.payload, 'createFetchRequest')
+          .mockReturnValue(tally.request)
         const fetchSpy = jest.spyOn(globalThis, 'fetch')
           .mockResolvedValue(responseTally)
 
         const launcher = BaseGraphqlLauncher.create({
-          config: graphqlConfig,
+          config: {
+            ENDPOINT_URL: params.endpointUrl,
+          },
         })
+        const args = {
+          payload: params.payload,
+          options: params.options,
+        }
 
-        const actual = await launcher.invokeFetchQuery(params)
+        const actual = await launcher.invokeFetchQuery(args)
 
         expect(actual)
           .toBe(responseTally) // same instance
         expect(fetchSpy)
-          .toHaveBeenCalledWith(params.request)
+          .toHaveBeenCalledWith(tally.request)
 
+        createFetchRequestSpy.mockRestore()
         fetchSpy.mockRestore()
       })
     })
 
     describe('to throw on fetch', () => {
-      const graphqlConfig = {
-        ENDPOINT_URL: 'http://example.com/graphql-customer',
-      }
+      const customerQueryTemplate = `
+        query {
+          customer {
+            id
+          }
+        }
+      }`
+      const adminQueryTemplate = `
+        query {
+          admin {
+            id
+          }
+        }
+      `
 
       const cases = [
         {
           params: {
-            request: new Request('http://example.com/graphql-customer'),
+            endpointUrl: 'http://example.com/graphql-customer',
+            payload: new BaseGraphqlPayload({
+              queryTemplate: customerQueryTemplate,
+            }),
+            options: {
+              headers: new Headers({
+                'x-access-key': 'access-key-01',
+              }),
+            },
+          },
+          tally: {
+            request: new Request('http://example.com/graphql-customer', {
+              method: 'POST',
+              headers: new Headers({
+                'content-type': 'application/json',
+                'x-access-key': 'access-key-01',
+              }),
+              body: JSON.stringify({
+                query: customerQueryTemplate,
+              }),
+            }),
           },
         },
         {
           params: {
-            request: new Request('http://example.com/graphql-admin'),
+            endpointUrl: 'http://example.com/graphql-admin',
+            payload: new BaseGraphqlPayload({
+              queryTemplate: adminQueryTemplate,
+            }),
+            options: {
+              headers: new Headers({
+                'content-type': 'application/json',
+                'x-access-key': 'access-key-02',
+              }),
+            },
+          },
+          tally: {
+            request: new Request('http://example.com/graphql-admin', {
+              method: 'POST',
+              headers: new Headers({
+                'content-type': 'application/json',
+                'x-access-key': 'access-key-02',
+              }),
+              body: JSON.stringify({
+                query: adminQueryTemplate,
+              }),
+            }),
           },
         },
       ]
 
-      test.each(cases)('request: $params.request.request', async ({ params }) => {
+      test.each(cases)('endpointUrl: $params.request.endpointUrl', async ({ params, tally }) => {
+        const createFetchRequestSpy = jest.spyOn(params.payload, 'createFetchRequest')
+          .mockReturnValue(tally.request)
         const fetchSpy = jest.spyOn(globalThis, 'fetch')
           .mockRejectedValue(new Error('Network Error'))
 
         const launcher = BaseGraphqlLauncher.create({
-          config: graphqlConfig,
+          config: {
+            ENDPOINT_URL: params.endpointUrl,
+          },
         })
+        const args = {
+          payload: params.payload,
+          options: params.options,
+        }
 
-        const actual = await launcher.invokeFetchQuery(params)
+        const actual = await launcher.invokeFetchQuery(args)
 
         expect(actual)
           .toBeNull()
         expect(fetchSpy)
-          .toHaveBeenCalledWith(params.request)
+          .toHaveBeenCalledWith(tally.request)
 
+        createFetchRequestSpy.mockRestore()
         fetchSpy.mockRestore()
       })
     })
