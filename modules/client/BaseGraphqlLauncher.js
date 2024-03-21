@@ -135,6 +135,26 @@ export default class BaseGraphqlLauncher {
   }
 
   /**
+   * Generate fetch result.
+   *
+   * @param {{
+   *   response: Response
+   * }} params - Parameters.
+   * @returns {Promise<object | null>} Promise of JSON.
+   */
+  async generateFetchResult ({
+    response,
+  }) {
+    try {
+      const result = await response.json()
+
+      return result
+    } catch (error) {
+      return null
+    }
+  }
+
+  /**
    * Create instance of capsule with result.
    *
    * @param {{
