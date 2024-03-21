@@ -96,6 +96,27 @@ export default class BaseGraphqlLauncher {
   }
 
   /**
+   * Fetch query.
+   *
+   * @param {{
+   *   request: Request
+   * }} params - Parameters.
+   * @returns {Promise<Response | null>} Instance of fetch API response.
+   */
+  async invokeFetchQuery ({
+    request,
+  }) {
+    try {
+      const $fetch = this.Ctor.fetch
+      const response = await $fetch(request)
+
+      return response
+    } catch (error) {
+      return null
+    }
+  }
+
+  /**
    * Create payload.
    *
    * @param {{
