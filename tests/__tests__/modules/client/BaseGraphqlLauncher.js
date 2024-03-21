@@ -386,3 +386,84 @@ describe('BaseGraphqlLauncher', () => {
     })
   })
 })
+
+describe('BaseGraphqlLauncher', () => {
+  describe('#createFetchRequest()', () => {
+    describe('to be instance of Request', () => {
+      const cases = [
+        {
+          params: {
+            url: 'http://example.com/graphql-customer',
+            input: {
+              id: 10001,
+            },
+            options: {
+              headers: new Headers({
+                'x-access-key': 'access-key-01',
+              }),
+            },
+            Payload: class CustomerPayload extends BaseGraphqlPayload {
+              /** @inheritdoc */
+              static get query () {
+                return `query {
+                  customer (input: $input) {
+                    id
+                  }
+                }`
+              }
+            },
+          },
+        },
+        {
+          params: {
+            url: 'http://example.com/graphql-admin',
+            input: null,
+            options: {
+              headers: new Headers({
+                'x-access-key': 'access-key-02',
+              }),
+            },
+            Payload: class AdminPayload extends BaseGraphqlPayload {
+              /** @inheritdoc */
+              static get query () {
+                return `query {
+                  admin (input: $input) {
+                    id
+                  }
+                }`
+              }
+            },
+          },
+        },
+      ]
+
+      test.each(cases)('url: $params.url', ({ params }) => {
+        const PayloadSpy = jest.spyOn(BaseGraphqlLauncher, 'Payload', 'get')
+          .mockReturnValue(params.Payload)
+
+        const launcher = BaseGraphqlLauncher.create({
+          config: {
+            ENDPOINT_URL: params.url,
+          },
+        })
+        const args = {
+          input: params.input,
+          options: params.options,
+        }
+
+        const actual = launcher.createFetchRequest(args)
+
+        expect(actual)
+          .toBeInstanceOf(Request)
+        expect(actual)
+          .toHaveProperty('url', params.url)
+        expect(actual)
+          .toHaveProperty('headers', params.options.headers)
+        expect(actual)
+          .toHaveProperty('method', 'POST')
+
+        PayloadSpy.mockRestore()
+      })
+    })
+  })
+})
