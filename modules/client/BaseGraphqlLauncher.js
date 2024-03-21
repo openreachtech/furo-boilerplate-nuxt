@@ -99,13 +99,20 @@ export default class BaseGraphqlLauncher {
    * Fetch query.
    *
    * @param {{
-   *   request: Request
+   *   payload: import('./BaseGraphqlPayload).default
+   *   options: RequestInit
    * }} params - Parameters.
    * @returns {Promise<Response | null>} Instance of fetch API response.
    */
   async invokeFetchQuery ({
-    request,
+    payload,
+    options,
   }) {
+    const request = payload.createFetchRequest({
+      url: this.endpointUrl,
+      options,
+    })
+
     try {
       const $fetch = this.Ctor.fetch
       const response = await $fetch(request)
