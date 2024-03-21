@@ -5,6 +5,8 @@ import {
 import BaseGraphqlLauncher from '@/modules/client/BaseGraphqlLauncher'
 import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
 import BaseGraphqlCapsule from '~/modules/client/BaseGraphqlCapsule'
+import NetworkErrorGraphqlCapsule from '~/modules/client/capsules/NetworkErrorGraphqlCapsule'
+import JsonParseErrorGraphqlCapsule from '~/modules/client/capsules/JsonParseErrorGraphqlCapsule'
 
 describe('BaseGraphqlLauncher', () => {
   describe('constructor', () => {
@@ -830,6 +832,316 @@ describe('BaseGraphqlLauncher', () => {
 
         expect(actual)
           .toBeNull()
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlLauncher', () => {
+  describe('#launchQuery()', () => {
+    describe('to return result capsule on success', () => {
+      const graphqlConfig = {
+        ENDPOINT_URL: 'http://example.com/graphql-customer',
+      }
+
+      const cases = [
+        {
+          params: {
+            endpointUrl: 'http://example.com/graphql-customer',
+            input: {
+              id: 10001,
+            },
+            options: {
+              headers: new Headers({
+                'x-access-key': 'access-key-01',
+              }),
+            },
+            Payload: class CustomerPayload extends BaseGraphqlPayload {
+              /** @inheritdoc */
+              static get query () {
+                return `
+                query {
+                  customer (input: $input) {
+                    id
+                  }
+                }`
+              }
+            },
+            Capsule: class CustomerCapsule extends BaseGraphqlCapsule {},
+          },
+          tally: {
+            response: new Response(`{
+              "data": {
+                "customer": {
+                  "id": 10001
+                }
+              }
+            }`),
+          },
+          expected: {
+            customer: {
+              id: 10001,
+            },
+          },
+        },
+        {
+          params: {
+            endpointUrl: 'http://example.com/graphql-admin',
+            input: null,
+            options: {
+              headers: new Headers({
+                'x-access-key': 'access-key-02',
+              }),
+            },
+            Payload: class AdminPayload extends BaseGraphqlPayload {
+              /** @inheritdoc */
+              static get query () {
+                return `
+                query {
+                  admin {
+                    id
+                  }
+                }`
+              }
+            },
+            Capsule: class AdminCapsule extends BaseGraphqlCapsule {},
+          },
+          tally: {
+            response: new Response(`{
+              "data": {
+                "admin": {
+                  "id": 20001
+                }
+              }
+            }`),
+          },
+          expected: {
+            admin: {
+              id: 20001,
+            },
+          },
+        },
+      ]
+
+      test.each(cases)('endpointUrl: $params.endpointUrl', async ({
+        params,
+        tally,
+        expected,
+      }) => {
+        const PayloadSpy = jest.spyOn(BaseGraphqlLauncher, 'Payload', 'get')
+          .mockReturnValue(params.Payload)
+        const fetchSpy = jest.spyOn(globalThis, 'fetch')
+          .mockResolvedValue(tally.response)
+        const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
+          .mockReturnValue(params.Capsule)
+
+        const launcher = BaseGraphqlLauncher.create({
+          config: graphqlConfig,
+        })
+        const args = {
+          input: params.input,
+          options: params.options,
+        }
+
+        const actual = await launcher.launchQuery(args)
+
+        expect(actual)
+          .toBeInstanceOf(params.Capsule)
+        expect(actual.extractContent())
+          .toEqual(expected)
+
+        PayloadSpy.mockRestore()
+        fetchSpy.mockRestore()
+        CapsuleSpy.mockRestore()
+      })
+    })
+
+    describe('to return Network error capsule', () => {
+      const cases = [
+        {
+          params: {
+            endpointUrl: 'http://example.com/graphql-customer',
+            input: {
+              id: 10001,
+            },
+            options: {
+              headers: new Headers({
+                'x-access-key': 'access-key-01',
+              }),
+            },
+            Payload: class CustomerPayload extends BaseGraphqlPayload {
+              /** @inheritdoc */
+              static get query () {
+                return `
+                query {
+                  customer (input: $input) {
+                    id
+                  }
+                }`
+              }
+            },
+            Capsule: class CustomerCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+        {
+          params: {
+            endpointUrl: 'http://example.com/graphql-admin',
+            input: null,
+            options: {
+              headers: new Headers({
+                'x-access-key': 'access-key-02',
+              }),
+            },
+            Payload: class AdminPayload extends BaseGraphqlPayload {
+              /** @inheritdoc */
+              static get query () {
+                return `
+                query {
+                  admin {
+                    id
+                  }
+                }`
+              }
+            },
+            Capsule: class AdminCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+      ]
+
+      test.each(cases)('endpointUrl: $params.endpointUrl', async ({ params }) => {
+        const PayloadSpy = jest.spyOn(BaseGraphqlLauncher, 'Payload', 'get')
+          .mockReturnValue(params.Payload)
+        const fetchSpy = jest.spyOn(globalThis, 'fetch')
+          .mockRejectedValue(new Error('Network Error'))
+        const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
+          .mockReturnValue(params.Capsule)
+
+        const launcher = BaseGraphqlLauncher.create({
+          config: {
+            ENDPOINT_URL: params.endpointUrl,
+          },
+        })
+        const args = {
+          input: params.input,
+          options: params.options,
+        }
+
+        const actual = await launcher.launchQuery(args)
+
+        expect(actual)
+          .toBeInstanceOf(NetworkErrorGraphqlCapsule)
+        expect(actual)
+          .toHaveProperty('rawResponse', null)
+        expect(actual.extractContent())
+          .toBeNull()
+
+        PayloadSpy.mockRestore()
+        fetchSpy.mockRestore()
+        CapsuleSpy.mockRestore()
+      })
+    })
+
+    describe('to return JSON parse error capsule', () => {
+      const cases = [
+        {
+          params: {
+            endpointUrl: 'http://example.com/graphql-customer',
+            input: {
+              id: 10001,
+            },
+            options: {
+              headers: new Headers({
+                'x-access-key': 'access-key-01',
+              }),
+            },
+            Payload: class CustomerPayload extends BaseGraphqlPayload {
+              /** @inheritdoc */
+              static get query () {
+                return `
+                query {
+                  customer (input: $input) {
+                    id
+                  }
+                }`
+              }
+            },
+            Capsule: class CustomerCapsule extends BaseGraphqlCapsule {},
+          },
+          tally: {
+            response: new Response(`{
+              "data": {
+                "customer": {
+                  "id": 10001
+                }
+              }
+            }}`), // ERROR: last } is doubled
+          },
+        },
+        {
+          params: {
+            endpointUrl: 'http://example.com/graphql-admin',
+            input: null,
+            options: {
+              headers: new Headers({
+                'x-access-key': 'access-key-02',
+              }),
+            },
+            Payload: class AdminPayload extends BaseGraphqlPayload {
+              /** @inheritdoc */
+              static get query () {
+                return `
+                query {
+                  admin {
+                    id
+                  }
+                }`
+              }
+            },
+            Capsule: class AdminCapsule extends BaseGraphqlCapsule {},
+          },
+          tally: {
+            response: new Response(`{
+              "data": {
+                "admin": {
+                  "id": 20001
+                }
+              }
+            }}`), // ERROR: last } is doubled
+          },
+        },
+      ]
+
+      test.each(cases)('endpointUrl: $params.endpointUrl', async ({
+        params,
+        tally,
+      }) => {
+        const PayloadSpy = jest.spyOn(BaseGraphqlLauncher, 'Payload', 'get')
+          .mockReturnValue(params.Payload)
+        const fetchSpy = jest.spyOn(globalThis, 'fetch')
+          .mockResolvedValue(tally.response)
+        const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
+          .mockReturnValue(params.Capsule)
+
+        const launcher = BaseGraphqlLauncher.create({
+          config: {
+            ENDPOINT_URL: params.endpointUrl,
+          },
+        })
+        const args = {
+          input: params.input,
+          options: params.options,
+        }
+
+        const actual = await launcher.launchQuery(args)
+
+        expect(actual)
+          .toBeInstanceOf(JsonParseErrorGraphqlCapsule)
+        expect(actual.extractContent())
+          .toBeNull()
+
+        PayloadSpy.mockRestore()
+        fetchSpy.mockRestore()
+        CapsuleSpy.mockRestore()
       })
     })
   })
