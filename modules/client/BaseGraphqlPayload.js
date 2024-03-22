@@ -77,7 +77,7 @@ export default class BaseGraphqlPayload {
     options,
   }) {
     const headers = this.buildHeaders({
-      headers: options.headers || new Headers(), // NOTE: When use ?? instead of ||, it will cause an error by ESLint.
+      headers: options.headers ?? new Headers(),
     })
 
     const query = this.generateQuery({
