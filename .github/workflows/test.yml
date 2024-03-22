@@ -9,12 +9,15 @@ on:
   pull_request:
     branches:
       - '**'
+
 jobs:
   test:
     runs-on: ubuntu-latest
+
     strategy:
       matrix:
         node-version: [18.x]
+
     steps:
       - name: 🛎 Checkout
         uses: actions/checkout@v2
