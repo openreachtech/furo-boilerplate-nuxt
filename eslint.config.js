@@ -21,6 +21,14 @@ export default [
   ),
 
   {
+    languageOptions: {
+      parserOptions: {
+        ecmaVersion: 'latest',
+      },
+    },
+  },
+
+  {
     ignores: [
       '**/.nuxt/**',
       '**/dist/**',
@@ -89,7 +97,33 @@ export default [
           functions: 'never',
         },
       ],
-      'vue/no-multiple-template-root': 'off', // 'error',
+      'jest/no-identical-title': [
+        'off', // 'error'
+      ],
+      'operator-linebreak': [
+        'error',
+        'before', // 'after'
+        {
+          overrides: { // replace all from default
+            '=': 'after',
+            '+=': 'after',
+            '-=': 'after',
+            '*=': 'after',
+            '/=': 'after',
+            '%=': 'after',
+            '**=': 'after',
+            '<<=': 'after',
+            '>>=': 'after',
+            '>>>=': 'after',
+            '&=': 'after',
+            '|=': 'after',
+            '^=': 'after',
+          },
+        },
+      ],
+      'vue/no-multiple-template-root': [
+        'off', // 'error'
+      ],
     },
   },
 ]
