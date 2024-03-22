@@ -11,3 +11,68 @@ describe('BaseAppGraphqlLauncher', () => {
     })
   })
 })
+
+describe('BaseAppGraphqlLauncher', () => {
+  describe('.create()', () => {
+    describe('to be instance of BaseAppGraphqlLauncher', () => {
+      const cases = [
+        {
+          params: {
+            config: {
+              ENDPOINT_URL: 'http://example.com/graphql-customer',
+            },
+          },
+        },
+        {
+          params: {
+            config: {
+              ENDPOINT_URL: 'http://example.com/graphql-admin',
+            },
+          },
+        },
+      ]
+
+      test.each(cases)('config: $params.config', ({ params }) => {
+        const actual = BaseAppGraphqlLauncher.create(params)
+
+        expect(actual)
+          .toBeInstanceOf(BaseAppGraphqlLauncher)
+      })
+
+      test('without params', () => {
+        const actual = BaseAppGraphqlLauncher.create()
+
+        expect(actual)
+          .toBeInstanceOf(BaseAppGraphqlLauncher)
+      })
+    })
+
+    describe('to call super.create()', () => {
+      const cases = [
+        {
+          params: {
+            config: {
+              ENDPOINT_URL: 'http://example.com/graphql-customer',
+            },
+          },
+        },
+        {
+          params: {
+            config: {
+              ENDPOINT_URL: 'http://example.com/graphql-admin',
+            },
+          },
+        },
+      ]
+
+      test.each(cases)('config: $params.config', ({ params }) => {
+        const createSpy = jest.spyOn(BaseGraphqlLauncher, 'create')
+
+        BaseAppGraphqlLauncher.create(params)
+
+        expect(createSpy)
+          .toHaveBeenCalledWith(params)
+      })
+    })
+  })
+})
