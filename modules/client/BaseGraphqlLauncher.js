@@ -1,0 +1,252 @@
+import JsonParseErrorGraphqlCapsule from '@/modules/client/capsules/JsonParseErrorGraphqlCapsule'
+import NetworkErrorGraphqlCapsule from '@/modules/client/capsules/NetworkErrorGraphqlCapsule'
+
+export default class BaseGraphqlLauncher {
+  /**
+   * Constructor.
+   *
+   * @param {BaseGraphqlLauncherParams} params - Parameters of constructor.
+   */
+  constructor ({
+    config,
+  }) {
+    this.config = config
+  }
+
+  /**
+   * Factory method.
+   *
+   * @param {BaseGraphqlLauncherFactoryParams} params - Parameters of factory method.
+   * @returns {BaseGraphqlLauncher} Instance of this class.
+   */
+  static create (params) {
+    return new this(params)
+  }
+
+  /**
+   * Fetch function.
+   *
+   * @returns {(
+   *   input: URL | RequestInfo,
+   *   init?: RequestInit
+   * ) => Promise<Response>} fetch function.
+   */
+  static get fetch () {
+    return fetch
+  }
+
+  /**
+   * get: Payload class.
+   *
+   * @abstract
+   * @returns {typeof import('./BaseGraphqlPayload').default} Payload class.
+   * @throws {Error} This function must be inherited.
+   */
+  static get Payload () {
+    throw new Error('this function must be inherited')
+  }
+
+  /**
+   * get: Capsule class.
+   *
+   * @abstract
+   * @returns {typeof import('./BaseGraphqlCapsule').default} Capsule class.
+   * @throws {Error} This function must be inherited.
+   */
+  static get Capsule () {
+    throw new Error('this function must be inherited')
+  }
+
+  /**
+   * get: Constructor from instance.
+   *
+   * @returns {typeof BaseGraphqlLauncher} Constructor of the instance.
+   */
+  get Ctor () {
+    return this.constructor
+  }
+
+  /**
+   * get: Endpoint URL.
+   *
+   * @returns {string} Endpoint URL.
+   */
+  get endpointUrl () {
+    return this.config.ENDPOINT_URL
+  }
+
+  /**
+   * Launch query.
+   *
+   * @public
+   * @param {{
+   *   input: object | null
+   *   options: RequestInit
+   * }} Params - Parameters.
+   * @returns {Promise<import('./BaseGraphqlCapsule').default>} Promise of instance of capsule.
+   */
+  async launchQuery ({
+    input,
+    options = {},
+  }) {
+    const payload = this.createPayload({
+      input,
+    })
+
+    const response = await this.invokeFetchQuery({
+      payload,
+      options,
+    })
+    if (response === null) {
+      return NetworkErrorGraphqlCapsule.create({
+        payload,
+      })
+    }
+
+    const result = await this.generateFetchResult({
+      response,
+    })
+    if (result === null) {
+      return JsonParseErrorGraphqlCapsule.create({
+        rawResponse: response,
+        payload,
+      })
+    }
+
+    return this.createResultCapsule({
+      rawResponse: response,
+      payload,
+      result,
+    })
+  }
+
+  /**
+   * Create fetch request.
+   *
+   * @param {{
+   *   input: object | null
+   *   options: RequestInit
+   * }} params - Parameters.
+   * @returns {Request} Instance of fetch request.
+   */
+  createFetchRequest ({
+    input,
+    options,
+  }) {
+    const payload = this.createPayload({
+      input,
+      options,
+    })
+
+    return payload.createFetchRequest({
+      url: this.endpointUrl,
+    })
+  }
+
+  /**
+   * Fetch query.
+   *
+   * @param {{
+   *   payload: import('./BaseGraphqlPayload).default
+   *   options: RequestInit
+   * }} params - Parameters.
+   * @returns {Promise<Response | null>} Instance of fetch API response.
+   */
+  async invokeFetchQuery ({
+    payload,
+    options,
+  }) {
+    const request = payload.createFetchRequest({
+      url: this.endpointUrl,
+      options,
+    })
+
+    try {
+      const $fetch = this.Ctor.fetch
+      const response = await $fetch(request)
+
+      return response
+    } catch (error) {
+      return null
+    }
+  }
+
+  /**
+   * Create payload.
+   *
+   * @param {{
+   *   input: object | null
+   *   options: RequestInit
+   * }} params - Parameters.
+   * @returns {import('./BaseGraphqlPayload').default} Instance of Payload.
+   */
+  createPayload ({
+    input,
+    options,
+  }) {
+    return this.Ctor
+      .Payload
+      .create({
+        input,
+        options,
+      })
+  }
+
+  /**
+   * Generate fetch result.
+   *
+   * @param {{
+   *   response: Response
+   * }} params - Parameters.
+   * @returns {Promise<object | null>} Promise of JSON.
+   */
+  async generateFetchResult ({
+    response,
+  }) {
+    try {
+      const result = await response.json()
+
+      return result
+    } catch (error) {
+      return null
+    }
+  }
+
+  /**
+   * Create instance of capsule with result.
+   *
+   * @param {{
+   *   rawResponse: Response
+   *   payload: import('./BaseGraphqlPayload')
+   *   result: object
+   * }} params - Parameters.
+   * @returns
+   */
+  createResultCapsule ({
+    rawResponse,
+    payload,
+    result,
+  }) {
+    const args = {
+      rawResponse,
+      payload,
+      result,
+    }
+
+    return this.Ctor
+      .Capsule
+      .create(args)
+  }
+}
+
+/**
+ * @typedef {{
+ *   config: {
+ *     [x: string]: string
+ *   }
+ * }} BaseGraphqlLauncherParams
+ */
+
+/**
+ * @typedef {BaseGraphqlLauncherParams} BaseGraphqlLauncherFactoryParams
+ */
