@@ -121,7 +121,9 @@ export default [
           },
         },
       ],
-      'vue/no-multiple-template-root': 'off', // 'error',
+      'vue/no-multiple-template-root': [
+        'off', // 'error'
+      ],
     },
   },
 ]
