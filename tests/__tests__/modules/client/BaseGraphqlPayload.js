@@ -73,6 +73,9 @@ describe('BaseGraphqlPayload', () => {
           const args = {
             queryTemplate: params.queryTemplate,
             input: null,
+            options: {
+              mode: 'cors',
+            },
           }
           const actual = new BaseGraphqlPayload(args)
 
@@ -104,10 +107,10 @@ describe('BaseGraphqlPayload', () => {
           },
         ]
 
-        test.each(cases)('queryTemplate: $params.queryTemplate', ({ params }) => {
+        test.each(cases)('input: $params.input', ({ params }) => {
           const queryTemplate = `
             query {
-              curriculums(input: $input) {
+              curriculums (input: $input) {
                 curriculums {
                   id
                   title
@@ -130,11 +133,74 @@ describe('BaseGraphqlPayload', () => {
           const args = {
             queryTemplate,
             input: params.input,
+            options: {
+              mode: 'cors',
+            },
           }
           const actual = new BaseGraphqlPayload(args)
 
           expect(actual)
             .toHaveProperty('input', params.input)
+        })
+      })
+
+      describe('#options', () => {
+        const cases = [
+          {
+            params: {
+              options: {
+                mode: 'cors',
+              },
+            },
+          },
+          {
+            params: {
+              options: {
+                credentials: 'omit',
+              },
+            },
+          },
+          {
+            params: {
+              options: {
+                priority: 'high',
+              },
+            },
+          },
+        ]
+
+        test.each(cases)('input: $params.input', ({ params }) => {
+          const queryTemplate = `
+            query {
+              curriculums (input: $input) {
+                curriculums {
+                  id
+                  title
+                  description
+                  thumbnailUrl
+                  postedAt
+                }
+                pagination {
+                  limit
+                  offset
+                  sort {
+                    targetColumn
+                    orderBy
+                  }
+                  totalRecords
+                }
+              }
+            }
+          `
+          const args = {
+            queryTemplate,
+            input: null,
+            options: params.options,
+          }
+          const actual = new BaseGraphqlPayload(args)
+
+          expect(actual)
+            .toHaveProperty('options', params.options)
         })
       })
     })
@@ -159,6 +225,9 @@ describe('BaseGraphqlPayload', () => {
         {
           params: {
             input: null,
+            options: {
+              mode: 'cors',
+            },
             queryTemplate: `
               query pickUpForumTopics {
                 pickUpForumTopics {
@@ -193,6 +262,9 @@ describe('BaseGraphqlPayload', () => {
           params: {
             input: {
               id: 10001,
+            },
+            options: {
+              credentials: 'omit',
             },
             queryTemplate: `
               query {
@@ -241,6 +313,9 @@ describe('BaseGraphqlPayload', () => {
         {
           params: {
             input: null,
+            options: {
+              mode: 'cors',
+            },
             queryTemplate: `
               query pickUpForumTopics {
                 pickUpForumTopics {
@@ -276,6 +351,9 @@ describe('BaseGraphqlPayload', () => {
             input: {
               id: 10001,
             },
+            options: {
+              credentials: 'omit',
+            },
             queryTemplate: `
               query {
                 curriculums(input: $input) {
@@ -306,9 +384,11 @@ describe('BaseGraphqlPayload', () => {
         const expected = {
           queryTemplate: params.queryTemplate,
           input: params.input,
+          options: params.options,
         }
         const args = {
           input: params.input,
+          options: params.options,
         }
 
         const querySpy = jest.spyOn(BaseGraphqlPayload, 'query', 'get')
@@ -334,11 +414,17 @@ describe('BaseGraphqlPayload', () => {
               input: {
                 id: 10001,
               },
+              options: {
+                mode: 'cors',
+              },
             },
           },
           {
             params: {
               input: null,
+              options: {
+                credentials: 'omit',
+              },
             },
           },
         ]
@@ -443,6 +529,9 @@ describe('BaseGraphqlPayload', () => {
 
           const payload = BaseGraphqlPayload.create({
             input,
+            options: {
+              mode: 'cors',
+            },
           })
 
           const actual = payload.generateQuery()
@@ -664,6 +753,9 @@ describe('BaseGraphqlPayload', () => {
 
           const payload = BaseGraphqlPayload.create({
             input,
+            options: {
+              mode: 'cors',
+            },
           })
 
           const actual = payload.generateQuery()
@@ -838,7 +930,9 @@ describe('BaseGraphqlPayload', () => {
           const cases = [
             {
               params: {
-                options: {},
+                options: {
+                  mode: 'cors',
+                },
                 input: {
                   curriculumId: 20001,
                 },
@@ -878,7 +972,9 @@ describe('BaseGraphqlPayload', () => {
           const cases = [
             {
               params: {
-                options: {},
+                options: {
+                  mode: 'cors',
+                },
                 input: {
                   curriculumId: 20001,
                 },
@@ -932,7 +1028,9 @@ describe('BaseGraphqlPayload', () => {
           const cases = [
             {
               params: {
-                options: {},
+                options: {
+                  mode: 'cors',
+                },
                 input: {
                   curriculumId: 20001,
                 },
@@ -1028,6 +1126,7 @@ describe('BaseGraphqlPayload', () => {
             const payload = new BaseGraphqlPayload({
               queryTemplate,
               input: params.input,
+              options: params.options,
             })
             const args = {
               options: params.options,
@@ -1062,7 +1161,9 @@ describe('BaseGraphqlPayload', () => {
         {
           params: {
             url: 'https://api.example.com/graphql-customer',
-            options: {},
+            options: {
+              mode: 'cors',
+            },
             input: {
               curriculumId: 20001,
             },
@@ -1087,10 +1188,10 @@ describe('BaseGraphqlPayload', () => {
         const payload = new BaseGraphqlPayload({
           queryTemplate,
           input: params.input,
+          options: params.options,
         })
         const args = {
           url: params.url,
-          options: params.options,
         }
 
         const actual = payload.createFetchRequest(args)
@@ -1116,7 +1217,9 @@ describe('BaseGraphqlPayload', () => {
         {
           params: {
             url: 'https://api.example.com/graphql-customer',
-            options: {},
+            options: {
+              mode: 'cors',
+            },
             input: {
               curriculumId: 20001,
             },
@@ -1156,10 +1259,10 @@ describe('BaseGraphqlPayload', () => {
         const payload = new BaseGraphqlPayload({
           queryTemplate,
           input: params.input,
+          options: params.options,
         })
         const args = {
           url: params.url,
-          options: params.options,
         }
 
         const actual = payload.createFetchRequest(args)
