@@ -7,9 +7,11 @@ export default class BaseGraphqlPayload {
   constructor ({
     queryTemplate,
     input,
+    options,
   }) {
     this.queryTemplate = queryTemplate
     this.input = input
+    this.options = options
   }
 
   /**
@@ -20,10 +22,12 @@ export default class BaseGraphqlPayload {
    */
   static create ({
     input = null,
+    options = {},
   } = {}) {
     return new this({
       queryTemplate: this.query,
       input,
+      options,
     })
   }
 
@@ -43,17 +47,15 @@ export default class BaseGraphqlPayload {
    *
    * @param {{
    *   url: URL
-   *   options?: RequestInit
    * }} params - Parameters.
    * @returns {Request} Instance of fetch request.
    * @public
    */
   createFetchRequest ({
     url,
-    options = {},
   }) {
     const builtOptions = this.generateFetchRequestOptions({
-      options,
+      options: this.options,
       input: this.input,
     })
 
@@ -135,11 +137,13 @@ export default class BaseGraphqlPayload {
  * @typedef {{
  *   queryTemplate: string
  *   input: object | null
+ *   options?: RequestInit
  * }} BaseGraphqlPayloadParams
  */
 
 /**
  * @typedef {{
  *   input?: object | null
+ *   options?: RequestInit
  * }} BaseGraphqlPayloadFactoryParams
  */

@@ -135,11 +135,11 @@ export default class BaseGraphqlLauncher {
   }) {
     const payload = this.createPayload({
       input,
+      options,
     })
 
     return payload.createFetchRequest({
       url: this.endpointUrl,
-      options,
     })
   }
 
@@ -176,16 +176,19 @@ export default class BaseGraphqlLauncher {
    *
    * @param {{
    *   input: object | null
+   *   options: RequestInit
    * }} params - Parameters.
    * @returns {import('./BaseGraphqlPayload').default} Instance of Payload.
    */
   createPayload ({
     input,
+    options,
   }) {
     return this.Ctor
       .Payload
       .create({
         input,
+        options,
       })
   }
 
