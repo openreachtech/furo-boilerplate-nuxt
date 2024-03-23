@@ -25,6 +25,33 @@ export default class ObjectLiteralizer {
   }
 
   /**
+   * Literalize.
+   *
+   * @public
+   * @description This method literalizes Date instance as ISO string.
+   * @param {*} source - Litralizing target value
+   * @returns {string} Literalized string.
+   * @throws {Error} Target value includes unliteralizable value
+   */
+  literalize (
+    source = this.source
+  ) {
+    if (this.isUnliteralizable(source)) {
+      throw new Error('Target value includes unliteralizable value')
+    }
+
+    if (this.isValueToStringify(source)) {
+      return JSON.stringify(source)
+    }
+
+    if (Array.isArray(source)) {
+      return this.literalizeArray(source)
+    }
+
+    return this.literalizeObject(source)
+  }
+
+  /**
    * Confirm is value unliteralizable.
    *
    * @param {*} source - Source value.
