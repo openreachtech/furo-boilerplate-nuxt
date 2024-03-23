@@ -9,7 +9,37 @@
 </template>
 
 <script>
+import CurriculumsGraphqlLauncher from '@/app/graphql/client/Curriculums/CurriculumsGraphqlLauncher'
 
+export default {
+  name: 'IndexPage',
+}
+
+const input = {
+  pagination: {
+    limit: 5,
+    offset: 1,
+    sort: {
+      targetColumn: 'title',
+      orderBy: 'ASC',
+    },
+  },
+}
+
+const launcher = CurriculumsGraphqlLauncher.create({
+  config: {
+    ENDPOINT_URL: 'https://clc-dev-front.openreach.tech/graphql-customer',
+  },
+})
+
+launcher.launchQuery({
+  input,
+})
+  .then(capsule =>
+    (0, console).log(
+      capsule
+    )
+  )
 </script>
 
 <style>
