@@ -72,6 +72,26 @@ export default class ObjectLiteralizer {
 
     return `[${contents}]`
   }
+
+  /**
+   * LiteralizeObject.
+   *
+   * @param {source} params - Parameters.
+   * @returns
+   */
+  literalizeObject (source) {
+    const contents = Object.entries(source)
+      .map(
+        ([key, value]) => {
+          const literalizedValue = this.literalize(value)
+
+          return `${key}:${literalizedValue}`
+        }
+      )
+      .join(',')
+
+    return `{${contents}}`
+  }
 }
 
 /**
