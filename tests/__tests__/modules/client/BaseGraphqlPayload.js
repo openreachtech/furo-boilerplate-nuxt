@@ -599,7 +599,7 @@ describe('BaseGraphqlPayload', () => {
                 pickUpForumTopicId: 10001,
               },
               expected: `
-                query pickUpForumTopics (input: {"pickUpForumTopicId":10001}) {
+                query pickUpForumTopics (input: {pickUpForumTopicId:10001}) {
                   pickUpForumTopics {
                     pickUpForumTopics {
                       id
@@ -632,7 +632,7 @@ describe('BaseGraphqlPayload', () => {
                 pickUpForumTopicId: 10002,
               },
               expected: `
-                query pickUpForumTopics (input: {"pickUpForumTopicId":10002}) {
+                query pickUpForumTopics (input: {pickUpForumTopicId:10002}) {
                   pickUpForumTopics {
                     pickUpForumTopics {
                       id
@@ -694,7 +694,7 @@ describe('BaseGraphqlPayload', () => {
               },
               expected: `
                 query {
-                  curriculums (input: {"curriculumId":20001}) {
+                  curriculums (input: {curriculumId:20001}) {
                     curriculums {
                       id
                       title
@@ -721,7 +721,7 @@ describe('BaseGraphqlPayload', () => {
               },
               expected: `
                 query {
-                  curriculums (input: {"curriculumId":20002}) {
+                  curriculums (input: {curriculumId:20002}) {
                     curriculums {
                       id
                       title
