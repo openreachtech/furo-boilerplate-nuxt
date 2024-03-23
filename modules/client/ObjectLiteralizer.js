@@ -23,6 +23,22 @@ export default class ObjectLiteralizer {
       source,
     })
   }
+
+  /**
+   * Confirm is value unliteralizable.
+   *
+   * @param {*} source - Source value.
+   * @returns {boolean} true: It is unliteralizable.
+   */
+  isUnliteralizable (source) {
+    return [
+      'bigint',
+      'symbol',
+      'function',
+    ]
+      .includes(typeof source)
+      || JSON.stringify(source) === undefined
+  }
 }
 
 /**
