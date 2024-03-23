@@ -244,3 +244,161 @@ describe('ObjectLiteralizer', () => {
     })
   })
 })
+
+describe('ObjectLiteralizer', () => {
+  describe('#isUnliteralizable()', () => {
+    describe('when source is unliteralizable (return truthy)', () => {
+      const cases = [
+        {
+          params: {
+            sources: undefined,
+          },
+        },
+        {
+          params: {
+            sources: 10000000000n,
+          },
+        },
+        {
+          params: {
+            sources: Symbol('symbol'),
+          },
+        },
+        {
+          params: {
+            sources: () => {},
+          },
+        },
+        {
+          params: {
+            sources () { return 999 },
+          },
+        },
+      ]
+        .concat([
+          {
+            params: {
+              sources: {
+                alpha: undefined,
+              },
+            },
+          },
+          {
+            params: {
+              sources: {
+                alpha: 10000000000n,
+              },
+            },
+          },
+          {
+            params: {
+              sources: {
+                alpha: Symbol('symbol'),
+              },
+            },
+          },
+          {
+            params: {
+              sources: {
+                alpha: () => {},
+              },
+            },
+          },
+          {
+            params: {
+              sources: {
+                alpha () { return 999 },
+              },
+            },
+          },
+        ])
+
+      test.each(cases)('source: $params.source', ({ params }) => {
+        const literalizer = new ObjectLiteralizer(params)
+
+        const actual = literalizer.isUnliteralizable(params.source)
+
+        expect(actual)
+          .toBeTruthy()
+      })
+    })
+
+    describe('when source is not unliteralizable (return falsy)', () => {
+      const cases = [
+        {
+          params: {
+            source: {},
+          },
+        },
+        {
+          params: {
+            source: {
+              alpha: 1,
+            },
+          },
+        },
+        {
+          params: {
+            source: {
+              alpha: 11,
+              beta: 22,
+            },
+          },
+        },
+        {
+          params: {
+            source: {
+              alpha: {
+                beta: 222,
+                gamma: 333,
+              },
+            },
+          },
+        },
+        {
+          params: {
+            source: {
+              alpha: {
+                beta: 222,
+                gamma: {
+                  delta: 444,
+                  epsilon: 555,
+                },
+              },
+            },
+          },
+        },
+        {
+          params: {
+            source: {
+              alpha: [
+                'first string',
+                'second string',
+                'third string',
+              ],
+              beta: [
+                {
+                  gamma: 1001,
+                  delta: 1002,
+                },
+                {
+                  gamma: 1003,
+                  delta: 1004,
+                },
+              ],
+            },
+          },
+        },
+      ]
+
+      test.each(cases)('source: $params.source', ({ params }) => {
+        const literalizer = new ObjectLiteralizer(params)
+
+        const actual = literalizer.isUnliteralizable(params.source)
+
+        expect(actual)
+          .toBeFalsy()
+      })
+    })
+  })
+})
