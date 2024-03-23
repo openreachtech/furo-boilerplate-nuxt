@@ -1035,7 +1035,7 @@ describe('BaseGraphqlPayload', () => {
                   curriculumId: 20001,
                 },
               },
-              expected: '{"query":"\\n                query {\\n                  curriculums(input: {\\"curriculumId\\":20001}) {\\n                    curriculums {\\n                      id\\n                      title\\n                    }\\n                  }\\n                }"}',
+              expected: '{"query":"\\n                query {\\n                  curriculums(input: {curriculumId:20001}) {\\n                    curriculums {\\n                      id\\n                      title\\n                    }\\n                  }\\n                }"}',
             },
             {
               params: {
@@ -1044,7 +1044,7 @@ describe('BaseGraphqlPayload', () => {
                   curriculumId: 20002,
                 },
               },
-              expected: '{"query":"\\n                query {\\n                  curriculums(input: {\\"curriculumId\\":20002}) {\\n                    curriculums {\\n                      id\\n                      title\\n                    }\\n                  }\\n                }"}',
+              expected: '{"query":"\\n                query {\\n                  curriculums(input: {curriculumId:20002}) {\\n                    curriculums {\\n                      id\\n                      title\\n                    }\\n                  }\\n                }"}',
             },
           ]
 
