@@ -465,3 +465,113 @@ describe('ObjectLiteralizer', () => {
     })
   })
 })
+
+describe('ObjectLiteralizer', () => {
+  describe('#literalizeArray()', () => {
+    const cases = [
+      {
+        params: {
+          source: [],
+        },
+        expected: {
+          result: '[]',
+          calledTimes: 0,
+        },
+      },
+      {
+        params: {
+          source: [
+            'first string',
+            'second string',
+            'third string',
+          ],
+        },
+        expected: {
+          result: '["first string","second string","third string"]',
+          calledTimes: 3,
+        },
+      },
+      {
+        params: {
+          source: [
+            1,
+            2,
+            3,
+            4,
+          ],
+        },
+        expected: {
+          result: '[1,2,3,4]',
+          calledTimes: 4,
+        },
+      },
+      {
+        params: {
+          source: [
+            {
+              alpha: 1,
+              beta: 2,
+            },
+            {
+              alpha: 11,
+              beta: 22,
+            },
+            {
+              alpha: 111,
+              beta: 222,
+            },
+          ],
+        },
+        expected: {
+          result: '[{alpha:1,beta:2},{alpha:11,beta:22},{alpha:111,beta:222}]',
+          calledTimes: 9, // 3 + 2 * 3
+        },
+      },
+      {
+        params: {
+          source: [
+            {
+              alpha: 1,
+              beta: [
+                'first string',
+                'second string',
+                'third string',
+                'fourth string',
+              ],
+              gamma: true,
+            },
+            {
+              alpha: 11,
+              beta: [
+                'fifth string',
+                'sixth string',
+                'seventh string',
+              ],
+              gamma: false,
+            },
+          ],
+        },
+
+        expected: {
+          result: '[{alpha:1,beta:["first string","second string","third string","fourth string"],gamma:true},{alpha:11,beta:["fifth string","sixth string","seventh string"],gamma:false}]',
+          calledTimes: 15, // 2 + 3 * 2 + [4] + [3]
+        },
+      },
+    ]
+
+    test.each(cases)('source: $params.source', ({ params, expected }) => {
+      const objectLiteralizer = new ObjectLiteralizer(params)
+
+      const literalizeSpy = jest.spyOn(objectLiteralizer, 'literalize')
+
+      const result = objectLiteralizer.literalizeArray(params.source)
+
+      expect(result)
+        .toBe(expected.result)
+      expect(literalizeSpy)
+        .toHaveBeenCalledTimes(expected.calledTimes)
+
+      literalizeSpy.mockRestore()
+    })
+  })
+})
