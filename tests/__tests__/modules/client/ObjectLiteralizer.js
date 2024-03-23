@@ -575,3 +575,84 @@ describe('ObjectLiteralizer', () => {
     })
   })
 })
+
+describe('ObjectLiteralizer', () => {
+  describe('#literalizeObject()', () => {
+    const cases = [
+      {
+        params: {
+          source: {},
+        },
+        expected: {
+          result: '{}',
+          calledTimes: 0,
+        },
+      },
+      {
+        params: {
+          source: {
+            alpha: 1,
+          },
+        },
+        expected: {
+          result: '{alpha:1}',
+          calledTimes: 1,
+        },
+      },
+      {
+        params: {
+          source: {
+            alpha: 11,
+            beta: 22,
+          },
+        },
+        expected: {
+          result: '{alpha:11,beta:22}',
+          calledTimes: 2,
+        },
+      },
+      {
+        params: {
+          source: {
+            alpha: {
+              beta: 222,
+              gamma: 333,
+            },
+          },
+        },
+        expected: {
+          result: '{alpha:{beta:222,gamma:333}}',
+          calledTimes: 3,
+        },
+      },
+      {
+        params: {
+          source: {
+            alpha: 'first string',
+            beta: 'second string',
+            gamma: 'third string',
+          },
+        },
+        expected: {
+          result: '{alpha:"first string",beta:"second string",gamma:"third string"}',
+          calledTimes: 3,
+        },
+      },
+    ]
+
+    test.each(cases)('source: $params.source', ({ params, expected }) => {
+      const objectLiteralizer = new ObjectLiteralizer(params)
+
+      const literalizeSpy = jest.spyOn(objectLiteralizer, 'literalize')
+
+      const result = objectLiteralizer.literalizeObject(params.source)
+
+      expect(result)
+        .toBe(expected.result)
+      expect(literalizeSpy)
+        .toHaveBeenCalledTimes(expected.calledTimes)
+
+      literalizeSpy.mockRestore()
+    })
+  })
+})
