@@ -656,3 +656,200 @@ describe('ObjectLiteralizer', () => {
     })
   })
 })
+
+describe('ObjectLiteralizer', () => {
+  describe('#literalize()', () => {
+    describe('when source is object', () => {
+      const cases = [
+        {
+          params: {
+            source: {},
+          },
+          expected: '{}',
+        },
+        {
+          params: {
+            source: {
+              alpha: 1,
+            },
+          },
+          expected: '{alpha:1}',
+        },
+        {
+          params: {
+            source: {
+              alpha: 11,
+              beta: 22,
+            },
+          },
+          expected: '{alpha:11,beta:22}',
+        },
+        {
+          params: {
+            source: {
+              alpha: {
+                beta: 222,
+                gamma: 333,
+              },
+            },
+          },
+          expected: '{alpha:{beta:222,gamma:333}}',
+        },
+        {
+          params: {
+            source: {
+              alpha: {
+                beta: 222,
+                gamma: {
+                  delta: 444,
+                  epsilon: 555,
+                },
+              },
+            },
+          },
+          expected: '{alpha:{beta:222,gamma:{delta:444,epsilon:555}}}',
+        },
+        {
+          params: {
+            source: {
+              alpha: [
+                'first string',
+                'second string',
+                'third string',
+              ],
+              beta: [
+                {
+                  id: 1001,
+                  title: 'title-1',
+                },
+                {
+                  id: 1002,
+                  title: 'title-2',
+                },
+              ],
+            },
+          },
+          expected: '{alpha:["first string","second string","third string"],beta:[{id:1001,title:"title-1"},{id:1002,title:"title-2"}]}',
+        },
+      ]
+
+      test.each(cases)('source: $params.source', ({ params, expected }) => {
+        const objectLiteralizer = new ObjectLiteralizer(params)
+
+        const result = objectLiteralizer.literalize()
+
+        expect(result)
+          .toBe(expected)
+      })
+    })
+
+    describe('when source is primitive', () => {
+      const cases = [
+        {
+          params: {
+            source: 123,
+          },
+          expected: '123',
+        },
+        {
+          params: {
+            source: 1000.456,
+          },
+          expected: '1000.456',
+        },
+        {
+          params: {
+            source: 'string',
+          },
+          expected: '"string"',
+        },
+        {
+          params: {
+            source: true,
+          },
+          expected: 'true',
+        },
+        {
+          params: {
+            source: false,
+          },
+          expected: 'false',
+        },
+      ]
+
+      test.each(cases)('source: $params.source', ({ params, expected }) => {
+        const objectLiteralizer = new ObjectLiteralizer(params)
+
+        const result = objectLiteralizer.literalize()
+
+        expect(result)
+          .toBe(expected)
+      })
+    })
+
+    describe('when source includes Date', () => {
+      const cases = [
+        {
+          params: {
+            source: new Date('2021-01-21T01:00:00.001Z'),
+          },
+          expected: '"2021-01-21T01:00:00.001Z"',
+        },
+        {
+          params: {
+            source: {
+              savedAt: new Date('2021-02-22T02:00:00.002Z'),
+            },
+          },
+          expected: '{savedAt:"2021-02-22T02:00:00.002Z"}',
+        },
+      ]
+
+      test.each(cases)('source: $params.source', ({ params, expected }) => {
+        const objectLiteralizer = new ObjectLiteralizer(params)
+
+        const result = objectLiteralizer.literalize()
+
+        expect(result)
+          .toBe(expected)
+      })
+    })
+
+    describe('to throw when source includes unliteralizable value', () => {
+      const cases = [
+        {
+          params: {
+            source: undefined, // undefined
+          },
+        },
+        {
+          params: {
+            source: 1000n, // bigint
+          },
+        },
+        {
+          params: {
+            source: Symbol('symbol'), // symbol
+          },
+        },
+        {
+          params: {
+            source: () => {}, // function
+          },
+        },
+        {
+          params: {
+            source () {}, // function
+          },
+        },
+      ]
+
+      test.each(cases)('source: $params.source', ({ params, expected }) => {
+        const objectLiteralizer = new ObjectLiteralizer(params)
+
+        expect(() => objectLiteralizer.literalize())
+          .toThrow(new Error('Target value includes unliteralizable value'))
+      })
+    })
+  })
+})
