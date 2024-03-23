@@ -1,3 +1,5 @@
+import ObjectLiteralizer from '@/modules/client/ObjectLiteralizer'
+
 export default class BaseGraphqlPayload {
   /**
    * Constructor.
@@ -105,7 +107,11 @@ export default class BaseGraphqlPayload {
       return this.queryTemplate
     }
 
-    const inputSlot = JSON.stringify(this.input)
+    const literalizer = ObjectLiteralizer.create({
+      source: this.input,
+    })
+
+    const inputSlot = literalizer.literalize()
 
     return this.queryTemplate
       .replace('$input', inputSlot)
