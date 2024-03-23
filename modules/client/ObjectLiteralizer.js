@@ -57,6 +57,21 @@ export default class ObjectLiteralizer {
     return value.constructor.name !== 'Array'
       && value.constructor.name !== 'Object'
   }
+
+  /**
+   * LiteralizeArray
+   * @param {Array<*>} array
+   * @returns
+   */
+  literalizeArray (array) {
+    const contents = array
+      .map(
+        it => this.literalize(it)
+      )
+      .join(',')
+
+    return `[${contents}]`
+  }
 }
 
 /**
