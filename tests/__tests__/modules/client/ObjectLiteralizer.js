@@ -402,3 +402,66 @@ describe('ObjectLiteralizer', () => {
     })
   })
 })
+
+describe('ObjectLiteralizer', () => {
+  describe('#isValueToStringify()', () => {
+    describe('when source is stringify target (return truthy)', () => {
+      const cases = [
+        {
+          params: {
+            source: null,
+          },
+        },
+        {
+          params: {
+            source: new Date(),
+          },
+        },
+        {
+          params: {
+            source: new (class DerivedClass {})(),
+          },
+        },
+      ]
+
+      test.each(cases)('source: $params.source', ({ params }) => {
+        const literalizer = new ObjectLiteralizer(params)
+
+        const actual = literalizer.isValueToStringify(params.source)
+
+        expect(actual)
+          .toBeTruthy()
+      })
+    })
+
+    describe('when source is not stringify target (return falsy)', () => {
+      const cases = [
+        {
+          params: {
+            source: {
+              alpha: 1,
+            },
+          },
+        },
+        {
+          params: {
+            source: [
+              'first string',
+              'second string',
+              'third string',
+            ],
+          },
+        },
+      ]
+
+      test.each(cases)('source: $params.source', ({ params }) => {
+        const literalizer = new ObjectLiteralizer(params)
+
+        const actual = literalizer.isValueToStringify(params.source)
+
+        expect(actual)
+          .toBeFalsy()
+      })
+    })
+  })
+})

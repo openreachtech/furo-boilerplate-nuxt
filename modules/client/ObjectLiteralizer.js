@@ -39,6 +39,24 @@ export default class ObjectLiteralizer {
       .includes(typeof source)
       || JSON.stringify(source) === undefined
   }
+
+  /**
+   * Confirm which is value to stringify.
+   *
+   * @param {*} value - Value to confirm.
+   * @returns {boolean} true: It is target value.
+   */
+  isValueToStringify (value) {
+    if (
+      value === null
+      || typeof value !== 'object'
+    ) {
+      return true
+    }
+
+    return value.constructor.name !== 'Array'
+      && value.constructor.name !== 'Object'
+  }
 }
 
 /**
