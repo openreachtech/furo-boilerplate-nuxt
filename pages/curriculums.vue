@@ -1,45 +1,40 @@
 <!-- pages/index.vue -->
 <template>
   <h1>Hello I&#39;m pages/curriculums.vue!</h1>
-  <div>1</div>
-  <div>2</div>
-  <div>3</div>
-  <div>4</div>
-  <div>5</div>
+
+  <h2>Curriculums</h2>
+  <pre>
+    {{
+      JSON.stringify(
+        curriculumsRef.extractContent(),
+        null,
+        2
+      )
+    }}
+  </pre>
 </template>
 
-<script>
-import CurriculumsGraphqlLauncher from '@/app/graphql/client/Curriculums/CurriculumsGraphqlLauncher'
+<script setup>
+import {
+  ref,
+} from 'vue'
 
-export default {
-  name: 'IndexPage',
-}
+import {
+  useCurriculums,
+} from '~/composables/useCurriculums'
 
-const input = {
-  pagination: {
-    limit: 5,
-    offset: 1,
-    sort: {
-      targetColumn: 'title',
-      orderBy: 'ASC',
-    },
-  },
-}
+/** @type {import('vue').Ref<import('~/app/graphql/client/Curriculums/CurriculumsGraphqlCapsule').default | null>} */
+const curriculumsRef = ref(null)
+// NOTE: Null Object Pattern を使えば、此処で NullGraphqlCapsule のインスタンスを入れて於ける！
 
-const launcher = CurriculumsGraphqlLauncher.create({
-  config: {
-    ENDPOINT_URL: 'https://clc-dev-front.openreach.tech/graphql-customer',
-  },
-})
+const {
+  fetchCurriculums,
+} = useCurriculums()
 
-launcher.launchQuery({
-  input,
-})
-  .then(capsule =>
-    (0, console).log(
-      capsule
-    )
-  )
+const response = await fetchCurriculums()
+
+// TODO: 此処で ref に保持する処理を追加する
+curriculumsRef.value = response
 </script>
 
 <style>
