@@ -16,7 +16,7 @@ export default {
   setupFiles: [
     './jest/setup.js',
   ],
-  testEnvironment: 'jsdom',
+  testEnvironment: 'jest-environment-jsdom',
   testEnvironmentOptions: {
     customExportConditions: [
       'node',
