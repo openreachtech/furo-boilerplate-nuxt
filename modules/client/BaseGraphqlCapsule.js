@@ -144,11 +144,15 @@ export default class BaseGraphqlCapsule {
  * @typedef {{
  *   rawResponse: Response
  *   payload: import('~/modules/client/BaseGraphqlPayload').default
- *   result: null | {
- *     data?: object
- *     errors?: Array<object>
- *   }
+ *   result: GraphqlCapsuleResult
  * }} BaseGraphqlCapsuleParams
+ */
+
+/**
+ * @typedef {null | {
+ *   data?: object
+ *   errors?: Array<object>
+ * }} GraphqlCapsuleResult
  */
 
 /**
