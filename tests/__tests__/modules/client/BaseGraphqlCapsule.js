@@ -271,6 +271,86 @@ describe('BaseGraphqlCapsule', () => {
 })
 
 describe('BaseGraphqlCapsule', () => {
+  describe('#isPending()', () => {
+    const mockResponse = new Response()
+    const mockResult = {
+      data: {
+        customer: {
+          id: 10001,
+        },
+      },
+    }
+
+    describe('to be pending (truthy)', () => {
+      const cases = [
+        {
+          params: {
+            rawResponse: null,
+            payload: null,
+            result: null,
+          },
+        },
+      ]
+
+      test.each(cases)('rawResponse: $params.rawResponse; result: $params.result', ({ params }) => {
+        const capsule = new BaseGraphqlCapsule(params)
+
+        const actual = capsule.isPending()
+
+        expect(actual)
+          .toBeTruthy()
+      })
+    })
+
+    describe('to be not pending (falsy)', () => {
+      const mockPayload = new BaseGraphqlPayload({
+        queryTemplate: `
+          query {
+            customer {
+              id
+            }
+          }
+        `,
+        input: null,
+      })
+
+      const cases = [
+        {
+          params: {
+            rawResponse: mockResponse,
+            payload: mockPayload,
+            result: mockResult,
+          },
+        },
+        {
+          params: {
+            rawResponse: mockResponse,
+            payload: mockPayload,
+            result: null,
+          },
+        },
+        {
+          params: {
+            rawResponse: null,
+            payload: mockPayload,
+            result: null,
+          },
+        },
+      ]
+
+      test.each(cases)('rawResponse: $params.rawResponse; result: $params.result', ({ params }) => {
+        const capsule = new BaseGraphqlCapsule(params)
+
+        const actual = capsule.isPending()
+
+        expect(actual)
+          .toBeFalsy()
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlCapsule', () => {
   describe('#hasContent()', () => {
     const mockResponse = new Response()
     const mockPayload = new BaseGraphqlPayload({
