@@ -97,6 +97,9 @@ export default [
           functions: 'never',
         },
       ],
+      'import/namespace': [
+        'off', // 'error'
+      ],
       'jest/no-identical-title': [
         'off', // 'error'
       ],
