@@ -90,7 +90,11 @@ describe('BaseGraphqlCapsule', () => {
 
       describe('#result', () => {
         /**
-         * @type {BaseGraphqlCapsuleParams}
+         * @type {Array<{
+         *   params: {
+         *     result: import('~/modules/client/BaseGraphqlCapsule').GraphqlCapsuleResult
+         *   }
+         * }>}
          */
         const cases = [
           {

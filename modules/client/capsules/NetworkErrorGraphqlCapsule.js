@@ -19,7 +19,7 @@ export default class NetworkErrorGraphqlCapsule extends BaseGraphqlCapsule {
 }
 
 /**
- * @typedef {BaseGraphqlCapsule.{
- *   payload: import('./BaseGraphqlPayload')
+ * @typedef {BaseGraphqlCapsule & {
+ *   payload: import('~/modules/client/BaseGraphqlPayload').default
  * }} NetworkErrorGraphqlCapsuleFactoryParams
  */

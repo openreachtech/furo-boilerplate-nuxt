@@ -21,7 +21,7 @@ export default class GenericGraphqlPayload extends BaseGraphqlPayload {
 }
 
 /**
- * @typedef {BaseGraphqlPayload.BaseGraphqlPayloadFactoryParams & {
+ * @typedef {import('~/modules/client/BaseGraphqlPayload').BaseGraphqlPayloadFactoryParams & {
  *   queryTemplate: string
  * }} GenericGraphqlPayloadFactoryParams
  */

@@ -20,8 +20,8 @@ export default class JsonParseErrorGraphqlCapsule extends BaseGraphqlCapsule {
 }
 
 /**
- * @typedef {BaseGraphqlCapsule.{
+ * @typedef {BaseGraphqlCapsule & {
  *   rawResponse: Response
- *   payload: import('./BaseGraphqlPayload')
+ *   payload: import('~/modules/client/BaseGraphqlPayload').default
  * }} JsonParseErrorGraphqlCapsuleFactoryParams
  */
