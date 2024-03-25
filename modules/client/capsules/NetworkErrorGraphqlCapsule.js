@@ -4,7 +4,8 @@ export default class NetworkErrorGraphqlCapsule extends BaseGraphqlCapsule {
   /**
    * Factory method.
    *
-   * @param {NetworkErrorGraphqlCapsuleFactoryParams} params
+   * @param {NetworkErrorGraphqlCapsuleFactoryParams} params - Parameters of factory method.
+   * @returns {NetworkErrorGraphqlCapsule} Instance of this class.
    */
   static create ({
     payload,
