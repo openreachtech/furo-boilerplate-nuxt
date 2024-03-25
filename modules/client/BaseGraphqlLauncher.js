@@ -80,15 +80,15 @@ export default class BaseGraphqlLauncher {
    *
    * @public
    * @param {{
-   *   input: object | null
-   *   options: RequestInit
+   *   input?: object | null
+   *   options?: RequestInit
    * }} Params - Parameters.
    * @returns {Promise<import('./BaseGraphqlCapsule').default>} Promise of instance of capsule.
    */
   async launchQuery ({
-    input,
+    input = null,
     options = {},
-  }) {
+  } = {}) {
     const payload = this.createPayload({
       input,
     })
