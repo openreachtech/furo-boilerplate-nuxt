@@ -91,6 +91,10 @@ export default class BaseGraphqlCapsule {
    * @returns {string | null} Error message.
    */
   getErrorMessage () {
+    if (this.isPending()) {
+      return null
+    }
+
     if (this.hasNetworkError()) {
       return 'Network error' // TODO: resolve embedded text
     }

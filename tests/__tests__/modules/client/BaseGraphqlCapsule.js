@@ -979,6 +979,7 @@ describe('BaseGraphqlCapsule', () => {
         // on network error
         {
           params: {
+            payload: mockPayload,
             rawResponse: null,
             result: null,
           },
@@ -987,6 +988,7 @@ describe('BaseGraphqlCapsule', () => {
         // on JSON parse error
         {
           params: {
+            payload: mockPayload,
             rawResponse: mockResponse,
             result: null,
           },
@@ -995,6 +997,7 @@ describe('BaseGraphqlCapsule', () => {
         // on query error
         {
           params: {
+            payload: mockPayload,
             rawResponse: mockResponse,
             result: {
               errors: [
@@ -1011,6 +1014,7 @@ describe('BaseGraphqlCapsule', () => {
         },
         {
           params: {
+            payload: mockPayload,
             rawResponse: mockResponse,
             result: {
               errors: [
@@ -1024,6 +1028,7 @@ describe('BaseGraphqlCapsule', () => {
         },
         {
           params: {
+            payload: mockPayload,
             rawResponse: mockResponse,
             result: {
               errors: [],
@@ -1033,10 +1038,10 @@ describe('BaseGraphqlCapsule', () => {
         },
       ]
 
-      test.each(cases)('rawResponse: $params.rawResponse; result: $params.result', ({ params, expected }) => {
+      test.each(cases)('payload: $params.payload; rawResponse: $params.rawResponse; result: $params.result', ({ params, expected }) => {
         const args = {
           rawResponse: params.rawResponse,
-          payload: mockPayload,
+          payload: params.payload,
           result: params.result,
         }
         const capsule = new BaseGraphqlCapsule(args)
@@ -1048,7 +1053,7 @@ describe('BaseGraphqlCapsule', () => {
       })
     })
 
-    describe('when has no error', () => {
+    describe('when has no error on post-fetch', () => {
       const cases = [
         {
           params: {
@@ -1073,6 +1078,22 @@ describe('BaseGraphqlCapsule', () => {
           rawResponse: mockResponse,
           payload: mockPayload,
           result: params.result,
+        }
+        const capsule = new BaseGraphqlCapsule(args)
+
+        const actual = capsule.getErrorMessage()
+
+        expect(actual)
+          .toBeNull()
+      })
+    })
+
+    describe('when has no error on pre-fetch', () => {
+      test('all args are null', () => {
+        const args = {
+          rawResponse: null,
+          payload: null,
+          result: null,
         }
         const capsule = new BaseGraphqlCapsule(args)
 
