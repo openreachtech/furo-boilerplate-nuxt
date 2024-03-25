@@ -47,6 +47,15 @@ export default class BaseGraphqlCapsule {
   }
 
   /**
+   * Check to be pending.
+   *
+   * @returns {BooleanLike} true: is pending (pre-fetching).
+   */
+  isPending () {
+    return this.payload === null
+  }
+
+  /**
    * Check to have query error.
    *
    * @returns {BooleanLike} true: has query error.
