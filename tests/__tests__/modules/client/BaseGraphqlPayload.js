@@ -298,6 +298,7 @@ describe('BaseGraphqlPayload', () => {
 
         const args = {
           input: params.input,
+          options: params.options,
         }
         const actual = BaseGraphqlPayload.create(args)
 
