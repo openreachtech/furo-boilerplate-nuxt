@@ -47,6 +47,15 @@ export default class BaseGraphqlCapsule {
   }
 
   /**
+   * Check to be pending.
+   *
+   * @returns {BooleanLike} true: is pending (pre-fetching).
+   */
+  isPending () {
+    return this.payload === null
+  }
+
+  /**
    * Check to have query error.
    *
    * @returns {BooleanLike} true: has query error.
@@ -82,6 +91,10 @@ export default class BaseGraphqlCapsule {
    * @returns {string | null} Error message.
    */
   getErrorMessage () {
+    if (this.isPending()) {
+      return null
+    }
+
     if (this.hasNetworkError()) {
       return 'Network error' // TODO: resolve embedded text
     }
