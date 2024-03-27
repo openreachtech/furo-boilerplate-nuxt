@@ -82,11 +82,9 @@ export default class BaseGraphqlPayload {
       headers: options.headers ?? new Headers(),
     })
 
-    const query = this.generateQuery({
-      input: this.input,
-    })
     const body = JSON.stringify({
-      query,
+      query: this.queryTemplate,
+      variables: this.input,
     })
 
     return {
