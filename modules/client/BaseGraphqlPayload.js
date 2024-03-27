@@ -1,5 +1,3 @@
-import ObjectLiteralizer from '@/modules/client/ObjectLiteralizer'
-
 export default class BaseGraphqlPayload {
   /**
    * Constructor.
@@ -93,26 +91,6 @@ export default class BaseGraphqlPayload {
       headers,
       body,
     }
-  }
-
-  /**
-   * Generate query.
-   *
-   * @returns {string} Fulfilled query.
-   */
-  generateQuery () {
-    if (!this.variables) {
-      return this.queryTemplate
-    }
-
-    const literalizer = ObjectLiteralizer.create({
-      source: this.variables,
-    })
-
-    const inputSlot = literalizer.literalize()
-
-    return this.queryTemplate
-      .replace('$input', inputSlot)
   }
 
   /**
