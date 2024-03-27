@@ -8,11 +8,11 @@ export default class BaseGraphqlPayload {
    */
   constructor ({
     queryTemplate,
-    input,
+    variables,
     options,
   }) {
     this.queryTemplate = queryTemplate
-    this.variables = input
+    this.variables = variables
     this.options = options
   }
 
@@ -28,7 +28,7 @@ export default class BaseGraphqlPayload {
   } = {}) {
     return new this({
       queryTemplate: this.query,
-      input,
+      variables: input,
       options,
     })
   }
