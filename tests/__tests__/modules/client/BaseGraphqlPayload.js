@@ -916,8 +916,8 @@ describe('BaseGraphqlPayload', () => {
 describe('BaseGraphqlPayload', () => {
   describe('#generateFetchRequestOptions()', () => {
     const queryTemplate = `
-                query {
-                  curriculums(input: $input) {
+                query CurriculumsQuery ($input: CurriculumsInput!) {
+                  curriculums (input: $input) {
                     curriculums {
                       id
                       title
@@ -1032,27 +1032,31 @@ describe('BaseGraphqlPayload', () => {
                 options: {
                   mode: 'cors',
                 },
-                input: {
-                  curriculumId: 20001,
+                variables: {
+                  input: {
+                    curriculumId: 20001,
+                  },
                 },
               },
-              expected: '{"query":"\\n                query {\\n                  curriculums(input: {curriculumId:20001}) {\\n                    curriculums {\\n                      id\\n                      title\\n                    }\\n                  }\\n                }"}',
+              expected: '{"query":"\\n                query CurriculumsQuery ($input: CurriculumsInput!) {\\n                  curriculums (input: $input) {\\n                    curriculums {\\n                      id\\n                      title\\n                    }\\n                  }\\n                }","variables":{"input":{"curriculumId":20001}}}',
             },
             {
               params: {
                 options: {},
-                input: {
-                  curriculumId: 20002,
+                variables: {
+                  input: {
+                    curriculumId: 20002,
+                  },
                 },
               },
-              expected: '{"query":"\\n                query {\\n                  curriculums(input: {curriculumId:20002}) {\\n                    curriculums {\\n                      id\\n                      title\\n                    }\\n                  }\\n                }"}',
+              expected: '{"query":"\\n                query CurriculumsQuery ($input: CurriculumsInput!) {\\n                  curriculums (input: $input) {\\n                    curriculums {\\n                      id\\n                      title\\n                    }\\n                  }\\n                }","variables":{"input":{"curriculumId":20002}}}',
             },
           ]
 
           test.each(cases)('input: $params.input', ({ params, expected }) => {
             const payload = new BaseGraphqlPayload({
               queryTemplate,
-              input: params.input,
+              input: params.variables,
             })
             const args = {
               options: params.options,
