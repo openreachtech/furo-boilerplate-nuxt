@@ -9,13 +9,15 @@ export function useCurriculums () {
    * Fetch curriculums.
    *
    * @param {{
-   *   input?: {
-   *     pagination: {
-   *       limit: number
-   *       offset: number
-   *       sort: {
-   *         targetColumn: string
-   *         orderBy: string
+   *   variables: {
+   *     input?: {
+   *       pagination: {
+   *         limit: number
+   *         offset: number
+   *         sort: {
+   *           targetColumn: string
+   *           orderBy: string
+   *         }
    *       }
    *     }
    *   }
@@ -23,13 +25,15 @@ export function useCurriculums () {
    * @returns {Promise<import('~/app/graphql/client/Curriculums/CurriculumsGraphqlCapsule').default>}
    */
   async function fetchCurriculums ({
-    input = {
-      pagination: {
-        limit: 5,
-        offset: 1,
-        sort: {
-          targetColumn: 'title',
-          orderBy: 'ASC',
+    variables = {
+      input: {
+        pagination: {
+          limit: 5,
+          offset: 1,
+          sort: {
+            targetColumn: 'title',
+            orderBy: 'ASC',
+          },
         },
       },
     },
@@ -37,7 +41,7 @@ export function useCurriculums () {
     const launcher = CurriculumsGraphqlLauncher.create()
 
     const response = await launcher.launchQuery({
-      input,
+      input: variables,
     })
 
     return response
