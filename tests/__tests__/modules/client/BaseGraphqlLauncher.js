@@ -875,8 +875,10 @@ describe('BaseGraphqlLauncher', () => {
         {
           params: {
             endpointUrl: 'http://example.com/graphql-customer',
-            input: {
-              id: 10001,
+            variables: {
+              input: {
+                id: 10001,
+              },
             },
             options: {
               headers: new Headers({
@@ -914,7 +916,7 @@ describe('BaseGraphqlLauncher', () => {
         {
           params: {
             endpointUrl: 'http://example.com/graphql-admin',
-            input: null,
+            variables: null,
             options: {
               headers: new Headers({
                 'x-access-key': 'access-key-02',
@@ -966,7 +968,7 @@ describe('BaseGraphqlLauncher', () => {
           config: graphqlConfig,
         })
         const args = {
-          input: params.input,
+          variables: params.variables,
           options: params.options,
         }
 
@@ -988,8 +990,10 @@ describe('BaseGraphqlLauncher', () => {
         {
           params: {
             endpointUrl: 'http://example.com/graphql-customer',
-            input: {
-              id: 10001,
+            variables: {
+              input: {
+                id: 10001,
+              },
             },
             options: {
               headers: new Headers({
@@ -1013,7 +1017,9 @@ describe('BaseGraphqlLauncher', () => {
         {
           params: {
             endpointUrl: 'http://example.com/graphql-admin',
-            input: null,
+            variables: {
+              input: null,
+            },
             options: {
               headers: new Headers({
                 'x-access-key': 'access-key-02',
@@ -1073,8 +1079,10 @@ describe('BaseGraphqlLauncher', () => {
         {
           params: {
             endpointUrl: 'http://example.com/graphql-customer',
-            input: {
-              id: 10001,
+            variables: {
+              input: {
+                id: 10001,
+              },
             },
             options: {
               headers: new Headers({
@@ -1107,7 +1115,9 @@ describe('BaseGraphqlLauncher', () => {
         {
           params: {
             endpointUrl: 'http://example.com/graphql-admin',
-            input: null,
+            variables: {
+              input: null,
+            },
             options: {
               headers: new Headers({
                 'x-access-key': 'access-key-02',
