@@ -175,19 +175,19 @@ export default class BaseGraphqlLauncher {
    * Create payload.
    *
    * @param {{
-   *   input: object | null
+   *   variables: object | null
    *   options: RequestInit
    * }} params - Parameters.
    * @returns {import('./BaseGraphqlPayload').default} Instance of Payload.
    */
   createPayload ({
-    input,
+    variables,
     options,
   }) {
     return this.Ctor
       .Payload
       .create({
-        variables: input,
+        variables,
         options,
       })
   }
