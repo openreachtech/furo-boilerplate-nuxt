@@ -12,7 +12,7 @@ export default class BaseGraphqlPayload {
     options,
   }) {
     this.queryTemplate = queryTemplate
-    this.input = input
+    this.variables = input
     this.options = options
   }
 
@@ -58,7 +58,7 @@ export default class BaseGraphqlPayload {
   }) {
     const builtOptions = this.generateFetchRequestOptions({
       options: this.options,
-      input: this.input,
+      input: this.variables,
     })
 
     return new Request(
@@ -84,7 +84,7 @@ export default class BaseGraphqlPayload {
 
     const body = JSON.stringify({
       query: this.queryTemplate,
-      variables: this.input,
+      variables: this.variables,
     })
 
     return {
@@ -101,12 +101,12 @@ export default class BaseGraphqlPayload {
    * @returns {string} Fulfilled query.
    */
   generateQuery () {
-    if (!this.input) {
+    if (!this.variables) {
       return this.queryTemplate
     }
 
     const literalizer = ObjectLiteralizer.create({
-      source: this.input,
+      source: this.variables,
     })
 
     const inputSlot = literalizer.literalize()
