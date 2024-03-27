@@ -170,6 +170,9 @@ describe('BaseGraphqlLauncher', () => {
             input: {
               id: 10001,
             },
+            options: {
+              mode: 'cors',
+            },
           },
         },
         {
@@ -185,13 +188,17 @@ describe('BaseGraphqlLauncher', () => {
               }
             },
             input: null,
+            options: {
+              credentials: 'omit',
+            },
           },
         },
       ]
 
       test.each(cases)('Payload: $params.Payload.name', ({ params }) => {
         const expected = {
-          input: params.input,
+          variables: params.input,
+          options: params.options,
         }
 
         const PayloadSpy = jest.spyOn(BaseGraphqlLauncher, 'Payload', 'get')
@@ -201,10 +208,12 @@ describe('BaseGraphqlLauncher', () => {
         const launcher = BaseGraphqlLauncher.create({
           config,
         })
-
-        const payload = launcher.createPayload({
+        const args = {
           input: params.input,
-        })
+          options: params.options,
+        }
+
+        const payload = launcher.createPayload(args)
 
         expect(payload)
           .toBeInstanceOf(params.Payload)
