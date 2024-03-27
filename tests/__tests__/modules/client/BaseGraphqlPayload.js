@@ -169,7 +169,7 @@ describe('BaseGraphqlPayload', () => {
           },
         ]
 
-        test.each(cases)('input: $params.input', ({ params }) => {
+        test.each(cases)('options: $params.options', ({ params }) => {
           const queryTemplate = `
             query {
               curriculums (input: $input) {
