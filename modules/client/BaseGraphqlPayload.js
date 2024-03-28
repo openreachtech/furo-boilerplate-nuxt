@@ -68,16 +68,13 @@ export default class BaseGraphqlPayload {
   /**
    * Generate fetch request options.
    *
-   * @param {{
-   *   options: RequestInit // Extra options of RequestInit.
-   * }} params - Parameters.
    * @returns {RequestInit} Instance of RequestInit.
    */
-  generateFetchRequestOptions ({
-    options,
-  }) {
+  generateFetchRequestOptions () {
     const headers = this.buildHeaders({
-      headers: options.headers ?? new Headers(),
+      headers: new Headers(
+        this.options?.headers
+      ),
     })
 
     const body = JSON.stringify({
@@ -87,7 +84,7 @@ export default class BaseGraphqlPayload {
 
     return {
       method: 'POST',
-      ...options,
+      ...this.options,
       headers,
       body,
     }
