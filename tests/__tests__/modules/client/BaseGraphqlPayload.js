@@ -637,12 +637,10 @@ describe('BaseGraphqlPayload', () => {
             const payload = new BaseGraphqlPayload({
               queryTemplate,
               variables: params.variables,
-            })
-            const args = {
               options: params.options,
-            }
+            })
 
-            const actual = payload.generateFetchRequestOptions(args)
+            const actual = payload.generateFetchRequestOptions()
 
             expect(actual.headers)
               .toBeInstanceOf(Headers)
@@ -690,12 +688,10 @@ describe('BaseGraphqlPayload', () => {
             const payload = new BaseGraphqlPayload({
               queryTemplate,
               variables: params.variables,
-            })
-            const args = {
               options: params.options,
-            }
+            })
 
-            const actual = payload.generateFetchRequestOptions(args)
+            const actual = payload.generateFetchRequestOptions()
 
             expect(actual)
               .toHaveProperty('headers', expect.any(Headers))
@@ -741,12 +737,10 @@ describe('BaseGraphqlPayload', () => {
             const payload = new BaseGraphqlPayload({
               queryTemplate,
               variables: params.variables,
-            })
-            const args = {
               options: params.options,
-            }
+            })
 
-            const actual = payload.generateFetchRequestOptions(args)
+            const actual = payload.generateFetchRequestOptions()
 
             expect(actual.body)
               .toBe(expected)
@@ -825,11 +819,8 @@ describe('BaseGraphqlPayload', () => {
               variables: params.variables,
               options: params.options,
             })
-            const args = {
-              options: params.options,
-            }
 
-            const actual = payload.generateFetchRequestOptions(args)
+            const actual = payload.generateFetchRequestOptions()
 
             expect(actual)
               .toMatchObject(expected)
