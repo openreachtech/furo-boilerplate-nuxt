@@ -72,7 +72,7 @@ describe('BaseGraphqlPayload', () => {
         test.each(cases)('queryTemplate: $params.queryTemplate', ({ params }) => {
           const args = {
             queryTemplate: params.queryTemplate,
-            variables: null,
+            variables: {},
             options: {
               mode: 'cors',
             },
@@ -102,7 +102,7 @@ describe('BaseGraphqlPayload', () => {
           },
           {
             params: {
-              variables: null,
+              variables: {},
             },
           },
         ]
@@ -194,7 +194,7 @@ describe('BaseGraphqlPayload', () => {
           `
           const args = {
             queryTemplate,
-            variables: null,
+            variables: {},
             options: params.options,
           }
           const actual = new BaseGraphqlPayload(args)
@@ -224,7 +224,7 @@ describe('BaseGraphqlPayload', () => {
       const cases = [
         {
           params: {
-            variables: null,
+            variables: {},
             options: {
               mode: 'cors',
             },
@@ -315,7 +315,7 @@ describe('BaseGraphqlPayload', () => {
       const cases = [
         {
           params: {
-            variables: null,
+            variables: {},
             options: {
               mode: 'cors',
             },
@@ -428,7 +428,7 @@ describe('BaseGraphqlPayload', () => {
           },
           {
             params: {
-              variables: null,
+              variables: {},
               options: {
                 credentials: 'omit',
               },
@@ -512,7 +512,7 @@ describe('BaseGraphqlPayload', () => {
       test.each(cases)('Content-Type: $params.headers', ({ params }) => {
         const payload = new BaseGraphqlPayload({
           queryTemplate,
-          variables: null,
+          variables: {},
         })
 
         const actual = payload.buildHeaders(params)
@@ -574,7 +574,7 @@ describe('BaseGraphqlPayload', () => {
       test.each(cases)('Content-Type: $params.headers', ({ params, expected }) => {
         const payload = new BaseGraphqlPayload({
           queryTemplate,
-          variables: null,
+          variables: {},
         })
 
         const actual = payload.buildHeaders(params)
