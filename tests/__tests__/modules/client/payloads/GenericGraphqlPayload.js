@@ -22,8 +22,8 @@ describe('GenericGraphqlPayload', () => {
       const cases = [
         {
           params: {
-            queryTemplate: `
-              query pickUpForumTopics {
+            queryTemplate: /* GraphQL */ `
+              query PickUpForumTopicsQuery {
                 pickUpForumTopics {
                   pickUpForumTopics {
                     id
@@ -60,8 +60,8 @@ describe('GenericGraphqlPayload', () => {
         },
         {
           params: {
-            queryTemplate: `
-              query {
+            queryTemplate: /* GraphQL */ `
+              query CurriculumsQuery ($input: CurriculumsSearchInput!) {
                 curriculums(input: $input) {
                   curriculums {
                     id
@@ -106,8 +106,8 @@ describe('GenericGraphqlPayload', () => {
       const cases = [
         {
           params: {
-            queryTemplate: `
-              query pickUpForumTopics {
+            queryTemplate: /* GraphQL */ `
+              query PickUpForumTopicsQuery {
                 pickUpForumTopics {
                   pickUpForumTopics {
                     id
@@ -144,8 +144,8 @@ describe('GenericGraphqlPayload', () => {
         },
         {
           params: {
-            queryTemplate: `
-              query {
+            queryTemplate: /* GraphQL */ `
+              query CurriculumsQuery ($input: CurriculumsSearchInput!) {
                 curriculums(input: $input) {
                   curriculums {
                     id

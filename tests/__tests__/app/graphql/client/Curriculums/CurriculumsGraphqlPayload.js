@@ -14,7 +14,7 @@ describe('CurriculumsGraphqlPayload', () => {
 
 describe('CurriculumsGraphqlPayload', () => {
   describe('.get:query', () => {
-    const expected = `
+    const expected = /* GraphQL */ `
       query CurriculumsQuery ($input: CurriculumsSearchInput!) {
         curriculums (input: $input) {
           curriculums {

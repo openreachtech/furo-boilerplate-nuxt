@@ -25,7 +25,7 @@ describe('JsonParseErrorGraphqlCapsule', () => {
           params: {
             rawResponse: new Response(),
             payload: new BaseGraphqlPayload({
-              queryTemplate: `
+              queryTemplate: /* GraphQL */ `
                 query {
                   customer: {
                     id
@@ -39,7 +39,7 @@ describe('JsonParseErrorGraphqlCapsule', () => {
           params: {
             rawResponse: new Response(),
             payload: new BaseGraphqlPayload({
-              queryTemplate: `
+              queryTemplate: /* GraphQL */ `
                 query {
                   admin: {
                     id
@@ -65,7 +65,7 @@ describe('JsonParseErrorGraphqlCapsule', () => {
           params: {
             rawResponse: new Response(),
             payload: new BaseGraphqlPayload({
-              queryTemplate: `
+              queryTemplate: /* GraphQL */ `
                 query {
                   customer: {
                     id
@@ -79,7 +79,7 @@ describe('JsonParseErrorGraphqlCapsule', () => {
           params: {
             rawResponse: new Response(),
             payload: new BaseGraphqlPayload({
-              queryTemplate: `
+              queryTemplate: /* GraphQL */ `
                 query {
                   admin: {
                     id

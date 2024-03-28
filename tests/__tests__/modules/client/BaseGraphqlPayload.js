@@ -11,8 +11,8 @@ describe('BaseGraphqlPayload', () => {
         const cases = [
           {
             params: {
-              queryTemplate: `
-                query pickUpForumTopics {
+              queryTemplate: /* GraphQL */ `
+                query PickUpForumTopicsQuery {
                   pickUpForumTopics {
                     pickUpForumTopics {
                       id
@@ -43,8 +43,8 @@ describe('BaseGraphqlPayload', () => {
           },
           {
             params: {
-              queryTemplate: `
-                query {
+              queryTemplate: /* GraphQL */ `
+                query CurriculumsQuery ($input: CurriculumsSearchInput!) {
                   curriculums(input: $input) {
                     curriculums {
                       id
@@ -108,8 +108,8 @@ describe('BaseGraphqlPayload', () => {
         ]
 
         test.each(cases)('variables: $params.variables', ({ params }) => {
-          const queryTemplate = `
-            query {
+          const queryTemplate = /* GraphQL */ `
+            query CurriculumsQuery ($input: CurriculumsSearchInput!) {
               curriculums (input: $input) {
                 curriculums {
                   id
@@ -170,8 +170,8 @@ describe('BaseGraphqlPayload', () => {
         ]
 
         test.each(cases)('options: $params.options', ({ params }) => {
-          const queryTemplate = `
-            query {
+          const queryTemplate = /* GraphQL */ `
+            query CurriculumsQuery ($input: CurriculumsSearchInput!) {
               curriculums (input: $input) {
                 curriculums {
                   id
@@ -228,8 +228,8 @@ describe('BaseGraphqlPayload', () => {
             options: {
               mode: 'cors',
             },
-            queryTemplate: `
-              query pickUpForumTopics {
+            queryTemplate: /* GraphQL */ `
+              query PickUpForumTopicsQuery {
                 pickUpForumTopics {
                   pickUpForumTopics {
                     id
@@ -268,8 +268,8 @@ describe('BaseGraphqlPayload', () => {
             options: {
               credentials: 'omit',
             },
-            queryTemplate: `
-              query {
+            queryTemplate: /* GraphQL */ `
+              query CurriculumsQuery ($input: CurriculumsSearchInput!) {
                 curriculums(input: $input) {
                   curriculums {
                     id
@@ -319,8 +319,8 @@ describe('BaseGraphqlPayload', () => {
             options: {
               mode: 'cors',
             },
-            queryTemplate: `
-              query pickUpForumTopics {
+            queryTemplate: /* GraphQL */ `
+              query PickUpForumTopicsQuery {
                 pickUpForumTopics {
                   pickUpForumTopics {
                     id
@@ -359,8 +359,8 @@ describe('BaseGraphqlPayload', () => {
             options: {
               credentials: 'omit',
             },
-            queryTemplate: `
-              query {
+            queryTemplate: /* GraphQL */ `
+              query CurriculumsQuery ($input: CurriculumsSearchInput!) {
                 curriculums(input: $input) {
                   curriculums {
                     id
@@ -449,8 +449,8 @@ describe('BaseGraphqlPayload', () => {
 
 describe('BaseGraphqlPayload', () => {
   describe('#buildHeaders()', () => {
-    const queryTemplate = `
-      query pickUpForumTopics {
+    const queryTemplate = /* GraphQL */ `
+      query PickUpForumTopicsQuery {
         pickUpForumTopics {
           pickUpForumTopics {
             id
@@ -591,7 +591,7 @@ describe('BaseGraphqlPayload', () => {
 
 describe('BaseGraphqlPayload', () => {
   describe('#generateFetchRequestOptions()', () => {
-    const queryTemplate = `
+    const queryTemplate = /* GraphQL */ `
                 query CurriculumsQuery ($input: CurriculumsInput!) {
                   curriculums (input: $input) {
                     curriculums {
@@ -834,8 +834,8 @@ describe('BaseGraphqlPayload', () => {
 describe('BaseGraphqlPayload', () => {
   describe('#createFetchRequest()', () => {
     describe('to be instance of Request', () => {
-      const queryTemplate = `
-        query {
+      const queryTemplate = /* GraphQL */ `
+        query CurriculumsQuery ($input: CurriculumsSearchInput!) {
           curriculums(input: $input) {
             curriculums {
               id
@@ -894,8 +894,8 @@ describe('BaseGraphqlPayload', () => {
     })
 
     describe('to equal Request value', () => {
-      const queryTemplate = `
-        query {
+      const queryTemplate = /* GraphQL */ `
+        query CurriculumsQuery ($input: CurriculumsSearchInput!) {
           curriculums(input: $input) {
             curriculums {
               id
