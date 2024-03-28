@@ -189,7 +189,7 @@ describe('BaseGraphqlLauncher', () => {
                 }`
               }
             },
-            variables: null,
+            variables: {},
             options: {
               credentials: 'omit',
             },
@@ -819,7 +819,7 @@ describe('BaseGraphqlLauncher', () => {
         {
           params: {
             endpointUrl: 'http://example.com/graphql-admin',
-            variables: null,
+            variables: {},
             options: {
               headers: new Headers({
                 'x-access-key': 'access-key-02',

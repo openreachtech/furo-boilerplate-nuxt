@@ -21,7 +21,7 @@ export default class BaseGraphqlPayload {
    * @returns {BaseGraphqlPayload} Instance of this class.
    */
   static create ({
-    variables = null,
+    variables = {},
     options = {},
   } = {}) {
     return new this({

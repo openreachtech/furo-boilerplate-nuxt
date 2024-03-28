@@ -9,7 +9,7 @@ export default class GenericGraphqlPayload extends BaseGraphqlPayload {
    */
   static create ({
     queryTemplate,
-    variables = null,
+    variables = {},
     options = {},
   } = {}) {
     return new this({
