@@ -194,7 +194,7 @@ export default class BaseGraphqlLauncher {
    *   payload: import('./BaseGraphqlPayload')
    *   result: object
    * }} params - Parameters.
-   * @returns
+   * @returns {import('./BaseGraphqlCapsule').default} Instance of capsule.
    */
   createResultCapsule ({
     rawResponse,
