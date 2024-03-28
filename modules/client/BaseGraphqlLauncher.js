@@ -91,11 +91,11 @@ export default class BaseGraphqlLauncher {
   } = {}) {
     const payload = this.createPayload({
       variables,
+      options,
     })
 
     const response = await this.invokeFetchQuery({
       payload,
-      options,
     })
     if (response === null) {
       return NetworkErrorGraphqlCapsule.create({
@@ -125,17 +125,14 @@ export default class BaseGraphqlLauncher {
    *
    * @param {{
    *   payload: import('./BaseGraphqlPayload).default
-   *   options: RequestInit
    * }} params - Parameters.
    * @returns {Promise<Response | null>} Instance of fetch API response.
    */
   async invokeFetchQuery ({
     payload,
-    options,
   }) {
     const request = payload.createFetchRequest({
       url: this.endpointUrl,
-      options,
     })
 
     try {
