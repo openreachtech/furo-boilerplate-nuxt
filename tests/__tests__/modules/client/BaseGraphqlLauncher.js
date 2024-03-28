@@ -792,7 +792,7 @@ describe('BaseGraphqlLauncher', () => {
               /** @inheritdoc */
               static get query () {
                 return `
-                query {
+                query CustomerQuery ($input: CustomerSearchInput!) {
                   customer (input: $input) {
                     id
                   }
@@ -907,7 +907,7 @@ describe('BaseGraphqlLauncher', () => {
               /** @inheritdoc */
               static get query () {
                 return `
-                query {
+                query CustomerQuery ($input: CustomerSearchInput!) {
                   customer (input: $input) {
                     id
                   }
@@ -996,7 +996,7 @@ describe('BaseGraphqlLauncher', () => {
               /** @inheritdoc */
               static get query () {
                 return `
-                query {
+                query CustomerQuery ($input: CustomerSearchInput!) {
                   customer (input: $input) {
                     id
                   }

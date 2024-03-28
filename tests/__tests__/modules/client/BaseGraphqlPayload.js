@@ -44,7 +44,7 @@ describe('BaseGraphqlPayload', () => {
           {
             params: {
               queryTemplate: `
-                query {
+                query CurriculumsQuery ($input: CurriculumsSearchInput!) {
                   curriculums(input: $input) {
                     curriculums {
                       id
@@ -109,7 +109,7 @@ describe('BaseGraphqlPayload', () => {
 
         test.each(cases)('variables: $params.variables', ({ params }) => {
           const queryTemplate = `
-            query {
+            query CurriculumsQuery ($input: CurriculumsSearchInput!) {
               curriculums (input: $input) {
                 curriculums {
                   id
@@ -171,7 +171,7 @@ describe('BaseGraphqlPayload', () => {
 
         test.each(cases)('options: $params.options', ({ params }) => {
           const queryTemplate = `
-            query {
+            query CurriculumsQuery ($input: CurriculumsSearchInput!) {
               curriculums (input: $input) {
                 curriculums {
                   id
@@ -269,7 +269,7 @@ describe('BaseGraphqlPayload', () => {
               credentials: 'omit',
             },
             queryTemplate: `
-              query {
+              query CurriculumsQuery ($input: CurriculumsSearchInput!) {
                 curriculums(input: $input) {
                   curriculums {
                     id
@@ -360,7 +360,7 @@ describe('BaseGraphqlPayload', () => {
               credentials: 'omit',
             },
             queryTemplate: `
-              query {
+              query CurriculumsQuery ($input: CurriculumsSearchInput!) {
                 curriculums(input: $input) {
                   curriculums {
                     id
@@ -835,7 +835,7 @@ describe('BaseGraphqlPayload', () => {
   describe('#createFetchRequest()', () => {
     describe('to be instance of Request', () => {
       const queryTemplate = `
-        query {
+        query CurriculumsQuery ($input: CurriculumsSearchInput!) {
           curriculums(input: $input) {
             curriculums {
               id
@@ -895,7 +895,7 @@ describe('BaseGraphqlPayload', () => {
 
     describe('to equal Request value', () => {
       const queryTemplate = `
-        query {
+        query CurriculumsQuery ($input: CurriculumsSearchInput!) {
           curriculums(input: $input) {
             curriculums {
               id

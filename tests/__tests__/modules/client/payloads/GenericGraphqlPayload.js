@@ -61,7 +61,7 @@ describe('GenericGraphqlPayload', () => {
         {
           params: {
             queryTemplate: `
-              query {
+              query CurriculumsQuery ($input: CurriculumsSearchInput!) {
                 curriculums(input: $input) {
                   curriculums {
                     id
@@ -145,7 +145,7 @@ describe('GenericGraphqlPayload', () => {
         {
           params: {
             queryTemplate: `
-              query {
+              query CurriculumsQuery ($input: CurriculumsSearchInput!) {
                 curriculums(input: $input) {
                   curriculums {
                     id
