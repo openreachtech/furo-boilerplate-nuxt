@@ -24,7 +24,7 @@ describe('NetworkErrorGraphqlCapsule', () => {
         {
           params: {
             payload: new BaseGraphqlPayload({
-              queryTemplate: `
+              queryTemplate: /* GraphQL */ `
                 query {
                   customer: {
                     id
@@ -37,7 +37,7 @@ describe('NetworkErrorGraphqlCapsule', () => {
         {
           params: {
             payload: new BaseGraphqlPayload({
-              queryTemplate: `
+              queryTemplate: /* GraphQL */ `
                 query {
                   admin: {
                     id
@@ -62,7 +62,7 @@ describe('NetworkErrorGraphqlCapsule', () => {
         {
           params: {
             payload: new BaseGraphqlPayload({
-              queryTemplate: `
+              queryTemplate: /* GraphQL */ `
                 query {
                   customer: {
                     id
@@ -75,7 +75,7 @@ describe('NetworkErrorGraphqlCapsule', () => {
         {
           params: {
             payload: new BaseGraphqlPayload({
-              queryTemplate: `
+              queryTemplate: /* GraphQL */ `
                 query {
                   admin: {
                     id

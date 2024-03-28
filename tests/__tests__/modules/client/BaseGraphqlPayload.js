@@ -11,7 +11,7 @@ describe('BaseGraphqlPayload', () => {
         const cases = [
           {
             params: {
-              queryTemplate: `
+              queryTemplate: /* GraphQL */ `
                 query PickUpForumTopicsQuery {
                   pickUpForumTopics {
                     pickUpForumTopics {
@@ -43,7 +43,7 @@ describe('BaseGraphqlPayload', () => {
           },
           {
             params: {
-              queryTemplate: `
+              queryTemplate: /* GraphQL */ `
                 query CurriculumsQuery ($input: CurriculumsSearchInput!) {
                   curriculums(input: $input) {
                     curriculums {
@@ -108,7 +108,7 @@ describe('BaseGraphqlPayload', () => {
         ]
 
         test.each(cases)('variables: $params.variables', ({ params }) => {
-          const queryTemplate = `
+          const queryTemplate = /* GraphQL */ `
             query CurriculumsQuery ($input: CurriculumsSearchInput!) {
               curriculums (input: $input) {
                 curriculums {
@@ -170,7 +170,7 @@ describe('BaseGraphqlPayload', () => {
         ]
 
         test.each(cases)('options: $params.options', ({ params }) => {
-          const queryTemplate = `
+          const queryTemplate = /* GraphQL */ `
             query CurriculumsQuery ($input: CurriculumsSearchInput!) {
               curriculums (input: $input) {
                 curriculums {
@@ -228,7 +228,7 @@ describe('BaseGraphqlPayload', () => {
             options: {
               mode: 'cors',
             },
-            queryTemplate: `
+            queryTemplate: /* GraphQL */ `
               query PickUpForumTopicsQuery {
                 pickUpForumTopics {
                   pickUpForumTopics {
@@ -268,7 +268,7 @@ describe('BaseGraphqlPayload', () => {
             options: {
               credentials: 'omit',
             },
-            queryTemplate: `
+            queryTemplate: /* GraphQL */ `
               query CurriculumsQuery ($input: CurriculumsSearchInput!) {
                 curriculums(input: $input) {
                   curriculums {
@@ -319,7 +319,7 @@ describe('BaseGraphqlPayload', () => {
             options: {
               mode: 'cors',
             },
-            queryTemplate: `
+            queryTemplate: /* GraphQL */ `
               query PickUpForumTopicsQuery {
                 pickUpForumTopics {
                   pickUpForumTopics {
@@ -359,7 +359,7 @@ describe('BaseGraphqlPayload', () => {
             options: {
               credentials: 'omit',
             },
-            queryTemplate: `
+            queryTemplate: /* GraphQL */ `
               query CurriculumsQuery ($input: CurriculumsSearchInput!) {
                 curriculums(input: $input) {
                   curriculums {
@@ -449,7 +449,7 @@ describe('BaseGraphqlPayload', () => {
 
 describe('BaseGraphqlPayload', () => {
   describe('#buildHeaders()', () => {
-    const queryTemplate = `
+    const queryTemplate = /* GraphQL */ `
       query PickUpForumTopicsQuery {
         pickUpForumTopics {
           pickUpForumTopics {
@@ -591,7 +591,7 @@ describe('BaseGraphqlPayload', () => {
 
 describe('BaseGraphqlPayload', () => {
   describe('#generateFetchRequestOptions()', () => {
-    const queryTemplate = `
+    const queryTemplate = /* GraphQL */ `
                 query CurriculumsQuery ($input: CurriculumsInput!) {
                   curriculums (input: $input) {
                     curriculums {
@@ -834,7 +834,7 @@ describe('BaseGraphqlPayload', () => {
 describe('BaseGraphqlPayload', () => {
   describe('#createFetchRequest()', () => {
     describe('to be instance of Request', () => {
-      const queryTemplate = `
+      const queryTemplate = /* GraphQL */ `
         query CurriculumsQuery ($input: CurriculumsSearchInput!) {
           curriculums(input: $input) {
             curriculums {
@@ -894,7 +894,7 @@ describe('BaseGraphqlPayload', () => {
     })
 
     describe('to equal Request value', () => {
-      const queryTemplate = `
+      const queryTemplate = /* GraphQL */ `
         query CurriculumsQuery ($input: CurriculumsSearchInput!) {
           curriculums(input: $input) {
             curriculums {

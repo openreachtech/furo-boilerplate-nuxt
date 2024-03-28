@@ -403,14 +403,14 @@ describe('BaseGraphqlLauncher', () => {
 describe('BaseGraphqlLauncher', () => {
   describe('#invokeFetchQuery()', () => {
     describe('to return response', () => {
-      const customerQueryTemplate = `
+      const customerQueryTemplate = /* GraphQL */ `
         query {
           customer {
             id
           }
         }
       }`
-      const adminQueryTemplate = `
+      const adminQueryTemplate = /* GraphQL */ `
         query {
           admin {
             id
@@ -503,14 +503,14 @@ describe('BaseGraphqlLauncher', () => {
     })
 
     describe('to throw on fetch', () => {
-      const customerQueryTemplate = `
+      const customerQueryTemplate = /* GraphQL */ `
         query {
           customer {
             id
           }
         }
       }`
-      const adminQueryTemplate = `
+      const adminQueryTemplate = /* GraphQL */ `
         query {
           admin {
             id
@@ -791,7 +791,7 @@ describe('BaseGraphqlLauncher', () => {
             Payload: class CustomerPayload extends BaseGraphqlPayload {
               /** @inheritdoc */
               static get query () {
-                return `
+                return /* GraphQL */ `
                 query CustomerQuery ($input: CustomerSearchInput!) {
                   customer (input: $input) {
                     id
@@ -828,7 +828,7 @@ describe('BaseGraphqlLauncher', () => {
             Payload: class AdminPayload extends BaseGraphqlPayload {
               /** @inheritdoc */
               static get query () {
-                return `
+                return /* GraphQL */ `
                 query {
                   admin {
                     id
@@ -906,7 +906,7 @@ describe('BaseGraphqlLauncher', () => {
             Payload: class CustomerPayload extends BaseGraphqlPayload {
               /** @inheritdoc */
               static get query () {
-                return `
+                return /* GraphQL */ `
                 query CustomerQuery ($input: CustomerSearchInput!) {
                   customer (input: $input) {
                     id
@@ -931,7 +931,7 @@ describe('BaseGraphqlLauncher', () => {
             Payload: class AdminPayload extends BaseGraphqlPayload {
               /** @inheritdoc */
               static get query () {
-                return `
+                return /* GraphQL */ `
                 query {
                   admin {
                     id
@@ -995,7 +995,7 @@ describe('BaseGraphqlLauncher', () => {
             Payload: class CustomerPayload extends BaseGraphqlPayload {
               /** @inheritdoc */
               static get query () {
-                return `
+                return /* GraphQL */ `
                 query CustomerQuery ($input: CustomerSearchInput!) {
                   customer (input: $input) {
                     id
@@ -1029,7 +1029,7 @@ describe('BaseGraphqlLauncher', () => {
             Payload: class AdminPayload extends BaseGraphqlPayload {
               /** @inheritdoc */
               static get query () {
-                return `
+                return /* GraphQL */ `
                 query {
                   admin {
                     id

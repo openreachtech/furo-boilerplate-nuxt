@@ -10,7 +10,7 @@ describe('BaseGraphqlCapsule', () => {
     describe('to keep property', () => {
       const mockResponse = new Response()
       const mockPayload = new BaseGraphqlCapsule({
-        queryTemplate: `
+        queryTemplate: /* GraphQL */ `
           query {
             customer {
               id
@@ -47,7 +47,7 @@ describe('BaseGraphqlCapsule', () => {
           {
             params: {
               payload: new BaseGraphqlPayload({
-                queryTemplate: `
+                queryTemplate: /* GraphQL */ `
                   query {
                     customer {
                       id
@@ -61,7 +61,7 @@ describe('BaseGraphqlCapsule', () => {
           {
             params: {
               payload: new BaseGraphqlPayload({
-                queryTemplate: `
+                queryTemplate: /* GraphQL */ `
                   query {
                     admin {
                       id
@@ -149,7 +149,7 @@ describe('BaseGraphqlCapsule', () => {
           params: {
             rawResponse: new Response(),
             payload: new BaseGraphqlPayload({
-              queryTemplate: `
+              queryTemplate: /* GraphQL */ `
                 query {
                   customer {
                     id
@@ -173,7 +173,7 @@ describe('BaseGraphqlCapsule', () => {
           params: {
             rawResponse: new Response(),
             payload: new BaseGraphqlPayload({
-              queryTemplate: `
+              queryTemplate: /* GraphQL */ `
                 query {
                   admin {
                     id
@@ -212,7 +212,7 @@ describe('BaseGraphqlCapsule', () => {
           params: {
             rawResponse: new Response(),
             payload: new BaseGraphqlPayload({
-              queryTemplate: `
+              queryTemplate: /* GraphQL */ `
                 query {
                   customer {
                     id
@@ -236,7 +236,7 @@ describe('BaseGraphqlCapsule', () => {
           params: {
             rawResponse: new Response(),
             payload: new BaseGraphqlPayload({
-              queryTemplate: `
+              queryTemplate: /* GraphQL */ `
                 query {
                   admin {
                     id
@@ -308,7 +308,7 @@ describe('BaseGraphqlCapsule', () => {
 
     describe('to be not pending (falsy)', () => {
       const mockPayload = new BaseGraphqlPayload({
-        queryTemplate: `
+        queryTemplate: /* GraphQL */ `
           query {
             customer {
               id
@@ -358,7 +358,7 @@ describe('BaseGraphqlCapsule', () => {
   describe('#hasContent()', () => {
     const mockResponse = new Response()
     const mockPayload = new BaseGraphqlPayload({
-      queryTemplate: `
+      queryTemplate: /* GraphQL */ `
         query {
           customer {
             id
@@ -453,7 +453,7 @@ describe('BaseGraphqlCapsule', () => {
   describe('#hasQueryError()', () => {
     const mockResponse = new Response()
     const mockPayload = new BaseGraphqlPayload({
-      queryTemplate: `
+      queryTemplate: /* GraphQL */ `
         query {
           customer {
             id
@@ -545,7 +545,7 @@ describe('BaseGraphqlCapsule', () => {
 describe('BaseGraphqlCapsule', () => {
   describe('#hasNetworkError()', () => {
     const mockPayload = new BaseGraphqlPayload({
-      queryTemplate: `
+      queryTemplate: /* GraphQL */ `
         query {
           customer {
             id
@@ -609,7 +609,7 @@ describe('BaseGraphqlCapsule', () => {
   describe('#hasJsonParseError()', () => {
     const mockResponse = new Response()
     const mockPayload = new BaseGraphqlPayload({
-      queryTemplate: `
+      queryTemplate: /* GraphQL */ `
         query {
           customer {
             id
@@ -746,7 +746,7 @@ describe('BaseGraphqlCapsule', () => {
   describe('#hasError()', () => {
     const mockResponse = new Response()
     const mockPayload = new BaseGraphqlPayload({
-      queryTemplate: `
+      queryTemplate: /* GraphQL */ `
         query {
           customer {
             id
@@ -850,7 +850,7 @@ describe('BaseGraphqlCapsule', () => {
   describe('#extractErrors()', () => {
     const mockResponse = new Response()
     const mockPayload = new BaseGraphqlPayload({
-      queryTemplate: `
+      queryTemplate: /* GraphQL */ `
         query {
           customer {
             id
@@ -968,7 +968,7 @@ describe('BaseGraphqlCapsule', () => {
   describe('#getErrorMessage()', () => {
     const mockResponse = new Response()
     const mockPayload = new BaseGraphqlPayload({
-      queryTemplate: `
+      queryTemplate: /* GraphQL */ `
         query {
           customer {
             id
@@ -1114,7 +1114,7 @@ describe('BaseGraphqlCapsule', () => {
   describe('#extractContent()', () => {
     const mockResponse = new Response()
     const mockPayload = new BaseGraphqlPayload({
-      queryTemplate: `
+      queryTemplate: /* GraphQL */ `
         query {
           customer {
             id
