@@ -89,3 +89,6 @@ sw.*
 
 # Vim swap files
 *.swp
+
+# for furo-core
+app/graphql/graphql.config.js
