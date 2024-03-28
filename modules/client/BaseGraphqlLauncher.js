@@ -91,11 +91,11 @@ export default class BaseGraphqlLauncher {
   } = {}) {
     const payload = this.createPayload({
       variables,
+      options,
     })
 
     const response = await this.invokeFetchQuery({
       payload,
-      options,
     })
     if (response === null) {
       return NetworkErrorGraphqlCapsule.create({
