@@ -72,7 +72,7 @@ describe('BaseGraphqlPayload', () => {
         test.each(cases)('queryTemplate: $params.queryTemplate', ({ params }) => {
           const args = {
             queryTemplate: params.queryTemplate,
-            input: null,
+            variables: null,
             options: {
               mode: 'cors',
             },
@@ -84,30 +84,30 @@ describe('BaseGraphqlPayload', () => {
         })
       })
 
-      describe('#input', () => {
+      describe('#variables', () => {
         const cases = [
           {
             params: {
-              input: {
+              variables: {
                 id: 10001,
               },
             },
           },
           {
             params: {
-              input: {
+              variables: {
                 id: 10002,
               },
             },
           },
           {
             params: {
-              input: null,
+              variables: null,
             },
           },
         ]
 
-        test.each(cases)('input: $params.input', ({ params }) => {
+        test.each(cases)('variables: $params.variables', ({ params }) => {
           const queryTemplate = `
             query {
               curriculums (input: $input) {
@@ -132,7 +132,7 @@ describe('BaseGraphqlPayload', () => {
           `
           const args = {
             queryTemplate,
-            input: params.input,
+            variables: params.variables,
             options: {
               mode: 'cors',
             },
@@ -140,7 +140,7 @@ describe('BaseGraphqlPayload', () => {
           const actual = new BaseGraphqlPayload(args)
 
           expect(actual)
-            .toHaveProperty('input', params.input)
+            .toHaveProperty('variables', params.variables)
         })
       })
 
@@ -194,7 +194,7 @@ describe('BaseGraphqlPayload', () => {
           `
           const args = {
             queryTemplate,
-            input: null,
+            variables: null,
             options: params.options,
           }
           const actual = new BaseGraphqlPayload(args)
@@ -224,7 +224,7 @@ describe('BaseGraphqlPayload', () => {
       const cases = [
         {
           params: {
-            input: null,
+            variables: null,
             options: {
               mode: 'cors',
             },
@@ -260,8 +260,10 @@ describe('BaseGraphqlPayload', () => {
         },
         {
           params: {
-            input: {
-              id: 10001,
+            variables: {
+              input: {
+                id: 10001,
+              },
             },
             options: {
               credentials: 'omit',
@@ -292,12 +294,12 @@ describe('BaseGraphqlPayload', () => {
         },
       ]
 
-      test.each(cases)('input: $params.input', ({ params }) => {
+      test.each(cases)('variables: $params.variables', ({ params }) => {
         const querySpy = jest.spyOn(BaseGraphqlPayload, 'query', 'get')
           .mockReturnValue(params.queryTemplate)
 
         const args = {
-          input: params.input,
+          variables: params.variables,
           options: params.options,
         }
         const actual = BaseGraphqlPayload.create(args)
@@ -313,7 +315,7 @@ describe('BaseGraphqlPayload', () => {
       const cases = [
         {
           params: {
-            input: null,
+            variables: null,
             options: {
               mode: 'cors',
             },
@@ -349,8 +351,10 @@ describe('BaseGraphqlPayload', () => {
         },
         {
           params: {
-            input: {
-              id: 10001,
+            variables: {
+              input: {
+                id: 10001,
+              },
             },
             options: {
               credentials: 'omit',
@@ -381,14 +385,14 @@ describe('BaseGraphqlPayload', () => {
         },
       ]
 
-      test.each(cases)('input: $params.input', ({ params }) => {
+      test.each(cases)('variables: $params.variables', ({ params }) => {
         const expected = {
           queryTemplate: params.queryTemplate,
-          input: params.input,
+          variables: params.variables,
           options: params.options,
         }
         const args = {
-          input: params.input,
+          variables: params.variables,
           options: params.options,
         }
 
@@ -412,8 +416,10 @@ describe('BaseGraphqlPayload', () => {
         const cases = [
           {
             params: {
-              input: {
-                id: 10001,
+              variables: {
+                input: {
+                  id: 10001,
+                },
               },
               options: {
                 mode: 'cors',
@@ -422,7 +428,7 @@ describe('BaseGraphqlPayload', () => {
           },
           {
             params: {
-              input: null,
+              variables: null,
               options: {
                 credentials: 'omit',
               },
@@ -430,7 +436,7 @@ describe('BaseGraphqlPayload', () => {
           },
         ]
 
-        test.each(cases)('input: $params.input', ({ params }) => {
+        test.each(cases)('variables: $params.variables', ({ params }) => {
           const expected = 'this function must be inherited'
 
           expect(() => BaseGraphqlPayload.create(params))
@@ -508,28 +514,34 @@ describe('BaseGraphqlPayload', () => {
       describe.each(cases)('queryTemplate: $params.queryTemplate', ({ params }) => {
         const args = [
           {
-            input: {
-              id: 10001,
+            variables: {
+              input: {
+                id: 10001,
+              },
             },
           },
           {
-            input: {
-              id: 10002,
+            variables: {
+              input: {
+                id: 10002,
+              },
             },
           },
           {
-            input: null,
+            variables: {
+              input: null,
+            },
           },
         ]
 
-        test.each(args)('input: $input', ({ input }) => {
+        test.each(args)('variables: $variables', ({ variables }) => {
           const expected = params.queryTemplate
 
           const querySpy = jest.spyOn(BaseGraphqlPayload, 'query', 'get')
             .mockReturnValue(params.queryTemplate)
 
           const payload = BaseGraphqlPayload.create({
-            input,
+            variables,
             options: {
               mode: 'cors',
             },
@@ -596,11 +608,13 @@ describe('BaseGraphqlPayload', () => {
           },
           inputCases: [
             {
-              input: {
-                pickUpForumTopicId: 10001,
+              variables: {
+                input: {
+                  pickUpForumTopicId: 10001,
+                },
               },
               expected: `
-                query pickUpForumTopics (input: {pickUpForumTopicId:10001}) {
+                query pickUpForumTopics (input: {input:{pickUpForumTopicId:10001}}) {
                   pickUpForumTopics {
                     pickUpForumTopics {
                       id
@@ -629,11 +643,13 @@ describe('BaseGraphqlPayload', () => {
             `,
             },
             {
-              input: {
-                pickUpForumTopicId: 10002,
+              variables: {
+                input: {
+                  pickUpForumTopicId: 10002,
+                },
               },
               expected: `
-                query pickUpForumTopics (input: {pickUpForumTopicId:10002}) {
+                query pickUpForumTopics (input: {input:{pickUpForumTopicId:10002}}) {
                   pickUpForumTopics {
                     pickUpForumTopics {
                       id
@@ -690,12 +706,14 @@ describe('BaseGraphqlPayload', () => {
           },
           inputCases: [
             {
-              input: {
-                curriculumId: 20001,
+              variables: {
+                input: {
+                  curriculumId: 20001,
+                },
               },
               expected: `
                 query {
-                  curriculums (input: {curriculumId:20001}) {
+                  curriculums (input: {input:{curriculumId:20001}}) {
                     curriculums {
                       id
                       title
@@ -717,12 +735,14 @@ describe('BaseGraphqlPayload', () => {
             `,
             },
             {
-              input: {
-                curriculumId: 20002,
+              variables: {
+                input: {
+                  curriculumId: 20002,
+                },
               },
               expected: `
                 query {
-                  curriculums (input: {curriculumId:20002}) {
+                  curriculums (input: {input:{curriculumId:20002}}) {
                     curriculums {
                       id
                       title
@@ -748,12 +768,12 @@ describe('BaseGraphqlPayload', () => {
       ]
 
       describe.each(cases)('queryTemplate: $params.queryTemplate', ({ params, inputCases }) => {
-        test.each(inputCases)('input: $input', ({ input, expected }) => {
+        test.each(inputCases)('variables: $variables', ({ variables, expected }) => {
           const querySpy = jest.spyOn(BaseGraphqlPayload, 'query', 'get')
             .mockReturnValue(params.queryTemplate)
 
           const payload = BaseGraphqlPayload.create({
-            input,
+            variables,
             options: {
               mode: 'cors',
             },
@@ -836,7 +856,7 @@ describe('BaseGraphqlPayload', () => {
       test.each(cases)('Content-Type: $params.headers', ({ params }) => {
         const payload = new BaseGraphqlPayload({
           queryTemplate,
-          input: null,
+          variables: null,
         })
 
         const actual = payload.buildHeaders(params)
@@ -898,7 +918,7 @@ describe('BaseGraphqlPayload', () => {
       test.each(cases)('Content-Type: $params.headers', ({ params, expected }) => {
         const payload = new BaseGraphqlPayload({
           queryTemplate,
-          input: null,
+          variables: null,
         })
 
         const actual = payload.buildHeaders(params)
@@ -934,8 +954,10 @@ describe('BaseGraphqlPayload', () => {
                 options: {
                   mode: 'cors',
                 },
-                input: {
-                  curriculumId: 20001,
+                variables: {
+                  input: {
+                    curriculumId: 20001,
+                  },
                 },
               },
             },
@@ -946,17 +968,19 @@ describe('BaseGraphqlPayload', () => {
                     'X-APP-ACCESS-KEY': 'access-key-of-our-application',
                   }),
                 },
-                input: {
-                  curriculumId: 20002,
+                variables: {
+                  input: {
+                    curriculumId: 20002,
+                  },
                 },
               },
             },
           ]
 
-          test.each(cases)('input: $params.input', ({ params }) => {
+          test.each(cases)('variables: $params.variables', ({ params }) => {
             const payload = new BaseGraphqlPayload({
               queryTemplate,
-              input: params.input,
+              variables: params.variables,
             })
             const args = {
               options: params.options,
@@ -976,8 +1000,10 @@ describe('BaseGraphqlPayload', () => {
                 options: {
                   mode: 'cors',
                 },
-                input: {
-                  curriculumId: 20001,
+                variables: {
+                  input: {
+                    curriculumId: 20001,
+                  },
                 },
               },
               expected: new Headers({
@@ -991,8 +1017,10 @@ describe('BaseGraphqlPayload', () => {
                     'X-APP-ACCESS-KEY': 'access-key-of-our-application',
                   }),
                 },
-                input: {
-                  curriculumId: 20002,
+                variables: {
+                  input: {
+                    curriculumId: 20002,
+                  },
                 },
               },
               expected: new Headers({
@@ -1002,10 +1030,10 @@ describe('BaseGraphqlPayload', () => {
             },
           ]
 
-          test.each(cases)('input: $params.input', ({ params, expected }) => {
+          test.each(cases)('variables: $params.variables', ({ params, expected }) => {
             const payload = new BaseGraphqlPayload({
               queryTemplate,
-              input: params.input,
+              variables: params.variables,
             })
             const args = {
               options: params.options,
@@ -1056,7 +1084,7 @@ describe('BaseGraphqlPayload', () => {
           test.each(cases)('input: $params.input', ({ params, expected }) => {
             const payload = new BaseGraphqlPayload({
               queryTemplate,
-              input: params.variables,
+              variables: params.variables,
             })
             const args = {
               options: params.options,
@@ -1075,8 +1103,10 @@ describe('BaseGraphqlPayload', () => {
           const cases = [
             {
               params: {
-                input: {
-                  curriculumId: 20001,
+                variables: {
+                  input: {
+                    curriculumId: 20001,
+                  },
                 },
                 options: {
                   mode: 'cors',
@@ -1088,8 +1118,10 @@ describe('BaseGraphqlPayload', () => {
             },
             {
               params: {
-                input: {
-                  curriculumId: 20002,
+                variables: {
+                  input: {
+                    curriculumId: 20002,
+                  },
                 },
                 options: {
                   credentials: 'include',
@@ -1101,8 +1133,10 @@ describe('BaseGraphqlPayload', () => {
             },
             {
               params: {
-                input: {
-                  curriculumId: 20003,
+                variables: {
+                  input: {
+                    curriculumId: 20003,
+                  },
                 },
                 options: {
                   cache: 'no-cache',
@@ -1114,8 +1148,10 @@ describe('BaseGraphqlPayload', () => {
             },
             {
               params: {
-                input: {
-                  curriculumId: 20004,
+                variables: {
+                  input: {
+                    curriculumId: 20004,
+                  },
                 },
                 options: {
                   redirect: 'follow',
@@ -1130,7 +1166,7 @@ describe('BaseGraphqlPayload', () => {
           test.each(cases)('options: $params.options', ({ params, expected }) => {
             const payload = new BaseGraphqlPayload({
               queryTemplate,
-              input: params.input,
+              variables: params.variables,
               options: params.options,
             })
             const args = {
@@ -1169,8 +1205,10 @@ describe('BaseGraphqlPayload', () => {
             options: {
               mode: 'cors',
             },
-            input: {
-              curriculumId: 20001,
+            variables: {
+              input: {
+                curriculumId: 20001,
+              },
             },
           },
         },
@@ -1182,8 +1220,10 @@ describe('BaseGraphqlPayload', () => {
                 'X-APP-ACCESS-KEY': 'access-key-of-our-application',
               }),
             },
-            input: {
-              curriculumId: 20002,
+            variables: {
+              input: {
+                curriculumId: 20002,
+              },
             },
           },
         },
@@ -1192,7 +1232,7 @@ describe('BaseGraphqlPayload', () => {
       test.each(cases)('url: $params.url', ({ params }) => {
         const payload = new BaseGraphqlPayload({
           queryTemplate,
-          input: params.input,
+          variables: params.variables,
           options: params.options,
         })
         const args = {
@@ -1225,8 +1265,10 @@ describe('BaseGraphqlPayload', () => {
             options: {
               mode: 'cors',
             },
-            input: {
-              curriculumId: 20001,
+            variables: {
+              input: {
+                curriculumId: 20001,
+              },
             },
           },
           expected: new Request('https://api.example.com/graphql-customer', {
@@ -1245,8 +1287,10 @@ describe('BaseGraphqlPayload', () => {
                 'X-APP-ACCESS-KEY': 'access-key-of-our-application',
               }),
             },
-            input: {
-              curriculumId: 20002,
+            variables: {
+              input: {
+                curriculumId: 20002,
+              },
             },
           },
           expected: new Request('https://api.example.com/graphql-admin', {
@@ -1263,7 +1307,7 @@ describe('BaseGraphqlPayload', () => {
       test.each(cases)('url: $params.url', ({ params }) => {
         const payload = new BaseGraphqlPayload({
           queryTemplate,
-          input: params.input,
+          variables: params.variables,
           options: params.options,
         })
         const args = {
