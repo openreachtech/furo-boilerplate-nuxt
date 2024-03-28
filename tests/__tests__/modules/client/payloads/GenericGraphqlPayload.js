@@ -50,7 +50,9 @@ describe('GenericGraphqlPayload', () => {
                 }
               }
             `,
-            input: null,
+            variables: {
+              input: null,
+            },
             options: {
               mode: 'cors',
             },
@@ -80,8 +82,10 @@ describe('GenericGraphqlPayload', () => {
                 }
               }
             `,
-            input: {
-              id: 10001,
+            variables: {
+              input: {
+                id: 10001,
+              },
             },
             options: {
               credentials: 'omit',
@@ -130,7 +134,9 @@ describe('GenericGraphqlPayload', () => {
                 }
               }
             `,
-            input: null,
+            variables: {
+              input: null,
+            },
             options: {
               mode: 'cors',
             },
@@ -160,8 +166,10 @@ describe('GenericGraphqlPayload', () => {
                 }
               }
             `,
-            input: {
-              id: 10001,
+            variables: {
+              input: {
+                id: 10001,
+              },
             },
             options: {
               credentials: 'omit',

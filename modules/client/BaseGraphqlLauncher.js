@@ -187,7 +187,7 @@ export default class BaseGraphqlLauncher {
     return this.Ctor
       .Payload
       .create({
-        input,
+        variables: input,
         options,
       })
   }

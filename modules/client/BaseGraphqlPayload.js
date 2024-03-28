@@ -23,12 +23,12 @@ export default class BaseGraphqlPayload {
    * @returns {BaseGraphqlPayload} Instance of this class.
    */
   static create ({
-    input = null,
+    variables = null,
     options = {},
   } = {}) {
     return new this({
       queryTemplate: this.query,
-      variables: input,
+      variables,
       options,
     })
   }
@@ -147,7 +147,7 @@ export default class BaseGraphqlPayload {
 
 /**
  * @typedef {{
- *   input?: object | null
+ *   variables?: object | null
  *   options?: RequestInit
  * }} BaseGraphqlPayloadFactoryParams
  */
