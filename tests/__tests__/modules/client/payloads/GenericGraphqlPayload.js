@@ -23,7 +23,7 @@ describe('GenericGraphqlPayload', () => {
         {
           params: {
             queryTemplate: `
-              query pickUpForumTopics {
+              query PickUpForumTopicsQuery {
                 pickUpForumTopics {
                   pickUpForumTopics {
                     id
@@ -107,7 +107,7 @@ describe('GenericGraphqlPayload', () => {
         {
           params: {
             queryTemplate: `
-              query pickUpForumTopics {
+              query PickUpForumTopicsQuery {
                 pickUpForumTopics {
                   pickUpForumTopics {
                     id

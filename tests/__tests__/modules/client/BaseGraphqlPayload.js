@@ -12,7 +12,7 @@ describe('BaseGraphqlPayload', () => {
           {
             params: {
               queryTemplate: `
-                query pickUpForumTopics {
+                query PickUpForumTopicsQuery {
                   pickUpForumTopics {
                     pickUpForumTopics {
                       id
@@ -229,7 +229,7 @@ describe('BaseGraphqlPayload', () => {
               mode: 'cors',
             },
             queryTemplate: `
-              query pickUpForumTopics {
+              query PickUpForumTopicsQuery {
                 pickUpForumTopics {
                   pickUpForumTopics {
                     id
@@ -320,7 +320,7 @@ describe('BaseGraphqlPayload', () => {
               mode: 'cors',
             },
             queryTemplate: `
-              query pickUpForumTopics {
+              query PickUpForumTopicsQuery {
                 pickUpForumTopics {
                   pickUpForumTopics {
                     id
@@ -450,7 +450,7 @@ describe('BaseGraphqlPayload', () => {
 describe('BaseGraphqlPayload', () => {
   describe('#buildHeaders()', () => {
     const queryTemplate = `
-      query pickUpForumTopics {
+      query PickUpForumTopicsQuery {
         pickUpForumTopics {
           pickUpForumTopics {
             id
