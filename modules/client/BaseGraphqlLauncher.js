@@ -124,7 +124,7 @@ export default class BaseGraphqlLauncher {
    * Fetch query.
    *
    * @param {{
-   *   payload: import('./BaseGraphqlPayload).default
+   *   payload: import('@/modules/client/BaseGraphqlPayload').default
    * }} params - Parameters.
    * @returns {Promise<Response | null>} Instance of fetch API response.
    */
@@ -194,7 +194,7 @@ export default class BaseGraphqlLauncher {
    *   payload: import('./BaseGraphqlPayload')
    *   result: object
    * }} params - Parameters.
-   * @returns
+   * @returns {import('./BaseGraphqlCapsule').default} Instance of capsule.
    */
   createResultCapsule ({
     rawResponse,
