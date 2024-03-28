@@ -167,8 +167,10 @@ describe('BaseGraphqlLauncher', () => {
                 }`
               }
             },
-            input: {
-              id: 10001,
+            variables: {
+              input: {
+                id: 10001,
+              },
             },
             options: {
               mode: 'cors',
@@ -187,7 +189,7 @@ describe('BaseGraphqlLauncher', () => {
                 }`
               }
             },
-            input: null,
+            variables: null,
             options: {
               credentials: 'omit',
             },
@@ -197,7 +199,7 @@ describe('BaseGraphqlLauncher', () => {
 
       test.each(cases)('Payload: $params.Payload.name', ({ params }) => {
         const expected = {
-          variables: params.input,
+          variables: params.variables,
           options: params.options,
         }
 
@@ -209,7 +211,7 @@ describe('BaseGraphqlLauncher', () => {
           config,
         })
         const args = {
-          input: params.input,
+          variables: params.variables,
           options: params.options,
         }
 
