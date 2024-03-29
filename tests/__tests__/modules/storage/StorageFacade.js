@@ -114,13 +114,6 @@ describe('StorageFacade', () => {
 
       describe.each(cases)('storage: $params.storage', ({ params }) => {
         const storage = globalThis[params.storage]
-        storage.clear()
-        storage.alpha = '100'
-        storage.beta = '200'
-
-        const facade = new StorageFacade({
-          storage,
-        })
 
         const cases = [
           {
@@ -138,6 +131,14 @@ describe('StorageFacade', () => {
         ]
 
         test.each(cases)('key: $params.key', ({ params, expected }) => {
+          storage.clear()
+          storage.alpha = '100'
+          storage.beta = '200'
+
+          const facade = new StorageFacade({
+            storage,
+          })
+
           const actual = facade.get(params.key)
 
           expect(actual)
