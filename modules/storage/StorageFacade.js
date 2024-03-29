@@ -35,6 +35,24 @@ export default class StorageFacade {
 
     return this.storage[methodName](key)
   }
+
+  /**
+   * Set an item to the storage.
+   *
+   * @param {string} key - Key of the item.
+   * @param {string} value - Value of the item.
+   * @returns {StorageFacade} For method chaining.
+   */
+  set (
+    key,
+    value
+  ) {
+    const methodName = 'setItem'
+
+    this.storage[methodName](key, value)
+
+    return this
+  }
 }
 
 /**
