@@ -126,6 +126,35 @@ describe('StorageFacade', () => {
 })
 
 describe('StorageFacade', () => {
+  describe('.createAsSession()', () => {
+    describe('to be instance of own class', () => {
+      test('with no arguments', () => {
+        const facade = StorageFacade.createAsSession()
+
+        expect(facade)
+          .toBeInstanceOf(StorageFacade)
+      })
+    })
+
+    describe('to call .create()', () => {
+      test('with no arguments', () => {
+        const expected = {
+          storage: globalThis.sessionStorage,
+        }
+        const createSpy = jest.spyOn(StorageFacade, 'create')
+
+        StorageFacade.createAsSession()
+
+        expect(createSpy)
+          .toHaveBeenCalledWith(expected)
+
+        createSpy.mockRestore()
+      })
+    })
+  })
+})
+
+describe('StorageFacade', () => {
   describe('#get()', () => {
     describe('to be set value', () => {
       const cases = [
