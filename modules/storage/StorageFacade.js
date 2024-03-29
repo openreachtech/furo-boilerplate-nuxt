@@ -23,6 +23,18 @@ export default class StorageFacade {
       storage,
     })
   }
+
+  /**
+   * Get an item from the storage.
+   *
+   * @param {string} key - Key of the item.
+   * @returns {string} Value of the item.
+   */
+  get (key) {
+    const methodName = 'getItem'
+
+    return this.storage[methodName](key)
+  }
 }
 
 /**
