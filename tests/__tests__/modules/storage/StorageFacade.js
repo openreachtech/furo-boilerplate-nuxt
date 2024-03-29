@@ -95,3 +95,89 @@ describe('StorageFacade', () => {
     })
   })
 })
+
+describe('StorageFacade', () => {
+  describe('#get()', () => {
+    describe('to be set value', () => {
+      const cases = [
+        {
+          params: {
+            storage: 'localStorage',
+          },
+        },
+        {
+          params: {
+            storage: 'sessionStorage',
+          },
+        },
+      ]
+
+      describe.each(cases)('storage: $params.storage', ({ params }) => {
+        const storage = globalThis[params.storage]
+        storage.clear()
+        storage.alpha = '100'
+        storage.beta = '200'
+
+        const facade = new StorageFacade({
+          storage,
+        })
+
+        const cases = [
+          {
+            params: {
+              key: 'alpha',
+            },
+            expected: '100',
+          },
+          {
+            params: {
+              key: 'beta',
+            },
+            expected: '200',
+          },
+        ]
+
+        test.each(cases)('key: $params.key', ({ params, expected }) => {
+          const actual = facade.get(params.key)
+
+          expect(actual)
+            .toBe(expected)
+        })
+      })
+    })
+
+    describe('to call #storage.getItem()', () => {
+      const cases = [
+        {
+          params: {
+            key: 'alpha',
+          },
+        },
+        {
+          params: {
+            key: 'beta',
+          },
+        },
+      ]
+
+      test.each(cases)('key: $params.kay', ({ params }) => {
+        const mockStorage = {
+          getItem () {},
+        }
+
+        const getItemSpy = jest.spyOn(mockStorage, 'getItem')
+          .mockReturnValue(null)
+        const facade = new StorageFacade({
+          storage: mockStorage,
+        })
+
+        facade.get(params.key)
+
+        expect(getItemSpy)
+          .toHaveBeenCalledWith(params.key)
+
+        getItemSpy.mockRestore()
+      })
+    })
+  })
+})
