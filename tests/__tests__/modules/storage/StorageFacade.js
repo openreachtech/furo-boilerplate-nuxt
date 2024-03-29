@@ -97,6 +97,35 @@ describe('StorageFacade', () => {
 })
 
 describe('StorageFacade', () => {
+  describe('.createAsLocal()', () => {
+    describe('to be instance of own class', () => {
+      test('with no arguments', () => {
+        const facade = StorageFacade.createAsLocal()
+
+        expect(facade)
+          .toBeInstanceOf(StorageFacade)
+      })
+    })
+
+    describe('to call .create()', () => {
+      test('with no arguments', () => {
+        const expected = {
+          storage: globalThis.localStorage,
+        }
+        const createSpy = jest.spyOn(StorageFacade, 'create')
+
+        StorageFacade.createAsLocal()
+
+        expect(createSpy)
+          .toHaveBeenCalledWith(expected)
+
+        createSpy.mockRestore()
+      })
+    })
+  })
+})
+
+describe('StorageFacade', () => {
   describe('#get()', () => {
     describe('to be set value', () => {
       const cases = [
