@@ -181,3 +181,152 @@ describe('StorageFacade', () => {
     })
   })
 })
+
+describe('StorageFacade', () => {
+  describe('#set()', () => {
+    describe('to be set value', () => {
+      const cases = [
+        {
+          params: {
+            storage: 'localStorage',
+          },
+        },
+        {
+          params: {
+            storage: 'sessionStorage',
+          },
+        },
+      ]
+
+      describe.each(cases)('storage: $params.storage', ({ params }) => {
+        const storage = globalThis[params.storage]
+        storage.clear()
+
+        const facade = new StorageFacade({
+          storage,
+        })
+
+        const cases = [
+          {
+            params: {
+              value: '100',
+            },
+            expected: '100',
+          },
+          {
+            params: {
+              value: '200',
+            },
+            expected: '200',
+          },
+        ]
+
+        test.each(cases)('value: $params.value', ({ params, expected }) => {
+          const key = 'alpha'
+
+          facade.set(
+            key,
+            params.value
+          )
+          const actualValue = storage[key]
+
+          expect(actualValue)
+            .toBe(expected)
+        })
+      })
+    })
+
+    describe('to call #storage.setItem()', () => {
+      const cases = [
+        {
+          params: {
+            key: 'alpha',
+            value: '100',
+          },
+        },
+        {
+          params: {
+            key: 'beta',
+            value: '200',
+          },
+        },
+      ]
+
+      test.each(cases)('key: $params.kay', ({ params }) => {
+        const mockStorage = {
+          setItem () {},
+        }
+
+        const getItemSpy = jest.spyOn(mockStorage, 'setItem')
+          .mockReturnValue(null)
+        const facade = new StorageFacade({
+          storage: mockStorage,
+        })
+
+        facade.set(
+          params.key,
+          params.value
+        )
+
+        expect(getItemSpy)
+          .toHaveBeenCalledWith(
+            params.key,
+            params.value
+          )
+
+        getItemSpy.mockRestore()
+      })
+    })
+
+    describe('to return own instance for method chain', () => {
+      const cases = [
+        {
+          params: {
+            storage: 'localStorage',
+          },
+        },
+        {
+          params: {
+            storage: 'sessionStorage',
+          },
+        },
+      ]
+
+      describe.each(cases)('storage: $params.storage', ({ params }) => {
+        const storage = globalThis[params.storage]
+        storage.clear()
+
+        const facade = new StorageFacade({
+          storage,
+        })
+
+        const cases = [
+          {
+            params: {
+              value: '100',
+            },
+            expected: '100',
+          },
+          {
+            params: {
+              value: '200',
+            },
+            expected: '200',
+          },
+        ]
+
+        test.each(cases)('value: $params.value', ({ params, expected }) => {
+          const key = 'beta'
+
+          const actual = facade.set(
+            key,
+            params.value
+          )
+
+          expect(actual)
+            .toBe(facade) // same reference
+        })
+      })
+    })
+  })
+})
