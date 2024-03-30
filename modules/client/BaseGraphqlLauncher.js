@@ -121,6 +121,30 @@ export default class BaseGraphqlLauncher {
   }
 
   /**
+   * Update options.
+   *
+   * @param {{
+   *   options: RequestInit
+   * }} params - Parameters.
+   * @returns {RequestInit} Updated options.
+   */
+  updateOptions ({
+    options: {
+      headers = new Headers(),
+      ...extraOptions
+    },
+  }) {
+    const updatedHeaders = this.updateHeaders({
+      headers,
+    })
+
+    return {
+      headers: updatedHeaders,
+      ...extraOptions,
+    }
+  }
+
+  /**
    * Update headers.
    *
    * @param {{
