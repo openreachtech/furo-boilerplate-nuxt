@@ -1084,6 +1084,163 @@ describe('BaseGraphqlLauncher', () => {
         CapsuleSpy.mockRestore()
       })
     })
+
+    describe('to call other members', () => {
+      const graphqlConfig = {
+        ENDPOINT_URL: 'http://example.com/graphql-customer',
+      }
+
+      class DerivedGraphqlPayload extends BaseGraphqlPayload {
+        /** @inheritdoc */
+        static get query () {
+          return /* GraphQL */ `
+          query DerivedQuery {
+            derived {
+              id
+            }
+          }`
+        }
+      }
+
+      class DerivedGraphqlCapsule extends BaseGraphqlCapsule {
+
+      }
+
+      describe('for #updateOptions()', () => {
+        const cases = [
+          {
+            params: {
+              variables: {
+                id: 10001,
+              },
+              options: {
+                headers: new Headers({
+                  'x-access-key': 'access-key-01',
+                }),
+                mode: 'cors',
+              },
+            },
+          },
+          {
+            params: {
+              variables: {
+                id: 10002,
+              },
+              options: {
+                headers: new Headers({
+                  'x-access-key': 'access-key-02',
+                }),
+                credentials: 'omit',
+              },
+            },
+          },
+        ]
+
+        test.each(cases)('variables: $params.variables', async ({ params }) => {
+          const PayloadSpy = jest.spyOn(BaseGraphqlLauncher, 'Payload', 'get')
+            .mockReturnValue(DerivedGraphqlPayload)
+          const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
+            .mockReturnValue(DerivedGraphqlCapsule)
+
+          const launcher = BaseGraphqlLauncher.create({
+            config: graphqlConfig,
+          })
+          const updateOptionsSpy = jest.spyOn(launcher, 'updateOptions')
+          const invokeFetchQuerySpy = jest.spyOn(launcher, 'invokeFetchQuery')
+            .mockResolvedValue(new Response())
+
+          const expected = {
+            options: params.options,
+          }
+
+          await launcher.launchQuery(params)
+
+          expect(updateOptionsSpy)
+            .toHaveBeenCalledWith(expected)
+
+          PayloadSpy.mockRestore()
+          CapsuleSpy.mockRestore()
+
+          updateOptionsSpy.mockRestore()
+          invokeFetchQuerySpy.mockRestore()
+        })
+      })
+
+      describe('for #createPayload()', () => {
+        const cases = [
+          {
+            params: {
+              variables: {
+                id: 10001,
+              },
+              options: {
+                headers: new Headers({
+                  'x-access-key': 'access-key-01',
+                }),
+                mode: 'cors',
+              },
+            },
+            expected: {
+              variables: {
+                id: 10001,
+              },
+              options: {
+                headers: expect.any(Headers),
+                mode: 'cors',
+              },
+            },
+          },
+          {
+            params: {
+              variables: {
+                id: 10002,
+              },
+              options: {
+                headers: new Headers({
+                  'x-access-key': 'access-key-02',
+                }),
+                credentials: 'omit',
+              },
+            },
+            expected: {
+              variables: {
+                id: 10002,
+              },
+              options: {
+                headers: expect.any(Headers),
+                credentials: 'omit',
+              },
+            },
+          },
+        ]
+
+        test.each(cases)('variables: $params.variables', async ({ params, expected }) => {
+          const PayloadSpy = jest.spyOn(BaseGraphqlLauncher, 'Payload', 'get')
+            .mockReturnValue(DerivedGraphqlPayload)
+          const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
+            .mockReturnValue(DerivedGraphqlCapsule)
+
+          const launcher = BaseGraphqlLauncher.create({
+            config: graphqlConfig,
+          })
+
+          const createPayloadSpy = jest.spyOn(launcher, 'createPayload')
+          const invokeFetchQuerySpy = jest.spyOn(launcher, 'invokeFetchQuery')
+            .mockResolvedValue(new Response())
+
+          await launcher.launchQuery(params)
+
+          expect(createPayloadSpy)
+            .toHaveBeenCalledWith(expected)
+
+          PayloadSpy.mockRestore()
+          CapsuleSpy.mockRestore()
+
+          createPayloadSpy.mockRestore()
+          invokeFetchQuerySpy.mockRestore()
+        })
+      })
+    })
   })
 })
 
