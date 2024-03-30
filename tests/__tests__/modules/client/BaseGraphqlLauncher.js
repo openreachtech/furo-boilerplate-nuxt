@@ -1120,3 +1120,250 @@ describe('BaseGraphqlLauncher', () => {
     })
   })
 })
+
+describe('BaseGraphqlLauncher', () => {
+  describe('#updateOptions()', () => {
+    describe('to return generated options', () => {
+      describe('with options includes Headers', () => {
+        const cases = [
+          {
+            params: {
+              options: {
+                headers: new Headers({
+                  'x-access-key': 'access-key-01',
+                }),
+                mode: 'cors',
+              },
+            },
+            expected: {
+              headers: expect.any(Headers),
+              mode: 'cors',
+            },
+          },
+          {
+            params: {
+              options: {
+                headers: new Headers({
+                  'x-access-key': 'access-key-02',
+                }),
+                credentials: 'omit',
+              },
+            },
+            expected: {
+              headers: expect.any(Headers),
+              credentials: 'omit',
+            },
+          },
+          {
+            params: {
+              options: {
+                headers: new Headers({
+                  'x-access-key': 'access-key-03',
+                }),
+                priority: 'high',
+              },
+            },
+            expected: {
+              headers: expect.any(Headers),
+              priority: 'high',
+            },
+          },
+          {
+            params: {
+              options: {
+                headers: new Headers({
+                  'x-access-key': 'access-key-04',
+                }),
+              },
+            },
+            expected: {
+              headers: expect.any(Headers),
+            },
+          },
+        ]
+
+        test.each(cases)('options: $params.options', ({ params, expected }) => {
+          const launcher = BaseGraphqlLauncher.create({
+            config: {
+              ENDPOINT_URL: 'http://example.com/graphql-customer',
+            },
+          })
+
+          const actual = launcher.updateOptions(params)
+
+          expect(actual)
+            .toMatchObject(expected)
+        })
+      })
+
+      describe('with options not include Headers', () => {
+        const cases = [
+          {
+            params: {
+              options: {
+                mode: 'cors',
+              },
+            },
+          },
+          {
+            params: {
+              options: {
+                credentials: 'omit',
+              },
+            },
+          },
+          {
+            params: {
+              options: {
+                priority: 'high',
+              },
+            },
+          },
+          {
+            params: {
+              options: {},
+            },
+          },
+        ]
+
+        test.each(cases)('options: $params.options', ({ params }) => {
+          const launcher = BaseGraphqlLauncher.create({
+            config: {
+              ENDPOINT_URL: 'http://example.com/graphql-customer',
+            },
+          })
+
+          const actual = launcher.updateOptions(params)
+
+          expect(actual)
+            .toMatchObject(params.options)
+          expect(actual)
+            .toHaveProperty('headers', expect.any(Headers))
+        })
+      })
+    })
+
+    describe('to call other members', () => {
+      describe('with options includes Headers', () => {
+        const cases = [
+          {
+            params: {
+              options: {
+                headers: new Headers({
+                  'x-access-key': 'access-key-01',
+                }),
+                mode: 'cors',
+              },
+            },
+          },
+          {
+            params: {
+              options: {
+                headers: new Headers({
+                  'x-access-key': 'access-key-02',
+                }),
+                credentials: 'omit',
+              },
+            },
+          },
+          {
+            params: {
+              options: {
+                headers: new Headers({
+                  'x-access-key': 'access-key-03',
+                }),
+                priority: 'high',
+              },
+            },
+          },
+          {
+            params: {
+              options: {
+                headers: new Headers({
+                  'x-access-key': 'access-key-04',
+                }),
+              },
+            },
+          },
+        ]
+
+        test.each(cases)('options: $params.options', ({ params }) => {
+          const launcher = BaseGraphqlLauncher.create({
+            config: {
+              ENDPOINT_URL: 'http://example.com/graphql-customer',
+            },
+          })
+          const headersTally = params.options.headers
+          const updateHeadersSpy = jest.spyOn(launcher, 'updateHeaders')
+
+          const expected = {
+            headers: headersTally,
+          }
+
+          const actual = launcher.updateOptions(params)
+
+          expect(updateHeadersSpy)
+            .toHaveBeenCalledWith(expected)
+          expect(actual.headers)
+            .toBe(headersTally) // same reference
+
+          updateHeadersSpy.mockRestore()
+        })
+      })
+
+      describe('with options not include Headers', () => {
+        const cases = [
+          {
+            params: {
+              options: {
+                mode: 'cors',
+              },
+            },
+          },
+          {
+            params: {
+              options: {
+                credentials: 'omit',
+              },
+            },
+          },
+          {
+            params: {
+              options: {
+                priority: 'high',
+              },
+            },
+          },
+          {
+            params: {
+              options: {},
+            },
+          },
+        ]
+
+        test.each(cases)('options: $params.options', ({ params }) => {
+          const launcher = BaseGraphqlLauncher.create({
+            config: {
+              ENDPOINT_URL: 'http://example.com/graphql-customer',
+            },
+          })
+          const headersTally = new Headers()
+          const updateHeadersSpy = jest.spyOn(launcher, 'updateHeaders')
+            .mockReturnValue(headersTally)
+          const expected = {
+            headers: headersTally,
+          }
+
+          const actual = launcher.updateOptions(params)
+
+          expect(updateHeadersSpy)
+            .toHaveBeenCalledWith(expected)
+          expect(actual.headers)
+            .toBe(headersTally) // same reference
+
+          updateHeadersSpy.mockRestore()
+        })
+      })
+    })
+  })
+})
