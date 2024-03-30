@@ -89,9 +89,13 @@ export default class BaseGraphqlLauncher {
     variables = {},
     options = {},
   } = {}) {
+    const updatedOptions = this.updateOptions({
+      options,
+    })
+
     const payload = this.createPayload({
       variables,
-      options,
+      options: updatedOptions,
     })
 
     const response = await this.invokeFetchQuery({
