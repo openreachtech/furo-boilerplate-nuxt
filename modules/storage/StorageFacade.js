@@ -25,6 +25,17 @@ export default class StorageFacade {
   }
 
   /**
+   * Factory method to create an instance with `localStorage`.
+   *
+   * @returns {StorageFacade} Instance of this class.
+   */
+  static createAsLocal () {
+    return this.create({
+      storage: localStorage,
+    })
+  }
+
+  /**
    * Get an item from the storage.
    *
    * @param {string} key - Key of the item.
