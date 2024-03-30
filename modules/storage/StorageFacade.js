@@ -36,6 +36,17 @@ export default class StorageFacade {
   }
 
   /**
+   * Factory method to create an instance with `sessionStorage`.
+   *
+   * @returns {StorageFacade} Instance of this class.
+   */
+  static createAsSession () {
+    return this.create({
+      storage: sessionStorage,
+    })
+  }
+
+  /**
    * Get an item from the storage.
    *
    * @param {string} key - Key of the item.
