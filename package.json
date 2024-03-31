@@ -20,6 +20,7 @@
   "author": "ORT inc.",
   "license": "UNLICENSED",
   "dependencies": {
+    "@openreachtech/renchan-env": "^0.0.1",
     "@openreachtech/renchan-test-tools": "^1.0.0",
     "core-js": "^3.36.0",
     "nuxt": "^3.10.3",
