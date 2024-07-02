@@ -23,7 +23,7 @@ import {
   useCurriculums,
 } from '~/composables/useCurriculums'
 
-/** @type {import('vue').Ref<import('~/app/graphql/client/Curriculums/CurriculumsGraphqlCapsule').default | null>} */
+/** @type {import('vue').Ref<import('~/app/graphql/client/Curriculums/CurriculumsQueryGraphqlCapsule').default | null>} */
 const curriculumsRef = ref(null)
 // NOTE: Null Object Pattern を使えば、此処で NullGraphqlCapsule のインスタンスを入れて於ける！
 

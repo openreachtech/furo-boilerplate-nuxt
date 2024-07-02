@@ -1,5 +1,5 @@
 import BaseGraphqlCapsule from '~/modules/client/BaseGraphqlCapsule'
 
-export default class CurriculumsGraphqlCapsule extends BaseGraphqlCapsule {
+export default class CurriculumsQueryGraphqlCapsule extends BaseGraphqlCapsule {
 
 }

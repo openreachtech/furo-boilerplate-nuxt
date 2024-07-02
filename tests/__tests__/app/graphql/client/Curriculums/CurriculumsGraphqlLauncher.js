@@ -1,7 +1,7 @@
 import CurriculumsGraphqlLauncher from '@/app/graphql/client/Curriculums/CurriculumsGraphqlLauncher'
 import BaseAppGraphqlLauncher from '~/app/graphql/client/BaseAppGraphqlLauncher'
 import CurriculumsQueryGraphqlPayload from '~/app/graphql/client/Curriculums/CurriculumsQueryGraphqlPayload'
-import CurriculumsGraphqlCapsule from '~/app/graphql/client/Curriculums/CurriculumsQueryGraphqlCapsule'
+import CurriculumsQueryGraphqlCapsule from '~/app/graphql/client/Curriculums/CurriculumsQueryGraphqlCapsule'
 
 describe('CurriculumsGraphqlLauncher', () => {
   describe('super class', () => {
@@ -31,7 +31,7 @@ describe('CurriculumsGraphqlLauncher', () => {
       const actual = CurriculumsGraphqlLauncher.Capsule
 
       expect(actual)
-        .toBe(CurriculumsGraphqlCapsule) // same reference
+        .toBe(CurriculumsQueryGraphqlCapsule) // same reference
     })
   })
 })
