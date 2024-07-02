@@ -1,10 +1,10 @@
-import CurriculumsGraphqlPayload from '@/app/graphql/client/Curriculums/CurriculumsQueryGraphqlPayload'
+import CurriculumsQueryGraphqlPayload from '@/app/graphql/client/Curriculums/CurriculumsQueryGraphqlPayload'
 import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
 
 describe('CurriculumsGraphqlPayload', () => {
   describe('super class', () => {
     test('to be derived class of BaseGraphqlPayload', () => {
-      const actual = CurriculumsGraphqlPayload.prototype
+      const actual = CurriculumsQueryGraphqlPayload.prototype
 
       expect(actual)
         .toBeInstanceOf(BaseGraphqlPayload)
@@ -38,7 +38,7 @@ describe('CurriculumsGraphqlPayload', () => {
     `
 
     test('to be fixed string', () => {
-      const actual = CurriculumsGraphqlPayload.query
+      const actual = CurriculumsQueryGraphqlPayload.query
 
       expect(actual)
         .toBe(expected)
