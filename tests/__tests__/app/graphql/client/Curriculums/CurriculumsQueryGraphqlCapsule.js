@@ -1,4 +1,4 @@
-import CurriculumsGraphqlCapsule from '@/app/graphql/client/Curriculums/CurriculumsGraphqlCapsule'
+import CurriculumsGraphqlCapsule from '@/app/graphql/client/Curriculums/CurriculumsQueryGraphqlCapsule'
 import BaseGraphqlCapsule from '~/modules/client/BaseGraphqlCapsule'
 
 describe('CurriculumsGraphqlCapsule', () => {
