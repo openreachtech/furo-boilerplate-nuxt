@@ -1,6 +1,6 @@
 import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
 
-export default class CurriculumsGraphqlPayload extends BaseGraphqlPayload {
+export default class CurriculumsQueryGraphqlPayload extends BaseGraphqlPayload {
   /** @inheritdoc */
   static get query () {
     return /* GraphQL */ `
