@@ -9,7 +9,7 @@ describe('BaseGraphqlCapsule', () => {
   describe('constructor', () => {
     describe('to keep property', () => {
       const mockResponse = new Response()
-      const mockPayload = new BaseGraphqlCapsule({
+      const mockPayload = new BaseGraphqlPayload({
         queryTemplate: /* GraphQL */ `
           query {
             customer {
