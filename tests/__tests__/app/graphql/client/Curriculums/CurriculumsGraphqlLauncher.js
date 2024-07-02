@@ -27,7 +27,7 @@ describe('CurriculumsGraphqlLauncher', () => {
 
 describe('CurriculumsGraphqlLauncher', () => {
   describe('.get:Capsule', () => {
-    test('to be CurriculumsGraphqlCapsule', () => {
+    test('to be CurriculumsQueryGraphqlCapsule', () => {
       const actual = CurriculumsGraphqlLauncher.Capsule
 
       expect(actual)
