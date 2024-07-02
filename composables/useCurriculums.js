@@ -1,4 +1,4 @@
-import CurriculumsGraphqlLauncher from '~/app/graphql/client/Curriculums/CurriculumsQueryGraphqlLauncher'
+import CurriculumsQueryGraphqlLauncher from '~/app/graphql/client/Curriculums/CurriculumsQueryGraphqlLauncher'
 
 export function useCurriculums () {
   return {
@@ -38,7 +38,7 @@ export function useCurriculums () {
       },
     },
   } = {}) {
-    const launcher = CurriculumsGraphqlLauncher.create()
+    const launcher = CurriculumsQueryGraphqlLauncher.create()
 
     const response = await launcher.launchQuery({
       variables,
