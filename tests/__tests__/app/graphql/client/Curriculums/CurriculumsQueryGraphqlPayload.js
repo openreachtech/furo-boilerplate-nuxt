@@ -1,7 +1,7 @@
 import CurriculumsQueryGraphqlPayload from '@/app/graphql/client/Curriculums/CurriculumsQueryGraphqlPayload'
 import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
 
-describe('CurriculumsGraphqlPayload', () => {
+describe('CurriculumsQueryGraphqlPayload', () => {
   describe('super class', () => {
     test('to be derived class of BaseGraphqlPayload', () => {
       const actual = CurriculumsQueryGraphqlPayload.prototype
@@ -12,7 +12,7 @@ describe('CurriculumsGraphqlPayload', () => {
   })
 })
 
-describe('CurriculumsGraphqlPayload', () => {
+describe('CurriculumsQueryGraphqlPayload', () => {
   describe('.get:query', () => {
     const expected = /* GraphQL */ `
       query CurriculumsQuery ($input: CurriculumsSearchInput!) {

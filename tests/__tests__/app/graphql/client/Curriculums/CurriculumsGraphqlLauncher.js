@@ -16,7 +16,7 @@ describe('CurriculumsGraphqlLauncher', () => {
 
 describe('CurriculumsGraphqlLauncher', () => {
   describe('.get:Payload', () => {
-    test('to be CurriculumsGraphqlPayload', () => {
+    test('to be CurriculumsQueryGraphqlPayload', () => {
       const actual = CurriculumsGraphqlLauncher.Payload
 
       expect(actual)
