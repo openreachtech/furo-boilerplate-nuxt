@@ -30,6 +30,28 @@ export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
   }
 
   /**
+   * Update headers.
+   *
+   * @override
+   * @param {{
+   *   headers: Headers
+   * }} params - Parameters.
+   * @returns {Headers} Updated headers.
+   */
+  updateHeaders ({
+    headers,
+  }) {
+    const accessToken = this.loadAccessToken()
+
+    headers.append(
+      constants.HEADER_KEY.ACCESS_TOKEN,
+      accessToken
+    )
+
+    return headers
+  }
+
+  /**
    * Load access token from storage.
    *
    * @returns {string | null} Access token.

@@ -143,3 +143,48 @@ describe('BaseAppGraphqlLauncher', () => {
     })
   })
 })
+
+describe('BaseAppGraphqlLauncher', () => {
+  describe('#updateHeaders()', () => {
+    describe('to add `x-renchan-app-access-token`', () => {
+      const cases = [
+        {
+          args: {
+            headers: new Headers({
+              'content-type': 'application/json',
+            }),
+            accessToken: 'fc3ff98e8c6a0d308700000000000001',
+          },
+          expected: new Headers({
+            'content-type': 'application/json',
+            'x-renchan-app-access-token': 'fc3ff98e8c6a0d308700000000000001',
+          }),
+        },
+        {
+          args: {
+            headers: new Headers(),
+            accessToken: 'fc3ff98e8c6a0d308700000000000002',
+          },
+          expected: new Headers({
+            'x-renchan-app-access-token': 'fc3ff98e8c6a0d308700000000000002',
+          }),
+        },
+      ]
+
+      test.each(cases)('accessToken: $args.accessToken', ({ args, expected }) => {
+        localStorage.setItem('access_token', args.accessToken)
+
+        const launcher = BaseAppGraphqlLauncher.create({
+          config: {},
+        })
+
+        const actual = launcher.updateHeaders({
+          headers: args.headers,
+        })
+
+        expect(actual)
+          .toEqual(expected)
+      })
+    })
+  })
+})
