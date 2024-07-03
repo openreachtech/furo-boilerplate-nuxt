@@ -22,7 +22,7 @@ export function useCurriculums () {
    *     }
    *   }
    * }} params - Parameters.
-   * @returns {Promise<import('~/app/graphql/client/Curriculums/CurriculumsGraphqlCapsule').default>}
+   * @returns {Promise<import('~/app/graphql/client/Curriculums/CurriculumsQueryGraphqlCapsule').default>}
    */
   async function fetchCurriculums ({
     variables = {
