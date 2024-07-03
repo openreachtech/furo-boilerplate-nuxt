@@ -1084,5 +1084,443 @@ describe('BaseGraphqlLauncher', () => {
         CapsuleSpy.mockRestore()
       })
     })
+
+    describe('to call other members', () => {
+      const graphqlConfig = {
+        ENDPOINT_URL: 'http://example.com/graphql-customer',
+      }
+
+      class DerivedGraphqlPayload extends BaseGraphqlPayload {
+        /** @inheritdoc */
+        static get query () {
+          return /* GraphQL */ `
+          query DerivedQuery {
+            derived {
+              id
+            }
+          }`
+        }
+      }
+
+      class DerivedGraphqlCapsule extends BaseGraphqlCapsule {
+
+      }
+
+      describe('for #updateOptions()', () => {
+        const cases = [
+          {
+            params: {
+              variables: {
+                id: 10001,
+              },
+              options: {
+                headers: new Headers({
+                  'x-access-key': 'access-key-01',
+                }),
+                mode: 'cors',
+              },
+            },
+          },
+          {
+            params: {
+              variables: {
+                id: 10002,
+              },
+              options: {
+                headers: new Headers({
+                  'x-access-key': 'access-key-02',
+                }),
+                credentials: 'omit',
+              },
+            },
+          },
+        ]
+
+        test.each(cases)('variables: $params.variables', async ({ params }) => {
+          const PayloadSpy = jest.spyOn(BaseGraphqlLauncher, 'Payload', 'get')
+            .mockReturnValue(DerivedGraphqlPayload)
+          const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
+            .mockReturnValue(DerivedGraphqlCapsule)
+
+          const launcher = BaseGraphqlLauncher.create({
+            config: graphqlConfig,
+          })
+          const updateOptionsSpy = jest.spyOn(launcher, 'updateOptions')
+          const invokeFetchQuerySpy = jest.spyOn(launcher, 'invokeFetchQuery')
+            .mockResolvedValue(new Response())
+
+          const expected = {
+            options: params.options,
+          }
+
+          await launcher.launchQuery(params)
+
+          expect(updateOptionsSpy)
+            .toHaveBeenCalledWith(expected)
+
+          PayloadSpy.mockRestore()
+          CapsuleSpy.mockRestore()
+
+          updateOptionsSpy.mockRestore()
+          invokeFetchQuerySpy.mockRestore()
+        })
+      })
+
+      describe('for #createPayload()', () => {
+        const cases = [
+          {
+            params: {
+              variables: {
+                id: 10001,
+              },
+              options: {
+                headers: new Headers({
+                  'x-access-key': 'access-key-01',
+                }),
+                mode: 'cors',
+              },
+            },
+            expected: {
+              variables: {
+                id: 10001,
+              },
+              options: {
+                headers: expect.any(Headers),
+                mode: 'cors',
+              },
+            },
+          },
+          {
+            params: {
+              variables: {
+                id: 10002,
+              },
+              options: {
+                headers: new Headers({
+                  'x-access-key': 'access-key-02',
+                }),
+                credentials: 'omit',
+              },
+            },
+            expected: {
+              variables: {
+                id: 10002,
+              },
+              options: {
+                headers: expect.any(Headers),
+                credentials: 'omit',
+              },
+            },
+          },
+        ]
+
+        test.each(cases)('variables: $params.variables', async ({ params, expected }) => {
+          const PayloadSpy = jest.spyOn(BaseGraphqlLauncher, 'Payload', 'get')
+            .mockReturnValue(DerivedGraphqlPayload)
+          const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
+            .mockReturnValue(DerivedGraphqlCapsule)
+
+          const launcher = BaseGraphqlLauncher.create({
+            config: graphqlConfig,
+          })
+
+          const createPayloadSpy = jest.spyOn(launcher, 'createPayload')
+          const invokeFetchQuerySpy = jest.spyOn(launcher, 'invokeFetchQuery')
+            .mockResolvedValue(new Response())
+
+          await launcher.launchQuery(params)
+
+          expect(createPayloadSpy)
+            .toHaveBeenCalledWith(expected)
+
+          PayloadSpy.mockRestore()
+          CapsuleSpy.mockRestore()
+
+          createPayloadSpy.mockRestore()
+          invokeFetchQuerySpy.mockRestore()
+        })
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlLauncher', () => {
+  describe('#updateHeaders()', () => {
+    describe('to return given options as is', () => {
+      const cases = [
+        {
+          params: {
+            headers: new Headers({
+              'x-access-key': 'access-key-01',
+            }),
+          },
+        },
+        {
+          params: {
+            headers: new Headers(),
+          },
+        },
+      ]
+
+      test.each(cases)('headers: $params.headers', ({ params }) => {
+        const launcher = BaseGraphqlLauncher.create({
+          config: {
+            ENDPOINT_URL: 'http://example.com/graphql-customer',
+          },
+        })
+
+        const actual = launcher.updateHeaders(params)
+
+        expect(actual)
+          .toBe(params.headers) // same reference
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlLauncher', () => {
+  describe('#updateOptions()', () => {
+    describe('to return generated options', () => {
+      describe('with options includes Headers', () => {
+        const cases = [
+          {
+            params: {
+              options: {
+                headers: new Headers({
+                  'x-access-key': 'access-key-01',
+                }),
+                mode: 'cors',
+              },
+            },
+            expected: {
+              headers: expect.any(Headers),
+              mode: 'cors',
+            },
+          },
+          {
+            params: {
+              options: {
+                headers: new Headers({
+                  'x-access-key': 'access-key-02',
+                }),
+                credentials: 'omit',
+              },
+            },
+            expected: {
+              headers: expect.any(Headers),
+              credentials: 'omit',
+            },
+          },
+          {
+            params: {
+              options: {
+                headers: new Headers({
+                  'x-access-key': 'access-key-03',
+                }),
+                priority: 'high',
+              },
+            },
+            expected: {
+              headers: expect.any(Headers),
+              priority: 'high',
+            },
+          },
+          {
+            params: {
+              options: {
+                headers: new Headers({
+                  'x-access-key': 'access-key-04',
+                }),
+              },
+            },
+            expected: {
+              headers: expect.any(Headers),
+            },
+          },
+        ]
+
+        test.each(cases)('options: $params.options', ({ params, expected }) => {
+          const launcher = BaseGraphqlLauncher.create({
+            config: {
+              ENDPOINT_URL: 'http://example.com/graphql-customer',
+            },
+          })
+
+          const actual = launcher.updateOptions(params)
+
+          expect(actual)
+            .toMatchObject(expected)
+        })
+      })
+
+      describe('with options not include Headers', () => {
+        const cases = [
+          {
+            params: {
+              options: {
+                mode: 'cors',
+              },
+            },
+          },
+          {
+            params: {
+              options: {
+                credentials: 'omit',
+              },
+            },
+          },
+          {
+            params: {
+              options: {
+                priority: 'high',
+              },
+            },
+          },
+          {
+            params: {
+              options: {},
+            },
+          },
+        ]
+
+        test.each(cases)('options: $params.options', ({ params }) => {
+          const launcher = BaseGraphqlLauncher.create({
+            config: {
+              ENDPOINT_URL: 'http://example.com/graphql-customer',
+            },
+          })
+
+          const actual = launcher.updateOptions(params)
+
+          expect(actual)
+            .toMatchObject(params.options)
+          expect(actual)
+            .toHaveProperty('headers', expect.any(Headers))
+        })
+      })
+    })
+
+    describe('to call other members', () => {
+      describe('with options includes Headers', () => {
+        const cases = [
+          {
+            params: {
+              options: {
+                headers: new Headers({
+                  'x-access-key': 'access-key-01',
+                }),
+                mode: 'cors',
+              },
+            },
+          },
+          {
+            params: {
+              options: {
+                headers: new Headers({
+                  'x-access-key': 'access-key-02',
+                }),
+                credentials: 'omit',
+              },
+            },
+          },
+          {
+            params: {
+              options: {
+                headers: new Headers({
+                  'x-access-key': 'access-key-03',
+                }),
+                priority: 'high',
+              },
+            },
+          },
+          {
+            params: {
+              options: {
+                headers: new Headers({
+                  'x-access-key': 'access-key-04',
+                }),
+              },
+            },
+          },
+        ]
+
+        test.each(cases)('options: $params.options', ({ params }) => {
+          const launcher = BaseGraphqlLauncher.create({
+            config: {
+              ENDPOINT_URL: 'http://example.com/graphql-customer',
+            },
+          })
+          const headersTally = params.options.headers
+          const updateHeadersSpy = jest.spyOn(launcher, 'updateHeaders')
+
+          const expected = {
+            headers: headersTally,
+          }
+
+          const actual = launcher.updateOptions(params)
+
+          expect(updateHeadersSpy)
+            .toHaveBeenCalledWith(expected)
+          expect(actual.headers)
+            .toBe(headersTally) // same reference
+
+          updateHeadersSpy.mockRestore()
+        })
+      })
+
+      describe('with options not include Headers', () => {
+        const cases = [
+          {
+            params: {
+              options: {
+                mode: 'cors',
+              },
+            },
+          },
+          {
+            params: {
+              options: {
+                credentials: 'omit',
+              },
+            },
+          },
+          {
+            params: {
+              options: {
+                priority: 'high',
+              },
+            },
+          },
+          {
+            params: {
+              options: {},
+            },
+          },
+        ]
+
+        test.each(cases)('options: $params.options', ({ params }) => {
+          const launcher = BaseGraphqlLauncher.create({
+            config: {
+              ENDPOINT_URL: 'http://example.com/graphql-customer',
+            },
+          })
+          const headersTally = new Headers()
+          const updateHeadersSpy = jest.spyOn(launcher, 'updateHeaders')
+            .mockReturnValue(headersTally)
+          const expected = {
+            headers: headersTally,
+          }
+
+          const actual = launcher.updateOptions(params)
+
+          expect(updateHeadersSpy)
+            .toHaveBeenCalledWith(expected)
+          expect(actual.headers)
+            .toBe(headersTally) // same reference
+
+          updateHeadersSpy.mockRestore()
+        })
+      })
+    })
   })
 })

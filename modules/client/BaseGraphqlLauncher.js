@@ -89,9 +89,13 @@ export default class BaseGraphqlLauncher {
     variables = {},
     options = {},
   } = {}) {
+    const updatedOptions = this.updateOptions({
+      options,
+    })
+
     const payload = this.createPayload({
       variables,
-      options,
+      options: updatedOptions,
     })
 
     const response = await this.invokeFetchQuery({
@@ -118,6 +122,44 @@ export default class BaseGraphqlLauncher {
       payload,
       result,
     })
+  }
+
+  /**
+   * Update options.
+   *
+   * @param {{
+   *   options: RequestInit
+   * }} params - Parameters.
+   * @returns {RequestInit} Updated options.
+   */
+  updateOptions ({
+    options: {
+      headers = new Headers(),
+      ...extraOptions
+    },
+  }) {
+    const updatedHeaders = this.updateHeaders({
+      headers,
+    })
+
+    return {
+      headers: updatedHeaders,
+      ...extraOptions,
+    }
+  }
+
+  /**
+   * Update headers.
+   *
+   * @param {{
+   *   headers: Headers
+   * }} params - Parameters.
+   * @returns {Headers} Updated headers.
+   */
+  updateHeaders ({
+    headers,
+  }) {
+    return headers
   }
 
   /**
