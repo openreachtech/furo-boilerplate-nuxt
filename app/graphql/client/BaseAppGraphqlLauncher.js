@@ -1,6 +1,7 @@
 import BaseGraphqlLauncher from '@/modules/client/BaseGraphqlLauncher'
 
 import graphqlConfig from '~/app/graphql/graphql.config'
+import StorageFacade from '~/modules/storage/StorageFacade'
 
 export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
   /**
@@ -16,6 +17,15 @@ export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
     return super.create({
       config,
     })
+  }
+
+  /**
+   * Create an instance of StorageFacade.
+   *
+   * @returns {StorageFacade} Instance of StorageFacade.
+   */
+  static createStorageFacade () {
+    return StorageFacade.createAsLocal()
   }
 }
 
