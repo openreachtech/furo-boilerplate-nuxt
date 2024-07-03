@@ -1,5 +1,6 @@
 import BaseAppGraphqlLauncher from '@/app/graphql/client/BaseAppGraphqlLauncher'
 import BaseGraphqlLauncher from '~/modules/client/BaseGraphqlLauncher'
+import StorageFacade from '~/modules/storage/StorageFacade'
 
 describe('BaseAppGraphqlLauncher', () => {
   describe('super class', () => {
@@ -72,6 +73,38 @@ describe('BaseAppGraphqlLauncher', () => {
 
         expect(createSpy)
           .toHaveBeenCalledWith(params)
+      })
+    })
+  })
+})
+
+describe('BaseAppGraphqlLauncher', () => {
+  describe('.createStorageFacade()', () => {
+    describe('to return instance of StorageFacade', () => {
+      test('with no params', () => {
+        const storageFacade = BaseAppGraphqlLauncher.createStorageFacade()
+
+        expect(storageFacade)
+          .toBeInstanceOf(StorageFacade)
+      })
+    })
+
+    describe('to call StorageFacade.createAsLocal()', () => {
+      test('with no params', () => {
+        const storageFacadeTally = /** @type {StorageFacade} */ ({})
+
+        const createAsLocalSpy = jest.spyOn(StorageFacade, 'createAsLocal')
+          .mockReturnValue(storageFacadeTally)
+
+        const actual = BaseAppGraphqlLauncher.createStorageFacade()
+
+        expect(actual)
+          .toBe(storageFacadeTally) // same reference
+
+        expect(createAsLocalSpy)
+          .toHaveBeenCalledWith()
+
+        createAsLocalSpy.mockRestore()
       })
     })
   })
