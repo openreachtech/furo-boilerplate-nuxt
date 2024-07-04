@@ -427,7 +427,7 @@ describe('BaseGraphqlLauncher', () => {
             }),
             options: {
               headers: new Headers({
-                'x-access-key': 'access-key-01',
+                'x-access-token': 'access-token-01',
               }),
             },
           },
@@ -436,7 +436,7 @@ describe('BaseGraphqlLauncher', () => {
               method: 'POST',
               headers: new Headers({
                 'content-type': 'application/json',
-                'x-access-key': 'access-key-01',
+                'x-access-token': 'access-token-01',
               }),
               body: JSON.stringify({
                 query: customerQueryTemplate,
@@ -453,7 +453,7 @@ describe('BaseGraphqlLauncher', () => {
             options: {
               headers: new Headers({
                 'content-type': 'application/json',
-                'x-access-key': 'access-key-02',
+                'x-access-token': 'access-token-02',
               }),
             },
           },
@@ -462,7 +462,7 @@ describe('BaseGraphqlLauncher', () => {
               method: 'POST',
               headers: new Headers({
                 'content-type': 'application/json',
-                'x-access-key': 'access-key-02',
+                'x-access-token': 'access-token-02',
               }),
               body: JSON.stringify({
                 query: adminQueryTemplate,
@@ -527,7 +527,7 @@ describe('BaseGraphqlLauncher', () => {
             }),
             options: {
               headers: new Headers({
-                'x-access-key': 'access-key-01',
+                'x-access-token': 'access-token-01',
               }),
             },
           },
@@ -536,7 +536,7 @@ describe('BaseGraphqlLauncher', () => {
               method: 'POST',
               headers: new Headers({
                 'content-type': 'application/json',
-                'x-access-key': 'access-key-01',
+                'x-access-token': 'access-token-01',
               }),
               body: JSON.stringify({
                 query: customerQueryTemplate,
@@ -553,7 +553,7 @@ describe('BaseGraphqlLauncher', () => {
             options: {
               headers: new Headers({
                 'content-type': 'application/json',
-                'x-access-key': 'access-key-02',
+                'x-access-token': 'access-token-02',
               }),
             },
           },
@@ -562,7 +562,7 @@ describe('BaseGraphqlLauncher', () => {
               method: 'POST',
               headers: new Headers({
                 'content-type': 'application/json',
-                'x-access-key': 'access-key-02',
+                'x-access-token': 'access-token-02',
               }),
               body: JSON.stringify({
                 query: adminQueryTemplate,
@@ -785,7 +785,7 @@ describe('BaseGraphqlLauncher', () => {
             },
             options: {
               headers: new Headers({
-                'x-access-key': 'access-key-01',
+                'x-access-token': 'access-token-01',
               }),
             },
             Payload: class CustomerPayload extends BaseGraphqlPayload {
@@ -822,7 +822,7 @@ describe('BaseGraphqlLauncher', () => {
             variables: {},
             options: {
               headers: new Headers({
-                'x-access-key': 'access-key-02',
+                'x-access-token': 'access-token-02',
               }),
             },
             Payload: class AdminPayload extends BaseGraphqlPayload {
@@ -900,7 +900,7 @@ describe('BaseGraphqlLauncher', () => {
             },
             options: {
               headers: new Headers({
-                'x-access-key': 'access-key-01',
+                'x-access-token': 'access-token-01',
               }),
             },
             Payload: class CustomerPayload extends BaseGraphqlPayload {
@@ -925,7 +925,7 @@ describe('BaseGraphqlLauncher', () => {
             },
             options: {
               headers: new Headers({
-                'x-access-key': 'access-key-02',
+                'x-access-token': 'access-token-02',
               }),
             },
             Payload: class AdminPayload extends BaseGraphqlPayload {
@@ -989,7 +989,7 @@ describe('BaseGraphqlLauncher', () => {
             },
             options: {
               headers: new Headers({
-                'x-access-key': 'access-key-01',
+                'x-access-token': 'access-token-01',
               }),
             },
             Payload: class CustomerPayload extends BaseGraphqlPayload {
@@ -1023,7 +1023,7 @@ describe('BaseGraphqlLauncher', () => {
             },
             options: {
               headers: new Headers({
-                'x-access-key': 'access-key-02',
+                'x-access-token': 'access-token-02',
               }),
             },
             Payload: class AdminPayload extends BaseGraphqlPayload {
@@ -1115,7 +1115,7 @@ describe('BaseGraphqlLauncher', () => {
               },
               options: {
                 headers: new Headers({
-                  'x-access-key': 'access-key-01',
+                  'x-access-token': 'access-token-01',
                 }),
                 mode: 'cors',
               },
@@ -1128,7 +1128,7 @@ describe('BaseGraphqlLauncher', () => {
               },
               options: {
                 headers: new Headers({
-                  'x-access-key': 'access-key-02',
+                  'x-access-token': 'access-token-02',
                 }),
                 credentials: 'omit',
               },
@@ -1175,7 +1175,7 @@ describe('BaseGraphqlLauncher', () => {
               },
               options: {
                 headers: new Headers({
-                  'x-access-key': 'access-key-01',
+                  'x-access-token': 'access-token-01',
                 }),
                 mode: 'cors',
               },
@@ -1197,7 +1197,7 @@ describe('BaseGraphqlLauncher', () => {
               },
               options: {
                 headers: new Headers({
-                  'x-access-key': 'access-key-02',
+                  'x-access-token': 'access-token-02',
                 }),
                 credentials: 'omit',
               },
@@ -1251,7 +1251,7 @@ describe('BaseGraphqlLauncher', () => {
         {
           params: {
             headers: new Headers({
-              'x-access-key': 'access-key-01',
+              'x-access-token': 'access-token-01',
             }),
           },
         },
@@ -1287,7 +1287,7 @@ describe('BaseGraphqlLauncher', () => {
             params: {
               options: {
                 headers: new Headers({
-                  'x-access-key': 'access-key-01',
+                  'x-access-token': 'access-token-01',
                 }),
                 mode: 'cors',
               },
@@ -1301,7 +1301,7 @@ describe('BaseGraphqlLauncher', () => {
             params: {
               options: {
                 headers: new Headers({
-                  'x-access-key': 'access-key-02',
+                  'x-access-token': 'access-token-02',
                 }),
                 credentials: 'omit',
               },
@@ -1315,7 +1315,7 @@ describe('BaseGraphqlLauncher', () => {
             params: {
               options: {
                 headers: new Headers({
-                  'x-access-key': 'access-key-03',
+                  'x-access-token': 'access-token-03',
                 }),
                 priority: 'high',
               },
@@ -1329,7 +1329,7 @@ describe('BaseGraphqlLauncher', () => {
             params: {
               options: {
                 headers: new Headers({
-                  'x-access-key': 'access-key-04',
+                  'x-access-token': 'access-token-04',
                 }),
               },
             },
@@ -1407,7 +1407,7 @@ describe('BaseGraphqlLauncher', () => {
             params: {
               options: {
                 headers: new Headers({
-                  'x-access-key': 'access-key-01',
+                  'x-access-token': 'access-token-01',
                 }),
                 mode: 'cors',
               },
@@ -1417,7 +1417,7 @@ describe('BaseGraphqlLauncher', () => {
             params: {
               options: {
                 headers: new Headers({
-                  'x-access-key': 'access-key-02',
+                  'x-access-token': 'access-token-02',
                 }),
                 credentials: 'omit',
               },
@@ -1427,7 +1427,7 @@ describe('BaseGraphqlLauncher', () => {
             params: {
               options: {
                 headers: new Headers({
-                  'x-access-key': 'access-key-03',
+                  'x-access-token': 'access-token-03',
                 }),
                 priority: 'high',
               },
@@ -1437,7 +1437,7 @@ describe('BaseGraphqlLauncher', () => {
             params: {
               options: {
                 headers: new Headers({
-                  'x-access-key': 'access-key-04',
+                  'x-access-token': 'access-token-04',
                 }),
               },
             },
