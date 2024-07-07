@@ -119,5 +119,9 @@ form button.standard {
   color: #fff;
 }
 
+form button[disabled] {
+  background-color: #ccc;
+}
+
 /* CSS styles here */
 </style>
