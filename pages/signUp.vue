@@ -79,5 +79,37 @@ export default {
 </script>
 
 <style>
+form {
+  margin-inline: 1rem;
+}
+
+label.row,
+label.column {
+  margin-block-start: 1rem;
+}
+
+label.row {
+  display: flex;
+  flex-direction: column;
+}
+
+label.column {
+  display: flex;
+  flex-direction: row;
+}
+
+form button {
+  margin-block-start: 1rem;
+}
+
+form button.standard {
+  border: none;
+  border-radius: .25rem;
+
+  padding: .5rem 1rem;
+  background-color: #007bff;
+  color: #fff;
+}
+
 /* CSS styles here */
 </style>
