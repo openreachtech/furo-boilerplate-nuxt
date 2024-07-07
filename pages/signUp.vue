@@ -61,21 +61,29 @@
     >
       <input
         id="agree-policy"
+        v-model="statusReactive.allowsToSubmit"
         type="checkbox"
       >
       <span>利用規約に同意する</span>
     </label>
 
-    <button class="standard">
+    <button
+      class="standard"
+      :disabled="!statusReactive.allowsToSubmit"
+    >
       新規登録
     </button>
   </form>
 </template>
 
-<script>
-export default {
-  name: 'SignUpPage',
-}
+<script setup>
+import {
+  reactive,
+} from 'vue'
+
+const statusReactive = reactive({
+  allowsToSubmit: false,
+})
 </script>
 
 <style>
