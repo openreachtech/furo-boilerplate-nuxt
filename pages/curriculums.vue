@@ -1,4 +1,4 @@
-<!-- pages/index.vue -->
+<!-- pages/curriculums.vue -->
 <template>
   <h1>Hello I&#39;m pages/curriculums.vue!</h1>
 
