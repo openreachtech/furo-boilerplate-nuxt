@@ -68,6 +68,7 @@
 
     <button
       class="standard"
+      type="submit"
       :disabled="!statusReactive.allowsToSubmit"
     >
       新規登録
