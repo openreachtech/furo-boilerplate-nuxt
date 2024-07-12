@@ -1,7 +1,9 @@
 <template>
   <h1>Hello I&#39;m pages/signUp.vue!</h1>
 
-  <form>
+  <form
+    ref="formRef"
+  >
     <label
       class="row"
       for="email"
@@ -79,8 +81,10 @@
 <script setup>
 import {
   reactive,
+  ref,
 } from 'vue'
 
+const formRef = ref(null)
 const statusReactive = reactive({
   allowsToSubmit: false,
 })
