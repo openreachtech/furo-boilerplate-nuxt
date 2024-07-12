@@ -11,6 +11,7 @@
       <span>メールアドレス</span>
       <input
         id="email"
+        v-model="formReactive.email"
         name="email"
         type="text"
         placeholder="メールアドレスを入力してください。"
@@ -24,6 +25,7 @@
       <span>ユーザ名</span>
       <input
         id="username"
+        v-model="formReactive.username"
         name="username"
         type="text"
         placeholder="ユーザ名を入力してください。"
@@ -37,6 +39,7 @@
       <span>パスワード</span>
       <input
         id="password"
+        v-model="formReactive.password"
         name="password"
         type="password"
         placeholder="パスワードを入力してください。"
@@ -50,6 +53,7 @@
       <span>パスワード (確認用)</span>
       <input
         id="confirm-password"
+        v-model="formReactive.confirmPassword"
         name="confirm-password"
         type="password"
         placeholder="パスワードを入力してください。"
@@ -85,6 +89,12 @@ import {
 } from 'vue'
 
 const formRef = ref(null)
+const formReactive = reactive({
+  email: '',
+  password: '',
+  username: '',
+  confirmPassword: '',
+})
 const statusReactive = reactive({
   allowsToSubmit: false,
 })
