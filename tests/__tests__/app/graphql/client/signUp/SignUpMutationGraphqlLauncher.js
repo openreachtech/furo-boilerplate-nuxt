@@ -1,6 +1,7 @@
 import SignUpMutationGraphqlLauncher from '~/app/graphql/client/signUp/SignUpMutationGraphqlLauncher'
 import BaseAppGraphqlLauncher from '~/app/graphql/client/BaseAppGraphqlLauncher'
 import SignUpMutationGraphqlPayload from '~/app/graphql/client/signUp/SignUpMutationGraphqlPayload'
+import SignUpMutationGraphqlCapsule from '~/app/graphql/client/signUp/SignUpMutationGraphqlCapsule'
 
 describe('SignUpMutationGraphqlLauncher', () => {
   describe('super class', () => {
@@ -20,6 +21,17 @@ describe('SignUpMutationGraphqlLauncher', () => {
 
       expect(actual)
         .toBe(SignUpMutationGraphqlPayload) // same reference
+    })
+  })
+})
+
+describe('SignUpMutationGraphqlLauncher', () => {
+  describe('.get:Capsule', () => {
+    test('to be SignUpMutationGraphqlCapsule', () => {
+      const actual = SignUpMutationGraphqlLauncher.Capsule
+
+      expect(actual)
+        .toBe(SignUpMutationGraphqlCapsule) // same reference
     })
   })
 })
