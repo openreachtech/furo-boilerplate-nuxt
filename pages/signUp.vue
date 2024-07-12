@@ -4,6 +4,9 @@
 
   <form
     ref="formRef"
+    @submit.prevent="submitForm({
+      formElement: formRef,
+    })"
   >
     <label
       class="row"
@@ -99,6 +102,13 @@ const formReactive = reactive({
 const statusReactive = reactive({
   allowsToSubmit: false,
 })
+
+async function submitForm ({
+  formElement,
+}) {
+  await console.log('submitForm()', formElement)
+  await console.log('formReactive', formReactive)
+}
 </script>
 
 <style>
