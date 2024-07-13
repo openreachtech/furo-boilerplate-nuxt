@@ -11,3 +11,22 @@ describe('SignUpMutationGraphqlPayload', () => {
     })
   })
 })
+
+describe('SignUpMutationGraphqlPayload', () => {
+  describe('.get:query', () => {
+    const expected = /* GraphQL */ `
+      mutation SignUpMutation ($input: SignUpInput!) {
+        signUp (input: $input) {
+          sentTo
+        }
+      }
+    `
+
+    test('to be fixed string', () => {
+      const actual = SignUpMutationGraphqlPayload.query
+
+      expect(actual)
+        .toBe(expected)
+    })
+  })
+})
