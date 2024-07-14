@@ -143,6 +143,10 @@ form button.standard {
   color: #fff;
 }
 
+form button.standard:active {
+  background-color: #03c;
+}
+
 form button[disabled] {
   background-color: #ccc;
 }
