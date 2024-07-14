@@ -83,6 +83,42 @@ describe('BaseAppGraphqlLauncher', () => {
 })
 
 describe('BaseAppGraphqlLauncher', () => {
+  describe('#get:Ctor', () => {
+    describe('to be BaseAppGraphqlLauncher', () => {
+      const cases = [
+        {
+          params: {
+            config: {
+              ENDPOINT_URL: 'http://example.com/graphql-customer',
+            },
+          },
+        },
+        {
+          params: {
+            config: {
+              ENDPOINT_URL: 'http://example.com/graphql-admin',
+            },
+          },
+        },
+      ]
+
+      test.each(cases)('config: $params.config', ({ params }) => {
+        /** @type {BaseAppGraphqlLauncher} */
+        const launcher = BaseAppGraphqlLauncher.create(params)
+
+        const actual = launcher.Ctor
+
+        expect(actual)
+          .toBe(BaseAppGraphqlLauncher) // same reference
+        expect(actual)
+          .not
+          .toBe(BaseGraphqlLauncher) // not same reference
+      })
+    })
+  })
+})
+
+describe('BaseAppGraphqlLauncher', () => {
   describe('.createStorageFacade()', () => {
     describe('to return instance of StorageFacade', () => {
       test('with no params', () => {

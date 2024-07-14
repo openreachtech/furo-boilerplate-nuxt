@@ -21,6 +21,16 @@ export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
   }
 
   /**
+   * get: Constructor from instance.
+   *
+   * @override
+   * @returns {typeof BaseAppGraphqlLauncher} Constructor of the instance.
+   */
+  get Ctor () {
+    return super.Ctor
+  }
+
+  /**
    * Create an instance of StorageFacade.
    *
    * @returns {StorageFacade} Instance of StorageFacade.
