@@ -83,6 +83,42 @@ describe('BaseAppGraphqlLauncher', () => {
 })
 
 describe('BaseAppGraphqlLauncher', () => {
+  describe('#get:Ctor', () => {
+    describe('to be BaseAppGraphqlLauncher', () => {
+      const cases = [
+        {
+          params: {
+            config: {
+              ENDPOINT_URL: 'http://example.com/graphql-customer',
+            },
+          },
+        },
+        {
+          params: {
+            config: {
+              ENDPOINT_URL: 'http://example.com/graphql-admin',
+            },
+          },
+        },
+      ]
+
+      test.each(cases)('config: $params.config', ({ params }) => {
+        /** @type {BaseAppGraphqlLauncher} */
+        const launcher = BaseAppGraphqlLauncher.create(params)
+
+        const actual = launcher.Ctor
+
+        expect(actual)
+          .toBe(BaseAppGraphqlLauncher) // same reference
+        expect(actual)
+          .not
+          .toBe(BaseGraphqlLauncher) // not same reference
+      })
+    })
+  })
+})
+
+describe('BaseAppGraphqlLauncher', () => {
   describe('.createStorageFacade()', () => {
     describe('to return instance of StorageFacade', () => {
       test('with no params', () => {
@@ -180,6 +216,42 @@ describe('BaseAppGraphqlLauncher', () => {
 
         const actual = launcher.updateHeaders({
           headers: args.headers,
+        })
+
+        expect(actual)
+          .toEqual(expected)
+      })
+    })
+
+    describe('to not add `x-renchan-app-access-token`', () => {
+      const cases = [
+        {
+          args: {
+            headersDefault: {
+              'content-type': 'application/json',
+            },
+          },
+          expected: new Headers({
+            'content-type': 'application/json',
+          }),
+        },
+        {
+          args: {
+            headersDefault: {},
+          },
+          expected: new Headers(),
+        },
+      ]
+
+      test.each(cases)('header default: $args.headersDefault', ({ args, expected }) => {
+        localStorage.removeItem('access_token')
+
+        const launcher = BaseAppGraphqlLauncher.create({
+          config: {},
+        })
+
+        const actual = launcher.updateHeaders({
+          headers: new Headers(args.headersDefault),
         })
 
         expect(actual)
