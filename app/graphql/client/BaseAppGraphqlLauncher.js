@@ -53,10 +53,12 @@ export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
   }) {
     const accessToken = this.loadAccessToken()
 
-    headers.append(
-      constants.HEADER_KEY.ACCESS_TOKEN,
-      accessToken
-    )
+    if (accessToken) {
+      headers.append(
+        constants.HEADER_KEY.ACCESS_TOKEN,
+        accessToken
+      )
+    }
 
     return headers
   }
