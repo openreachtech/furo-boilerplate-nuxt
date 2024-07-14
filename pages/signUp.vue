@@ -92,6 +92,14 @@ import {
   ref,
 } from 'vue'
 
+import {
+  useSignUpClient,
+} from '~/composables/useSignUpClient'
+
+const {
+  sendSignUp,
+} = useSignUpClient()
+
 const formRef = ref(null)
 const formReactive = reactive({
   email: '',
@@ -108,6 +116,21 @@ async function submitForm ({
 }) {
   await console.log('submitForm()', formElement)
   await console.log('formReactive', formReactive)
+
+  const capsule = await sendSignUp({
+    variables: {
+      input: {
+        email: 'stew.eucen@openreach.tech',
+        username: 'EucenSama',
+        firstName: 'Eucen',
+        lastName: 'Stew',
+
+        password: 'passwordIsString',
+      },
+    },
+  })
+
+  console.log('@@@@@@@@@@@', capsule)
 }
 </script>
 
