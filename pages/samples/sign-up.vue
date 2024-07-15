@@ -7,13 +7,9 @@
       formElement: formRef,
     })"
   >
-    <label
-      class="row"
-      for="email"
-    >
+    <label class="row">
       <span>メールアドレス</span>
       <input
-        id="email"
         v-model="formReactive.email"
         name="email"
         type="text"
@@ -21,13 +17,9 @@
       >
     </label>
 
-    <label
-      class="row"
-      for="username"
-    >
+    <label class="row">
       <span>ユーザ名</span>
       <input
-        id="username"
         v-model="formReactive.username"
         name="username"
         type="text"
@@ -35,13 +27,9 @@
       >
     </label>
 
-    <label
-      class="row"
-      for="password"
-    >
+    <label class="row">
       <span>パスワード</span>
       <input
-        id="password"
         v-model="formReactive.password"
         name="password"
         type="password"
@@ -49,13 +37,9 @@
       >
     </label>
 
-    <label
-      class="row"
-      for="confirm-password"
-    >
+    <label class="row">
       <span>パスワード (確認用)</span>
       <input
-        id="confirm-password"
         v-model="formReactive.confirmPassword"
         name="confirm-password"
         type="password"
@@ -63,12 +47,8 @@
       >
     </label>
 
-    <label
-      class="column"
-      for="agree-policy"
-    >
+    <label class="column">
       <input
-        id="agree-policy"
         v-model="statusReactive.allowsToSubmit"
         type="checkbox"
       >
