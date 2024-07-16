@@ -1,6 +1,6 @@
 import BaseAppGraphqlLauncher from '@/app/graphql/client/BaseAppGraphqlLauncher'
 import BaseGraphqlLauncher from '~/modules/client/BaseGraphqlLauncher'
-import StorageFacade from '~/modules/storage/StorageClerk'
+import StorageClerk from '~/modules/storage/StorageClerk'
 
 beforeEach(() => {
   localStorage.clear()
@@ -119,27 +119,27 @@ describe('BaseAppGraphqlLauncher', () => {
 })
 
 describe('BaseAppGraphqlLauncher', () => {
-  describe('.createStorageFacade()', () => {
-    describe('to return instance of StorageFacade', () => {
+  describe('.createStorageClerk()', () => {
+    describe('to return instance of StorageClerk', () => {
       test('with no params', () => {
-        const storageFacade = BaseAppGraphqlLauncher.createStorageFacade()
+        const storageClerk = BaseAppGraphqlLauncher.createStorageClerk()
 
-        expect(storageFacade)
-          .toBeInstanceOf(StorageFacade)
+        expect(storageClerk)
+          .toBeInstanceOf(StorageClerk)
       })
     })
 
-    describe('to call StorageFacade.createAsLocal()', () => {
+    describe('to call StorageClerk.createAsLocal()', () => {
       test('with no params', () => {
-        const storageFacadeTally = /** @type {StorageFacade} */ ({})
+        const storageClerkTally = /** @type {StorageClerk} */ ({})
 
-        const createAsLocalSpy = jest.spyOn(StorageFacade, 'createAsLocal')
-          .mockReturnValue(storageFacadeTally)
+        const createAsLocalSpy = jest.spyOn(StorageClerk, 'createAsLocal')
+          .mockReturnValue(storageClerkTally)
 
-        const actual = BaseAppGraphqlLauncher.createStorageFacade()
+        const actual = BaseAppGraphqlLauncher.createStorageClerk()
 
         expect(actual)
-          .toBe(storageFacadeTally) // same reference
+          .toBe(storageClerkTally) // same reference
 
         expect(createAsLocalSpy)
           .toHaveBeenCalledWith()

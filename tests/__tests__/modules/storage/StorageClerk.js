@@ -2,9 +2,9 @@ import {
   ConstructorSpyGenerator,
 } from '~/node_modules/@openreachtech/renchan-test-tools/index'
 
-import StorageFacade from '@/modules/storage/StorageClerk'
+import StorageClerk from '@/modules/storage/StorageClerk'
 
-describe('StorageFacade', () => {
+describe('StorageClerk', () => {
   describe('constructor', () => {
     describe('to keep property', () => {
       describe('#storage', () => {
@@ -26,7 +26,7 @@ describe('StorageFacade', () => {
           const args = {
             storage: storageTally,
           }
-          const facade = new StorageFacade(args)
+          const facade = new StorageClerk(args)
 
           expect(facade)
             .toHaveProperty('storage', storageTally)
@@ -36,7 +36,7 @@ describe('StorageFacade', () => {
   })
 })
 
-describe('StorageFacade', () => {
+describe('StorageClerk', () => {
   describe('.create()', () => {
     describe('to be instance of own class', () => {
       const cases = [
@@ -57,10 +57,10 @@ describe('StorageFacade', () => {
         const args = {
           storage: storageTally,
         }
-        const facade = StorageFacade.create(args)
+        const facade = StorageClerk.create(args)
 
         expect(facade)
-          .toBeInstanceOf(StorageFacade)
+          .toBeInstanceOf(StorageClerk)
       })
     })
 
@@ -80,7 +80,7 @@ describe('StorageFacade', () => {
 
       test.each(cases)('storage: $params.storage', ({ params }) => {
         const DerivedClass = ConstructorSpyGenerator.create({ jest })
-          .generateSpyKitClass(StorageFacade)
+          .generateSpyKitClass(StorageClerk)
 
         const storageTally = globalThis[params.storage]
         const args = {
@@ -96,14 +96,14 @@ describe('StorageFacade', () => {
   })
 })
 
-describe('StorageFacade', () => {
+describe('StorageClerk', () => {
   describe('.createAsLocal()', () => {
     describe('to be instance of own class', () => {
       test('with no arguments', () => {
-        const facade = StorageFacade.createAsLocal()
+        const facade = StorageClerk.createAsLocal()
 
         expect(facade)
-          .toBeInstanceOf(StorageFacade)
+          .toBeInstanceOf(StorageClerk)
       })
     })
 
@@ -112,9 +112,9 @@ describe('StorageFacade', () => {
         const expected = {
           storage: globalThis.localStorage,
         }
-        const createSpy = jest.spyOn(StorageFacade, 'create')
+        const createSpy = jest.spyOn(StorageClerk, 'create')
 
-        StorageFacade.createAsLocal()
+        StorageClerk.createAsLocal()
 
         expect(createSpy)
           .toHaveBeenCalledWith(expected)
@@ -125,14 +125,14 @@ describe('StorageFacade', () => {
   })
 })
 
-describe('StorageFacade', () => {
+describe('StorageClerk', () => {
   describe('.createAsSession()', () => {
     describe('to be instance of own class', () => {
       test('with no arguments', () => {
-        const facade = StorageFacade.createAsSession()
+        const facade = StorageClerk.createAsSession()
 
         expect(facade)
-          .toBeInstanceOf(StorageFacade)
+          .toBeInstanceOf(StorageClerk)
       })
     })
 
@@ -141,9 +141,9 @@ describe('StorageFacade', () => {
         const expected = {
           storage: globalThis.sessionStorage,
         }
-        const createSpy = jest.spyOn(StorageFacade, 'create')
+        const createSpy = jest.spyOn(StorageClerk, 'create')
 
-        StorageFacade.createAsSession()
+        StorageClerk.createAsSession()
 
         expect(createSpy)
           .toHaveBeenCalledWith(expected)
@@ -154,7 +154,7 @@ describe('StorageFacade', () => {
   })
 })
 
-describe('StorageFacade', () => {
+describe('StorageClerk', () => {
   describe('#get()', () => {
     describe('to be set value', () => {
       const cases = [
@@ -193,7 +193,7 @@ describe('StorageFacade', () => {
           storage.alpha = '100'
           storage.beta = '200'
 
-          const facade = new StorageFacade({
+          const facade = new StorageClerk({
             storage,
           })
 
@@ -226,7 +226,7 @@ describe('StorageFacade', () => {
 
         const getItemSpy = jest.spyOn(mockStorage, 'getItem')
           .mockReturnValue(null)
-        const facade = new StorageFacade({
+        const facade = new StorageClerk({
           storage: mockStorage,
         })
 
@@ -241,7 +241,7 @@ describe('StorageFacade', () => {
   })
 })
 
-describe('StorageFacade', () => {
+describe('StorageClerk', () => {
   describe('#set()', () => {
     describe('to be set value', () => {
       const cases = [
@@ -261,7 +261,7 @@ describe('StorageFacade', () => {
         const storage = globalThis[params.storage]
         storage.clear()
 
-        const facade = new StorageFacade({
+        const facade = new StorageClerk({
           storage,
         })
 
@@ -318,7 +318,7 @@ describe('StorageFacade', () => {
 
         const getItemSpy = jest.spyOn(mockStorage, 'setItem')
           .mockReturnValue(null)
-        const facade = new StorageFacade({
+        const facade = new StorageClerk({
           storage: mockStorage,
         })
 
@@ -355,7 +355,7 @@ describe('StorageFacade', () => {
         const storage = globalThis[params.storage]
         storage.clear()
 
-        const facade = new StorageFacade({
+        const facade = new StorageClerk({
           storage,
         })
 
