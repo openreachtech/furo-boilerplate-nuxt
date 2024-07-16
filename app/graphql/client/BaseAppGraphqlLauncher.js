@@ -2,7 +2,7 @@ import BaseGraphqlLauncher from '@/modules/client/BaseGraphqlLauncher'
 import constants from '~/app/constants'
 
 import graphqlConfig from '~/app/graphql/graphql.config'
-import StorageFacade from '~/modules/storage/StorageClerk'
+import StorageClerk from '~/modules/storage/StorageClerk'
 
 export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
   /**
@@ -31,12 +31,12 @@ export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
   }
 
   /**
-   * Create an instance of StorageFacade.
+   * Create an instance of StorageClerk.
    *
-   * @returns {StorageFacade} Instance of StorageFacade.
+   * @returns {StorageClerk} Instance of StorageClerk.
    */
-  static createStorageFacade () {
-    return StorageFacade.createAsLocal()
+  static createStorageClerk () {
+    return StorageClerk.createAsLocal()
   }
 
   /**
@@ -69,9 +69,9 @@ export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
    * @returns {string | null} Access token.
    */
   loadAccessToken () {
-    const storageFacade = this.Ctor.createStorageFacade()
+    const storageClerk = this.Ctor.createStorageClerk()
 
-    return storageFacade.get(constants.STORAGE_KEY.ACCESS_TOKEN)
+    return storageClerk.get(constants.STORAGE_KEY.ACCESS_TOKEN)
   }
 }
 
