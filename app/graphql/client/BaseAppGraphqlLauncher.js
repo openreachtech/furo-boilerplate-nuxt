@@ -2,7 +2,7 @@ import BaseGraphqlLauncher from '@/modules/client/BaseGraphqlLauncher'
 import constants from '~/app/constants'
 
 import graphqlConfig from '~/app/graphql/graphql.config'
-import StorageFacade from '~/modules/storage/StorageFacade'
+import StorageFacade from '~/modules/storage/StorageClerk'
 
 export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
   /**

@@ -2,7 +2,7 @@ import {
   ConstructorSpyGenerator,
 } from '~/node_modules/@openreachtech/renchan-test-tools/index'
 
-import StorageFacade from '@/modules/storage/StorageFacade'
+import StorageFacade from '@/modules/storage/StorageClerk'
 
 describe('StorageFacade', () => {
   describe('constructor', () => {

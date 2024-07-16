@@ -1,6 +1,6 @@
 import BaseAppGraphqlLauncher from '@/app/graphql/client/BaseAppGraphqlLauncher'
 import BaseGraphqlLauncher from '~/modules/client/BaseGraphqlLauncher'
-import StorageFacade from '~/modules/storage/StorageFacade'
+import StorageFacade from '~/modules/storage/StorageClerk'
 
 beforeEach(() => {
   localStorage.clear()
