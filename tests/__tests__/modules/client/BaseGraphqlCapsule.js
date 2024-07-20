@@ -137,6 +137,55 @@ describe('BaseGraphqlCapsule', () => {
             .toHaveProperty('result', params.result)
         })
       })
+
+      describe('#behavesNull', () => {
+        /**
+         * @type {Array<{
+         *   params: {
+         *     result: import('~/modules/client/BaseGraphqlCapsule').GraphqlCapsuleResult
+         *   }
+         * }>}
+         */
+        const cases = [
+          {
+            params: {
+              behavesNull: true,
+            },
+          },
+          {
+            params: {
+              behavesNull: false,
+            },
+          },
+        ]
+
+        test.each(cases)('behavesNull: $params.behavesNull', ({ params }) => {
+          const args = {
+            rawResponse: null,
+            payload: null,
+            result: null,
+            behavesNull: params.behavesNull,
+          }
+
+          const actual = new BaseGraphqlCapsule(args)
+
+          expect(actual)
+            .toHaveProperty('behavesNull', params.behavesNull)
+        })
+
+        test('with out behavesNull in args of constructor', () => {
+          const args = {
+            rawResponse: null,
+            payload: null,
+            result: null,
+          }
+
+          const actual = new BaseGraphqlCapsule(args)
+
+          expect(actual)
+            .toHaveProperty('behavesNull', false)
+        })
+      })
     })
   })
 })
