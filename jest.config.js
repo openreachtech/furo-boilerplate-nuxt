@@ -39,6 +39,10 @@ export default {
 
       displayName: 'node',
       testEnvironment: 'node',
+      testMatch: [ // '**/__tests__/**/*.[jt]s?(x)', '**/?(*.)+(spec|test).[jt]s?(x)',
+        '**/__tests__/node/**/*.[jt]s?(x)',
+        '**/node/?(*.)+(spec|test).[jt]s?(x)',
+      ],
     },
   ],
 }
