@@ -275,6 +275,36 @@ describe('BaseGraphqlCapsule', () => {
 })
 
 describe('BaseGraphqlCapsule', () => {
+  describe('.createAsPending()', () => {
+    describe('to be instance of own class', () => {
+      test('with no args', () => {
+        const actual = BaseGraphqlCapsule.createAsPending()
+
+        expect(actual)
+          .toBeInstanceOf(BaseGraphqlCapsule)
+      })
+    })
+
+    describe('to call .create()', () => {
+      test('with no args', () => {
+        const expectedArgs = {
+          rawResponse: null,
+          payload: null,
+          result: null,
+        }
+
+        const createSpy = jest.spyOn(BaseGraphqlCapsule, 'create')
+
+        BaseGraphqlCapsule.createAsPending()
+
+        expect(createSpy)
+          .toHaveBeenCalledWith(expectedArgs)
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlCapsule', () => {
   describe('#isPending()', () => {
     const mockResponse = new Response()
     const mockResult = {
