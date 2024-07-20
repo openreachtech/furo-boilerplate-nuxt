@@ -25,6 +25,19 @@ export default class BaseGraphqlCapsule {
   }
 
   /**
+   * Factory method to create as pending behavior.
+   *
+   * @returns {BaseGraphqlCapsule} Instance of this class.
+   */
+  static createAsPending () {
+    return this.create({
+      rawResponse: null,
+      payload: null,
+      result: null,
+    })
+  }
+
+  /**
    * Check to have content.
    *
    * @returns {BooleanLike} true: has content.
