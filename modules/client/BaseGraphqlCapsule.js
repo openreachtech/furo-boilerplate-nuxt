@@ -8,10 +8,12 @@ export default class BaseGraphqlCapsule {
     rawResponse,
     payload,
     result,
+    behavesNull = false,
   }) {
     this.rawResponse = rawResponse
     this.payload = payload
     this.result = result
+    this.behavesNull = behavesNull
   }
 
   /**
@@ -145,6 +147,7 @@ export default class BaseGraphqlCapsule {
  *   rawResponse: Response
  *   payload: import('~/modules/client/BaseGraphqlPayload').default
  *   result: GraphqlCapsuleResult
+ *   behavesNull: boolean
  * }} BaseGraphqlCapsuleParams
  */
 
