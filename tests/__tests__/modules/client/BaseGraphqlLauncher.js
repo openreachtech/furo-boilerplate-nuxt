@@ -5,8 +5,6 @@ import {
 import BaseGraphqlLauncher from '@/modules/client/BaseGraphqlLauncher'
 import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
 import BaseGraphqlCapsule from '~/modules/client/BaseGraphqlCapsule'
-import NetworkErrorGraphqlCapsule from '~/modules/client/capsules/NetworkErrorGraphqlCapsule'
-import JsonParseErrorGraphqlCapsule from '~/modules/client/capsules/JsonParseErrorGraphqlCapsule'
 
 describe('BaseGraphqlLauncher', () => {
   describe('constructor', () => {
@@ -1293,7 +1291,7 @@ describe('BaseGraphqlLauncher', () => {
         const actual = await launcher.launchQuery(args)
 
         expect(actual)
-          .toBeInstanceOf(NetworkErrorGraphqlCapsule)
+          .toBeInstanceOf(params.Capsule)
         expect(actual)
           .toHaveProperty('rawResponse', null)
         expect(actual.extractContent())
@@ -1403,7 +1401,7 @@ describe('BaseGraphqlLauncher', () => {
         const actual = await launcher.launchQuery(args)
 
         expect(actual)
-          .toBeInstanceOf(JsonParseErrorGraphqlCapsule)
+          .toBeInstanceOf(params.Capsule)
         expect(actual.extractContent())
           .toBeNull()
 
