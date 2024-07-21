@@ -148,6 +148,72 @@ describe('BaseGraphqlLauncher', () => {
 })
 
 describe('BaseGraphqlLauncher', () => {
+  describe('.createResultCapsuleAsPending()', () => {
+    describe('to be instance of BaseGraphqlCapsule', () => {
+      const cases = [
+        {
+          params: {
+            CapsuleClass: class AlphaCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+        {
+          params: {
+            CapsuleClass: class BetaCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+      ]
+
+      test.each(cases)('Capsule: $params.CapsuleClass.name', ({ params }) => {
+        const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
+          .mockReturnValue(params.CapsuleClass)
+
+        const capsule = BaseGraphqlLauncher.createResultCapsuleAsPending()
+
+        expect(capsule)
+          .toBeInstanceOf(params.CapsuleClass)
+
+        CapsuleSpy.mockRestore()
+      })
+    })
+
+    describe('to call Capsule factory method', () => {
+      const cases = [
+        {
+          params: {
+            CapsuleClass: class AlphaCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+        {
+          params: {
+            CapsuleClass: class BetaCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+      ]
+
+      test.each(cases)('Capsule: $params.CapsuleClass.name', ({ params }) => {
+        const expected = {
+          rawResponse: null,
+          payload: null,
+          result: null,
+        }
+
+        const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
+          .mockReturnValue(params.CapsuleClass)
+        const createSpy = jest.spyOn(params.CapsuleClass, 'create')
+
+        BaseGraphqlLauncher.createResultCapsuleAsPending(params)
+
+        expect(createSpy)
+          .toHaveBeenCalledWith(expected)
+
+        CapsuleSpy.mockRestore()
+        createSpy.mockRestore()
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlLauncher', () => {
   describe('#createPayload()', () => {
     const config = {
       ENDPOINT_URL: 'http://example.com/graphql-customer',
