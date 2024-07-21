@@ -305,6 +305,94 @@ describe('BaseGraphqlCapsule', () => {
 })
 
 describe('BaseGraphqlCapsule', () => {
+  describe('.createAsNetworkError()', () => {
+    describe('to be instance of own class', () => {
+      const cases = [
+        {
+          args: {
+            payload: new BaseGraphqlPayload({
+              queryTemplate: /* GraphQL */ `
+                query {
+                  customer: {
+                    id
+                  }
+                }
+              }`,
+            }),
+          },
+        },
+        {
+          args: {
+            payload: new BaseGraphqlPayload({
+              queryTemplate: /* GraphQL */ `
+                query {
+                  admin: {
+                    id
+                  }
+                }
+              }`,
+            }),
+          },
+        },
+      ]
+
+      test.each(cases)('payload: $args.payload', ({ args }) => {
+        const actual = BaseGraphqlCapsule.createAsNetworkError(args)
+
+        expect(actual)
+          .toBeInstanceOf(BaseGraphqlCapsule)
+      })
+    })
+
+    describe('to call .create()', () => {
+      const cases = [
+        {
+          args: {
+            payload: new BaseGraphqlPayload({
+              queryTemplate: /* GraphQL */ `
+                query {
+                  customer: {
+                    id
+                  }
+                }
+              }`,
+            }),
+          },
+        },
+        {
+          args: {
+            payload: new BaseGraphqlPayload({
+              queryTemplate: /* GraphQL */ `
+                query {
+                  admin: {
+                    id
+                  }
+                }
+              }`,
+            }),
+          },
+        },
+      ]
+
+      test.each(cases)('payload: $args.payload', ({ args }) => {
+        const expectedArgs = {
+          rawResponse: null,
+          payload: null,
+          result: null,
+        }
+
+        const createSpy = jest.spyOn(BaseGraphqlCapsule, 'create')
+
+        BaseGraphqlCapsule.createAsNetworkError(args)
+
+        expect(createSpy)
+          .toHaveBeenCalledWith(expectedArgs)
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlCapsule', () => {
   describe('#isPending()', () => {
     const mockResponse = new Response()
     const mockResult = {
