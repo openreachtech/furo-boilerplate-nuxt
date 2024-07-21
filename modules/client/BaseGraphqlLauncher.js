@@ -95,6 +95,28 @@ export default class BaseGraphqlLauncher {
   }
 
   /**
+   * Create instance of capsule with result as JSON parse error.
+   *
+   * @param {{
+   *   rawResponse: Response
+   *   payload: import('./BaseGraphqlPayload')
+   * }} params - Parameters.
+   * @returns {import('./BaseGraphqlCapsule').default} Instance of capsule.
+   */
+  static createResultCapsuleAsJsonParseError ({
+    rawResponse,
+    payload,
+  }) {
+    const args = {
+      rawResponse,
+      payload,
+      result: null,
+    }
+
+    return this.createResultCapsule(args)
+  }
+
+  /**
    * get: Constructor from instance.
    *
    * @returns {typeof BaseGraphqlLauncher} Constructor of the instance.
