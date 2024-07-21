@@ -393,6 +393,99 @@ describe('BaseGraphqlCapsule', () => {
 })
 
 describe('BaseGraphqlCapsule', () => {
+  describe('.createAsJsonParseError()', () => {
+    describe('to be instance of own class', () => {
+      const cases = [
+        {
+          args: {
+            rawResponse: new Response(),
+            payload: new BaseGraphqlPayload({
+              queryTemplate: /* GraphQL */ `
+                query {
+                  customer: {
+                    id
+                  }
+                }
+              }`,
+            }),
+          },
+        },
+        {
+          args: {
+            rawResponse: new Response(),
+            payload: new BaseGraphqlPayload({
+              queryTemplate: /* GraphQL */ `
+                query {
+                  admin: {
+                    id
+                  }
+                }
+              }`,
+            }),
+          },
+        },
+      ]
+
+      test.each(cases)('payload: $args.payload', ({ args }) => {
+        const actual = BaseGraphqlCapsule.createAsJsonParseError(args)
+
+        expect(actual)
+          .toBeInstanceOf(BaseGraphqlCapsule)
+      })
+    })
+
+    describe('to call constructor', () => {
+      const cases = [
+        {
+          args: {
+            rawResponse: new Response(),
+            payload: new BaseGraphqlPayload({
+              queryTemplate: /* GraphQL */ `
+                query {
+                  customer: {
+                    id
+                  }
+                }
+              }`,
+            }),
+          },
+        },
+        {
+          args: {
+            rawResponse: new Response(),
+            payload: new BaseGraphqlPayload({
+              queryTemplate: /* GraphQL */ `
+                query {
+                  admin: {
+                    id
+                  }
+                }
+              }`,
+            }),
+          },
+        },
+      ]
+
+      test.each(cases)('payload: $args.payload', ({ args }) => {
+        const expected = {
+          rawResponse: args.rawResponse,
+          payload: args.payload,
+          result: null,
+        }
+
+        const DerivedClass = ConstructorSpyGenerator.create({ jest })
+          .generateSpyKitClass(BaseGraphqlCapsule)
+
+        DerivedClass.createAsJsonParseError(args)
+
+        expect(DerivedClass.__spy__)
+          .toHaveBeenCalledWith(expected)
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlCapsule', () => {
   describe('#isPending()', () => {
     const mockResponse = new Response()
     const mockResult = {
