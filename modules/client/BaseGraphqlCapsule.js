@@ -38,6 +38,24 @@ export default class BaseGraphqlCapsule {
   }
 
   /**
+   * Factory method to create as network error.
+   *
+   * @param {{
+   *   payload: import('./BaseGraphqlPayload').default
+   * }} params - Parameters.
+   * @returns
+   */
+  static createAsNetworkError ({
+    payload,
+  }) {
+    return this.create({
+      rawResponse: null,
+      payload,
+      result: null,
+    })
+  }
+
+  /**
    * Check to have content.
    *
    * @returns {BooleanLike} true: has content.
