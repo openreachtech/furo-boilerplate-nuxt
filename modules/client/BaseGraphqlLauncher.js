@@ -117,7 +117,7 @@ export default class BaseGraphqlLauncher {
       })
     }
 
-    return this.createResultCapsule({
+    return this.Ctor.createResultCapsule({
       rawResponse: response,
       payload,
       result,
