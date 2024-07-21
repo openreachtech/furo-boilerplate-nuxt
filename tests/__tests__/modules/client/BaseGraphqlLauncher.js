@@ -273,15 +273,9 @@ describe('BaseGraphqlLauncher', () => {
 })
 
 describe('BaseGraphqlLauncher', () => {
-  describe('#createResultCapsule()', () => {
+  describe('.createResultCapsule()', () => {
     describe('to be instance of BaseGraphqlCapsule', () => {
       const MockGraphqlCapsule = class extends BaseGraphqlCapsule {}
-
-      const mockLauncherParams = {
-        config: {
-          ENDPOINT_URL: 'http://example.com/graphql-customer',
-        },
-      }
 
       const cases = [
         {
@@ -324,9 +318,7 @@ describe('BaseGraphqlLauncher', () => {
         const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
           .mockReturnValue(MockGraphqlCapsule)
 
-        const launcher = BaseGraphqlLauncher.create(mockLauncherParams)
-
-        const capsule = launcher.createResultCapsule(params)
+        const capsule = BaseGraphqlLauncher.createResultCapsule(params)
 
         expect(capsule)
           .toBeInstanceOf(BaseGraphqlCapsule)
@@ -337,12 +329,6 @@ describe('BaseGraphqlLauncher', () => {
 
     describe('to call Capsule factory method', () => {
       const MockGraphqlCapsule = class extends BaseGraphqlCapsule {}
-
-      const mockLauncherParams = {
-        config: {
-          ENDPOINT_URL: 'http://example.com/graphql-customer',
-        },
-      }
 
       const cases = [
         {
@@ -386,9 +372,7 @@ describe('BaseGraphqlLauncher', () => {
           .mockReturnValue(MockGraphqlCapsule)
         const createSpy = jest.spyOn(MockGraphqlCapsule, 'create')
 
-        const launcher = BaseGraphqlLauncher.create(mockLauncherParams)
-
-        launcher.createResultCapsule(params)
+        BaseGraphqlLauncher.createResultCapsule(params)
 
         expect(createSpy)
           .toHaveBeenCalledWith(params)
