@@ -5,8 +5,6 @@ import {
 import BaseGraphqlLauncher from '@/modules/client/BaseGraphqlLauncher'
 import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
 import BaseGraphqlCapsule from '~/modules/client/BaseGraphqlCapsule'
-import NetworkErrorGraphqlCapsule from '~/modules/client/capsules/NetworkErrorGraphqlCapsule'
-import JsonParseErrorGraphqlCapsule from '~/modules/client/capsules/JsonParseErrorGraphqlCapsule'
 
 describe('BaseGraphqlLauncher', () => {
   describe('constructor', () => {
@@ -148,6 +146,350 @@ describe('BaseGraphqlLauncher', () => {
 })
 
 describe('BaseGraphqlLauncher', () => {
+  describe('.createResultCapsuleAsPending()', () => {
+    describe('to be instance of BaseGraphqlCapsule', () => {
+      const cases = [
+        {
+          params: {
+            CapsuleClass: class AlphaCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+        {
+          params: {
+            CapsuleClass: class BetaCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+      ]
+
+      test.each(cases)('Capsule: $params.CapsuleClass.name', ({ params }) => {
+        const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
+          .mockReturnValue(params.CapsuleClass)
+
+        const capsule = BaseGraphqlLauncher.createResultCapsuleAsPending()
+
+        expect(capsule)
+          .toBeInstanceOf(params.CapsuleClass)
+
+        CapsuleSpy.mockRestore()
+      })
+    })
+
+    describe('to call Capsule factory method', () => {
+      const cases = [
+        {
+          params: {
+            CapsuleClass: class AlphaCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+        {
+          params: {
+            CapsuleClass: class BetaCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+      ]
+
+      test.each(cases)('Capsule: $params.CapsuleClass.name', ({ params }) => {
+        const expected = {
+          rawResponse: null,
+          payload: null,
+          result: null,
+        }
+
+        const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
+          .mockReturnValue(params.CapsuleClass)
+        const createSpy = jest.spyOn(params.CapsuleClass, 'create')
+
+        BaseGraphqlLauncher.createResultCapsuleAsPending(params)
+
+        expect(createSpy)
+          .toHaveBeenCalledWith(expected)
+
+        CapsuleSpy.mockRestore()
+        createSpy.mockRestore()
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlLauncher', () => {
+  describe('.createResultCapsuleAsNetworkError()', () => {
+    describe('to be instance of BaseGraphqlCapsule', () => {
+      const capsuleCases = [
+        {
+          params: {
+            CapsuleClass: class AlphaCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+        {
+          params: {
+            CapsuleClass: class BetaCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+      ]
+
+      describe.each(capsuleCases)('Capsule: $params.CapsuleClass.name', ({ params }) => {
+        const cases = [
+          {
+            args: {
+              payload: new BaseGraphqlPayload({
+                queryTemplate: /* GraphQL */ `
+                  query {
+                    customer: {
+                      id
+                    }
+                  }
+                }`,
+              }),
+            },
+          },
+          {
+            args: {
+              payload: new BaseGraphqlPayload({
+                queryTemplate: /* GraphQL */ `
+                  query {
+                    admin: {
+                      id
+                    }
+                  }
+                }`,
+              }),
+            },
+          },
+        ]
+
+        test.each(cases)('payload: $args.payload', ({ args }) => {
+          const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
+            .mockReturnValue(params.CapsuleClass)
+
+          const currentArgs = {
+            payload: args.payload,
+          }
+
+          const capsule = BaseGraphqlLauncher.createResultCapsuleAsNetworkError(currentArgs)
+
+          expect(capsule)
+            .toBeInstanceOf(params.CapsuleClass)
+
+          CapsuleSpy.mockRestore()
+        })
+      })
+    })
+
+    describe('to call Capsule factory method', () => {
+      const capsuleCases = [
+        {
+          params: {
+            CapsuleClass: class AlphaCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+        {
+          params: {
+            CapsuleClass: class BetaCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+      ]
+
+      describe.each(capsuleCases)('Capsule: $params.CapsuleClass.name', ({ params }) => {
+        const cases = [
+          {
+            args: {
+              payload: new BaseGraphqlPayload({
+                queryTemplate: /* GraphQL */ `
+                  query {
+                    customer: {
+                      id
+                    }
+                  }
+                }`,
+              }),
+            },
+          },
+          {
+            args: {
+              payload: new BaseGraphqlPayload({
+                queryTemplate: /* GraphQL */ `
+                  query {
+                    admin: {
+                      id
+                    }
+                  }
+                }`,
+              }),
+            },
+          },
+        ]
+
+        test.each(cases)('payload: $args.payload', ({ args }) => {
+          const expected = {
+            rawResponse: null,
+            payload: args.payload,
+            result: null,
+          }
+
+          const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
+            .mockReturnValue(params.CapsuleClass)
+          const createSpy = jest.spyOn(params.CapsuleClass, 'create')
+
+          const currentArgs = {
+            payload: args.payload,
+          }
+
+          BaseGraphqlLauncher.createResultCapsuleAsNetworkError(currentArgs)
+
+          expect(createSpy)
+            .toHaveBeenCalledWith(expected)
+
+          CapsuleSpy.mockRestore()
+          createSpy.mockRestore()
+        })
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlLauncher', () => {
+  describe('.createResultCapsuleAsJsonParseError()', () => {
+    describe('to be instance of BaseGraphqlCapsule', () => {
+      const capsuleCases = [
+        {
+          params: {
+            CapsuleClass: class AlphaCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+        {
+          params: {
+            CapsuleClass: class BetaCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+      ]
+
+      describe.each(capsuleCases)('Capsule: $params.CapsuleClass.name', ({ params }) => {
+        const cases = [
+          {
+            args: {
+              rawResponse: new Response(),
+              payload: new BaseGraphqlPayload({
+                queryTemplate: /* GraphQL */ `
+                  query {
+                    customer: {
+                      id
+                    }
+                  }
+                }`,
+              }),
+            },
+          },
+          {
+            args: {
+              rawResponse: new Response(),
+              payload: new BaseGraphqlPayload({
+                queryTemplate: /* GraphQL */ `
+                  query {
+                    admin: {
+                      id
+                    }
+                  }
+                }`,
+              }),
+            },
+          },
+        ]
+
+        test.each(cases)('payload: $args.payload', ({ args }) => {
+          const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
+            .mockReturnValue(params.CapsuleClass)
+
+          const currentArgs = {
+            rawResponse: args.rawResponse,
+            payload: args.payload,
+          }
+
+          const capsule = BaseGraphqlLauncher.createResultCapsuleAsJsonParseError(currentArgs)
+
+          expect(capsule)
+            .toBeInstanceOf(params.CapsuleClass)
+
+          CapsuleSpy.mockRestore()
+        })
+      })
+    })
+
+    describe('to call Capsule factory method', () => {
+      const capsuleCases = [
+        {
+          params: {
+            CapsuleClass: class AlphaCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+        {
+          params: {
+            CapsuleClass: class BetaCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+      ]
+
+      describe.each(capsuleCases)('Capsule: $params.CapsuleClass.name', ({ params }) => {
+        const cases = [
+          {
+            args: {
+              rawResponse: new Response(),
+              payload: new BaseGraphqlPayload({
+                queryTemplate: /* GraphQL */ `
+                  query {
+                    customer: {
+                      id
+                    }
+                  }
+                }`,
+              }),
+            },
+          },
+          {
+            args: {
+              rawResponse: new Response(),
+              payload: new BaseGraphqlPayload({
+                queryTemplate: /* GraphQL */ `
+                  query {
+                    admin: {
+                      id
+                    }
+                  }
+                }`,
+              }),
+            },
+          },
+        ]
+
+        test.each(cases)('payload: $args.payload', ({ args }) => {
+          const expected = {
+            rawResponse: args.rawResponse,
+            payload: args.payload,
+            result: null,
+          }
+
+          const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
+            .mockReturnValue(params.CapsuleClass)
+          const createSpy = jest.spyOn(params.CapsuleClass, 'create')
+
+          const currentArgs = {
+            rawResponse: args.rawResponse,
+            payload: args.payload,
+          }
+
+          BaseGraphqlLauncher.createResultCapsuleAsJsonParseError(currentArgs)
+
+          expect(createSpy)
+            .toHaveBeenCalledWith(expected)
+
+          CapsuleSpy.mockRestore()
+          createSpy.mockRestore()
+        })
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlLauncher', () => {
   describe('#createPayload()', () => {
     const config = {
       ENDPOINT_URL: 'http://example.com/graphql-customer',
@@ -273,15 +615,9 @@ describe('BaseGraphqlLauncher', () => {
 })
 
 describe('BaseGraphqlLauncher', () => {
-  describe('#createResultCapsule()', () => {
+  describe('.createResultCapsule()', () => {
     describe('to be instance of BaseGraphqlCapsule', () => {
       const MockGraphqlCapsule = class extends BaseGraphqlCapsule {}
-
-      const mockLauncherParams = {
-        config: {
-          ENDPOINT_URL: 'http://example.com/graphql-customer',
-        },
-      }
 
       const cases = [
         {
@@ -324,9 +660,7 @@ describe('BaseGraphqlLauncher', () => {
         const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
           .mockReturnValue(MockGraphqlCapsule)
 
-        const launcher = BaseGraphqlLauncher.create(mockLauncherParams)
-
-        const capsule = launcher.createResultCapsule(params)
+        const capsule = BaseGraphqlLauncher.createResultCapsule(params)
 
         expect(capsule)
           .toBeInstanceOf(BaseGraphqlCapsule)
@@ -337,12 +671,6 @@ describe('BaseGraphqlLauncher', () => {
 
     describe('to call Capsule factory method', () => {
       const MockGraphqlCapsule = class extends BaseGraphqlCapsule {}
-
-      const mockLauncherParams = {
-        config: {
-          ENDPOINT_URL: 'http://example.com/graphql-customer',
-        },
-      }
 
       const cases = [
         {
@@ -386,9 +714,7 @@ describe('BaseGraphqlLauncher', () => {
           .mockReturnValue(MockGraphqlCapsule)
         const createSpy = jest.spyOn(MockGraphqlCapsule, 'create')
 
-        const launcher = BaseGraphqlLauncher.create(mockLauncherParams)
-
-        launcher.createResultCapsule(params)
+        BaseGraphqlLauncher.createResultCapsule(params)
 
         expect(createSpy)
           .toHaveBeenCalledWith(params)
@@ -965,7 +1291,7 @@ describe('BaseGraphqlLauncher', () => {
         const actual = await launcher.launchQuery(args)
 
         expect(actual)
-          .toBeInstanceOf(NetworkErrorGraphqlCapsule)
+          .toBeInstanceOf(params.Capsule)
         expect(actual)
           .toHaveProperty('rawResponse', null)
         expect(actual.extractContent())
@@ -1075,7 +1401,7 @@ describe('BaseGraphqlLauncher', () => {
         const actual = await launcher.launchQuery(args)
 
         expect(actual)
-          .toBeInstanceOf(JsonParseErrorGraphqlCapsule)
+          .toBeInstanceOf(params.Capsule)
         expect(actual.extractContent())
           .toBeNull()
 
