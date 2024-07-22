@@ -1,6 +1,3 @@
-import JsonParseErrorGraphqlCapsule from '@/modules/client/capsules/JsonParseErrorGraphqlCapsule'
-import NetworkErrorGraphqlCapsule from '@/modules/client/capsules/NetworkErrorGraphqlCapsule'
-
 export default class BaseGraphqlLauncher {
   /**
    * Constructor.
@@ -161,7 +158,7 @@ export default class BaseGraphqlLauncher {
       payload,
     })
     if (response === null) {
-      return NetworkErrorGraphqlCapsule.create({
+      return this.Ctor.createResultCapsuleAsNetworkError({
         payload,
       })
     }
@@ -170,7 +167,7 @@ export default class BaseGraphqlLauncher {
       response,
     })
     if (result === null) {
-      return JsonParseErrorGraphqlCapsule.create({
+      return this.Ctor.createResultCapsuleAsJsonParseError({
         rawResponse: response,
         payload,
       })
