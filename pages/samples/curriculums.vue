@@ -1,24 +1,30 @@
 <script setup>
 import {
+  onMounted,
   ref,
 } from 'vue'
 
+import CurriculumsQueryGraphqlCapsule from '~/app/graphql/client/queries/curriculums/CurriculumsQueryGraphqlCapsule'
+
 import {
   useCurriculums,
-} from '~/composables/useCurriculums'
+} from '~/composables/client/queries/useCurriculumsClient'
 
-/** @type {import('vue').Ref<import('~/app/graphql/client/curriculums/CurriculumsQueryGraphqlCapsule').default | null>} */
-const curriculumsRef = ref(null)
-// NOTE: Null Object Pattern を使えば、此処で NullGraphqlCapsule のインスタンスを入れて於ける！
+/** @type {import('vue').Ref<CurriculumsQueryGraphqlCapsule>} */
+const capsuleRef = ref(
+  CurriculumsQueryGraphqlCapsule.createAsPending()
+)
 
 const {
   fetchCurriculums,
 } = useCurriculums()
 
-const response = await fetchCurriculums()
+onMounted(async () => {
+  const capsule = await fetchCurriculums()
 
-// TODO: 此処で ref に保持する処理を追加する
-curriculumsRef.value = response
+  capsuleRef.value = capsule
+})
+
 </script>
 
 <template>
@@ -28,7 +34,9 @@ curriculumsRef.value = response
   <pre>
     {{
       JSON.stringify(
-        curriculumsRef.extractContent(),
+        capsuleRef.isPending()
+          ? '(Loading...)'
+          : capsuleRef.extractContent(),
         null,
         2
       )
