@@ -73,6 +73,28 @@ export default class BaseGraphqlLauncher {
   }
 
   /**
+   * Create instance of capsule with result as network error.
+   *
+   * @param {{
+   *   rawResponse: Response
+   *   payload: import('./BaseGraphqlPayload')
+   *   result: object
+   * }} params - Parameters.
+   * @returns {import('./BaseGraphqlCapsule').default} Instance of capsule.
+   */
+  static createResultCapsuleAsNetworkError ({
+    payload,
+  }) {
+    const args = {
+      rawResponse: null,
+      payload,
+      result: null,
+    }
+
+    return this.createResultCapsule(args)
+  }
+
+  /**
    * get: Constructor from instance.
    *
    * @returns {typeof BaseGraphqlLauncher} Constructor of the instance.
