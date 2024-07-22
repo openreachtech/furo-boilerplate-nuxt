@@ -1,4 +1,4 @@
-import CurriculumsQueryGraphqlLauncher from '~/app/graphql/client/Curriculums/CurriculumsQueryGraphqlLauncher'
+import CurriculumsQueryGraphqlLauncher from '~/app/graphql/client/curriculums/CurriculumsQueryGraphqlLauncher'
 
 export function useCurriculums () {
   return {
@@ -22,7 +22,7 @@ export function useCurriculums () {
    *     }
    *   }
    * }} params - Parameters.
-   * @returns {Promise<import('~/app/graphql/client/Curriculums/CurriculumsQueryGraphqlCapsule').default>}
+   * @returns {Promise<import('~/app/graphql/client/curriculums/CurriculumsQueryGraphqlCapsule').default>}
    */
   async function fetchCurriculums ({
     variables = {
