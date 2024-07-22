@@ -1,7 +1,7 @@
-import CurriculumsQueryGraphqlLauncher from '~/app/graphql/client/Curriculums/CurriculumsQueryGraphqlLauncher'
+import CurriculumsQueryGraphqlLauncher from '~/app/graphql/client/queries/curriculums/CurriculumsQueryGraphqlLauncher'
 import BaseAppGraphqlLauncher from '~/app/graphql/client/BaseAppGraphqlLauncher'
-import CurriculumsQueryGraphqlPayload from '~/app/graphql/client/Curriculums/CurriculumsQueryGraphqlPayload'
-import CurriculumsQueryGraphqlCapsule from '~/app/graphql/client/Curriculums/CurriculumsQueryGraphqlCapsule'
+import CurriculumsQueryGraphqlPayload from '~/app/graphql/client/queries/curriculums/CurriculumsQueryGraphqlPayload'
+import CurriculumsQueryGraphqlCapsule from '~/app/graphql/client/queries/curriculums/CurriculumsQueryGraphqlCapsule'
 
 describe('CurriculumsQueryGraphqlLauncher', () => {
   describe('super class', () => {

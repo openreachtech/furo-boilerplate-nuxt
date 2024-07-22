@@ -1,4 +1,4 @@
-import CurriculumsQueryGraphqlPayload from '@/app/graphql/client/Curriculums/CurriculumsQueryGraphqlPayload'
+import CurriculumsQueryGraphqlPayload from '~/app/graphql/client/queries/curriculums/CurriculumsQueryGraphqlPayload'
 import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
 
 describe('CurriculumsQueryGraphqlPayload', () => {
