@@ -1,4 +1,4 @@
-import CurriculumsQueryGraphqlLauncher from '~/app/graphql/client/curriculums/CurriculumsQueryGraphqlLauncher'
+import CurriculumsQueryGraphqlLauncher from '~/app/graphql/client/queries/curriculums/CurriculumsQueryGraphqlLauncher'
 
 export function useCurriculums () {
   return {
