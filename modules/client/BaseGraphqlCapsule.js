@@ -25,6 +25,57 @@ export default class BaseGraphqlCapsule {
   }
 
   /**
+   * Factory method to create as pending behavior.
+   *
+   * @returns {BaseGraphqlCapsule} Instance of this class.
+   */
+  static createAsPending () {
+    return this.create({
+      rawResponse: null,
+      payload: null,
+      result: null,
+    })
+  }
+
+  /**
+   * Factory method to create as network error.
+   *
+   * @param {{
+   *   payload: import('./BaseGraphqlPayload').default
+   * }} params - Parameters.
+   * @returns
+   */
+  static createAsNetworkError ({
+    payload,
+  }) {
+    return this.create({
+      rawResponse: null,
+      payload,
+      result: null,
+    })
+  }
+
+  /**
+   * Factory method to create as JSON parse error.
+   *
+   * @param {{
+   *   rawResponse: Response
+   *   payload: import('./BaseGraphqlPayload').default
+   * }} params - Parameters.
+   * @returns
+   */
+  static createAsJsonParseError ({
+    rawResponse,
+    payload,
+  }) {
+    return this.create({
+      rawResponse,
+      payload,
+      result: null,
+    })
+  }
+
+  /**
    * Check to have content.
    *
    * @returns {BooleanLike} true: has content.

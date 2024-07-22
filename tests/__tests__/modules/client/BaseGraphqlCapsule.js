@@ -275,6 +275,217 @@ describe('BaseGraphqlCapsule', () => {
 })
 
 describe('BaseGraphqlCapsule', () => {
+  describe('.createAsPending()', () => {
+    describe('to be instance of own class', () => {
+      test('with no args', () => {
+        const actual = BaseGraphqlCapsule.createAsPending()
+
+        expect(actual)
+          .toBeInstanceOf(BaseGraphqlCapsule)
+      })
+    })
+
+    describe('to call .create()', () => {
+      test('with no args', () => {
+        const expectedArgs = {
+          rawResponse: null,
+          payload: null,
+          result: null,
+        }
+
+        const createSpy = jest.spyOn(BaseGraphqlCapsule, 'create')
+
+        BaseGraphqlCapsule.createAsPending()
+
+        expect(createSpy)
+          .toHaveBeenCalledWith(expectedArgs)
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlCapsule', () => {
+  describe('.createAsNetworkError()', () => {
+    describe('to be instance of own class', () => {
+      const cases = [
+        {
+          args: {
+            payload: new BaseGraphqlPayload({
+              queryTemplate: /* GraphQL */ `
+                query {
+                  customer: {
+                    id
+                  }
+                }
+              }`,
+            }),
+          },
+        },
+        {
+          args: {
+            payload: new BaseGraphqlPayload({
+              queryTemplate: /* GraphQL */ `
+                query {
+                  admin: {
+                    id
+                  }
+                }
+              }`,
+            }),
+          },
+        },
+      ]
+
+      test.each(cases)('payload: $args.payload', ({ args }) => {
+        const actual = BaseGraphqlCapsule.createAsNetworkError(args)
+
+        expect(actual)
+          .toBeInstanceOf(BaseGraphqlCapsule)
+      })
+    })
+
+    describe('to call .create()', () => {
+      const cases = [
+        {
+          args: {
+            payload: new BaseGraphqlPayload({
+              queryTemplate: /* GraphQL */ `
+                query {
+                  customer: {
+                    id
+                  }
+                }
+              }`,
+            }),
+          },
+        },
+        {
+          args: {
+            payload: new BaseGraphqlPayload({
+              queryTemplate: /* GraphQL */ `
+                query {
+                  admin: {
+                    id
+                  }
+                }
+              }`,
+            }),
+          },
+        },
+      ]
+
+      test.each(cases)('payload: $args.payload', ({ args }) => {
+        const expectedArgs = {
+          rawResponse: null,
+          payload: null,
+          result: null,
+        }
+
+        const createSpy = jest.spyOn(BaseGraphqlCapsule, 'create')
+
+        BaseGraphqlCapsule.createAsNetworkError(args)
+
+        expect(createSpy)
+          .toHaveBeenCalledWith(expectedArgs)
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlCapsule', () => {
+  describe('.createAsJsonParseError()', () => {
+    describe('to be instance of own class', () => {
+      const cases = [
+        {
+          args: {
+            rawResponse: new Response(),
+            payload: new BaseGraphqlPayload({
+              queryTemplate: /* GraphQL */ `
+                query {
+                  customer: {
+                    id
+                  }
+                }
+              }`,
+            }),
+          },
+        },
+        {
+          args: {
+            rawResponse: new Response(),
+            payload: new BaseGraphqlPayload({
+              queryTemplate: /* GraphQL */ `
+                query {
+                  admin: {
+                    id
+                  }
+                }
+              }`,
+            }),
+          },
+        },
+      ]
+
+      test.each(cases)('payload: $args.payload', ({ args }) => {
+        const actual = BaseGraphqlCapsule.createAsJsonParseError(args)
+
+        expect(actual)
+          .toBeInstanceOf(BaseGraphqlCapsule)
+      })
+    })
+
+    describe('to call constructor', () => {
+      const cases = [
+        {
+          args: {
+            rawResponse: new Response(),
+            payload: new BaseGraphqlPayload({
+              queryTemplate: /* GraphQL */ `
+                query {
+                  customer: {
+                    id
+                  }
+                }
+              }`,
+            }),
+          },
+        },
+        {
+          args: {
+            rawResponse: new Response(),
+            payload: new BaseGraphqlPayload({
+              queryTemplate: /* GraphQL */ `
+                query {
+                  admin: {
+                    id
+                  }
+                }
+              }`,
+            }),
+          },
+        },
+      ]
+
+      test.each(cases)('payload: $args.payload', ({ args }) => {
+        const expected = {
+          rawResponse: args.rawResponse,
+          payload: args.payload,
+          result: null,
+        }
+
+        const DerivedClass = ConstructorSpyGenerator.create({ jest })
+          .generateSpyKitClass(BaseGraphqlCapsule)
+
+        DerivedClass.createAsJsonParseError(args)
+
+        expect(DerivedClass.__spy__)
+          .toHaveBeenCalledWith(expected)
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlCapsule', () => {
   describe('#isPending()', () => {
     const mockResponse = new Response()
     const mockResult = {
