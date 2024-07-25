@@ -17,8 +17,10 @@ export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
    * @returns {BaseAppGraphqlLauncher} Instance of BaseAppGraphqlLauncher.
    */
   static create ({
-    config = graphqlConfig,
-  } = {}) {
+    config,
+  } = {
+    config: graphqlConfig,
+  }) {
     return /** @type {*} */ (
       super.create({
         config,
