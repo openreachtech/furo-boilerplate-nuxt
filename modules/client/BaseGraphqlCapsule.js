@@ -43,7 +43,7 @@ export default class BaseGraphqlCapsule {
    * @param {{
    *   payload: import('./BaseGraphqlPayload').default
    * }} params - Parameters.
-   * @returns
+   * @returns {BaseGraphqlCapsule} Instance of this class.
    */
   static createAsNetworkError ({
     payload,
