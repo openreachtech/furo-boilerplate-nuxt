@@ -141,7 +141,7 @@ export default class BaseGraphqlLauncher {
    * @returns {Promise<import('./BaseGraphqlCapsule').default>} Promise of instance of capsule.
    * @public
    */
-  async launchQuery ({
+  async launchRequest ({
     variables = {},
     options = {},
   } = {}) {
