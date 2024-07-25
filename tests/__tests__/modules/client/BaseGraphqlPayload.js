@@ -208,11 +208,11 @@ describe('BaseGraphqlPayload', () => {
 })
 
 describe('BaseGraphqlPayload', () => {
-  describe('.get:query', () => {
+  describe('.get:document', () => {
     test('to throw Error', () => {
       const expected = 'this function must be inherited'
 
-      expect(() => BaseGraphqlPayload.query)
+      expect(() => BaseGraphqlPayload.document)
         .toThrow(expected)
     })
   })
@@ -295,7 +295,7 @@ describe('BaseGraphqlPayload', () => {
       ]
 
       test.each(cases)('variables: $params.variables', ({ params }) => {
-        const querySpy = jest.spyOn(BaseGraphqlPayload, 'query', 'get')
+        const querySpy = jest.spyOn(BaseGraphqlPayload, 'document', 'get')
           .mockReturnValue(params.queryTemplate)
 
         const args = {
@@ -396,7 +396,7 @@ describe('BaseGraphqlPayload', () => {
           options: params.options,
         }
 
-        const querySpy = jest.spyOn(BaseGraphqlPayload, 'query', 'get')
+        const querySpy = jest.spyOn(BaseGraphqlPayload, 'document', 'get')
           .mockReturnValue(params.queryTemplate)
 
         const DerivedClass = ConstructorSpyGenerator.create({ jest })

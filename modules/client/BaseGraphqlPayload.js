@@ -25,7 +25,7 @@ export default class BaseGraphqlPayload {
     options = {},
   } = {}) {
     return new this({
-      queryTemplate: this.query,
+      queryTemplate: this.document,
       variables,
       options,
     })
@@ -38,7 +38,7 @@ export default class BaseGraphqlPayload {
    * @return {string} GraphQL query template.
    * @throws {Error} This function must be inherited.
    */
-  static get query () {
+  static get document () {
     throw new Error('this function must be inherited')
   }
 
