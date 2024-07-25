@@ -2,7 +2,7 @@ import {
   ConstructorSpyGenerator,
 } from '@openreachtech/renchan-test-tools'
 
-import BaseGraphqlLauncher from '@/modules/client/BaseGraphqlLauncher'
+import BaseGraphqlLauncher from '~/modules/client/BaseGraphqlLauncher'
 import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
 import BaseGraphqlCapsule from '~/modules/client/BaseGraphqlCapsule'
 
