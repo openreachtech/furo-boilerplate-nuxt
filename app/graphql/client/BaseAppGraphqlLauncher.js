@@ -1,5 +1,8 @@
 import BaseGraphqlLauncher from '@/modules/client/BaseGraphqlLauncher'
-import constants from '~/app/constants'
+import {
+  HEADER_KEY,
+  STORAGE_KEY,
+} from '~/app/constants'
 
 import graphqlConfig from '~/app/graphql/graphql.config'
 import StorageClerk from '~/modules/storage/StorageClerk'
@@ -55,7 +58,7 @@ export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
 
     if (accessToken) {
       headers.append(
-        constants.HEADER_KEY.ACCESS_TOKEN,
+        HEADER_KEY.ACCESS_TOKEN,
         accessToken
       )
     }
@@ -71,7 +74,7 @@ export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
   loadAccessToken () {
     const storageClerk = this.Ctor.createStorageClerk()
 
-    return storageClerk.get(constants.STORAGE_KEY.ACCESS_TOKEN)
+    return storageClerk.get(STORAGE_KEY.ACCESS_TOKEN)
   }
 }
 
