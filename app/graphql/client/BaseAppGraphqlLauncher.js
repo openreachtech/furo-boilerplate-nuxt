@@ -1,11 +1,12 @@
 import BaseGraphqlLauncher from '@/modules/client/BaseGraphqlLauncher'
+import StorageClerk from '~/modules/storage/StorageClerk'
+
 import {
   HEADER_KEY,
   STORAGE_KEY,
 } from '~/app/constants'
 
 import graphqlConfig from '~/app/graphql/graphql.config'
-import StorageClerk from '~/modules/storage/StorageClerk'
 
 export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
   /**
