@@ -40,7 +40,7 @@ export function useCurriculums () {
   } = {}) {
     const launcher = CurriculumsQueryGraphqlLauncher.create()
 
-    const response = await launcher.launchQuery({
+    const response = await launcher.launchRequest({
       variables,
     })
 
