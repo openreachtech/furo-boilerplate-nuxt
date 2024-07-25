@@ -8,7 +8,7 @@ export default class CurriculumsQueryGraphqlLauncher extends BaseAppGraphqlLaunc
     return CurriculumsQueryGraphqlPayload
   }
 
-  /** @inheritdoc */
+  /** @override */
   static get Capsule () {
     return CurriculumsQueryGraphqlCapsule
   }
