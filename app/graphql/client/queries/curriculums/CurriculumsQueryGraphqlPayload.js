@@ -2,7 +2,7 @@ import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
 
 export default class CurriculumsQueryGraphqlPayload extends BaseGraphqlPayload {
   /** @override */
-  static get query () {
+  static get document () {
     return /* GraphQL */ `
       query CurriculumsQuery ($input: CurriculumsSearchInput!) {
         curriculums (input: $input) {
