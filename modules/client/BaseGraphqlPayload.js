@@ -32,10 +32,10 @@ export default class BaseGraphqlPayload {
   }
 
   /**
-   * get: query.
+   * get: document.
    *
    * @abstract
-   * @return {string} GraphQL query template.
+   * @returns {string} GraphQL document template.
    * @throws {Error} This function must be inherited.
    */
   static get document () {
