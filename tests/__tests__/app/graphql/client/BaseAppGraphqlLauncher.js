@@ -1,4 +1,4 @@
-import BaseAppGraphqlLauncher from '@/app/graphql/client/BaseAppGraphqlLauncher'
+import BaseAppGraphqlLauncher from '~/app/graphql/client/BaseAppGraphqlLauncher'
 import BaseGraphqlLauncher from '~/modules/client/BaseGraphqlLauncher'
 import StorageClerk from '~/modules/storage/StorageClerk'
 
