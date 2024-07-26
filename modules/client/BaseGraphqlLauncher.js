@@ -45,7 +45,7 @@ export default class BaseGraphqlLauncher {
    * get: Payload class.
    *
    * @abstract
-   * @returns {typeof import('./BaseGraphqlPayload').default} Payload class.
+   * @returns {PayloadClass} Payload class.
    * @throws {Error} This function must be inherited.
    */
   static get Payload () {
@@ -56,7 +56,8 @@ export default class BaseGraphqlLauncher {
    * get: Capsule class.
    *
    * @abstract
-   * @returns {typeof import('./BaseGraphqlCapsule').default} Capsule class.
+   * @template {CapsuleClass} C
+   * @returns {C} Capsule class.
    * @throws {Error} This function must be inherited.
    */
   static get Capsule () {
@@ -66,7 +67,8 @@ export default class BaseGraphqlLauncher {
   /**
    * Create instance of capsule with result as pending.
    *
-   * @returns {import('./BaseGraphqlCapsule').default} Instance of capsule.
+   * @template {CapsuleClass} C
+   * @returns {Promise<InstanceType<C>>} Instance of capsule.
    */
   static createResultCapsuleAsPending () {
     const args = {
@@ -82,11 +84,10 @@ export default class BaseGraphqlLauncher {
    * Create instance of capsule with result as network error.
    *
    * @param {{
-   *   rawResponse: Response
-   *   payload: import('./BaseGraphqlPayload')
-   *   result: object
+   *   payload: InstanceType<PayloadClass>
    * }} params - Parameters.
-   * @returns {import('./BaseGraphqlCapsule').default} Instance of capsule.
+   * @template {CapsuleClass} C
+   * @returns {Promise<InstanceType<C>>} Instance of capsule.
    */
   static createResultCapsuleAsNetworkError ({
     payload,
@@ -105,9 +106,10 @@ export default class BaseGraphqlLauncher {
    *
    * @param {{
    *   rawResponse: Response
-   *   payload: import('./BaseGraphqlPayload')
+   *   payload: InstanceType<PayloadClass>
    * }} params - Parameters.
-   * @returns {import('./BaseGraphqlCapsule').default} Instance of capsule.
+   * @template {CapsuleClass} C
+   * @returns {Promise<InstanceType<C>>} Instance of capsule.
    */
   static createResultCapsuleAsJsonParseError ({
     rawResponse,
@@ -125,10 +127,11 @@ export default class BaseGraphqlLauncher {
   /**
    * get: Constructor from instance.
    *
-   * @returns {typeof BaseGraphqlLauncher} Constructor of the instance.
+   * @template {typeof BaseGraphqlLauncher} L
+   * @returns {L} Constructor of the instance.
    */
   get Ctor () {
-    return this.constructor
+    return /** @type {*} */ (this.constructor)
   }
 
   /**
@@ -147,7 +150,8 @@ export default class BaseGraphqlLauncher {
    *   variables?: object | null
    *   options?: RequestInit
    * }} Params - Parameters.
-   * @returns {Promise<import('./BaseGraphqlCapsule').default>} Promise of instance of capsule.
+   * @template {CapsuleClass} C
+   * @returns {Promise<InstanceType<C>>} Promise of instance of capsule.
    * @public
    */
   async launchRequest ({
@@ -231,7 +235,7 @@ export default class BaseGraphqlLauncher {
    * Fetch query.
    *
    * @param {{
-   *   payload: import('~/modules/client/BaseGraphqlPayload').default
+   *   payload: InstanceType<PayloadClass>
    * }} params - Parameters.
    * @returns {Promise<Response | null>} Instance of fetch API response.
    */
@@ -259,7 +263,7 @@ export default class BaseGraphqlLauncher {
    *   variables: object | null
    *   options: RequestInit
    * }} params - Parameters.
-   * @returns {import('./BaseGraphqlPayload').default} Instance of Payload.
+   * @returns {InstanceType<PayloadClass>} Instance of Payload.
    */
   createPayload ({
     variables,
@@ -296,12 +300,9 @@ export default class BaseGraphqlLauncher {
   /**
    * Create instance of capsule with result.
    *
-   * @param {{
-   *   rawResponse: Response
-   *   payload: import('./BaseGraphqlPayload')
-   *   result: object
-   * }} params - Parameters.
-   * @returns {import('./BaseGraphqlCapsule').default} Instance of capsule.
+   * @param {CapsuleParams} params - Parameters.
+   * @template {CapsuleClass} C
+   * @returns {Promise<InstanceType<C>>} Instance of capsule.
    */
   static createResultCapsule ({
     rawResponse,
@@ -328,4 +329,20 @@ export default class BaseGraphqlLauncher {
 
 /**
  * @typedef {BaseGraphqlLauncherParams} BaseGraphqlLauncherFactoryParams
+ */
+
+/**
+ * @typedef {typeof import('./BaseGraphqlPayload').default} PayloadClass
+ */
+
+/**
+ * @typedef {typeof import('./BaseGraphqlCapsule').default} CapsuleClass
+ */
+
+/**
+ * @typedef {{
+ *   rawResponse: Response | null
+ *   payload: InstanceType<PayloadClass> | null
+ *   result: object | null
+ * }} CapsuleParams
  */
