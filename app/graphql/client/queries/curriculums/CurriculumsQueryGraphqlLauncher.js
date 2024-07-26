@@ -3,12 +3,12 @@ import CurriculumsQueryGraphqlPayload from '~/app/graphql/client/queries/curricu
 import CurriculumsQueryGraphqlCapsule from '~/app/graphql/client/queries/curriculums/CurriculumsQueryGraphqlCapsule'
 
 export default class CurriculumsQueryGraphqlLauncher extends BaseAppGraphqlLauncher {
-  /** @inheritdoc */
+  /** @override */
   static get Payload () {
     return CurriculumsQueryGraphqlPayload
   }
 
-  /** @inheritdoc */
+  /** @override */
   static get Capsule () {
     return CurriculumsQueryGraphqlCapsule
   }
