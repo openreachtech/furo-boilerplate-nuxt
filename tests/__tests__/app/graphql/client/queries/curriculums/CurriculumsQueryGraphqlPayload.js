@@ -13,7 +13,7 @@ describe('CurriculumsQueryGraphqlPayload', () => {
 })
 
 describe('CurriculumsQueryGraphqlPayload', () => {
-  describe('.get:query', () => {
+  describe('.get:document', () => {
     const expected = /* GraphQL */ `
       query CurriculumsQuery ($input: CurriculumsSearchInput!) {
         curriculums (input: $input) {
@@ -38,7 +38,7 @@ describe('CurriculumsQueryGraphqlPayload', () => {
     `
 
     test('to be fixed string', () => {
-      const actual = CurriculumsQueryGraphqlPayload.query
+      const actual = CurriculumsQueryGraphqlPayload.document
 
       expect(actual)
         .toBe(expected)

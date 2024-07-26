@@ -179,7 +179,7 @@ describe('GenericGraphqlPayload', () => {
       ]
 
       test.each(cases)('input: $params.input', ({ params }) => {
-        const querySpy = jest.spyOn(GenericGraphqlPayload, 'query', 'get')
+        const querySpy = jest.spyOn(GenericGraphqlPayload, 'document', 'get')
           .mockReturnValue(params.queryTemplate)
 
         const DerivedClass = ConstructorSpyGenerator.create({ jest })
