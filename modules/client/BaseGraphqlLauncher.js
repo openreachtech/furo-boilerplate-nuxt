@@ -125,10 +125,11 @@ export default class BaseGraphqlLauncher {
   /**
    * get: Constructor from instance.
    *
-   * @returns {typeof BaseGraphqlLauncher} Constructor of the instance.
+   * @template {typeof BaseGraphqlLauncher} L
+   * @returns {L} Constructor of the instance.
    */
   get Ctor () {
-    return this.constructor
+    return /** @type {*} */ (this.constructor)
   }
 
   /**
