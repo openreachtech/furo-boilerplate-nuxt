@@ -295,11 +295,7 @@ export default class BaseGraphqlLauncher {
   /**
    * Create instance of capsule with result.
    *
-   * @param {{
-   *   rawResponse: Response
-   *   payload: InstanceType<PayloadClass>
-   *   result: object
-   * }} params - Parameters.
+   * @param {CapsuleParams} params - Parameters.
    * @returns {InstanceType<CapsuleClass>} Instance of capsule.
    */
   static createResultCapsule ({
