@@ -86,7 +86,8 @@ export default class BaseGraphqlLauncher {
    * @param {{
    *   payload: InstanceType<PayloadClass>
    * }} params - Parameters.
-   * @returns {InstanceType<CapsuleClass>} Instance of capsule.
+   * @template {CapsuleClass} C
+   * @returns {Promise<InstanceType<C>>} Instance of capsule.
    */
   static createResultCapsuleAsNetworkError ({
     payload,
