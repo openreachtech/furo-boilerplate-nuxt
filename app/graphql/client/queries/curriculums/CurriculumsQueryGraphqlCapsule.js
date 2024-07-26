@@ -1,5 +1,10 @@
 import BaseGraphqlCapsule from '~/modules/client/BaseGraphqlCapsule'
 
+/**
+ * Curriculums query graphql capsule.
+ *
+ * @extends {BaseGraphqlCapsule<CurriculumsQueryGraphqlCapsule>}
+ */
 export default class CurriculumsQueryGraphqlCapsule extends BaseGraphqlCapsule {
   /**
    * Factory method to create as pending behavior.
