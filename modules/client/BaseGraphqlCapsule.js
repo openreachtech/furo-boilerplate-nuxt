@@ -23,10 +23,14 @@ export default class BaseGraphqlCapsule {
    * Factory method.
    *
    * @param {BaseGraphqlCapsuleFactoryParams} params - Parameters of factory method.
-   * @returns {BaseGraphqlCapsule} Instance of this class.
+   * @template {typeof BaseGraphqlCapsule} T
+   * @this {T}
+   * @returns {InstanceType<T>} Instance of this class.
    */
   static create (params) {
-    return new this(params)
+    return /** @type {*} */ (
+      new this(params)
+    )
   }
 
   /**
