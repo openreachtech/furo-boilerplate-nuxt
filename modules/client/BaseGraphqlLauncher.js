@@ -1,3 +1,8 @@
+/**
+ * Base class of GraphQL launcher.
+ *
+ * @template T
+ */
 export default class BaseGraphqlLauncher {
   /**
    * Constructor.
