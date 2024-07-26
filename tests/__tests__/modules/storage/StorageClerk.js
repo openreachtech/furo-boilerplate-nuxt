@@ -2,7 +2,7 @@ import {
   ConstructorSpyGenerator,
 } from '~/node_modules/@openreachtech/renchan-test-tools/index'
 
-import StorageClerk from '@/modules/storage/StorageClerk'
+import StorageClerk from '~/modules/storage/StorageClerk'
 
 describe('StorageClerk', () => {
   describe('constructor', () => {

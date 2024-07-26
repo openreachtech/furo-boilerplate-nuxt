@@ -222,7 +222,7 @@ export default class BaseGraphqlLauncher {
    * Fetch query.
    *
    * @param {{
-   *   payload: import('@/modules/client/BaseGraphqlPayload').default
+   *   payload: import('~/modules/client/BaseGraphqlPayload').default
    * }} params - Parameters.
    * @returns {Promise<Response | null>} Instance of fetch API response.
    */

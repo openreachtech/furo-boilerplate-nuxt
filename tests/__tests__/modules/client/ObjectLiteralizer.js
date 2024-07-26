@@ -2,7 +2,7 @@ import {
   ConstructorSpyGenerator,
 } from '@openreachtech/renchan-test-tools'
 
-import ObjectLiteralizer from '@/modules/client/ObjectLiteralizer'
+import ObjectLiteralizer from '~/modules/client/ObjectLiteralizer'
 
 describe('ObjectLiteralizer', () => {
   describe('constructor', () => {

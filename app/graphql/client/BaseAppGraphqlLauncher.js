@@ -1,4 +1,4 @@
-import BaseGraphqlLauncher from '@/modules/client/BaseGraphqlLauncher'
+import BaseGraphqlLauncher from '~/modules/client/BaseGraphqlLauncher'
 import StorageClerk from '~/modules/storage/StorageClerk'
 
 import {
@@ -82,5 +82,5 @@ export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
 }
 
 /**
- * @typedef {import('@/modules/client/BaseGraphqlLauncher').BaseGraphqlLauncherFactoryParams} BaseAppGraphqlLauncherFactoryParams
+ * @typedef {import('~/modules/client/BaseGraphqlLauncher').BaseGraphqlLauncherFactoryParams} BaseAppGraphqlLauncherFactoryParams
  */
