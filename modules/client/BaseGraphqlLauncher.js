@@ -336,3 +336,11 @@ export default class BaseGraphqlLauncher {
 /**
  * @typedef {typeof import('./BaseGraphqlCapsule').default} CapsuleClass
  */
+
+/**
+ * @typedef {{
+ *   rawResponse: Response | null
+ *   payload: InstanceType<PayloadClass> | null
+ *   result: object | null
+ * }} CapsuleParams
+ */
