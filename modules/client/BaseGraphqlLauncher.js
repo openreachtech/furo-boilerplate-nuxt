@@ -108,7 +108,8 @@ export default class BaseGraphqlLauncher {
    *   rawResponse: Response
    *   payload: InstanceType<PayloadClass>
    * }} params - Parameters.
-   * @returns {InstanceType<CapsuleClass>} Instance of capsule.
+   * @template {CapsuleClass} C
+   * @returns {Promise<InstanceType<C>>} Instance of capsule.
    */
   static createResultCapsuleAsJsonParseError ({
     rawResponse,
