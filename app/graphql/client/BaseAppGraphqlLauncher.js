@@ -8,13 +8,21 @@ import {
 
 import graphqlConfig from '~/app/graphql/graphql.config'
 
+/**
+ * Company sponsors query graphql launcher.
+ *
+ * @template {typeof BaseAppGraphqlLauncher} T
+ * @extends {BaseGraphqlLauncher<T>}
+ */
 export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
   /**
    * Factory method.
    *
    * @override
    * @param {BaseAppGraphqlLauncherFactoryParams} params - Parameters of factory method.
-   * @returns {BaseAppGraphqlLauncher} Instance of BaseAppGraphqlLauncher.
+   * @template {typeof BaseGraphqlLauncher} T
+   * @this {T}
+   * @returns {InstanceType<T>} Instance of BaseAppGraphqlLauncher.
    */
   static create ({
     config,
@@ -26,16 +34,6 @@ export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
         config,
       })
     )
-  }
-
-  /**
-   * get: Constructor from instance.
-   *
-   * @override
-   * @returns {typeof BaseAppGraphqlLauncher} Constructor of the instance.
-   */
-  get Ctor () {
-    return /** @type {*} */ (super.Ctor)
   }
 
   /**
