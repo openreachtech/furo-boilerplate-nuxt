@@ -1094,7 +1094,7 @@ describe('BaseGraphqlLauncher', () => {
 })
 
 describe('BaseGraphqlLauncher', () => {
-  describe('#launchQuery()', () => {
+  describe('#launchRequest()', () => {
     describe('to return result capsule on success', () => {
       const graphqlConfig = {
         ENDPOINT_URL: 'http://example.com/graphql-customer',
@@ -1201,7 +1201,7 @@ describe('BaseGraphqlLauncher', () => {
           options: params.options,
         }
 
-        const actual = await launcher.launchQuery(args)
+        const actual = await launcher.launchRequest(args)
 
         expect(actual)
           .toBeInstanceOf(params.Capsule)
@@ -1288,7 +1288,7 @@ describe('BaseGraphqlLauncher', () => {
           options: params.options,
         }
 
-        const actual = await launcher.launchQuery(args)
+        const actual = await launcher.launchRequest(args)
 
         expect(actual)
           .toBeInstanceOf(params.Capsule)
@@ -1398,7 +1398,7 @@ describe('BaseGraphqlLauncher', () => {
           options: params.options,
         }
 
-        const actual = await launcher.launchQuery(args)
+        const actual = await launcher.launchRequest(args)
 
         expect(actual)
           .toBeInstanceOf(params.Capsule)
@@ -1479,7 +1479,7 @@ describe('BaseGraphqlLauncher', () => {
             options: params.options,
           }
 
-          await launcher.launchQuery(params)
+          await launcher.launchRequest(params)
 
           expect(updateOptionsSpy)
             .toHaveBeenCalledWith(expected)
@@ -1554,7 +1554,7 @@ describe('BaseGraphqlLauncher', () => {
           const invokeFetchQuerySpy = jest.spyOn(launcher, 'invokeFetchQuery')
             .mockResolvedValue(new Response())
 
-          await launcher.launchQuery(params)
+          await launcher.launchRequest(params)
 
           expect(createPayloadSpy)
             .toHaveBeenCalledWith(expected)
