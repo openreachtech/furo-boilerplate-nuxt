@@ -19,7 +19,9 @@ export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
    *
    * @override
    * @param {BaseAppGraphqlLauncherFactoryParams} params - Parameters of factory method.
-   * @returns {BaseAppGraphqlLauncher} Instance of BaseAppGraphqlLauncher.
+   * @template {typeof BaseAppGraphqlLauncher} T
+   * @this {T}
+   * @returns {InstanceType<T>} Instance of BaseAppGraphqlLauncher.
    */
   static create ({
     config,
