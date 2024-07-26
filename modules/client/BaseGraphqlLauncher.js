@@ -1,3 +1,8 @@
+/**
+ * Base class of GraphQL launcher.
+ *
+ * @template T
+ */
 export default class BaseGraphqlLauncher {
   /**
    * Constructor.
@@ -14,10 +19,14 @@ export default class BaseGraphqlLauncher {
    * Factory method.
    *
    * @param {BaseGraphqlLauncherFactoryParams} params - Parameters of factory method.
-   * @returns {BaseGraphqlLauncher} Instance of this class.
+   * @template {typeof BaseGraphqlLauncher} T
+   * @this {T}
+   * @returns {InstanceType<T>} Instance of this class.
    */
   static create (params) {
-    return new this(params)
+    return /** @type {*} */ (
+      new this(params)
+    )
   }
 
   /**
