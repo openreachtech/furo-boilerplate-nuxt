@@ -7,18 +7,6 @@ import BaseGraphqlCapsule from '~/modules/client/BaseGraphqlCapsule'
  */
 export default class CurriculumsQueryGraphqlCapsule extends BaseGraphqlCapsule {
   /**
-   * Factory method to create as pending behavior.
-   *
-   * @override
-   * @returns {CurriculumsQueryGraphqlCapsule} Instance of this class.
-   */
-  static createAsPending () {
-    return /** @type {*} */ (
-      super.createAsPending()
-    )
-  }
-
-  /**
    * Extract content from response.
    *
    * @override
