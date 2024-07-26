@@ -17,20 +17,21 @@ invokeRequestOnMounted()
 
   <h2>Curriculums</h2>
 
-  <button @click="invokeRequestOnEvent({
-    variables: {
-      input: {
-        pagination: {
-          limit: 5,
-          offset: 2,
-          sort: {
-            targetColumn: 'title',
-            orderBy: 'ASC',
+  <button
+    @click="invokeRequestOnEvent({
+      variables: {
+        input: {
+          pagination: {
+            limit: 5,
+            offset: 2,
+            sort: {
+              targetColumn: 'title',
+              orderBy: 'ASC',
+            },
           },
         },
       },
-    },
-  })"
+    })"
   >
     Fetch curriculums with offset 2
   </button>
