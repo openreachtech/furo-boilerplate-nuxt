@@ -75,7 +75,9 @@ export default class BaseGraphqlCapsule {
    *   rawResponse: Response
    *   payload: import('./BaseGraphqlPayload').default
    * }} params - Parameters.
-   * @returns {BaseGraphqlCapsule} Instance of this class.
+   * @template {typeof BaseGraphqlCapsule} T
+   * @this {T}
+   * @returns {InstanceType<T>} Instance of this class.
    */
   static createAsJsonParseError ({
     rawResponse,
