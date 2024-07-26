@@ -1,8 +1,12 @@
-import BaseGraphqlLauncher from '@/modules/client/BaseGraphqlLauncher'
-import constants from '~/app/constants'
+import BaseGraphqlLauncher from '~/modules/client/BaseGraphqlLauncher'
+import StorageClerk from '~/modules/storage/StorageClerk'
+
+import {
+  HEADER_KEY,
+  STORAGE_KEY,
+} from '~/app/constants'
 
 import graphqlConfig from '~/app/graphql/graphql.config'
-import StorageClerk from '~/modules/storage/StorageClerk'
 
 export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
   /**
@@ -10,14 +14,18 @@ export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
    *
    * @override
    * @param {BaseAppGraphqlLauncherFactoryParams} params - Parameters of factory method.
-   * @returns
+   * @returns {BaseAppGraphqlLauncher} Instance of BaseAppGraphqlLauncher.
    */
   static create ({
-    config = graphqlConfig,
-  } = {}) {
-    return super.create({
-      config,
-    })
+    config,
+  } = {
+    config: graphqlConfig,
+  }) {
+    return /** @type {*} */ (
+      super.create({
+        config,
+      })
+    )
   }
 
   /**
@@ -27,7 +35,7 @@ export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
    * @returns {typeof BaseAppGraphqlLauncher} Constructor of the instance.
    */
   get Ctor () {
-    return super.Ctor
+    return /** @type {*} */ (super.Ctor)
   }
 
   /**
@@ -55,7 +63,7 @@ export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
 
     if (accessToken) {
       headers.append(
-        constants.HEADER_KEY.ACCESS_TOKEN,
+        HEADER_KEY.ACCESS_TOKEN,
         accessToken
       )
     }
@@ -71,10 +79,10 @@ export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
   loadAccessToken () {
     const storageClerk = this.Ctor.createStorageClerk()
 
-    return storageClerk.get(constants.STORAGE_KEY.ACCESS_TOKEN)
+    return storageClerk.get(STORAGE_KEY.ACCESS_TOKEN)
   }
 }
 
 /**
- * @typedef {import('@/modules/client/BaseGraphqlLauncher').BaseGraphqlLauncherFactoryParams} BaseAppGraphqlLauncherFactoryParams
+ * @typedef {import('~/modules/client/BaseGraphqlLauncher').BaseGraphqlLauncherFactoryParams} BaseAppGraphqlLauncherFactoryParams
  */

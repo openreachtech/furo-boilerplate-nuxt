@@ -2,7 +2,7 @@ import {
   ConstructorSpyGenerator,
 } from '@openreachtech/renchan-test-tools'
 
-import BaseGraphqlLauncher from '@/modules/client/BaseGraphqlLauncher'
+import BaseGraphqlLauncher from '~/modules/client/BaseGraphqlLauncher'
 import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
 import BaseGraphqlCapsule from '~/modules/client/BaseGraphqlCapsule'
 
@@ -501,7 +501,7 @@ describe('BaseGraphqlLauncher', () => {
           params: {
             Payload: class CustomerPayload extends BaseGraphqlPayload {
               /** @inheritdoc */
-              static get query () {
+              static get document () {
                 return `query {
                   customer (input: $input) {
                     id
@@ -523,7 +523,7 @@ describe('BaseGraphqlLauncher', () => {
           params: {
             Payload: class AdminPayload extends BaseGraphqlPayload {
               /** @inheritdoc */
-              static get query () {
+              static get document () {
                 return `query {
                   admin (input: $input) {
                     id
@@ -1094,7 +1094,7 @@ describe('BaseGraphqlLauncher', () => {
 })
 
 describe('BaseGraphqlLauncher', () => {
-  describe('#launchQuery()', () => {
+  describe('#launchRequest()', () => {
     describe('to return result capsule on success', () => {
       const graphqlConfig = {
         ENDPOINT_URL: 'http://example.com/graphql-customer',
@@ -1116,7 +1116,7 @@ describe('BaseGraphqlLauncher', () => {
             },
             Payload: class CustomerPayload extends BaseGraphqlPayload {
               /** @inheritdoc */
-              static get query () {
+              static get document () {
                 return /* GraphQL */ `
                 query CustomerQuery ($input: CustomerSearchInput!) {
                   customer (input: $input) {
@@ -1153,7 +1153,7 @@ describe('BaseGraphqlLauncher', () => {
             },
             Payload: class AdminPayload extends BaseGraphqlPayload {
               /** @inheritdoc */
-              static get query () {
+              static get document () {
                 return /* GraphQL */ `
                 query {
                   admin {
@@ -1201,7 +1201,7 @@ describe('BaseGraphqlLauncher', () => {
           options: params.options,
         }
 
-        const actual = await launcher.launchQuery(args)
+        const actual = await launcher.launchRequest(args)
 
         expect(actual)
           .toBeInstanceOf(params.Capsule)
@@ -1231,7 +1231,7 @@ describe('BaseGraphqlLauncher', () => {
             },
             Payload: class CustomerPayload extends BaseGraphqlPayload {
               /** @inheritdoc */
-              static get query () {
+              static get document () {
                 return /* GraphQL */ `
                 query CustomerQuery ($input: CustomerSearchInput!) {
                   customer (input: $input) {
@@ -1256,7 +1256,7 @@ describe('BaseGraphqlLauncher', () => {
             },
             Payload: class AdminPayload extends BaseGraphqlPayload {
               /** @inheritdoc */
-              static get query () {
+              static get document () {
                 return /* GraphQL */ `
                 query {
                   admin {
@@ -1288,7 +1288,7 @@ describe('BaseGraphqlLauncher', () => {
           options: params.options,
         }
 
-        const actual = await launcher.launchQuery(args)
+        const actual = await launcher.launchRequest(args)
 
         expect(actual)
           .toBeInstanceOf(params.Capsule)
@@ -1320,7 +1320,7 @@ describe('BaseGraphqlLauncher', () => {
             },
             Payload: class CustomerPayload extends BaseGraphqlPayload {
               /** @inheritdoc */
-              static get query () {
+              static get document () {
                 return /* GraphQL */ `
                 query CustomerQuery ($input: CustomerSearchInput!) {
                   customer (input: $input) {
@@ -1354,7 +1354,7 @@ describe('BaseGraphqlLauncher', () => {
             },
             Payload: class AdminPayload extends BaseGraphqlPayload {
               /** @inheritdoc */
-              static get query () {
+              static get document () {
                 return /* GraphQL */ `
                 query {
                   admin {
@@ -1398,7 +1398,7 @@ describe('BaseGraphqlLauncher', () => {
           options: params.options,
         }
 
-        const actual = await launcher.launchQuery(args)
+        const actual = await launcher.launchRequest(args)
 
         expect(actual)
           .toBeInstanceOf(params.Capsule)
@@ -1418,7 +1418,7 @@ describe('BaseGraphqlLauncher', () => {
 
       class DerivedGraphqlPayload extends BaseGraphqlPayload {
         /** @inheritdoc */
-        static get query () {
+        static get document () {
           return /* GraphQL */ `
           query DerivedQuery {
             derived {
@@ -1479,7 +1479,7 @@ describe('BaseGraphqlLauncher', () => {
             options: params.options,
           }
 
-          await launcher.launchQuery(params)
+          await launcher.launchRequest(params)
 
           expect(updateOptionsSpy)
             .toHaveBeenCalledWith(expected)
@@ -1554,7 +1554,7 @@ describe('BaseGraphqlLauncher', () => {
           const invokeFetchQuerySpy = jest.spyOn(launcher, 'invokeFetchQuery')
             .mockResolvedValue(new Response())
 
-          await launcher.launchQuery(params)
+          await launcher.launchRequest(params)
 
           expect(createPayloadSpy)
             .toHaveBeenCalledWith(expected)

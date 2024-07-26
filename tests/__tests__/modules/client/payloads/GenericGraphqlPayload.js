@@ -2,7 +2,7 @@ import {
   ConstructorSpyGenerator,
 } from '@openreachtech/renchan-test-tools'
 
-import GenericGraphqlPayload from '@/modules/client/payloads/GenericGraphqlPayload'
+import GenericGraphqlPayload from '~/modules/client/payloads/GenericGraphqlPayload'
 import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
 
 describe('GenericGraphqlPayload', () => {
@@ -179,7 +179,7 @@ describe('GenericGraphqlPayload', () => {
       ]
 
       test.each(cases)('input: $params.input', ({ params }) => {
-        const querySpy = jest.spyOn(GenericGraphqlPayload, 'query', 'get')
+        const querySpy = jest.spyOn(GenericGraphqlPayload, 'document', 'get')
           .mockReturnValue(params.queryTemplate)
 
         const DerivedClass = ConstructorSpyGenerator.create({ jest })

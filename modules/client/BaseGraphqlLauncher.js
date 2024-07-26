@@ -134,14 +134,14 @@ export default class BaseGraphqlLauncher {
   /**
    * Launch query.
    *
-   * @public
    * @param {{
    *   variables?: object | null
    *   options?: RequestInit
    * }} Params - Parameters.
    * @returns {Promise<import('./BaseGraphqlCapsule').default>} Promise of instance of capsule.
+   * @public
    */
-  async launchQuery ({
+  async launchRequest ({
     variables = {},
     options = {},
   } = {}) {
@@ -222,7 +222,7 @@ export default class BaseGraphqlLauncher {
    * Fetch query.
    *
    * @param {{
-   *   payload: import('@/modules/client/BaseGraphqlPayload').default
+   *   payload: import('~/modules/client/BaseGraphqlPayload').default
    * }} params - Parameters.
    * @returns {Promise<Response | null>} Instance of fetch API response.
    */

@@ -1,49 +1,112 @@
-import CurriculumsQueryGraphqlLauncher from '~/app/graphql/client/queries/curriculums/CurriculumsQueryGraphqlLauncher'
+import {
+  onMounted,
+  ref,
+} from 'vue'
 
-export function useCurriculums () {
+import CurriculumsQueryGraphqlLauncher from '~/app/graphql/client/queries/curriculums/CurriculumsQueryGraphqlLauncher'
+import CurriculumsQueryGraphqlCapsule from '~/app/graphql/client/queries/curriculums/CurriculumsQueryGraphqlCapsule'
+
+/**
+ * Use curriculums GraphQL client
+ *
+ * @returns {{
+ *   capsuleRef: import('vue').Ref<GraphqlResponseCapsule>
+ *   invokeRequestOnEvent: (args?: GraphqlRequestParams) => Promise<void>
+ *   invokeRequestOnMounted: (args?: GraphqlRequestParams) => void
+ * }}
+ */
+export function useCurriculumsClient () {
+  const capsuleRef = ref(
+    CurriculumsQueryGraphqlCapsule.createAsPending()
+  )
+
   return {
-    fetchCurriculums,
+    capsuleRef,
+
+    /**
+     * Invoke request.
+     *
+     * @param {GraphqlRequestParams} [args] - Arguments.
+     * @returns {Promise<void>}
+     */
+    async invokeRequestOnEvent (args) {
+      await invokeRequest(args)
+    },
+
+    /**
+     * Invoke request.
+     *
+     * @param {GraphqlRequestParams} [args] - Arguments.
+     * @returns {void}
+     */
+    invokeRequestOnMounted (args) {
+      onMounted(async () => {
+        await invokeRequest(args)
+      })
+    },
   }
 
   /**
-   * Fetch curriculums.
+   * Invoke request.
    *
-   * @param {{
-   *   variables: {
-   *     input?: {
-   *       pagination: {
-   *         limit: number
-   *         offset: number
-   *         sort: {
-   *           targetColumn: string
-   *           orderBy: string
-   *         }
-   *       }
-   *     }
-   *   }
-   * }} params - Parameters.
-   * @returns {Promise<import('~/app/graphql/client/curriculums/CurriculumsQueryGraphqlCapsule').default>}
+   * @param {GraphqlRequestParams} [args] - Arguments.
+   * @returns {Promise<void>}
    */
-  async function fetchCurriculums ({
-    variables = {
-      input: {
-        pagination: {
-          limit: 5,
-          offset: 1,
-          sort: {
-            targetColumn: 'title',
-            orderBy: 'ASC',
-          },
+  async function invokeRequest (args) {
+    const capsule = await fetchCapsule(args)
+
+    capsuleRef.value = capsule
+  }
+}
+
+/**
+ * Fetch GraphQL client capsule.
+ *
+ * @param {GraphqlRequestParams} params - Parameters.
+ * @returns {Promise<GraphqlResponseCapsule>}
+ */
+async function fetchCapsule ({
+  variables,
+} = {
+  variables: {
+    input: {
+      pagination: {
+        limit: 5,
+        offset: 0,
+        sort: {
+          targetColumn: 'title',
+          orderBy: 'ASC',
         },
       },
     },
-  } = {}) {
-    const launcher = CurriculumsQueryGraphqlLauncher.create()
+  },
+}) {
+  const launcher = CurriculumsQueryGraphqlLauncher.create()
 
-    const response = await launcher.launchQuery({
-      variables,
-    })
+  const capsule = await launcher.launchRequest({
+    variables,
+  })
 
-    return response
-  }
+  return /** @type {*} */ (capsule)
 }
+
+/**
+ * @typedef {import('~/app/graphql/client/queries/curriculums/CurriculumsQueryGraphqlCapsule').default} GraphqlResponseCapsule
+ */
+
+/**
+ * @typedef {{
+ *   variables?: {
+ *     input: {
+ *       pagination: {
+ *         limit: number
+ *         offset: number
+ *         sort: {
+ *           targetColumn: string
+ *           orderBy: string
+ *         }
+ *       }
+ *     }
+ *   }
+ * }} GraphqlRequestParams
+ */
