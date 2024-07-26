@@ -82,9 +82,7 @@ export default class BaseGraphqlLauncher {
    * Create instance of capsule with result as network error.
    *
    * @param {{
-   *   rawResponse: Response
    *   payload: InstanceType<PayloadClass>
-   *   result: object
    * }} params - Parameters.
    * @returns {InstanceType<CapsuleClass>} Instance of capsule.
    */
