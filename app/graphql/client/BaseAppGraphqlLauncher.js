@@ -14,14 +14,16 @@ export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
    *
    * @override
    * @param {BaseAppGraphqlLauncherFactoryParams} params - Parameters of factory method.
-   * @returns
+   * @returns {BaseAppGraphqlLauncher} Instance of BaseAppGraphqlLauncher.
    */
   static create ({
     config = graphqlConfig,
   } = {}) {
-    return super.create({
-      config,
-    })
+    return /** @type {*} */ (
+      super.create({
+        config,
+      })
+    )
   }
 
   /**
