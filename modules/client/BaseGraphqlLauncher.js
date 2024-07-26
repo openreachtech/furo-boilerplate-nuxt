@@ -56,7 +56,8 @@ export default class BaseGraphqlLauncher {
    * get: Capsule class.
    *
    * @abstract
-   * @returns {CapsuleClass} Capsule class.
+   * @template {CapsuleClass} C
+   * @returns {C} Capsule class.
    * @throws {Error} This function must be inherited.
    */
   static get Capsule () {
@@ -66,7 +67,8 @@ export default class BaseGraphqlLauncher {
   /**
    * Create instance of capsule with result as pending.
    *
-   * @returns {InstanceType<CapsuleClass>} Instance of capsule.
+   * @template {CapsuleClass} C
+   * @returns {Promise<InstanceType<C>>} Instance of capsule.
    */
   static createResultCapsuleAsPending () {
     const args = {
@@ -84,7 +86,8 @@ export default class BaseGraphqlLauncher {
    * @param {{
    *   payload: InstanceType<PayloadClass>
    * }} params - Parameters.
-   * @returns {InstanceType<CapsuleClass>} Instance of capsule.
+   * @template {CapsuleClass} C
+   * @returns {Promise<InstanceType<C>>} Instance of capsule.
    */
   static createResultCapsuleAsNetworkError ({
     payload,
@@ -105,7 +108,8 @@ export default class BaseGraphqlLauncher {
    *   rawResponse: Response
    *   payload: InstanceType<PayloadClass>
    * }} params - Parameters.
-   * @returns {InstanceType<CapsuleClass>} Instance of capsule.
+   * @template {CapsuleClass} C
+   * @returns {Promise<InstanceType<C>>} Instance of capsule.
    */
   static createResultCapsuleAsJsonParseError ({
     rawResponse,
@@ -146,7 +150,8 @@ export default class BaseGraphqlLauncher {
    *   variables?: object | null
    *   options?: RequestInit
    * }} Params - Parameters.
-   * @returns {Promise<InstanceType<CapsuleClass>>} Promise of instance of capsule.
+   * @template {CapsuleClass} C
+   * @returns {Promise<InstanceType<C>>} Promise of instance of capsule.
    * @public
    */
   async launchRequest ({
@@ -296,7 +301,8 @@ export default class BaseGraphqlLauncher {
    * Create instance of capsule with result.
    *
    * @param {CapsuleParams} params - Parameters.
-   * @returns {InstanceType<CapsuleClass>} Instance of capsule.
+   * @template {CapsuleClass} C
+   * @returns {Promise<InstanceType<C>>} Instance of capsule.
    */
   static createResultCapsule ({
     rawResponse,
