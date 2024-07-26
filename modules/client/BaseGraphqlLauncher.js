@@ -329,3 +329,7 @@ export default class BaseGraphqlLauncher {
 /**
  * @typedef {BaseGraphqlLauncherParams} BaseGraphqlLauncherFactoryParams
  */
+
+/**
+ * @typedef {typeof import('./BaseGraphqlPayload').default} PayloadClass
+ */
