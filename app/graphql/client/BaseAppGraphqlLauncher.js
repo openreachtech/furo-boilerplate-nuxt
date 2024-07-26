@@ -33,7 +33,7 @@ export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
    * @returns {typeof BaseAppGraphqlLauncher} Constructor of the instance.
    */
   get Ctor () {
-    return super.Ctor
+    return /** @type {*} */ (super.Ctor)
   }
 
   /**
