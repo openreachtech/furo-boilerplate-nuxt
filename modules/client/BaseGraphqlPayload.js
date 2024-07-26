@@ -1,3 +1,8 @@
+/**
+ * Base class of GraphQL payload.
+ *
+ * @template T
+ */
 export default class BaseGraphqlPayload {
   /**
    * Constructor.
