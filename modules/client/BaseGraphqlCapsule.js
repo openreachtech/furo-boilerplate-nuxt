@@ -36,7 +36,9 @@ export default class BaseGraphqlCapsule {
   /**
    * Factory method to create as pending behavior.
    *
-   * @returns {BaseGraphqlCapsule} Instance of this class.
+   * @template {typeof BaseGraphqlCapsule} T
+   * @this {T}
+   * @returns {InstanceType<T>} Instance of this class.
    */
   static createAsPending () {
     return this.create({
