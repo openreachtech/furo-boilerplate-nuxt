@@ -1,18 +1,11 @@
 import BaseGraphqlCapsule from '~/modules/client/BaseGraphqlCapsule'
 
+/**
+ * CompanySponsorsQueryGraphqlCapsule
+ *
+ * @extends BaseGraphqlCapsule<CompanySponsorsQueryGraphqlCapsule>
+ */
 export default class CompanySponsorsQueryGraphqlCapsule extends BaseGraphqlCapsule {
-  /**
-   * Factory method to create as pending behavior.
-   *
-   * @override
-   * @returns {CompanySponsorsQueryGraphqlCapsule} Instance of this class.
-   */
-  static createAsPending () {
-    return /** @type {*} */ (
-      super.createAsPending()
-    )
-  }
-
   /**
    * Extract content from response.
    *

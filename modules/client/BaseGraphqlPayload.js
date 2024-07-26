@@ -1,3 +1,8 @@
+/**
+ * Base class of GraphQL payload.
+ *
+ * @template T
+ */
 export default class BaseGraphqlPayload {
   /**
    * Constructor.
@@ -18,17 +23,21 @@ export default class BaseGraphqlPayload {
    * Factory method.
    *
    * @param {BaseGraphqlPayloadFactoryParams} params - Parameters of factory method.
-   * @returns {BaseGraphqlPayload} Instance of this class.
+   * @template {typeof BaseGraphqlPayload} T
+   * @this {T}
+   * @returns {InstanceType<T>} Instance of this class.
    */
   static create ({
     variables = {},
     options = {},
   } = {}) {
-    return new this({
-      queryTemplate: this.document,
-      variables,
-      options,
-    })
+    return /** @type {*} */ (
+      new this({
+        queryTemplate: this.document,
+        variables,
+        options,
+      })
+    )
   }
 
   /**

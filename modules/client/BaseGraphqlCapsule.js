@@ -1,3 +1,8 @@
+/**
+ * Base class for GraphQL capsule.
+ *
+ * @template T
+ */
 export default class BaseGraphqlCapsule {
   /**
    * Constructor.
@@ -18,16 +23,22 @@ export default class BaseGraphqlCapsule {
    * Factory method.
    *
    * @param {BaseGraphqlCapsuleFactoryParams} params - Parameters of factory method.
-   * @returns {BaseGraphqlCapsule} Instance of this class.
+   * @template {typeof BaseGraphqlCapsule} T
+   * @this {T}
+   * @returns {InstanceType<T>} Instance of this class.
    */
   static create (params) {
-    return new this(params)
+    return /** @type {*} */ (
+      new this(params)
+    )
   }
 
   /**
    * Factory method to create as pending behavior.
    *
-   * @returns {BaseGraphqlCapsule} Instance of this class.
+   * @template {typeof BaseGraphqlCapsule} T
+   * @this {T}
+   * @returns {InstanceType<T>} Instance of this class.
    */
   static createAsPending () {
     return this.create({
@@ -43,7 +54,9 @@ export default class BaseGraphqlCapsule {
    * @param {{
    *   payload: import('./BaseGraphqlPayload').default
    * }} params - Parameters.
-   * @returns {BaseGraphqlCapsule} Instance of this class.
+   * @template {typeof BaseGraphqlCapsule} T
+   * @this {T}
+   * @returns {InstanceType<T>} Instance of this class.
    */
   static createAsNetworkError ({
     payload,
@@ -62,7 +75,9 @@ export default class BaseGraphqlCapsule {
    *   rawResponse: Response
    *   payload: import('./BaseGraphqlPayload').default
    * }} params - Parameters.
-   * @returns {BaseGraphqlCapsule} Instance of this class.
+   * @template {typeof BaseGraphqlCapsule} T
+   * @this {T}
+   * @returns {InstanceType<T>} Instance of this class.
    */
   static createAsJsonParseError ({
     rawResponse,
