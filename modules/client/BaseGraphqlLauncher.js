@@ -45,7 +45,7 @@ export default class BaseGraphqlLauncher {
    * get: Payload class.
    *
    * @abstract
-   * @returns {typeof import('./BaseGraphqlPayload').default} Payload class.
+   * @returns {PayloadClass} Payload class.
    * @throws {Error} This function must be inherited.
    */
   static get Payload () {
@@ -83,7 +83,7 @@ export default class BaseGraphqlLauncher {
    *
    * @param {{
    *   rawResponse: Response
-   *   payload: import('./BaseGraphqlPayload')
+   *   payload: InstanceType<PayloadClass>
    *   result: object
    * }} params - Parameters.
    * @returns {import('./BaseGraphqlCapsule').default} Instance of capsule.
@@ -105,7 +105,7 @@ export default class BaseGraphqlLauncher {
    *
    * @param {{
    *   rawResponse: Response
-   *   payload: import('./BaseGraphqlPayload')
+   *   payload: InstanceType<PayloadClass>
    * }} params - Parameters.
    * @returns {import('./BaseGraphqlCapsule').default} Instance of capsule.
    */
@@ -231,7 +231,7 @@ export default class BaseGraphqlLauncher {
    * Fetch query.
    *
    * @param {{
-   *   payload: import('~/modules/client/BaseGraphqlPayload').default
+   *   payload: InstanceType<PayloadClass>
    * }} params - Parameters.
    * @returns {Promise<Response | null>} Instance of fetch API response.
    */
@@ -259,7 +259,7 @@ export default class BaseGraphqlLauncher {
    *   variables: object | null
    *   options: RequestInit
    * }} params - Parameters.
-   * @returns {import('./BaseGraphqlPayload').default} Instance of Payload.
+   * @returns {InstanceType<PayloadClass>} Instance of Payload.
    */
   createPayload ({
     variables,
@@ -298,7 +298,7 @@ export default class BaseGraphqlLauncher {
    *
    * @param {{
    *   rawResponse: Response
-   *   payload: import('./BaseGraphqlPayload')
+   *   payload: InstanceType<PayloadClass>
    *   result: object
    * }} params - Parameters.
    * @returns {import('./BaseGraphqlCapsule').default} Instance of capsule.
@@ -328,4 +328,8 @@ export default class BaseGraphqlLauncher {
 
 /**
  * @typedef {BaseGraphqlLauncherParams} BaseGraphqlLauncherFactoryParams
+ */
+
+/**
+ * @typedef {typeof import('./BaseGraphqlPayload').default} PayloadClass
  */
