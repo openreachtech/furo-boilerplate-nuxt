@@ -1,3 +1,8 @@
+/**
+ * Base class for GraphQL capsule.
+ *
+ * @template T
+ */
 export default class BaseGraphqlCapsule {
   /**
    * Constructor.
