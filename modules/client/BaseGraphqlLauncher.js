@@ -67,7 +67,8 @@ export default class BaseGraphqlLauncher {
   /**
    * Create instance of capsule with result as pending.
    *
-   * @returns {InstanceType<CapsuleClass>} Instance of capsule.
+   * @template {CapsuleClass} C
+   * @returns {Promise<InstanceType<C>>} Instance of capsule.
    */
   static createResultCapsuleAsPending () {
     const args = {
