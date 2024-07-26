@@ -1,5 +1,10 @@
 import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
 
+/**
+ * CompanySponsors query payload.
+ *
+ * @extends {BaseGraphqlPayload<CompanySponsorsQueryGraphqlPayload>}
+ */
 export default class CompanySponsorsQueryGraphqlPayload extends BaseGraphqlPayload {
   /** @override */
   static get document () {
