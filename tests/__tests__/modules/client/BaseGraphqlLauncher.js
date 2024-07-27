@@ -632,8 +632,17 @@ describe('BaseGraphqlLauncher', () => {
           params: {
             rawResponse: new Response(),
             payload: new BaseGraphqlPayload({
-              input: {
-                customerId: 10001,
+              queryTemplate: /* GraphQL */ `
+                query {
+                  customer {
+                    id
+                  }
+                }
+              `,
+              variables: {
+                input: {
+                  customerId: 10001,
+                },
               },
             }),
             result: {
@@ -649,8 +658,17 @@ describe('BaseGraphqlLauncher', () => {
           params: {
             rawResponse: new Response(),
             payload: new BaseGraphqlPayload({
-              input: {
-                adminId: 20001,
+              queryTemplate: /* GraphQL */ `
+                query {
+                  admin {
+                    id
+                  }
+                }
+              `,
+              variables: {
+                input: {
+                  adminId: 20001,
+                },
               },
             }),
             result: {
@@ -685,8 +703,17 @@ describe('BaseGraphqlLauncher', () => {
           params: {
             rawResponse: new Response(),
             payload: new BaseGraphqlPayload({
-              input: {
-                customerId: 10001,
+              queryTemplate: /* GraphQL */ `
+                query {
+                  customer {
+                    id
+                  }
+                }
+              `,
+              variables: {
+                input: {
+                  customerId: 10001,
+                },
               },
             }),
             result: {
@@ -702,8 +729,17 @@ describe('BaseGraphqlLauncher', () => {
           params: {
             rawResponse: new Response(),
             payload: new BaseGraphqlPayload({
-              input: {
-                adminId: 20001,
+              queryTemplate: /* GraphQL */ `
+                query {
+                  admin {
+                    id
+                  }
+                }
+              `,
+              variables: {
+                input: {
+                  adminId: 20001,
+                },
               },
             }),
             result: {
