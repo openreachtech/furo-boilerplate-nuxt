@@ -50,7 +50,7 @@ export function useCompanySponsorsClient () {
 export async function fetchCapsule () {
   const launcher = CompanySponsorsQueryGraphqlLauncher.create()
 
-  const capsule = await launcher.launchRequest()
+  const capsule = await launcher.launchRequestWithVariables()
 
   return /** @type {*} */ (capsule)
 }
