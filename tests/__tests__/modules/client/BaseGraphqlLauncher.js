@@ -239,6 +239,7 @@ describe('BaseGraphqlLauncher', () => {
                     }
                   }
                 }`,
+                variables: null,
               }),
             },
           },
@@ -252,6 +253,7 @@ describe('BaseGraphqlLauncher', () => {
                     }
                   }
                 }`,
+                variables: null,
               }),
             },
           },
@@ -301,6 +303,7 @@ describe('BaseGraphqlLauncher', () => {
                     }
                   }
                 }`,
+                variables: null,
               }),
             },
           },
@@ -314,6 +317,7 @@ describe('BaseGraphqlLauncher', () => {
                     }
                   }
                 }`,
+                variables: null,
               }),
             },
           },
@@ -376,6 +380,7 @@ describe('BaseGraphqlLauncher', () => {
                     }
                   }
                 }`,
+                variables: null,
               }),
             },
           },
@@ -390,6 +395,7 @@ describe('BaseGraphqlLauncher', () => {
                     }
                   }
                 }`,
+                variables: null,
               }),
             },
           },
@@ -441,6 +447,7 @@ describe('BaseGraphqlLauncher', () => {
                     }
                   }
                 }`,
+                variables: null,
               }),
             },
           },
@@ -455,6 +462,7 @@ describe('BaseGraphqlLauncher', () => {
                     }
                   }
                 }`,
+                variables: null,
               }),
             },
           },
@@ -624,8 +632,17 @@ describe('BaseGraphqlLauncher', () => {
           params: {
             rawResponse: new Response(),
             payload: new BaseGraphqlPayload({
-              input: {
-                customerId: 10001,
+              queryTemplate: /* GraphQL */ `
+                query {
+                  customer {
+                    id
+                  }
+                }
+              `,
+              variables: {
+                input: {
+                  customerId: 10001,
+                },
               },
             }),
             result: {
@@ -641,8 +658,17 @@ describe('BaseGraphqlLauncher', () => {
           params: {
             rawResponse: new Response(),
             payload: new BaseGraphqlPayload({
-              input: {
-                adminId: 20001,
+              queryTemplate: /* GraphQL */ `
+                query {
+                  admin {
+                    id
+                  }
+                }
+              `,
+              variables: {
+                input: {
+                  adminId: 20001,
+                },
               },
             }),
             result: {
@@ -677,8 +703,17 @@ describe('BaseGraphqlLauncher', () => {
           params: {
             rawResponse: new Response(),
             payload: new BaseGraphqlPayload({
-              input: {
-                customerId: 10001,
+              queryTemplate: /* GraphQL */ `
+                query {
+                  customer {
+                    id
+                  }
+                }
+              `,
+              variables: {
+                input: {
+                  customerId: 10001,
+                },
               },
             }),
             result: {
@@ -694,8 +729,17 @@ describe('BaseGraphqlLauncher', () => {
           params: {
             rawResponse: new Response(),
             payload: new BaseGraphqlPayload({
-              input: {
-                adminId: 20001,
+              queryTemplate: /* GraphQL */ `
+                query {
+                  admin {
+                    id
+                  }
+                }
+              `,
+              variables: {
+                input: {
+                  adminId: 20001,
+                },
               },
             }),
             result: {
@@ -750,6 +794,7 @@ describe('BaseGraphqlLauncher', () => {
             endpointUrl: 'http://example.com/graphql-customer',
             payload: new BaseGraphqlPayload({
               queryTemplate: customerQueryTemplate,
+              variables: null,
             }),
             options: {
               headers: new Headers({
@@ -775,6 +820,7 @@ describe('BaseGraphqlLauncher', () => {
             endpointUrl: 'http://example.com/graphql-admin',
             payload: new BaseGraphqlPayload({
               queryTemplate: adminQueryTemplate,
+              variables: null,
             }),
             options: {
               headers: new Headers({
@@ -850,6 +896,7 @@ describe('BaseGraphqlLauncher', () => {
             endpointUrl: 'http://example.com/graphql-customer',
             payload: new BaseGraphqlPayload({
               queryTemplate: customerQueryTemplate,
+              variables: null,
             }),
             options: {
               headers: new Headers({
@@ -875,6 +922,7 @@ describe('BaseGraphqlLauncher', () => {
             endpointUrl: 'http://example.com/graphql-admin',
             payload: new BaseGraphqlPayload({
               queryTemplate: adminQueryTemplate,
+              variables: null,
             }),
             options: {
               headers: new Headers({
