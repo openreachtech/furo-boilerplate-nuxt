@@ -1,4 +1,3 @@
-<!-- pages/signUp.vue -->
 <template>
   <h1>Hello I&#39;m pages/signUp.vue!</h1>
 
