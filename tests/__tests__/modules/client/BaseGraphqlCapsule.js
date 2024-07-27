@@ -55,7 +55,7 @@ describe('BaseGraphqlCapsule', () => {
                     }
                   }
                 `,
-                input: null,
+                variables: null,
               }),
             },
           },
@@ -69,7 +69,7 @@ describe('BaseGraphqlCapsule', () => {
                     }
                   }
                 `,
-                input: null,
+                variables: null,
               }),
             },
           },
@@ -535,7 +535,7 @@ describe('BaseGraphqlCapsule', () => {
             }
           }
         `,
-        input: null,
+        variables: null,
       })
 
       const cases = [
@@ -585,7 +585,7 @@ describe('BaseGraphqlCapsule', () => {
           }
         }
       `,
-      input: null,
+      variables: null,
     })
 
     describe('to has content (truthy)', () => {
@@ -680,7 +680,7 @@ describe('BaseGraphqlCapsule', () => {
           }
         }
       `,
-      input: null,
+      variables: null,
     })
 
     describe('to has errors (truthy)', () => {
@@ -772,7 +772,7 @@ describe('BaseGraphqlCapsule', () => {
           }
         }
       `,
-      input: null,
+      variables: null,
     })
 
     describe('to has no rawResponse (truthy)', () => {
@@ -836,7 +836,7 @@ describe('BaseGraphqlCapsule', () => {
           }
         }
       `,
-      input: null,
+      variables: null,
     })
 
     describe('when has rawResponse', () => {
@@ -973,7 +973,7 @@ describe('BaseGraphqlCapsule', () => {
           }
         }
       `,
-      input: null,
+      variables: null,
     })
 
     describe('to has error (truthy)', () => {
@@ -1077,7 +1077,7 @@ describe('BaseGraphqlCapsule', () => {
           }
         }
       `,
-      input: null,
+      variables: null,
     })
 
     describe('when existing errors', () => {
@@ -1195,7 +1195,7 @@ describe('BaseGraphqlCapsule', () => {
           }
         }
       `,
-      input: null,
+      variables: null,
     })
 
     describe('when has error', () => {
@@ -1341,7 +1341,7 @@ describe('BaseGraphqlCapsule', () => {
           }
         }
       `,
-      input: null,
+      variables: null,
     })
 
     describe('when has content', () => {
