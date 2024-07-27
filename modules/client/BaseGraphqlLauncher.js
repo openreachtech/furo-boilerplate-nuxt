@@ -143,29 +143,19 @@ export default class BaseGraphqlLauncher {
   }
 
   /**
-   * Launch query.
+   * Launch query with direct variables.
    *
+   * @template {PayloadClass} P
    * @param {{
-   *   variables?: object | null
-   *   options?: RequestInit
+   *   payload: InstanceType<P>
    * }} Params - Parameters.
    * @template {CapsuleClass} C
    * @returns {Promise<InstanceType<C>>} Promise of instance of capsule.
    * @public
    */
   async launchRequest ({
-    variables = {},
-    options = {},
-  } = {}) {
-    const updatedOptions = this.updateOptions({
-      options,
-    })
-
-    const payload = this.createPayload({
-      variables,
-      options: updatedOptions,
-    })
-
+    payload,
+  }) {
     const response = await this.invokeFetchQuery({
       payload,
     })
@@ -190,6 +180,36 @@ export default class BaseGraphqlLauncher {
       payload,
       result,
     })
+  }
+
+  /**
+   * Launch query with direct variables.
+   *
+   * @param {{
+   *   variables?: object | null
+   *   options?: RequestInit
+   * }} Params - Parameters.
+   * @returns {Promise<InstanceType<CapsuleClass>>} Promise of instance of capsule.
+   * @public
+   */
+  async launchRequestWithVariables ({
+    variables = {},
+    options = {},
+  } = {}) {
+    const updatedOptions = this.updateOptions({
+      options,
+    })
+
+    const payload = this.createPayload({
+      variables,
+      options: updatedOptions,
+    })
+
+    const capsule = await this.launchRequest({
+      payload,
+    })
+
+    return capsule
   }
 
   /**
