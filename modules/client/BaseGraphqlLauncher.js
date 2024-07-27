@@ -56,8 +56,7 @@ export default class BaseGraphqlLauncher {
    * get: Capsule class.
    *
    * @abstract
-   * @template {CapsuleClass} C
-   * @returns {C} Capsule class.
+   * @returns {CapsuleClass} Capsule class.
    * @throws {Error} This function must be inherited.
    */
   static get Capsule () {
