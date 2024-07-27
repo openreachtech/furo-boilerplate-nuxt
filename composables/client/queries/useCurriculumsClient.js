@@ -83,7 +83,7 @@ async function fetchCapsule ({
 }) {
   const launcher = CurriculumsQueryGraphqlLauncher.create()
 
-  const capsule = await launcher.launchRequest({
+  const capsule = await launcher.launchRequestWithVariables({
     variables,
   })
 
