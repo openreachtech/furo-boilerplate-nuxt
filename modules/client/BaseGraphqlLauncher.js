@@ -189,8 +189,7 @@ export default class BaseGraphqlLauncher {
    *   variables?: object | null
    *   options?: RequestInit
    * }} Params - Parameters.
-   * @template {CapsuleClass} C
-   * @returns {Promise<InstanceType<C>>} Promise of instance of capsule.
+   * @returns {Promise<InstanceType<CapsuleClass>>} Promise of instance of capsule.
    * @public
    */
   async launchRequestWithVariables ({
