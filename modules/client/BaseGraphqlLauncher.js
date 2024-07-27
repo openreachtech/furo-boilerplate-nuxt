@@ -145,6 +145,46 @@ export default class BaseGraphqlLauncher {
   /**
    * Launch query with direct variables.
    *
+   * @template {PayloadClass} P
+   * @param {{
+   *   payload: InstanceType<P>
+   * }} Params - Parameters.
+   * @template {CapsuleClass} C
+   * @returns {Promise<InstanceType<C>>} Promise of instance of capsule.
+   * @public
+   */
+  async launchRequest ({
+    payload,
+  }) {
+    const response = await this.invokeFetchQuery({
+      payload,
+    })
+    if (response === null) {
+      return this.Ctor.createResultCapsuleAsNetworkError({
+        payload,
+      })
+    }
+
+    const result = await this.generateFetchResult({
+      response,
+    })
+    if (result === null) {
+      return this.Ctor.createResultCapsuleAsJsonParseError({
+        rawResponse: response,
+        payload,
+      })
+    }
+
+    return this.Ctor.createResultCapsule({
+      rawResponse: response,
+      payload,
+      result,
+    })
+  }
+
+  /**
+   * Launch query with direct variables.
+   *
    * @param {{
    *   variables?: object | null
    *   options?: RequestInit
