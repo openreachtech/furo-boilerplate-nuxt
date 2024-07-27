@@ -143,7 +143,7 @@ export default class BaseGraphqlLauncher {
   }
 
   /**
-   * Launch query.
+   * Launch query with direct variables.
    *
    * @param {{
    *   variables?: object | null
