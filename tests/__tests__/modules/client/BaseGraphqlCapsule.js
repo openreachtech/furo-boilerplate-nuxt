@@ -157,8 +157,10 @@ describe('BaseGraphqlCapsule', () => {
                   }
                 }
               `,
-              input: {
-                id: 10001,
+              variables: {
+                input: {
+                  id: 10001,
+                },
               },
             }),
             result: {
@@ -181,8 +183,10 @@ describe('BaseGraphqlCapsule', () => {
                   }
                 }
               `,
-              input: {
-                id: 10002,
+              variables: {
+                input: {
+                  id: 10002,
+                },
               },
             }),
             result: {
@@ -220,8 +224,10 @@ describe('BaseGraphqlCapsule', () => {
                   }
                 }
               `,
-              input: {
-                id: 10001,
+              variables: {
+                input: {
+                  id: 10001,
+                },
               },
             }),
             result: {
@@ -244,8 +250,10 @@ describe('BaseGraphqlCapsule', () => {
                   }
                 }
               `,
-              input: {
-                id: 10002,
+              variables: {
+                input: {
+                  id: 10002,
+                },
               },
             }),
             result: {
