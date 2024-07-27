@@ -2,6 +2,11 @@ import BaseAppGraphqlLauncher from '~/app/graphql/client/BaseAppGraphqlLauncher'
 import CompanySponsorsQueryGraphqlPayload from '~/app/graphql/client/queries/companySponsors/CompanySponsorsQueryGraphqlPayload'
 import CompanySponsorsQueryGraphqlCapsule from '~/app/graphql/client/queries/companySponsors/CompanySponsorsQueryGraphqlCapsule'
 
+/**
+ * Company sponsors query graphql launcher.
+ *
+ * @extends {BaseAppGraphqlLauncher<typeof BaseAppGraphqlLauncher>
+ */
 export default class CompanySponsorsQueryGraphqlLauncher extends BaseAppGraphqlLauncher {
   /** @override */
   static get Payload () {
