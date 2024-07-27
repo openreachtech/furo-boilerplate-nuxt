@@ -16,8 +16,9 @@ invokeRequestOnMounted()
 
   <h2>companySponsors</h2>
 
-  <div :key="it.id"
+  <div
     v-for="it in capsuleRef.companySponsors"
+    :key="it.id"
     class="company-sponsor-layout"
   >
     <div class="company-sponsor">
