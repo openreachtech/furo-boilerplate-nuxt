@@ -17,6 +17,7 @@ describe('BaseGraphqlCapsule', () => {
             }
           }
         `,
+        variables: null,
       })
 
       describe('#rawResponse', () => {
@@ -318,6 +319,7 @@ describe('BaseGraphqlCapsule', () => {
                   }
                 }
               }`,
+              variables: null,
             }),
           },
         },
@@ -331,6 +333,7 @@ describe('BaseGraphqlCapsule', () => {
                   }
                 }
               }`,
+              variables: null,
             }),
           },
         },
@@ -356,6 +359,7 @@ describe('BaseGraphqlCapsule', () => {
                   }
                 }
               }`,
+              variables: null,
             }),
           },
         },
@@ -369,6 +373,7 @@ describe('BaseGraphqlCapsule', () => {
                   }
                 }
               }`,
+              variables: null,
             }),
           },
         },
@@ -407,6 +412,7 @@ describe('BaseGraphqlCapsule', () => {
                   }
                 }
               }`,
+              variables: null,
             }),
           },
         },
@@ -421,6 +427,7 @@ describe('BaseGraphqlCapsule', () => {
                   }
                 }
               }`,
+              variables: null,
             }),
           },
         },
@@ -447,6 +454,7 @@ describe('BaseGraphqlCapsule', () => {
                   }
                 }
               }`,
+              variables: null,
             }),
           },
         },
@@ -461,6 +469,7 @@ describe('BaseGraphqlCapsule', () => {
                   }
                 }
               }`,
+              variables: null,
             }),
           },
         },
