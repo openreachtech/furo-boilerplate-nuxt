@@ -40,9 +40,11 @@ async function submitForm ({
   Timber.log(
     'FormControlElementClerk',
     formElementClerk.extractControls()
-      .map(it => FormControlElementClerk.create({
-        controlElement: it,
-      }))
+      .map(it =>
+        FormControlElementClerk.create({
+          controlElement: it,
+        })
+      )
       .map(it => it.extractValue())
   )
 
@@ -106,6 +108,9 @@ class FormControlElementClerk {
     this.controlElement = controlElement
   }
 
+  /**
+   * @returns {FormControlElementClerk}
+   */
   static create ({
     controlElement,
   }) {
@@ -139,14 +144,15 @@ class FormControlElementClerk {
     }
 
     if (this.controlElement instanceof RadioNodeList) {
-      return [...this.controlElement.values()
+      return [...this.controlElement.values()]
         .map(it =>
           FormControlElementClerk.create({
             controlElement: it,
           })
         )
-        .map(it => it.extractValue())
-      ]
+        .map(it =>
+          it.extractValue()
+        )
     }
 
     return null
