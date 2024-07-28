@@ -55,6 +55,52 @@ export default class FormControlElementClerk {
         )
     )
   }
+
+  /**
+   * Extract value from the radio node list
+   *
+   * @param {{
+   *   radioNodes: RadioNodeList
+   * }} params
+   * @returns {FormControlElementValueHash}
+   */
+  extractValueHashFromRadioNodes ({
+    radioNodes,
+  }) {
+    /** @type {Array<HTMLInputElement>} */
+    const inputElements = /***/ (
+      [...radioNodes.values()]
+    )
+
+    if (inputElements.length === 0) {
+      return null
+    }
+
+    const sampleElement = inputElements.at(0)
+
+    if (sampleElement?.type === 'radio') {
+      const checkedElement = inputElements.find(it => it.checked)
+
+      return checkedElement?.value
+        ?? null
+    }
+
+    const extractingElements = sampleElement?.type === 'checkbox'
+      ? inputElements.filter(it => it.checked)
+      : inputElements
+
+    return /** @type {Array<string>} */ (
+      extractingElements
+        .map(it =>
+          FormControlElementClerk.create({
+            control: it,
+          })
+        )
+        .map(it =>
+          it.extractValueHash()
+        )
+    )
+  }
 }
 
 /**
