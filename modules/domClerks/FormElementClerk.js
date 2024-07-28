@@ -34,3 +34,12 @@ export default class FormElementClerk {
 /**
  * @typedef {FormElementClerkParams} FormElementClerkFactoryParams
  */
+
+/**
+ * @typedef {HTMLButtonElement
+ *   | HTMLInputElement
+ *   | HTMLOptionElement
+ *   | HTMLSelectElement
+ *   | HTMLTextAreaElement
+ * } FormControlElementType
+ */
