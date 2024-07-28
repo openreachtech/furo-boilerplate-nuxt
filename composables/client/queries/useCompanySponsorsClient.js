@@ -22,9 +22,21 @@ export function useCompanySponsorsClient () {
 
   return {
     capsuleRef,
+
+    /**
+     * Invoke request.
+     *
+     * @returns {Promise<void>}
+     */
     async invokeRequestOnEvent () {
       await invokeRequest()
     },
+
+    /**
+     * Invoke request.
+     *
+     * @returns {void}
+     */
     invokeRequestOnMounted () {
       onMounted(async () => {
         await invokeRequest()
