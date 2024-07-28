@@ -400,6 +400,20 @@ class FormControlElementClerk {
     </label>
 
     <label class="column">
+      <span>Amount (Optional)</span>
+      <select
+        name="amount"
+        style="
+          min-width: 10rem;
+        "
+      >
+        <option value="" disabled selected>Please select</option>
+        <option value="small">small</option>
+        <option value="large">large</option>
+      </select>
+    </label>
+
+    <label class="column">
       <span>Greek</span>
       <select
         name="greek"
