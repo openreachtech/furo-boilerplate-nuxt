@@ -19,23 +19,138 @@ async function submitForm ({
 }) {
   await Timber.log('formElement', formElement)
 
-  const formArgs = new FormData(formElement)
+  const controlElements = formElement.elements
 
-  Timber.log('formArgs',
-    Object.fromEntries(
-      [...formArgs]
-    )
-  )
-  Timber.log('@@@@@ formArgs @@@@@@', [...new Set(formArgs.keys())])
+  await Timber.log('controlElements', [...controlElements])
 
-  const names = [...new Set(formArgs.keys())]
-
-  const controlElements = names.map((it) => {
-    return formElement[it]
+  const formElementClerk = FormElementClerk.create({
+    formElement,
   })
 
-  Timber.log('controlElements names', names)
-  Timber.log('controlElements', controlElements)
+  Timber.log(
+    'formElementClerk.extractNames()',
+    formElementClerk.extractNames()
+  )
+
+  Timber.log(
+    'formElementClerk.extractControls()',
+    formElementClerk.extractControls()
+  )
+
+  Timber.log(
+    'FormControlElementClerk',
+    formElementClerk.extractControls()
+      .map(it => FormControlElementClerk.create({
+        controlElement: it,
+      }))
+      .map(it => it.extractValue())
+  )
+
+  // const formArgs = new FormData(formElement)
+
+  // Timber.log('formArgs',
+  //   Object.fromEntries(
+  //     [...formArgs]
+  //   )
+  // )
+  // Timber.log('@@@@@ formArgs @@@@@@', [...new Set(formArgs.keys())])
+
+  // const names = [...new Set(formArgs.keys())]
+
+  // const controlElements = names.map((it) => {
+  //   return formElement[it]
+  // })
+
+  // Timber.log('controlElements names', names)
+  // Timber.log('controlElements', controlElements)
+}
+
+class FormElementClerk {
+  constructor ({
+    formElement,
+  }) {
+    this.formElement = formElement
+  }
+
+  static create ({
+    formElement,
+  }) {
+    return new this({
+      formElement,
+    })
+  }
+
+  get controlElements () {
+    return this.formElement.elements
+  }
+
+  extractControls () {
+    const names = this.extractNames()
+
+    return names.map(it => this.formElement[it])
+  }
+
+  extractNames () {
+    return [...new Set(
+      [...this.controlElements]
+        .map(it => it.getAttribute('name'))
+        .filter(it => it)
+    )]
+  }
+}
+
+class FormControlElementClerk {
+  constructor ({
+    controlElement,
+  }) {
+    this.controlElement = controlElement
+  }
+
+  static create ({
+    controlElement,
+  }) {
+    return new this({
+      controlElement,
+    })
+  }
+
+  extractValue () {
+    if (this.controlElement instanceof HTMLInputElement) {
+      return {
+        tag: this.controlElement.tagName,
+        name: this.controlElement.name,
+        type: this.controlElement.type,
+        value: this.controlElement.value,
+        checked: this.controlElement.checked,
+      }
+    }
+
+    if (this.controlElement instanceof HTMLTextAreaElement) {
+      return {
+        tag: this.controlElement.tagName,
+        name: this.controlElement.name,
+        type: this.controlElement.type,
+        value: this.controlElement.value,
+      }
+    }
+
+    if (this.controlElement instanceof HTMLSelectElement) {
+      return this.controlElement.selectedOptions
+    }
+
+    if (this.controlElement instanceof RadioNodeList) {
+      return [...this.controlElement.values()
+        .map(it =>
+          FormControlElementClerk.create({
+            controlElement: it,
+          })
+        )
+        .map(it => it.extractValue())
+      ]
+    }
+
+    return null
+  }
 }
 </script>
 
@@ -272,7 +387,7 @@ async function submitForm ({
           min-width: 10rem;
         "
       >
-        <option value="tokyo" selected>Tokyo</option>
+        <option value="tokyo">Tokyo</option>
         <option value="osaka">Osaka</option>
         <option value="kyoto">Kyoto</option>
       </select>
