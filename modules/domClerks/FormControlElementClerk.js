@@ -44,3 +44,7 @@ export default class FormControlElementClerk {
  *   | RadioNodeList
  * } FormControlElementType
  */
+
+/**
+ * @typedef {string | Array<string> | null} FormControlElementValueHash
+ */
