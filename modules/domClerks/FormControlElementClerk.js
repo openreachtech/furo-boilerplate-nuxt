@@ -38,6 +38,7 @@ export default class FormControlElementClerk {
 /**
  * @typedef {HTMLButtonElement
  *   | HTMLInputElement
+ *   | HTMLOptionElement
  *   | HTMLSelectElement
  *   | HTMLTextAreaElement
  *   | RadioNodeList
