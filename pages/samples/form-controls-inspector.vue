@@ -1,0 +1,472 @@
+<script setup>
+import {
+  ref,
+} from 'vue'
+
+const formRef = ref(null)
+
+const Timber = console
+
+/**
+ * Submit form event handler.
+ *
+ * @param {{
+ *   formElement: HTMLFormElement
+ * }} args
+ */
+async function submitForm ({
+  formElement,
+}) {
+  await Timber.log('formElement', formElement)
+
+  const controlElements = formElement.elements
+
+  await Timber.log('controlElements', [...controlElements])
+
+  const formElementClerk = FormElementClerk.create({
+    formElement,
+  })
+
+  Timber.log(
+    'formElementClerk.extractNames()',
+    formElementClerk.extractNames()
+  )
+
+  Timber.log(
+    'formElementClerk.extractControls()',
+    formElementClerk.extractControls()
+  )
+
+  Timber.log(
+    'FormControlElementClerk',
+    formElementClerk.extractControls()
+      .map(it =>
+        FormControlElementClerk.create({
+          controlElement: it,
+        })
+      )
+      .map(it => it.extractValue())
+  )
+
+  // const formArgs = new FormData(formElement)
+
+  // Timber.log('formArgs',
+  //   Object.fromEntries(
+  //     [...formArgs]
+  //   )
+  // )
+  // Timber.log('@@@@@ formArgs @@@@@@', [...new Set(formArgs.keys())])
+
+  // const names = [...new Set(formArgs.keys())]
+
+  // const controlElements = names.map((it) => {
+  //   return formElement[it]
+  // })
+
+  // Timber.log('controlElements names', names)
+  // Timber.log('controlElements', controlElements)
+}
+
+class FormElementClerk {
+  constructor ({
+    formElement,
+  }) {
+    this.formElement = formElement
+  }
+
+  static create ({
+    formElement,
+  }) {
+    return new this({
+      formElement,
+    })
+  }
+
+  get controlElements () {
+    return this.formElement.elements
+  }
+
+  extractControls () {
+    const names = this.extractNames()
+
+    return names.map(it => this.formElement[it])
+  }
+
+  extractNames () {
+    return [...new Set(
+      [...this.controlElements]
+        .map(it => it.getAttribute('name'))
+        .filter(it => it)
+    )]
+  }
+}
+
+class FormControlElementClerk {
+  constructor ({
+    controlElement,
+  }) {
+    this.controlElement = controlElement
+  }
+
+  /**
+   * @returns {FormControlElementClerk}
+   */
+  static create ({
+    controlElement,
+  }) {
+    return new this({
+      controlElement,
+    })
+  }
+
+  extractValue () {
+    if (this.controlElement instanceof HTMLInputElement) {
+      return {
+        tag: this.controlElement.tagName,
+        name: this.controlElement.name,
+        type: this.controlElement.type,
+        value: this.controlElement.value,
+        checked: this.controlElement.checked,
+      }
+    }
+
+    if (this.controlElement instanceof HTMLTextAreaElement) {
+      return {
+        tag: this.controlElement.tagName,
+        name: this.controlElement.name,
+        type: this.controlElement.type,
+        value: this.controlElement.value,
+      }
+    }
+
+    if (this.controlElement instanceof HTMLSelectElement) {
+      return this.controlElement.selectedOptions
+    }
+
+    if (this.controlElement instanceof RadioNodeList) {
+      return [...this.controlElement.values()]
+        .map(it =>
+          FormControlElementClerk.create({
+            controlElement: it,
+          })
+        )
+        .map(it =>
+          it.extractValue()
+        )
+    }
+
+    return null
+  }
+}
+</script>
+
+<template>
+  <h1>Hello I&#39;m pages/form-controls-inspector.vue!</h1>
+
+  <form
+    ref="formRef"
+    @submit.prevent="submitForm({
+      formElement: formRef,
+    })"
+  >
+    <button
+      class="standard"
+      type="submit"
+    >
+      Submit (above)
+    </button>
+
+    <label class="row">
+      <span>Test</span>
+      <input
+        name="text"
+        type="text"
+        value="default text"
+      >
+    </label>
+
+    <label class="row">
+      <span>Double Text</span>
+      <input
+        name="double-text"
+        type="text"
+        value="double 001"
+      >
+      <input
+        name="double-text"
+        type="text"
+        value="double 002"
+      >
+    </label>
+
+    <label class="row">
+      <span>Password</span>
+      <input
+        name="password"
+        type="password"
+        value="password123"
+      >
+    </label>
+
+    <label class="row">
+      <span>Email</span>
+      <input
+        name="email"
+        type="email"
+        value="example@example.com"
+      >
+    </label>
+
+    <label class="row">
+      <span>Website</span>
+      <input
+        name="url"
+        type="url"
+        value="https://www.example.com"
+      >
+    </label>
+
+    <label class="row">
+      <span>Telephone Number</span>
+      <input
+        name="tel"
+        type="tel"
+        value="090-1234-5678"
+      >
+    </label>
+
+    <label class="row">
+      <span>Color</span>
+      <input
+        name="color"
+        type="color"
+        value="#ff00ff"
+      >
+    </label>
+
+    <label class="row">
+      <span>Number</span>
+      <input
+        name="number"
+        type="number"
+        min="1"
+        max="10"
+        value="5"
+      >
+    </label>
+
+    <label class="row">
+      <span>Range</span>
+      <input
+        name="range"
+        type="range"
+        min="0"
+        max="100"
+        value="50"
+      >
+    </label>
+
+    <label class="row">
+      <span>Date</span>
+      <input
+        name="date"
+        type="date"
+        value="2024-01-01"
+      >
+    </label>
+
+    <label class="row">
+      <span>Time</span>
+      <input
+        name="time"
+        type="time"
+        value="11:22:33"
+        step="1"
+      >
+    </label>
+
+    <label class="row">
+      <span>DateTime</span>
+      <input
+        name="datetime-local"
+        type="datetime-local"
+        value="2024-01-01T11:22:33Z"
+        step="1"
+      >
+    </label>
+
+    <label class="row">
+      <span>Year Month</span>
+      <input
+        name="month"
+        type="month"
+        value="2024-01"
+      >
+    </label>
+
+    <label class="row">
+      <span>File</span>
+      <input
+        name="file"
+        type="file"
+      >
+    </label>
+
+    <hr>
+
+    <h2>Emotion</h2>
+    <label>
+      <input
+        name="emotion"
+        type="radio"
+        value="happy"
+      >
+      <span>happy</span>
+    </label>
+    <br>
+    <label>
+      <input
+        name="emotion"
+        type="radio"
+        value="sad"
+      >
+      <span>sad</span>
+    </label>
+    <br>
+    <label>
+      <input
+        name="emotion"
+        type="radio"
+        value="angry"
+      >
+      <span>angry</span>
+    </label>
+
+    <hr>
+
+    <h2>Interest</h2>
+    <label>
+      <input
+        name="interest"
+        type="checkbox"
+        value="coding"
+        checked
+      >
+      <span>coding</span>
+    </label>
+    <br>
+    <label>
+      <input
+        name="interest"
+        type="checkbox"
+        value="music"
+      >
+      <span>music</span>
+    </label>
+    <br>
+    <label>
+      <input
+        name="interest"
+        type="checkbox"
+        value="sports"
+        checked
+      >
+      <span>sports</span>
+    </label>
+
+    <hr>
+
+    <label class="row">
+      <span>Message</span>
+      <textarea
+        name="message"
+        rows="4"
+        cols="50"
+      >default message</textarea>
+    </label>
+
+    <label class="column">
+      <span>City</span>
+      <select
+        name="city"
+        style="
+          min-width: 10rem;
+        "
+      >
+        <option value="tokyo">Tokyo</option>
+        <option value="osaka">Osaka</option>
+        <option value="kyoto">Kyoto</option>
+      </select>
+    </label>
+
+    <label class="column">
+      <span>Greek</span>
+      <select
+        name="greek"
+        multiple
+        style="
+          height: 5rem;
+          min-width: 10rem;
+        "
+      >
+        <option value="alpha" selected>alpha</option>
+        <option value="beta">beta</option>
+        <option value="gamma" selected>gamma</option>
+        <option value="delta">delta</option>
+        <option value="epsilon">epsilon</option>
+        <option value="zeta">zeta</option>
+        <option value="eta">eta</option>
+        <option value="theta">theta</option>
+      </select>
+    </label>
+
+    <button
+      class="standard"
+      type="submit"
+    >
+      Submit (below)
+    </button>
+  </form>
+</template>
+
+<style>
+form {
+  margin-inline: 1rem;
+}
+
+label.row,
+label.column {
+  margin-block-start: 1rem;
+}
+
+label.row {
+  display: flex;
+  flex-direction: column;
+}
+
+label.column {
+  display: flex;
+  flex-direction: row;
+}
+
+form button {
+  margin-block-start: 1rem;
+}
+
+form button.standard {
+  border: none;
+  border-radius: .25rem;
+
+  padding: .5rem 1rem;
+  background-color: #007bff;
+  color: #fff;
+}
+
+form button.standard:active {
+  background-color: #03c;
+}
+
+form button[disabled] {
+  background-color: #ccc;
+}
+</style>
