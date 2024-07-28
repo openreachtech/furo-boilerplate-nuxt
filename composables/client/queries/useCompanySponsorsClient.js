@@ -26,7 +26,9 @@ export function useCompanySponsorsClient () {
       await invokeRequest()
     },
     invokeRequestOnMounted () {
-      onMounted(invokeRequest)
+      onMounted(async () => {
+        await invokeRequest()
+      })
     },
   }
 
