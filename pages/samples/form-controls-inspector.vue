@@ -290,7 +290,7 @@ class FormControlElementClerk {
       <input
         name="datetime-local"
         type="datetime-local"
-        value="2024-01-01T11:22:33Z"
+        value="2024-01-31T11:22:33"
         step="1"
       >
     </label>
@@ -396,6 +396,20 @@ class FormControlElementClerk {
         <option value="tokyo">Tokyo</option>
         <option value="osaka">Osaka</option>
         <option value="kyoto">Kyoto</option>
+      </select>
+    </label>
+
+    <label class="column">
+      <span>Amount (Optional)</span>
+      <select
+        name="amount"
+        style="
+          min-width: 10rem;
+        "
+      >
+        <option value="" disabled selected>Please select</option>
+        <option value="small">small</option>
+        <option value="large">large</option>
       </select>
     </label>
 
