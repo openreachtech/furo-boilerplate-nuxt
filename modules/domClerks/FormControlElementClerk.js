@@ -23,6 +23,38 @@ export default class FormControlElementClerk {
       control,
     })
   }
+
+  /**
+   * Extract value from the select element.
+   *
+   * @param {{
+   *   selectElement: HTMLSelectElement
+   * }} params
+   * @returns {FormControlElementValueHash}
+   */
+  extractValueHashFromSelectElement ({
+    selectElement,
+  }) {
+    if (!selectElement.multiple) {
+      return selectElement.value
+        || null // for <option disabled selected>
+    }
+
+    /** @type {Array<HTMLOptionElement>} */
+    const optionElements = [...selectElement.selectedOptions]
+
+    return /** @type {Array<*>} */ (
+      optionElements
+        .map(it =>
+          FormControlElementClerk.create({
+            control: it,
+          })
+        )
+        .map(it =>
+          it.extractValueHash()
+        )
+    )
+  }
 }
 
 /**
