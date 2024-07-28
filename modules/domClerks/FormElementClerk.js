@@ -36,6 +36,24 @@ export default class FormElementClerk {
   }
 
   /**
+   * Extract control elements by object hash.
+   *
+   * @returns {{
+   *   [key: string]: FormControlElementHash
+   * }}
+   */
+  extractControlElements () {
+    const names = this.extractNames()
+
+    return Object.fromEntries(
+      names.map(it => [
+        it,
+        this.formElement[it],
+      ])
+    )
+  }
+
+  /**
    * Extract names of the control elements.
    *
    * @returns {Array<string>}
