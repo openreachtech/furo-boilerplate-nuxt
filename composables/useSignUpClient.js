@@ -26,7 +26,7 @@ export function useSignUpClient () {
   }) {
     const launcher = SignUpMutationGraphqlLauncher.create()
 
-    const capsule = await launcher.launchQuery({
+    const capsule = await launcher.launchRequestWithVariables({
       variables,
     })
 
