@@ -62,6 +62,10 @@ export default class FormElementClerk {
  */
 
 /**
+ * @typedef {FormControlElementType | RadioNodeList} FormControlElementHash
+ */
+
+/**
  * @typedef {HTMLButtonElement
  *   | HTMLInputElement
  *   | HTMLOptionElement
