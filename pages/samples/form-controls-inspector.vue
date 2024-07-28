@@ -290,7 +290,7 @@ class FormControlElementClerk {
       <input
         name="datetime-local"
         type="datetime-local"
-        value="2024-01-01T11:22:33Z"
+        value="2024-01-31T11:22:33"
         step="1"
       >
     </label>
