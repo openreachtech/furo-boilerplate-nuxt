@@ -13,7 +13,7 @@ describe('SignUpMutationGraphqlPayload', () => {
 })
 
 describe('SignUpMutationGraphqlPayload', () => {
-  describe('.get:query', () => {
+  describe('.get:document', () => {
     const expected = /* GraphQL */ `
       mutation SignUpMutation ($input: SignUpInput!) {
         signUp (input: $input) {
@@ -23,7 +23,7 @@ describe('SignUpMutationGraphqlPayload', () => {
     `
 
     test('to be fixed string', () => {
-      const actual = SignUpMutationGraphqlPayload.query
+      const actual = SignUpMutationGraphqlPayload.document
 
       expect(actual)
         .toBe(expected)
