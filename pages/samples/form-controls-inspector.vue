@@ -3,6 +3,8 @@ import {
   ref,
 } from 'vue'
 
+import FormControlElementClerk from '~/modules/domClerks/FormControlElementClerk'
+
 const formRef = ref(null)
 
 const Timber = console
@@ -42,10 +44,10 @@ async function submitForm ({
     formElementClerk.extractControls()
       .map(it =>
         FormControlElementClerk.create({
-          controlElement: it,
+          control: it,
         })
       )
-      .map(it => it.extractValue())
+      .map(it => it.extractValueHash())
   )
 
   // const formArgs = new FormData(formElement)
@@ -98,64 +100,6 @@ class FormElementClerk {
         .map(it => it.getAttribute('name'))
         .filter(it => it)
     )]
-  }
-}
-
-class FormControlElementClerk {
-  constructor ({
-    controlElement,
-  }) {
-    this.controlElement = controlElement
-  }
-
-  /**
-   * @returns {FormControlElementClerk}
-   */
-  static create ({
-    controlElement,
-  }) {
-    return new this({
-      controlElement,
-    })
-  }
-
-  extractValue () {
-    if (this.controlElement instanceof HTMLInputElement) {
-      return {
-        tag: this.controlElement.tagName,
-        name: this.controlElement.name,
-        type: this.controlElement.type,
-        value: this.controlElement.value,
-        checked: this.controlElement.checked,
-      }
-    }
-
-    if (this.controlElement instanceof HTMLTextAreaElement) {
-      return {
-        tag: this.controlElement.tagName,
-        name: this.controlElement.name,
-        type: this.controlElement.type,
-        value: this.controlElement.value,
-      }
-    }
-
-    if (this.controlElement instanceof HTMLSelectElement) {
-      return this.controlElement.selectedOptions
-    }
-
-    if (this.controlElement instanceof RadioNodeList) {
-      return [...this.controlElement.values()]
-        .map(it =>
-          FormControlElementClerk.create({
-            controlElement: it,
-          })
-        )
-        .map(it =>
-          it.extractValue()
-        )
-    }
-
-    return null
   }
 }
 </script>
