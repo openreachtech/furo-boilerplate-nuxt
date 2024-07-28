@@ -5,7 +5,7 @@ import CurriculumsQueryGraphqlCapsule from '~/app/graphql/client/queries/curricu
 /**
  * Curriculums query graphql launcher.
  *
- * @extends {BaseAppGraphqlLauncher<typeof BaseAppGraphqlLauncher>}
+ * @extends {BaseAppGraphqlLauncher<typeof CurriculumsQueryGraphqlLauncher>}
  */
 export default class CurriculumsQueryGraphqlLauncher extends BaseAppGraphqlLauncher {
   /** @override */
