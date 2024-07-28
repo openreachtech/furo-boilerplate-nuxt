@@ -1,3 +1,5 @@
+import FormControlElementClerk from '~/modules/domClerks/FormControlElementClerk'
+
 export default class FormElementClerk {
   /**
    * Constructor of FormElementClerk.
@@ -32,6 +34,28 @@ export default class FormElementClerk {
   get controlElements () {
     return /** @type {Array<*>} */ (
       [...this.formElement.elements]
+    )
+  }
+
+  /**
+   * Extract value hash from the form element.
+   *
+   * @returns {{
+   *   [key: string]: string | Array<string> | null
+   * }}
+   */
+  extractValueHash () {
+    const controlHash = this.extractControlElements()
+
+    return Object.fromEntries(
+      Object.entries(controlHash)
+        .map(([name, control]) => [
+          name,
+          FormControlElementClerk.create({
+            control,
+          })
+            .extractValueHash(),
+        ])
     )
   }
 
