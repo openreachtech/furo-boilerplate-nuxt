@@ -25,6 +25,39 @@ export default class FormControlElementClerk {
   }
 
   /**
+   * Extract value from the control element.
+   *
+   * @returns {FormControlElementValueHash}
+   */
+  extractValueHash () {
+    if (this.control instanceof HTMLInputElement) {
+      return this.control.value
+    }
+
+    if (this.control instanceof HTMLTextAreaElement) {
+      return this.control.value
+    }
+
+    if (this.control instanceof HTMLSelectElement) {
+      return this.extractValueHashFromSelectElement({
+        selectElement: this.control,
+      })
+    }
+
+    if (this.control instanceof HTMLOptionElement) {
+      return this.control.value
+    }
+
+    if (this.control instanceof RadioNodeList) {
+      return this.extractValueHashFromRadioNodes({
+        radioNodes: this.control,
+      })
+    }
+
+    return null
+  }
+
+  /**
    * Extract value from the select element.
    *
    * @param {{
