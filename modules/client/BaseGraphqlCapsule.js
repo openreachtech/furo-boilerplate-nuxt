@@ -228,5 +228,10 @@ export default class BaseGraphqlCapsule {
  */
 
 /**
+ * @template P
+ * @typedef {import('~/modules/client/BaseGraphqlPayload').default<P>} PayloadClass
+ */
+
+/**
  * @typedef {*} BooleanLike
  */
