@@ -1,7 +1,7 @@
 /**
  * Base class of GraphQL launcher.
  *
- * @template {typeof BaseGraphqlLauncher} T
+ * @template T
  */
 export default class BaseGraphqlLauncher {
   /**
@@ -123,6 +123,7 @@ export default class BaseGraphqlLauncher {
   /**
    * get: Constructor from instance.
    *
+   * @template {typeof BaseGraphqlLauncher} T
    * @returns {T} Constructor of the instance.
    */
   get Ctor () {
