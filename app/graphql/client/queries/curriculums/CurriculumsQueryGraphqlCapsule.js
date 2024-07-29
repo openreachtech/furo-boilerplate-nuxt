@@ -3,21 +3,9 @@ import BaseGraphqlCapsule from '~/modules/client/BaseGraphqlCapsule'
 /**
  * Curriculums query graphql capsule.
  *
- * @extends {BaseGraphqlCapsule<CurriculumsQueryGraphqlCapsule>}
+ * @extends {BaseGraphqlCapsule<CurriculumsQueryGraphqlCapsule, CurriculumsContent>}
  */
 export default class CurriculumsQueryGraphqlCapsule extends BaseGraphqlCapsule {
-  /**
-   * Extract content from response.
-   *
-   * @override
-   * @returns {CurriculumsContent | null} Content
-   */
-  extractContent () {
-    return /** @type {*} */ (
-      super.extractContent()
-    )
-  }
-
   /**
    * get: curriculums
    *

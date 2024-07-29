@@ -1,7 +1,7 @@
 /**
  * Base class for GraphQL capsule.
  *
- * @template T
+ * @template T, D
  */
 export default class BaseGraphqlCapsule {
   /**
@@ -23,7 +23,8 @@ export default class BaseGraphqlCapsule {
    * Factory method.
    *
    * @param {BaseGraphqlCapsuleFactoryParams} params - Parameters of factory method.
-   * @template {typeof BaseGraphqlCapsule} T
+   * @template D
+   * @template {typeof BaseGraphqlCapsule<T, D>} T
    * @this {T}
    * @returns {InstanceType<T>} Instance of this class.
    */
@@ -36,7 +37,8 @@ export default class BaseGraphqlCapsule {
   /**
    * Factory method to create as pending behavior.
    *
-   * @template {typeof BaseGraphqlCapsule} T
+   * @template D
+   * @template {typeof BaseGraphqlCapsule<T, D>} T
    * @this {T}
    * @returns {InstanceType<T>} Instance of this class.
    */
@@ -54,7 +56,8 @@ export default class BaseGraphqlCapsule {
    * @param {{
    *   payload: import('./BaseGraphqlPayload').default
    * }} params - Parameters.
-   * @template {typeof BaseGraphqlCapsule} T
+   * @template D
+   * @template {typeof BaseGraphqlCapsule<T, D>} T
    * @this {T}
    * @returns {InstanceType<T>} Instance of this class.
    */
@@ -75,7 +78,8 @@ export default class BaseGraphqlCapsule {
    *   rawResponse: Response
    *   payload: import('./BaseGraphqlPayload').default
    * }} params - Parameters.
-   * @template {typeof BaseGraphqlCapsule} T
+   * @template D
+   * @template {typeof BaseGraphqlCapsule<T, D>} T
    * @this {T}
    * @returns {InstanceType<T>} Instance of this class.
    */
@@ -193,16 +197,18 @@ export default class BaseGraphqlCapsule {
   /**
    * Extract content from #result.
    *
-   * @returns {object | null} Content.
+   * @returns {D | null} Content.
    */
   extractContent () {
     if (this.hasError()) {
       return null
     }
 
-    return this.result
-      ?.data
-      ?? null
+    return /** @type {*} */ (
+      this.result
+        ?.data
+        ?? null
+    )
   }
 }
 
