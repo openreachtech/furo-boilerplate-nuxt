@@ -34,6 +34,21 @@ export default class FormElementClerk {
       [...this.formElement.elements]
     )
   }
+
+  /**
+   * Extract names of the control elements.
+   *
+   * @returns {Array<string>}
+   */
+  extractNames () {
+    return /** @type Array<*>} */ (
+      [...new Set(
+        this.controlElements
+          .map(it => it.getAttribute('name'))
+          .filter(it => it)
+      )]
+    )
+  }
 }
 
 /**
