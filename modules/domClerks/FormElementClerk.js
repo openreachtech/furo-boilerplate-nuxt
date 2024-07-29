@@ -23,6 +23,17 @@ export default class FormElementClerk {
       formElement,
     })
   }
+
+  /**
+   * get: All control elements of the form.
+   *
+   * @returns {Array<FormControlElementType>}
+   */
+  get controlElements () {
+    return /** @type {Array<*>} */ (
+      [...this.formElement.elements]
+    )
+  }
 }
 
 /**
@@ -33,4 +44,13 @@ export default class FormElementClerk {
 
 /**
  * @typedef {FormElementClerkParams} FormElementClerkFactoryParams
+ */
+
+/**
+ * @typedef {HTMLButtonElement
+ *   | HTMLInputElement
+ *   | HTMLOptionElement
+ *   | HTMLSelectElement
+ *   | HTMLTextAreaElement
+ * } FormControlElementType
  */
