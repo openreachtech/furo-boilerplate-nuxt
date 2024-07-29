@@ -79,6 +79,15 @@ export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
 
     return storageClerk.get(STORAGE_KEY.ACCESS_TOKEN)
   }
+
+  /**
+   * Create an instance of StorageClerk.
+   *
+   * @returns {StorageClerk} Instance of StorageClerk.
+   */
+  createStorageClerk () {
+    return StorageClerk.createAsLocal()
+  }
 }
 
 /**
