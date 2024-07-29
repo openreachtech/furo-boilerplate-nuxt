@@ -37,15 +37,6 @@ export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
   }
 
   /**
-   * Create an instance of StorageClerk.
-   *
-   * @returns {StorageClerk} Instance of StorageClerk.
-   */
-  static createStorageClerk () {
-    return StorageClerk.createAsLocal()
-  }
-
-  /**
    * Update headers.
    *
    * @override
