@@ -119,38 +119,6 @@ describe('BaseAppGraphqlLauncher', () => {
 })
 
 describe('BaseAppGraphqlLauncher', () => {
-  describe('.createStorageClerk()', () => {
-    describe('to return instance of StorageClerk', () => {
-      test('with no params', () => {
-        const storageClerk = BaseAppGraphqlLauncher.createStorageClerk()
-
-        expect(storageClerk)
-          .toBeInstanceOf(StorageClerk)
-      })
-    })
-
-    describe('to call StorageClerk.createAsLocal()', () => {
-      test('with no params', () => {
-        const storageClerkTally = /** @type {StorageClerk} */ ({})
-
-        const createAsLocalSpy = jest.spyOn(StorageClerk, 'createAsLocal')
-          .mockReturnValue(storageClerkTally)
-
-        const actual = BaseAppGraphqlLauncher.createStorageClerk()
-
-        expect(actual)
-          .toBe(storageClerkTally) // same reference
-
-        expect(createAsLocalSpy)
-          .toHaveBeenCalledWith()
-
-        createAsLocalSpy.mockRestore()
-      })
-    })
-  })
-})
-
-describe('BaseAppGraphqlLauncher', () => {
   describe('#loadAccessToken()', () => {
     describe('with no params', () => {
       const cases = [
@@ -256,6 +224,46 @@ describe('BaseAppGraphqlLauncher', () => {
 
         expect(actual)
           .toEqual(expected)
+      })
+    })
+  })
+})
+
+describe('BaseAppGraphqlLauncher', () => {
+  describe('#createStorageClerk()', () => {
+    describe('to return instance of StorageClerk', () => {
+      test('with no params', () => {
+        const launcher = BaseAppGraphqlLauncher.create({
+          config: {},
+        })
+
+        const storageClerk = launcher.createStorageClerk()
+
+        expect(storageClerk)
+          .toBeInstanceOf(StorageClerk)
+      })
+    })
+
+    describe('to call StorageClerk.createAsLocal()', () => {
+      test('with no params', () => {
+        const launcher = BaseAppGraphqlLauncher.create({
+          config: {},
+        })
+
+        const storageClerkTally = /** @type {StorageClerk} */ ({})
+
+        const createAsLocalSpy = jest.spyOn(StorageClerk, 'createAsLocal')
+          .mockReturnValue(storageClerkTally)
+
+        const actual = launcher.createStorageClerk()
+
+        expect(actual)
+          .toBe(storageClerkTally) // same reference
+
+        expect(createAsLocalSpy)
+          .toHaveBeenCalledWith()
+
+        createAsLocalSpy.mockRestore()
       })
     })
   })

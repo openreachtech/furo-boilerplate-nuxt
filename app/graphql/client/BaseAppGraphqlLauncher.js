@@ -37,15 +37,6 @@ export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
   }
 
   /**
-   * Create an instance of StorageClerk.
-   *
-   * @returns {StorageClerk} Instance of StorageClerk.
-   */
-  static createStorageClerk () {
-    return StorageClerk.createAsLocal()
-  }
-
-  /**
    * Update headers.
    *
    * @override
@@ -75,9 +66,18 @@ export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
    * @returns {string | null} Access token.
    */
   loadAccessToken () {
-    const storageClerk = this.Ctor.createStorageClerk()
+    const storageClerk = this.createStorageClerk()
 
     return storageClerk.get(STORAGE_KEY.ACCESS_TOKEN)
+  }
+
+  /**
+   * Create an instance of StorageClerk.
+   *
+   * @returns {StorageClerk} Instance of StorageClerk.
+   */
+  createStorageClerk () {
+    return StorageClerk.createAsLocal()
   }
 }
 
