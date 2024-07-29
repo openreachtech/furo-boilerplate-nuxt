@@ -51,8 +51,9 @@ export default class BaseGraphqlCapsule {
   /**
    * Factory method to create as network error.
    *
+   * @template P
    * @param {{
-   *   payload: import('./BaseGraphqlPayload').default
+   *   payload: PayloadClass<P>
    * }} params - Parameters.
    * @template {typeof BaseGraphqlCapsule<C, D>} C, D
    * @this {C}
