@@ -22,7 +22,8 @@ export default class BaseGraphqlCapsule {
   /**
    * Factory method.
    *
-   * @param {BaseGraphqlCapsuleFactoryParams} params - Parameters of factory method.
+   * @template P
+   * @param {BaseGraphqlCapsuleFactoryParams<PayloadClass<P>>} params - Parameters of factory method.
    * @template {typeof BaseGraphqlCapsule<C, D>} C, D
    * @this {C}
    * @returns {InstanceType<C>} Instance of this class.
@@ -220,7 +221,8 @@ export default class BaseGraphqlCapsule {
  */
 
 /**
- * @typedef {BaseGraphqlCapsuleParams} BaseGraphqlCapsuleFactoryParams
+ * @template P
+ * @typedef {BaseGraphqlCapsuleParams<P>} BaseGraphqlCapsuleFactoryParams
  */
 
 /**
