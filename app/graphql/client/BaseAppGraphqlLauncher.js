@@ -75,7 +75,7 @@ export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
    * @returns {string | null} Access token.
    */
   loadAccessToken () {
-    const storageClerk = this.Ctor.createStorageClerk()
+    const storageClerk = this.createStorageClerk()
 
     return storageClerk.get(STORAGE_KEY.ACCESS_TOKEN)
   }
