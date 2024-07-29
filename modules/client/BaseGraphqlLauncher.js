@@ -145,8 +145,7 @@ export default class BaseGraphqlLauncher {
    * @param {{
    *   payload: InstanceType<P>
    * }} Params - Parameters.
-   * @template {CapsuleClass} C
-   * @returns {Promise<InstanceType<C>>} Promise of instance of capsule.
+   * @returns {Promise<InstanceType<CapsuleClass>>} Promise of instance of capsule.
    * @public
    */
   async launchRequest ({
