@@ -1,7 +1,7 @@
 /**
  * Base class of GraphQL launcher.
  *
- * @template T
+ * @template {typeof BaseGraphqlLauncher} T
  */
 export default class BaseGraphqlLauncher {
   /**
@@ -66,8 +66,7 @@ export default class BaseGraphqlLauncher {
   /**
    * Create instance of capsule with result as pending.
    *
-   * @template {CapsuleClass} C
-   * @returns {Promise<InstanceType<C>>} Instance of capsule.
+   * @returns {InstanceType<CapsuleClass>} Instance of capsule.
    */
   static createResultCapsuleAsPending () {
     const args = {
@@ -85,8 +84,7 @@ export default class BaseGraphqlLauncher {
    * @param {{
    *   payload: InstanceType<PayloadClass>
    * }} params - Parameters.
-   * @template {CapsuleClass} C
-   * @returns {Promise<InstanceType<C>>} Instance of capsule.
+   * @returns {InstanceType<CapsuleClass>} Instance of capsule.
    */
   static createResultCapsuleAsNetworkError ({
     payload,
@@ -107,8 +105,7 @@ export default class BaseGraphqlLauncher {
    *   rawResponse: Response
    *   payload: InstanceType<PayloadClass>
    * }} params - Parameters.
-   * @template {CapsuleClass} C
-   * @returns {Promise<InstanceType<C>>} Instance of capsule.
+   * @returns {InstanceType<CapsuleClass>} Instance of capsule.
    */
   static createResultCapsuleAsJsonParseError ({
     rawResponse,
@@ -148,8 +145,7 @@ export default class BaseGraphqlLauncher {
    * @param {{
    *   payload: InstanceType<P>
    * }} Params - Parameters.
-   * @template {CapsuleClass} C
-   * @returns {Promise<InstanceType<C>>} Promise of instance of capsule.
+   * @returns {Promise<InstanceType<CapsuleClass>>} Promise of instance of capsule.
    * @public
    */
   async launchRequest ({
@@ -319,8 +315,7 @@ export default class BaseGraphqlLauncher {
    * Create instance of capsule with result.
    *
    * @param {CapsuleParams} params - Parameters.
-   * @template {CapsuleClass} C
-   * @returns {Promise<InstanceType<C>>} Instance of capsule.
+   * @returns {InstanceType<CapsuleClass>} Instance of capsule.
    */
   static createResultCapsule ({
     rawResponse,
