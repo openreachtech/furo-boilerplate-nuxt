@@ -350,7 +350,8 @@ export default class BaseGraphqlLauncher {
  */
 
 /**
- * @typedef {typeof import('./BaseGraphqlCapsule').default} CapsuleClass
+ * @template {typeof import('./BaseGraphqlCapsule')} C, D
+ * @typedef {typeof import('./BaseGraphqlCapsule').default<C, D>} CapsuleClass
  */
 
 /**
