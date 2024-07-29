@@ -3,7 +3,7 @@ import {
   ref,
 } from 'vue'
 
-import FormControlElementClerk from '~/modules/domClerks/FormControlElementClerk'
+import FormElementClerk from '~/modules/domClerks/FormElementClerk'
 
 const formRef = ref(null)
 
@@ -19,88 +19,14 @@ const Timber = console
 async function submitForm ({
   formElement,
 }) {
-  await Timber.log('formElement', formElement)
-
-  const controlElements = formElement.elements
-
-  await Timber.log('controlElements', [...controlElements])
-
   const formElementClerk = FormElementClerk.create({
     formElement,
   })
 
-  Timber.log(
-    'formElementClerk.extractNames()',
-    formElementClerk.extractNames()
+  await Timber.log(
+    'formElementClerk.extractValueHash()',
+    formElementClerk.extractValueHash()
   )
-
-  Timber.log(
-    'formElementClerk.extractControls()',
-    formElementClerk.extractControls()
-  )
-
-  Timber.log(
-    'FormControlElementClerk',
-    formElementClerk.extractControls()
-      .map(it =>
-        FormControlElementClerk.create({
-          control: it,
-        })
-      )
-      .map(it => it.extractValueHash())
-  )
-
-  // const formArgs = new FormData(formElement)
-
-  // Timber.log('formArgs',
-  //   Object.fromEntries(
-  //     [...formArgs]
-  //   )
-  // )
-  // Timber.log('@@@@@ formArgs @@@@@@', [...new Set(formArgs.keys())])
-
-  // const names = [...new Set(formArgs.keys())]
-
-  // const controlElements = names.map((it) => {
-  //   return formElement[it]
-  // })
-
-  // Timber.log('controlElements names', names)
-  // Timber.log('controlElements', controlElements)
-}
-
-class FormElementClerk {
-  constructor ({
-    formElement,
-  }) {
-    this.formElement = formElement
-  }
-
-  static create ({
-    formElement,
-  }) {
-    return new this({
-      formElement,
-    })
-  }
-
-  get controlElements () {
-    return this.formElement.elements
-  }
-
-  extractControls () {
-    const names = this.extractNames()
-
-    return names.map(it => this.formElement[it])
-  }
-
-  extractNames () {
-    return [...new Set(
-      [...this.controlElements]
-        .map(it => it.getAttribute('name'))
-        .filter(it => it)
-    )]
-  }
 }
 </script>
 
