@@ -7,7 +7,7 @@ export default class BaseGraphqlCapsule {
   /**
    * Constructor.
    *
-   * @param {BaseGraphqlCapsuleParams} params
+   * @param {BaseGraphqlCapsuleParams<PayloadClass<*>>} params
    */
   constructor ({
     rawResponse,
@@ -211,9 +211,10 @@ export default class BaseGraphqlCapsule {
 }
 
 /**
+ * @template P
  * @typedef {{
  *   rawResponse: Response | null
- *   payload: import('~/modules/client/BaseGraphqlPayload').default | null
+ *   payload: PayloadClass<P> | null
  *   result: GraphqlCapsuleResult
  * }} BaseGraphqlCapsuleParams
  */
