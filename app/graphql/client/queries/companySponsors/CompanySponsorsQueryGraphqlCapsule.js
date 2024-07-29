@@ -3,7 +3,7 @@ import BaseGraphqlCapsule from '~/modules/client/BaseGraphqlCapsule'
 /**
  * CompanySponsorsQueryGraphqlCapsule
  *
- * @extends BaseGraphqlCapsule<CompanySponsorsQueryGraphqlCapsule>
+ * @extends {BaseGraphqlCapsule<CompanySponsorsQueryGraphqlCapsule>}
  */
 export default class CompanySponsorsQueryGraphqlCapsule extends BaseGraphqlCapsule {
   /**
