@@ -220,6 +220,10 @@ export default class BaseGraphqlCapsule {
  */
 
 /**
+ * @typedef {BaseGraphqlCapsuleParams} BaseGraphqlCapsuleFactoryParams
+ */
+
+/**
  * @typedef {null | {
  *   data?: object
  *   errors?: Array<object>
@@ -229,10 +233,6 @@ export default class BaseGraphqlCapsule {
 /**
  * @template P
  * @typedef {import('~/modules/client/BaseGraphqlPayload').default<P>} PayloadClass
- */
-
-/**
- * @typedef {BaseGraphqlCapsuleParams} BaseGraphqlCapsuleFactoryParams
  */
 
 /**
