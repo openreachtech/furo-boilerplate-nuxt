@@ -3,21 +3,9 @@ import BaseGraphqlCapsule from '~/modules/client/BaseGraphqlCapsule'
 /**
  * CompanySponsorsQueryGraphqlCapsule
  *
- * @extends {BaseGraphqlCapsule<CompanySponsorsQueryGraphqlCapsule>}
+ * @extends {BaseGraphqlCapsule<CompanySponsorsQueryGraphqlCapsule, CompanySponsorsContent>}
  */
 export default class CompanySponsorsQueryGraphqlCapsule extends BaseGraphqlCapsule {
-  /**
-   * Extract content from response.
-   *
-   * @override
-   * @returns {CompanySponsorsContent | null} Content
-   */
-  extractContent () {
-    return /** @type {*} */ (
-      super.extractContent()
-    )
-  }
-
   /**
    * get: companySponsors
    *
