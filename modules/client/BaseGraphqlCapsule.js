@@ -72,9 +72,10 @@ export default class BaseGraphqlCapsule {
   /**
    * Factory method to create as JSON parse error.
    *
+   * @template P
    * @param {{
    *   rawResponse: Response
-   *   payload: import('./BaseGraphqlPayload').default
+   *   payload: PayloadClass<P>
    * }} params - Parameters.
    * @template {typeof BaseGraphqlCapsule<C, D>} C, D
    * @this {C}
