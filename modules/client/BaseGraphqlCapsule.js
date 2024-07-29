@@ -1,7 +1,7 @@
 /**
  * Base class for GraphQL capsule.
  *
- * @template T
+ * @template T, D
  */
 export default class BaseGraphqlCapsule {
   /**
@@ -193,16 +193,18 @@ export default class BaseGraphqlCapsule {
   /**
    * Extract content from #result.
    *
-   * @returns {object | null} Content.
+   * @returns {D | null} Content.
    */
   extractContent () {
     if (this.hasError()) {
       return null
     }
 
-    return this.result
-      ?.data
-      ?? null
+    return /** @type {*} */ (
+      this.result
+        ?.data
+        ?? null
+    )
   }
 }
 
