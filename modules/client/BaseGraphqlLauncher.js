@@ -1,7 +1,7 @@
 /**
  * Base class of GraphQL launcher.
  *
- * @template T
+ * @template {typeof BaseGraphqlLauncher} T
  */
 export default class BaseGraphqlLauncher {
   /**
