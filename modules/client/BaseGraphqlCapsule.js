@@ -226,15 +226,15 @@ export default class BaseGraphqlCapsule {
  */
 
 /**
+ * @template P
+ * @typedef {import('~/modules/client/BaseGraphqlPayload').default<P>} PayloadClass
+ */
+
+/**
  * @typedef {{
  *   data?: object
  *   errors?: Array<object>
  * }} GraphqlCapsuleResult
- */
-
-/**
- * @template P
- * @typedef {import('~/modules/client/BaseGraphqlPayload').default<P>} PayloadClass
  */
 
 /**
