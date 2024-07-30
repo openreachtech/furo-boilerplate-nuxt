@@ -261,9 +261,9 @@ export default class BaseGraphqlLauncher {
    * Update headers.
    *
    * @param {{
-   *   headers: Headers
+   *   headers: HeadersInit
    * }} params - Parameters.
-   * @returns {Headers} Updated headers.
+   * @returns {HeadersInit} Updated headers.
    */
   updateHeaders ({
     headers,
