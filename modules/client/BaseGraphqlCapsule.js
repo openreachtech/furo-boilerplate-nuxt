@@ -238,5 +238,16 @@ export default class BaseGraphqlCapsule {
  */
 
 /**
+ * @typedef {{
+ *   message: string
+ *   locations: Array<{
+ *     line: number
+ *     column: number
+ *   }>
+ *   path: Array<string>
+ * }} GraphqlResponseError
+ */
+
+/**
  * @typedef {*} BooleanLike
  */
