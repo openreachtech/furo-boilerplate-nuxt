@@ -103,8 +103,8 @@ export default class ObjectLiteralizer {
   /**
    * LiteralizeObject.
    *
-   * @param {source} params - Parameters.
-   * @returns
+   * @param {object} source - Parameters.
+   * @returns {string}
    */
   literalizeObject (source) {
     const contents = Object.entries(source)
