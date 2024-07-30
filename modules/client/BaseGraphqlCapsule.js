@@ -185,7 +185,7 @@ export default class BaseGraphqlCapsule {
   /**
    * Extract errors from #result.
    *
-   * @returns {Array<object>} Array of errors.
+   * @returns {Array<GraphqlResponseError>} Array of errors.
    */
   extractErrors () {
     return this.result
@@ -226,15 +226,26 @@ export default class BaseGraphqlCapsule {
  */
 
 /**
+ * @template P
+ * @typedef {import('~/modules/client/BaseGraphqlPayload').default<P>} PayloadClass
+ */
+
+/**
  * @typedef {{
  *   data?: object
- *   errors?: Array<object>
+ *   errors?: Array<GraphqlResponseError>
  * }} GraphqlCapsuleResult
  */
 
 /**
- * @template P
- * @typedef {import('~/modules/client/BaseGraphqlPayload').default<P>} PayloadClass
+ * @typedef {{
+ *   message: string
+ *   locations: Array<{
+ *     line: number
+ *     column: number
+ *   }>
+ *   path: Array<string>
+ * }} GraphqlResponseError
  */
 
 /**
