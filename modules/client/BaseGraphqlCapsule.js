@@ -226,7 +226,7 @@ export default class BaseGraphqlCapsule {
  */
 
 /**
- * @typedef {null | {
+ * @typedef {{
  *   data?: object
  *   errors?: Array<object>
  * }} GraphqlCapsuleResult
