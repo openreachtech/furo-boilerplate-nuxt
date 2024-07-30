@@ -88,7 +88,7 @@ export default class ObjectLiteralizer {
   /**
    * LiteralizeArray
    * @param {Array<*>} array
-   * @returns
+   * @returns {string}
    */
   literalizeArray (array) {
     const contents = array
