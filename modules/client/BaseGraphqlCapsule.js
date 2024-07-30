@@ -216,7 +216,7 @@ export default class BaseGraphqlCapsule {
  * @typedef {{
  *   rawResponse: Response | null
  *   payload: PayloadClass<P> | null
- *   result: GraphqlCapsuleResult
+ *   result: GraphqlCapsuleResult | null
  * }} BaseGraphqlCapsuleParams
  */
 
