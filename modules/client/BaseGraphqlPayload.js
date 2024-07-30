@@ -55,7 +55,7 @@ export default class BaseGraphqlPayload {
    * Create fetch request.
    *
    * @param {{
-   *   url: URL
+   *   url: RequestInfo | URL
    * }} params - Parameters.
    * @returns {Request} Instance of fetch request.
    * @public
