@@ -185,7 +185,7 @@ export default class BaseGraphqlCapsule {
   /**
    * Extract errors from #result.
    *
-   * @returns {Array<object>} Array of errors.
+   * @returns {Array<GraphqlResponseError>} Array of errors.
    */
   extractErrors () {
     return this.result
