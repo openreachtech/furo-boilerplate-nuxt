@@ -157,7 +157,7 @@ export default class BaseGraphqlLauncher {
   /**
    * get: Endpoint URL.
    *
-   * @returns {string} Endpoint URL.
+   * @returns {RequestInfo | URL} Endpoint URL.
    */
   get endpointUrl () {
     return this.config.ENDPOINT_URL
