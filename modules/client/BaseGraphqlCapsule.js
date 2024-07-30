@@ -217,14 +217,14 @@ export default class BaseGraphqlCapsule {
  */
 
 /**
+ * @typedef {BaseGraphqlCapsuleParams} BaseGraphqlCapsuleFactoryParams
+ */
+
+/**
  * @typedef {null | {
  *   data?: object
  *   errors?: Array<object>
  * }} GraphqlCapsuleResult
- */
-
-/**
- * @typedef {BaseGraphqlCapsuleParams} BaseGraphqlCapsuleFactoryParams
  */
 
 /**
