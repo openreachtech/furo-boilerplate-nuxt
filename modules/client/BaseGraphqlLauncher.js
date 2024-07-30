@@ -56,7 +56,7 @@ export default class BaseGraphqlLauncher {
    * get: Capsule class.
    *
    * @abstract
-   * @returns {CapsuleClass} Capsule class.
+   * @returns {CapsuleClass<*, *>} Capsule class.
    * @throws {Error} This function must be inherited.
    */
   static get Capsule () {
@@ -66,7 +66,8 @@ export default class BaseGraphqlLauncher {
   /**
    * Create instance of capsule with result as pending.
    *
-   * @returns {InstanceType<CapsuleClass>} Instance of capsule.
+   * @template C, D
+   * @returns {InstanceType<CapsuleClass<C, D>>} Instance of capsule.
    */
   static createResultCapsuleAsPending () {
     const args = {
@@ -84,7 +85,8 @@ export default class BaseGraphqlLauncher {
    * @param {{
    *   payload: InstanceType<PayloadClass>
    * }} params - Parameters.
-   * @returns {InstanceType<CapsuleClass>} Instance of capsule.
+   * @template C, D
+   * @returns {InstanceType<CapsuleClass<C, D>>} Instance of capsule.
    */
   static createResultCapsuleAsNetworkError ({
     payload,
@@ -105,7 +107,8 @@ export default class BaseGraphqlLauncher {
    *   rawResponse: Response
    *   payload: InstanceType<PayloadClass>
    * }} params - Parameters.
-   * @returns {InstanceType<CapsuleClass>} Instance of capsule.
+   * @template C, D
+   * @returns {InstanceType<CapsuleClass<C, D>>} Instance of capsule.
    */
   static createResultCapsuleAsJsonParseError ({
     rawResponse,
@@ -146,7 +149,7 @@ export default class BaseGraphqlLauncher {
    * @param {{
    *   payload: InstanceType<P>
    * }} Params - Parameters.
-   * @returns {Promise<InstanceType<CapsuleClass>>} Promise of instance of capsule.
+   * @returns {Promise<InstanceType<CapsuleClass<*, *>>>} Promise of instance of capsule.
    * @public
    */
   async launchRequest ({
@@ -185,7 +188,8 @@ export default class BaseGraphqlLauncher {
    *   variables?: object | null
    *   options?: RequestInit
    * }} Params - Parameters.
-   * @returns {Promise<InstanceType<CapsuleClass>>} Promise of instance of capsule.
+   * @template C, D
+   * @returns {Promise<InstanceType<CapsuleClass<C, D>>>} Promise of instance of capsule.
    * @public
    */
   async launchRequestWithVariables ({
@@ -316,7 +320,8 @@ export default class BaseGraphqlLauncher {
    * Create instance of capsule with result.
    *
    * @param {CapsuleParams} params - Parameters.
-   * @returns {InstanceType<CapsuleClass>} Instance of capsule.
+   * @template C, D
+   * @returns {InstanceType<CapsuleClass<C, D>>} Instance of capsule.
    */
   static createResultCapsule ({
     rawResponse,
@@ -350,7 +355,8 @@ export default class BaseGraphqlLauncher {
  */
 
 /**
- * @typedef {typeof import('./BaseGraphqlCapsule').default} CapsuleClass
+ * @template {typeof import('./BaseGraphqlCapsule')} C, D
+ * @typedef {typeof import('./BaseGraphqlCapsule').default<C, D>} CapsuleClass
  */
 
 /**

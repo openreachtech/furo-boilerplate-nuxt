@@ -23,10 +23,9 @@ export default class BaseGraphqlCapsule {
    * Factory method.
    *
    * @param {BaseGraphqlCapsuleFactoryParams} params - Parameters of factory method.
-   * @template D
-   * @template {typeof BaseGraphqlCapsule<T, D>} T
-   * @this {T}
-   * @returns {InstanceType<T>} Instance of this class.
+   * @template {typeof BaseGraphqlCapsule<C, D>} C, D
+   * @this {C}
+   * @returns {InstanceType<C>} Instance of this class.
    */
   static create (params) {
     return /** @type {*} */ (
@@ -37,10 +36,9 @@ export default class BaseGraphqlCapsule {
   /**
    * Factory method to create as pending behavior.
    *
-   * @template D
-   * @template {typeof BaseGraphqlCapsule<T, D>} T
-   * @this {T}
-   * @returns {InstanceType<T>} Instance of this class.
+   * @template {typeof BaseGraphqlCapsule<C, D>} C, D
+   * @this {C}
+   * @returns {InstanceType<C>} Instance of this class.
    */
   static createAsPending () {
     return this.create({
@@ -56,10 +54,9 @@ export default class BaseGraphqlCapsule {
    * @param {{
    *   payload: import('./BaseGraphqlPayload').default
    * }} params - Parameters.
-   * @template D
-   * @template {typeof BaseGraphqlCapsule<T, D>} T
-   * @this {T}
-   * @returns {InstanceType<T>} Instance of this class.
+   * @template {typeof BaseGraphqlCapsule<C, D>} C, D
+   * @this {C}
+   * @returns {InstanceType<C>} Instance of this class.
    */
   static createAsNetworkError ({
     payload,
@@ -78,10 +75,9 @@ export default class BaseGraphqlCapsule {
    *   rawResponse: Response
    *   payload: import('./BaseGraphqlPayload').default
    * }} params - Parameters.
-   * @template D
-   * @template {typeof BaseGraphqlCapsule<T, D>} T
-   * @this {T}
-   * @returns {InstanceType<T>} Instance of this class.
+   * @template {typeof BaseGraphqlCapsule<C, D>} C, D
+   * @this {C}
+   * @returns {InstanceType<C>} Instance of this class.
    */
   static createAsJsonParseError ({
     rawResponse,
