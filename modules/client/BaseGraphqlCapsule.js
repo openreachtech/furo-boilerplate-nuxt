@@ -7,7 +7,7 @@ export default class BaseGraphqlCapsule {
   /**
    * Constructor.
    *
-   * @param {BaseGraphqlCapsuleParams} params
+   * @param {BaseGraphqlCapsuleParams<PayloadClass<*>>} params
    */
   constructor ({
     rawResponse,
@@ -22,7 +22,8 @@ export default class BaseGraphqlCapsule {
   /**
    * Factory method.
    *
-   * @param {BaseGraphqlCapsuleFactoryParams} params - Parameters of factory method.
+   * @template P
+   * @param {BaseGraphqlCapsuleFactoryParams<PayloadClass<P>>} params - Parameters of factory method.
    * @template {typeof BaseGraphqlCapsule<C, D>} C, D
    * @this {C}
    * @returns {InstanceType<C>} Instance of this class.
@@ -51,8 +52,9 @@ export default class BaseGraphqlCapsule {
   /**
    * Factory method to create as network error.
    *
+   * @template P
    * @param {{
-   *   payload: import('./BaseGraphqlPayload').default
+   *   payload: PayloadClass<P>
    * }} params - Parameters.
    * @template {typeof BaseGraphqlCapsule<C, D>} C, D
    * @this {C}
@@ -71,9 +73,10 @@ export default class BaseGraphqlCapsule {
   /**
    * Factory method to create as JSON parse error.
    *
+   * @template P
    * @param {{
    *   rawResponse: Response
-   *   payload: import('./BaseGraphqlPayload').default
+   *   payload: PayloadClass<P>
    * }} params - Parameters.
    * @template {typeof BaseGraphqlCapsule<C, D>} C, D
    * @this {C}
@@ -182,7 +185,7 @@ export default class BaseGraphqlCapsule {
   /**
    * Extract errors from #result.
    *
-   * @returns {Array<object>} Array of errors.
+   * @returns {Array<GraphqlResponseError>} Array of errors.
    */
   extractErrors () {
     return this.result
@@ -209,22 +212,40 @@ export default class BaseGraphqlCapsule {
 }
 
 /**
+ * @template P
  * @typedef {{
  *   rawResponse: Response | null
- *   payload: import('~/modules/client/BaseGraphqlPayload').default | null
- *   result: GraphqlCapsuleResult
+ *   payload: PayloadClass<P> | null
+ *   result: GraphqlCapsuleResult | null
  * }} BaseGraphqlCapsuleParams
  */
 
 /**
- * @typedef {null | {
+ * @template P
+ * @typedef {BaseGraphqlCapsuleParams<P>} BaseGraphqlCapsuleFactoryParams
+ */
+
+/**
+ * @template P
+ * @typedef {import('~/modules/client/BaseGraphqlPayload').default<P>} PayloadClass
+ */
+
+/**
+ * @typedef {{
  *   data?: object
- *   errors?: Array<object>
+ *   errors?: Array<GraphqlResponseError>
  * }} GraphqlCapsuleResult
  */
 
 /**
- * @typedef {BaseGraphqlCapsuleParams} BaseGraphqlCapsuleFactoryParams
+ * @typedef {{
+ *   message: string
+ *   locations: Array<{
+ *     line: number
+ *     column: number
+ *   }>
+ *   path: Array<string>
+ * }} GraphqlResponseError
  */
 
 /**

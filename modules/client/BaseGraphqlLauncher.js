@@ -157,7 +157,7 @@ export default class BaseGraphqlLauncher {
   /**
    * get: Endpoint URL.
    *
-   * @returns {string} Endpoint URL.
+   * @returns {RequestInfo | URL} Endpoint URL.
    */
   get endpointUrl () {
     return this.config.ENDPOINT_URL
@@ -261,9 +261,9 @@ export default class BaseGraphqlLauncher {
    * Update headers.
    *
    * @param {{
-   *   headers: Headers
+   *   headers: HeadersInit
    * }} params - Parameters.
-   * @returns {Headers} Updated headers.
+   * @returns {HeadersInit} Updated headers.
    */
   updateHeaders ({
     headers,
