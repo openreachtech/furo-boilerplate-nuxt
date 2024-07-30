@@ -233,7 +233,7 @@ export default class BaseGraphqlCapsule {
 /**
  * @typedef {{
  *   data?: object
- *   errors?: Array<object>
+ *   errors?: Array<GraphqlResponseError>
  * }} GraphqlCapsuleResult
  */
 
