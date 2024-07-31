@@ -54,6 +54,22 @@ export default class FieldValidator {
   }) {
     return !this.accepts({ field })
   }
+
+  /**
+   * Is valid the target.
+   *
+   * @param {{
+   *   target: any
+   *   variables: object
+   * }} args - Arguments.
+   * @returns {boolean} true: valid, false: invalid.
+   */
+  isValid ({
+    target,
+    variables,
+  }) {
+    return this.body(target, variables)
+  }
 }
 
 /**
