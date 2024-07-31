@@ -447,3 +447,148 @@ describe('FieldValidator', () => {
     })
   })
 })
+
+describe('FieldValidator', () => {
+  describe('#isInvalid()', () => {
+    /**
+     * @type {Array<{
+     *   args: {
+     *     field: string
+     *     body: (
+     *       it: any,
+     *       variables: {
+     *         [key: string]: any
+     *       }) => boolean
+     *     message?: string | null
+     *   }
+     *   truthyCases: Array<{
+     *     target: any
+     *     variables: {
+     *       [key: string]: any
+     *     }
+     *   }>
+     *   falsyCases: Array<{
+     *     target: any
+     *     variables: {
+     *       [key: string]: any
+     *     }
+     *   }>
+     * }>} cases - Test cases.
+     */
+    const cases = [
+      {
+        args: {
+          field: 'username',
+          body: (it, variables) => it,
+        },
+        truthyCases: [
+          {
+            target: '',
+            variables: {},
+          },
+          {
+            target: null,
+            variables: {},
+          },
+          {
+            target: undefined,
+            variables: {},
+          },
+        ],
+        falsyCases: [
+          {
+            target: 'alpha',
+            variables: {},
+          },
+          {
+            target: 'beta',
+            variables: {},
+          },
+        ],
+      },
+      {
+        args: {
+          field: 'password',
+          body: (it, variables) =>
+            it
+            && it === variables.passwordConfirmation
+          ,
+        },
+        truthyCases: [
+          {
+            target: 'alpha',
+            variables: {
+              passwordConfirmation: 'notAlpha',
+            },
+          },
+          {
+            target: 'beta',
+            variables: {
+              passwordConfirmation: 'notBeta',
+            },
+          },
+          {
+            target: '',
+            variables: {
+              passwordConfirmation: '',
+            },
+          },
+          {
+            target: null,
+            variables: {
+              passwordConfirmation: null,
+            },
+          },
+          {
+            target: undefined,
+            variables: {
+              passwordConfirmation: undefined,
+            },
+          },
+        ],
+        falsyCases: [
+          {
+            target: 'alpha',
+            variables: {
+              passwordConfirmation: 'alpha',
+            },
+          },
+          {
+            target: 'beta',
+            variables: {
+              passwordConfirmation: 'beta',
+            },
+          },
+        ],
+      },
+    ]
+
+    describe.each(cases)('field: $args.field', ({ args, truthyCases, falsyCases }) => {
+      const validator = FieldValidator.create(args)
+
+      describe('to be truthy', () => {
+        test.each(truthyCases)('target: $target', ({ target, variables }) => {
+          const actual = validator.isInvalid({
+            target,
+            variables,
+          })
+
+          expect(actual)
+            .toBeTruthy()
+        })
+      })
+
+      describe('to be falsy', () => {
+        test.each(falsyCases)('target: $target', ({ target, variables }) => {
+          const actual = validator.isInvalid({
+            target,
+            variables,
+          })
+
+          expect(actual)
+            .toBeFalsy()
+        })
+      })
+    })
+  })
+})
