@@ -228,3 +228,77 @@ describe('FieldValidator', () => {
     })
   })
 })
+
+describe('FieldValidator', () => {
+  describe('#rejects()', () => {
+    describe('to be truthy', () => {
+      const cases = [
+        {
+          args: {
+            field: 'customer',
+            body: () => true,
+          },
+          fieldCases: [
+            { field: 'notCustomer' },
+            { field: 'extraCustomer' },
+          ],
+        },
+        {
+          args: {
+            field: 'message',
+            body: () => false,
+          },
+          fieldCases: [
+            { field: 'notMessage' },
+            { field: 'extraMessage' },
+          ],
+        },
+      ]
+
+      describe.each(cases)('field: $args.field', ({ args, fieldCases }) => {
+        const validator = FieldValidator.create(args)
+
+        test.each(fieldCases)('field: $field', ({ field }) => {
+          const actual = validator.rejects({ field })
+
+          expect(actual)
+            .toBeTruthy()
+        })
+      })
+    })
+
+    describe('to be falsy', () => {
+      const cases = [
+        {
+          args: {
+            field: 'customer',
+            body: () => true,
+          },
+          fieldCases: [
+            { field: 'customer' },
+          ],
+        },
+        {
+          args: {
+            field: 'message',
+            body: () => false,
+          },
+          fieldCases: [
+            { field: 'message' },
+          ],
+        },
+      ]
+
+      describe.each(cases)('field: $args.field', ({ args, fieldCases }) => {
+        const validator = FieldValidator.create(args)
+
+        test.each(fieldCases)('field: $field', ({ field }) => {
+          const actual = validator.rejects({ field })
+
+          expect(actual)
+            .toBeFalsy()
+        })
+      })
+    })
+  })
+})

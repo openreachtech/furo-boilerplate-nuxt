@@ -40,6 +40,20 @@ export default class FieldValidator {
   }) {
     return this.field === field
   }
+
+  /**
+   * Rejects for the field.
+   *
+   * @param {{
+   *   field: string
+   * }} args - Arguments.
+   * @returns {boolean} true: Rejects, false: Accepts.
+   */
+  rejects ({
+    field,
+  }) {
+    return !this.accepts({ field })
+  }
 }
 
 /**
