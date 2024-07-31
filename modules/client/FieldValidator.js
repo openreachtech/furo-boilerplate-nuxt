@@ -70,6 +70,25 @@ export default class FieldValidator {
   }) {
     return this.body(target, variables)
   }
+
+  /**
+   * Is invalid the target.
+   *
+   * @param {{
+   *   target: any
+   *   variables: object
+   * }} args - Arguments.
+   * @returns {boolean} true: invalid, false: valid.
+   */
+  isInvalid ({
+    target,
+    variables,
+  }) {
+    return !this.isValid({
+      target,
+      variables,
+    })
+  }
 }
 
 /**
