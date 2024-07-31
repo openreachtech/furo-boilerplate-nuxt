@@ -2,8 +2,6 @@ import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
 
 /**
  * Curriculums query payload.
- *
- * @extends {BaseGraphqlPayload<CurriculumsQueryGraphqlPayload>}
  */
 export default class CurriculumsQueryGraphqlPayload extends BaseGraphqlPayload {
   /** @override */
