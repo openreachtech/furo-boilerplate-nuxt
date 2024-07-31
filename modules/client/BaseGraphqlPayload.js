@@ -50,6 +50,15 @@ export default class BaseGraphqlPayload {
   }
 
   /**
+   * get: validators.
+   *
+   * @returns {Array<import('./FieldValidator').FieldValidatorFactoryParams>} Array of arguments to create an instance of FieldValidator.
+   */
+  static get validators () {
+    return []
+  }
+
+  /**
    * Create fetch request.
    *
    * @param {{
