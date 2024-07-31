@@ -89,6 +89,15 @@ export default class FieldValidator {
       variables,
     })
   }
+
+  /**
+   * Get the message.
+   *
+   * @returns {string | null} Message.
+   */
+  getMessage () {
+    return this.message
+  }
 }
 
 /**
