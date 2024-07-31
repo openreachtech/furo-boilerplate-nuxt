@@ -26,6 +26,20 @@ export default class FieldValidator {
   static create (params) {
     return new this(params)
   }
+
+  /**
+   * Accepts for the field.
+   *
+   * @param {{
+   *   field: string
+   * }} args - Arguments.
+   * @returns {boolean} true: Accepts, false: Rejects.
+   */
+  accepts ({
+    field,
+  }) {
+    return this.field === field
+  }
 }
 
 /**
