@@ -103,7 +103,12 @@ export default class FieldValidator {
 /**
  * @typedef {{
  *   field: string
- *   body: (it: any, variables: object) => boolean
+ *   body: (
+ *     it: any,
+ *     variables: {
+ *       [group: string]: any
+ *     }
+ *   ) => boolean
  *   message?: string | null
  * }} FieldValidatorParams
  */
