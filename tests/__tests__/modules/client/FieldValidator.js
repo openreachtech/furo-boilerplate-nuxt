@@ -592,3 +592,44 @@ describe('FieldValidator', () => {
     })
   })
 })
+
+describe('FieldValidator', () => {
+  describe('#getMessage()', () => {
+    describe('to return #message', () => {
+      const cases = [
+        {
+          args: {
+            field: 'username',
+            body: () => true,
+            message: 'error message 01',
+          },
+          expected: 'error message 01',
+        },
+        {
+          args: {
+            field: 'password',
+            body: () => false,
+            message: 'error message-02',
+          },
+          expected: 'error message-02',
+        },
+        {
+          args: {
+            field: 'gender',
+            body: () => false,
+          },
+          expected: null,
+        },
+      ]
+
+      test.each(cases)('message: $args.message', ({ args, expected }) => {
+        const validator = FieldValidator.create(args)
+
+        const actual = validator.getMessage()
+
+        expect(actual)
+          .toBe(expected)
+      })
+    })
+  })
+})
