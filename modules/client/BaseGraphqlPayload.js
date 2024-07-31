@@ -1,5 +1,7 @@
 /**
  * Base class of GraphQL payload.
+ *
+ * @template T
  */
 export default class BaseGraphqlPayload {
   /**
@@ -56,6 +58,16 @@ export default class BaseGraphqlPayload {
    */
   static get validators () {
     return []
+  }
+
+  /**
+   * get: Ctor.
+   *
+   * @template {typeof BaseGraphqlPayload} T
+   * @returns {T} Constructor of this
+   */
+  get Ctor () {
+    return /** @type {*} */ (this.constructor)
   }
 
   /**

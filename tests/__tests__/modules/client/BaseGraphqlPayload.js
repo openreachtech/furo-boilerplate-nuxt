@@ -463,6 +463,86 @@ describe('BaseGraphqlPayload', () => {
 })
 
 describe('BaseGraphqlPayload', () => {
+  describe('#get:Ctor', () => {
+    describe('to be own class', () => {
+      const cases = [
+        {
+          params: {
+            variables: {},
+            queryTemplate: /* GraphQL */ `
+              query PickUpForumTopicsQuery {
+                pickUpForumTopics {
+                  pickUpForumTopics {
+                    id
+                    forumCategory {
+                      id
+                      name
+                    }
+                    name
+                    descriptionHtml
+                    proposer {
+                      customerId
+                      username
+                      avatarUrl
+                      customerRoles {
+                        id
+                        name
+                      }
+                    }
+                    proposedAt
+                    editedAt
+                    totalForumPost
+                    latestForumPostPostedAt
+                  }
+                }
+              }
+            `,
+          },
+        },
+        {
+          params: {
+            variables: {
+              input: {
+                id: 10001,
+              },
+            },
+            queryTemplate: /* GraphQL */ `
+              query CurriculumsQuery ($input: CurriculumsSearchInput!) {
+                curriculums(input: $input) {
+                  curriculums {
+                    id
+                    title
+                    description
+                    thumbnailUrl
+                    postedAt
+                  }
+                  pagination {
+                    limit
+                    offset
+                    sort {
+                      targetColumn
+                      orderBy
+                    }
+                    totalRecords
+                  }
+                }
+              }
+            `,
+          },
+        },
+      ]
+
+      test.each(cases)('variables: $params.variables', ({ params }) => {
+        const payload = new BaseGraphqlPayload(params)
+
+        expect(payload.Ctor)
+          .toBe(BaseGraphqlPayload)
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlPayload', () => {
   describe('#buildHeaders()', () => {
     const queryTemplate = /* GraphQL */ `
       query PickUpForumTopicsQuery {
