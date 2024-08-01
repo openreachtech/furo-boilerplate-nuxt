@@ -196,5 +196,5 @@ export default class BaseGraphqlPayload {
  */
 
 /**
- * @typedef {import('./FieldValidator').FieldValidatorFactoryParams} ValidatorOptionsType
+ * @typedef {import('~/modules/client/FieldValidator').FieldValidatorFactoryParams} ValidatorOptionsType
  */
