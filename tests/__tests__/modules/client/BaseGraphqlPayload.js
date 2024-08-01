@@ -1064,3 +1064,165 @@ describe('BaseGraphqlPayload', () => {
     })
   })
 })
+
+describe('BaseGraphqlPayload', () => {
+  describe('#resolveValidatorHash()', () => {
+    describe('to return as is for object hash validators', () => {
+      const queryTemplate = /* GraphQL */ `
+        query CurriculumsQuery ($input: CurriculumsSearchInput!) {
+          curriculums(input: $input) {
+            curriculums {
+              id
+              title
+            }
+          }
+        }
+      `
+
+      /**
+       * @type {Array<{
+       *   args: {
+       *     validators: {
+       *       [group: string]: Array<import('~/modules/client/BaseGraphqlPayload').ValidatorOptionsType>
+       *     }
+       *   }
+       * }>}
+       */
+      const cases = [
+        {
+          args: {
+            validators: {
+              input: [
+                { field: 'username', body: (it, variables) => it },
+                { field: 'username', body: (it, variables) => it && it.length >= 1 && it.length <= 8 },
+                { field: 'password', body: (it, variables) => it },
+              ],
+            },
+          },
+        },
+        {
+          args: {
+            validators: {
+              alphaInput: [
+                { field: 'invite-code', body: (it, variables) => it && it.length === 16 },
+              ],
+              betaInput: [
+                { field: 'hidden-secret', body: (it, variables) => it && it.length === 32 },
+              ],
+            },
+          },
+        },
+      ]
+
+      test.each(cases)('validators: $args.validators', ({ args }) => {
+        const payload = new BaseGraphqlPayload({
+          queryTemplate,
+          variables: {},
+        })
+
+        const actual = payload.resolveValidatorHash({
+          validators: args.validators,
+        })
+
+        expect(actual)
+          .toEqual(args.validators)
+      })
+    })
+
+    describe('to return mapped by #variables', () => {
+      const queryTemplate = /* GraphQL */ `
+        query CurriculumsQuery ($input: CurriculumsSearchInput!) {
+          curriculums(input: $input) {
+            curriculums {
+              id
+              title
+            }
+          }
+        }
+      `
+
+      /**
+       * @type {Array<{
+       *   args: {
+       *     variables: import('~/modules/client/BaseGraphqlPayload').VariablesType
+       *     validators: Array<import('~/modules/client/BaseGraphqlPayload').ValidatorOptionsType>
+       *   }
+       *   expected: import('~/modules/client/BaseGraphqlPayload').ValidatorHashType
+       * }>}
+       */
+      const cases = [
+        {
+          args: {
+            variables: {
+              alphaInput: {
+                username: 'Alice',
+                password: 'password$001',
+              },
+              betaInput: {
+                username: 'Bob',
+                password: 'password$002',
+              },
+            },
+            validators: [
+              { field: 'username', message: 'message 001', body: (it, variables) => it },
+              { field: 'username', message: 'message 002', body: (it, variables) => it && it.length >= 1 && it.length <= 8 },
+              { field: 'password', message: 'message 003', body: (it, variables) => it },
+            ],
+          },
+          expected: {
+            alphaInput: [
+              expect.objectContaining({ field: 'username', message: 'message 001' }),
+              expect.objectContaining({ field: 'username', message: 'message 002' }),
+              expect.objectContaining({ field: 'password', message: 'message 003' }),
+            ],
+            betaInput: [
+              expect.objectContaining({ field: 'username', message: 'message 001' }),
+              expect.objectContaining({ field: 'username', message: 'message 002' }),
+              expect.objectContaining({ field: 'password', message: 'message 003' }),
+            ],
+          },
+        },
+        {
+          args: {
+            variables: {
+              alphaInput: {
+                'invite-code': '1234567890abcdef',
+              },
+              betaInput: {
+                'invite-code': '1234567890abcdef',
+              },
+            },
+            validators: [
+              { field: 'invite-code', body: (it, variables) => it && it.length === 16 },
+              { field: 'hidden-secret', body: (it, variables) => it && it.length === 32 },
+            ],
+          },
+          expected: {
+            alphaInput: [
+              expect.objectContaining({ field: 'invite-code' }),
+              expect.objectContaining({ field: 'hidden-secret' }),
+            ],
+            betaInput: [
+              expect.objectContaining({ field: 'invite-code' }),
+              expect.objectContaining({ field: 'hidden-secret' }),
+            ],
+          },
+        },
+      ]
+
+      test.each(cases)('variables: $args.variables', ({ args, expected }) => {
+        const payload = new BaseGraphqlPayload({
+          queryTemplate,
+          variables: args.variables,
+        })
+
+        const actual = payload.resolveValidatorHash({
+          validators: args.validators,
+        })
+
+        expect(actual)
+          .toEqual(expected)
+      })
+    })
+  })
+})
