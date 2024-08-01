@@ -62,6 +62,15 @@ export default class VariablesPerSchemaValidator {
   }
 
   /**
+   * Is invalid variables.
+   *
+   * @returns {boolean} true: invalid.
+   */
+  isInvalid () {
+    return !this.isValid()
+  }
+
+  /**
    * Extract field names.
    *
    * @returns {Array<string>} Field names.
