@@ -219,6 +219,21 @@ describe('BaseGraphqlPayload', () => {
 })
 
 describe('BaseGraphqlPayload', () => {
+  describe('.get:validators', () => {
+    describe('to be []', () => {
+      test('with no arguments', () => {
+        const actual = BaseGraphqlPayload.validators
+
+        expect(actual)
+          .toBeInstanceOf(Array)
+        expect(actual)
+          .toHaveLength(0)
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlPayload', () => {
   describe('.create', () => {
     describe('to return instance of this class', () => {
       const cases = [
@@ -442,6 +457,86 @@ describe('BaseGraphqlPayload', () => {
           expect(() => BaseGraphqlPayload.create(params))
             .toThrow(expected)
         })
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlPayload', () => {
+  describe('#get:Ctor', () => {
+    describe('to be own class', () => {
+      const cases = [
+        {
+          params: {
+            variables: {},
+            queryTemplate: /* GraphQL */ `
+              query PickUpForumTopicsQuery {
+                pickUpForumTopics {
+                  pickUpForumTopics {
+                    id
+                    forumCategory {
+                      id
+                      name
+                    }
+                    name
+                    descriptionHtml
+                    proposer {
+                      customerId
+                      username
+                      avatarUrl
+                      customerRoles {
+                        id
+                        name
+                      }
+                    }
+                    proposedAt
+                    editedAt
+                    totalForumPost
+                    latestForumPostPostedAt
+                  }
+                }
+              }
+            `,
+          },
+        },
+        {
+          params: {
+            variables: {
+              input: {
+                id: 10001,
+              },
+            },
+            queryTemplate: /* GraphQL */ `
+              query CurriculumsQuery ($input: CurriculumsSearchInput!) {
+                curriculums(input: $input) {
+                  curriculums {
+                    id
+                    title
+                    description
+                    thumbnailUrl
+                    postedAt
+                  }
+                  pagination {
+                    limit
+                    offset
+                    sort {
+                      targetColumn
+                      orderBy
+                    }
+                    totalRecords
+                  }
+                }
+              }
+            `,
+          },
+        },
+      ]
+
+      test.each(cases)('variables: $params.variables', ({ params }) => {
+        const payload = new BaseGraphqlPayload(params)
+
+        expect(payload.Ctor)
+          .toBe(BaseGraphqlPayload)
       })
     })
   })

@@ -1,5 +1,7 @@
 /**
  * Base class of GraphQL payload.
+ *
+ * @template T
  */
 export default class BaseGraphqlPayload {
   /**
@@ -47,6 +49,25 @@ export default class BaseGraphqlPayload {
    */
   static get document () {
     throw new Error('this function must be inherited')
+  }
+
+  /**
+   * get: validators.
+   *
+   * @returns {ValidatorHashType} Array of arguments to create an instance of FieldValidator.
+   */
+  static get validators () {
+    return []
+  }
+
+  /**
+   * get: Ctor.
+   *
+   * @template {typeof BaseGraphqlPayload} T
+   * @returns {T} Constructor of this
+   */
+  get Ctor () {
+    return /** @type {*} */ (this.constructor)
   }
 
   /**
@@ -119,14 +140,32 @@ export default class BaseGraphqlPayload {
 /**
  * @typedef {{
  *   queryTemplate: string
- *   variables: object | null
+ *   variables: VariablesType | null
  *   options?: RequestInit
  * }} BaseGraphqlPayloadParams
  */
 
 /**
  * @typedef {{
- *   variables?: object | null
+ *   variables?: VariablesType | null
  *   options?: RequestInit
  * }} BaseGraphqlPayloadFactoryParams
+ */
+
+/**
+ * @typedef {{
+ *   [group: string]: {
+ *     [field: string]: any
+ *   }
+ * }} VariablesType
+ */
+
+/**
+ * @typedef {Array<ValidatorOptionsType> | {
+ *   [group: string]: Array<ValidatorOptionsType>
+ * }} ValidatorHashType
+ */
+
+/**
+ * @typedef {import('./FieldValidator').FieldValidatorFactoryParams} ValidatorOptionsType
  */
