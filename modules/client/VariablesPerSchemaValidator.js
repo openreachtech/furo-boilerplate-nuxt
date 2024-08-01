@@ -33,6 +33,25 @@ export default class VariablesPerSchemaValidator {
   extractFieldNames () {
     return Object.keys(this.variables)
   }
+
+  /**
+   * Extract validators.
+   *
+   * @param {{
+   *   field: string
+   * }} params - Parameters.
+   * @returns {Array<import('~/modules/client/FieldValidator').default>} Validators.
+   */
+  extractValidators ({
+    field,
+  }) {
+    return this.validators
+      .filter(it =>
+        it.accepts({
+          field,
+        })
+      )
+  }
 }
 
 /**
