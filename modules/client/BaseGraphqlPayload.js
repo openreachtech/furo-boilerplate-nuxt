@@ -135,6 +135,35 @@ export default class BaseGraphqlPayload {
 
     return buildHeaders
   }
+
+  /**
+   * Resolve validators as object hash.
+   *
+   * @param {{
+   *   validators: ValidatorHashType
+   * }} args - Arguments for FieldValidator.
+   * @returns {{
+   *   [group: string]: Array<ValidatorOptionsType>
+   * }}
+   */
+  resolveValidatorHash ({
+    validators,
+  }) {
+    if (!Array.isArray(validators)) {
+      return validators
+    }
+
+    const groupNames = Object.keys(this.variables ?? {})
+
+    return Object.fromEntries(
+      groupNames.map(
+        group => [
+          group,
+          validators,
+        ]
+      )
+    )
+  }
 }
 
 /**
