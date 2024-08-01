@@ -1226,3 +1226,337 @@ describe('BaseGraphqlPayload', () => {
     })
   })
 })
+
+describe('BaseGraphqlPayload', () => {
+  describe('#isValidVariables()', () => {
+    const queryTemplateMock = /* GraphQL */ `
+      query CurriculumsQuery ($input: CurriculumsSearchInput!) {
+        curriculums(input: $input) {
+          curriculums {
+            id
+            title
+          }
+        }
+      }
+    `
+
+    /**
+     * @type {Array<import('~/modules/client/FieldValidator').FieldValidatorParams>}
+     */
+    const inputValidators = [
+      {
+        field: 'username',
+        body: (it, variables) => it,
+        message: 'username must be set',
+      },
+      {
+        field: 'username',
+        body: (it, variables) => /^\w+$/.test(it),
+        message: 'username must be alphanumeric',
+      },
+      {
+        field: 'password',
+        body: (it, variables) => {
+          return it
+            && it.length >= 1
+            && it.length <= 16
+        },
+        message: 'password must be set with at least 1 character and no more than 16 characters',
+      },
+      {
+        field: 'password-confirmation',
+        body: (it, variables) => {
+          return it
+            && it === variables.password
+        },
+        message: 'passwords do not match.',
+      },
+    ]
+
+    /** @extends BaseGraphqlPayload<typeof AlphaPayload> */
+    class AlphaPayload extends BaseGraphqlPayload {
+      /** @override */
+      static get document () {
+        return queryTemplateMock
+      }
+
+      /** @override */
+      static get validators () {
+        return {
+          input: inputValidators,
+        }
+      }
+    }
+
+    /** @extends BaseGraphqlPayload<typeof AlphaPayload> */
+    class BetaPayload extends BaseGraphqlPayload {
+      /** @override */
+      static get document () {
+        return queryTemplateMock
+      }
+
+      /** @override */
+      static get validators () {
+        return inputValidators
+      }
+    }
+
+    /**
+     * @type {Array<{
+     *   args: {
+     *     Payload: typeof BaseGraphqlPayload
+     *     truthyCases: Array<import('~/modules/client/BaseGraphqlPayload').VariablesType>
+     *     falsyCases: Array<import('~/modules/client/BaseGraphqlPayload').VariablesType>
+     *   }
+     * }>
+     */
+    const cases = [
+      {
+        args: {
+          Payload: AlphaPayload,
+          truthyCases: [
+            {
+              variables: {
+                input: {
+                  username: 'Alice',
+                  password: 'password$001',
+                  'password-confirmation': 'password$001',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'Betty',
+                  password: 'password$002',
+                  // 'password-confirmation': 'password$002',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'Carol',
+                  // password: 'password$003',
+                  // 'password-confirmation': 'password$003',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'Underscored_Name',
+                  password: 'password$004',
+                  'password-confirmation': 'password$004',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  // username: 'john_doe',
+                  // password: 'password$999',
+                  // 'password-confirmation': 'password$999',
+                },
+              },
+            },
+          ],
+          falsyCases: [
+            {
+              variables: {
+                input: {
+                  username: 'Space Split Name',
+                  password: 'password$001',
+                  'password-confirmation': 'password$001',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'Hyphen-Split-Name',
+                  password: 'password$002',
+                  'password-confirmation': 'password$002',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: null,
+                  password: 'password$003',
+                  'password-confirmation': 'password$003',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: '',
+                  password: 'password$004',
+                  'password-confirmation': 'password$004',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: undefined,
+                  password: 'password$005',
+                  'password-confirmation': 'password$005',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'John Doe',
+                  password: 'password$999',
+                  'password-confirmation': 'password$999',
+                },
+              },
+            },
+          ],
+        },
+      },
+      {
+        args: {
+          Payload: BetaPayload,
+          truthyCases: [
+            {
+              variables: {
+                input: {
+                  username: 'Alice',
+                  password: 'password$001',
+                  'password-confirmation': 'password$001',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'Betty',
+                  password: 'password$002',
+                  // 'password-confirmation': 'password$002',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'Carol',
+                  // password: 'password$003',
+                  // 'password-confirmation': 'password$003',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'Underscored_Name',
+                  password: 'password$004',
+                  'password-confirmation': 'password$004',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  // username: 'john_doe',
+                  // password: 'password$999',
+                  // 'password-confirmation': 'password$999',
+                },
+              },
+            },
+          ],
+          falsyCases: [
+            {
+              variables: {
+                input: {
+                  username: 'Space Split Name',
+                  password: 'password$001',
+                  'password-confirmation': 'password$001',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'Hyphen-Split-Name',
+                  password: 'password$002',
+                  'password-confirmation': 'password$002',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: null,
+                  password: 'password$003',
+                  'password-confirmation': 'password$003',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: '',
+                  password: 'password$004',
+                  'password-confirmation': 'password$004',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: undefined,
+                  password: 'password$005',
+                  'password-confirmation': 'password$005',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'John Doe',
+                  password: 'password$999',
+                  'password-confirmation': 'password$999',
+                },
+              },
+            },
+          ],
+        },
+      },
+    ]
+
+    describe.each(cases)('Payload: $args.Payload.name', ({ args }) => {
+      describe('to be truthy', () => {
+        test.each(args.truthyCases)('username: $variables.input.username', ({ variables }) => {
+          const payload = new args.Payload({
+            queryTemplate: queryTemplateMock,
+            variables,
+          })
+
+          const actual = payload.isValidVariables()
+
+          expect(actual)
+            .toBeTruthy()
+        })
+      })
+
+      describe('to be falsy', () => {
+        test.each(args.falsyCases)('username: $variables.input.username', ({ variables }) => {
+          const payload = new args.Payload({
+            queryTemplate: queryTemplateMock,
+            variables,
+          })
+
+          const actual = payload.isValidVariables()
+
+          expect(actual)
+            .toBeFalsy()
+        })
+      })
+    })
+  })
+})
