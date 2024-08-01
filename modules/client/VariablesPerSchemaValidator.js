@@ -26,6 +26,42 @@ export default class VariablesPerSchemaValidator {
   }
 
   /**
+   * Is valid variables.
+   *
+   * @returns {boolean} true: valid.
+   */
+  isValid () {
+    const fieldNames = this.extractFieldNames()
+
+    /**
+     * @type {Array<{
+     *   field: string
+     *   validators: Array<import('~/modules/client/FieldValidator').default>
+     * }>} Entries.
+     */
+    const entries = fieldNames.map(field => ({
+      field,
+      validators: this.extractValidators({
+        field,
+      }),
+    }))
+
+    return entries
+      .flatMap(({
+        field,
+        validators,
+      }) =>
+        validators.every(it =>
+          it.isValid({
+            target: this.variables[field],
+            variables: this.variables,
+          })
+        )
+      )
+      .every(it => it)
+  }
+
+  /**
    * Extract field names.
    *
    * @returns {Array<string>} Field names.
