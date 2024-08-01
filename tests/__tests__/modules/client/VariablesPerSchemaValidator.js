@@ -223,3 +223,47 @@ describe('VariablesPerSchemaValidator', () => {
     })
   })
 })
+
+describe('VariablesPerSchemaValidator', () => {
+  describe('#extractFieldNames()', () => {
+    const cases = [
+      {
+        args: {
+          variables: {
+            username: 'Alice',
+            password: 'password$001',
+            email: 'info@example.com',
+          },
+          validators: [],
+        },
+        expected: [
+          'username',
+          'password',
+          'email',
+        ],
+      },
+      {
+        args: {
+          variables: {
+            password: 'password$001',
+            'password-confirmation': 'password$001',
+          },
+          validators: [],
+        },
+        expected: [
+          'password',
+          'password-confirmation',
+        ],
+      },
+    ]
+
+    test.each(cases)('variables: $args.variables', ({ args, expected }) => {
+      const validator = VariablesPerSchemaValidator.create(args)
+
+      const actual = validator.extractFieldNames()
+
+      expect(actual)
+        .toEqual(expected)
+    })
+  })
+})
