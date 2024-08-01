@@ -54,7 +54,7 @@ export default class BaseGraphqlPayload {
   /**
    * get: validators.
    *
-   * @returns {Array<import('./FieldValidator').FieldValidatorFactoryParams>} Array of arguments to create an instance of FieldValidator.
+   * @returns {ValidatorHashType} Array of arguments to create an instance of FieldValidator.
    */
   static get validators () {
     return []
@@ -140,14 +140,32 @@ export default class BaseGraphqlPayload {
 /**
  * @typedef {{
  *   queryTemplate: string
- *   variables: object | null
+ *   variables: VariablesType | null
  *   options?: RequestInit
  * }} BaseGraphqlPayloadParams
  */
 
 /**
  * @typedef {{
- *   variables?: object | null
+ *   variables?: VariablesType | null
  *   options?: RequestInit
  * }} BaseGraphqlPayloadFactoryParams
+ */
+
+/**
+ * @typedef {{
+ *   [group: string]: {
+ *     [field: string]: any
+ *   }
+ * }} VariablesType
+ */
+
+/**
+ * @typedef {Array<ValidatorOptionsType> | {
+ *   [group: string]: Array<ValidatorOptionsType>
+ * }} ValidatorHashType
+ */
+
+/**
+ * @typedef {import('./FieldValidator').FieldValidatorFactoryParams} ValidatorOptionsType
  */
