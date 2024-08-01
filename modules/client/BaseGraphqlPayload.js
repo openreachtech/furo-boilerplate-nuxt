@@ -1,3 +1,5 @@
+import FieldValidator from '~/modules/client/FieldValidator'
+
 /**
  * Base class of GraphQL payload.
  *
@@ -134,6 +136,57 @@ export default class BaseGraphqlPayload {
     )
 
     return buildHeaders
+  }
+
+  /**
+   * Is valid variables.
+   *
+   * @returns {boolean} true: valid, false: invalid.
+   */
+  isValidVariables () {
+    if (!this.variables) {
+      return true
+    }
+
+    const validatorHash = this.resolveValidatorHash({
+      validators: this.Ctor.validators,
+    })
+
+    /**
+     * @type {Array<[
+     *   Array<[string, any]>,
+     *   VariablesType,
+     *   Array<FieldValidator>
+     * ]>}
+     */
+    const validations = Object.entries(this.variables)
+      .map(([
+        group,
+        variables,
+      ]) => [
+        Object.entries(variables),
+        variables,
+        validatorHash[group].map(it =>
+          FieldValidator.create(it)
+        ),
+      ])
+
+    return validations
+      .flatMap(([
+        entries,
+        variables,
+        validators,
+      ]) =>
+        entries.flatMap(([field, target]) =>
+          validators
+            .filter(it => it.accepts({ field }))
+            .every(validator => validator.isValid({
+              target,
+              variables,
+            }))
+        )
+      )
+      .every(it => it)
   }
 
   /**
