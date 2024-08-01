@@ -914,3 +914,157 @@ describe('VariablesPerSchemaValidator', () => {
     })
   })
 })
+
+describe('VariablesPerSchemaValidator', () => {
+  describe('#getOneMessage()', () => {
+    /**
+     * @type {Array<{
+     *   args: {
+     *     validators: Array<import('~/modules/client/FieldValidator').default>
+     *   }
+     *   fieldCases: Array<{
+     *     field: string
+     *     variables: Record<string, any>
+     *     expected: string | null
+     *   }>
+     * }>}
+     */
+    const cases = [
+      {
+        args: {
+          validators: [
+            FieldValidator.create({
+              field: 'username',
+              body: (it, variables) => it,
+              message: 'username is required',
+            }),
+            FieldValidator.create({
+              field: 'username',
+              body: (it, variables) =>
+                it
+                && it.length >= 1
+                && it.length <= 8,
+              message: 'username length 1 - 8 characters',
+            }),
+            FieldValidator.create({
+              field: 'username',
+              body: (it, variables) => {
+                return !it
+                  || /^\w+$/.test(it)
+              },
+              message: 'username must be alphanumeric',
+            }),
+            FieldValidator.create({
+              field: 'password',
+              body: (it, variables) => it,
+              message: 'password is required',
+            }),
+          ],
+        },
+        fieldCases: [
+          {
+            field: 'username',
+            variables: {
+              username: 'Alice',
+              password: 'pass0004',
+            },
+            expected: null,
+          },
+          {
+            field: 'username',
+            variables: {
+              username: '',
+              password: 'pass0004',
+            },
+            expected: 'username is required',
+          },
+          {
+            field: 'username',
+            variables: {
+              username: 'John Doe',
+              password: 'pass0004',
+            },
+            expected: 'username must be alphanumeric',
+          },
+          {
+            field: 'password',
+            variables: {
+              username: '',
+              password: '',
+            },
+            expected: 'password is required',
+          },
+        ],
+      },
+      {
+        args: {
+          validators: [
+            FieldValidator.create({
+              field: 'password',
+              body: (it, variables) => it,
+              message: 'password is required',
+            }),
+            FieldValidator.create({
+              field: 'password-confirmation',
+              body: (it, variables) => {
+                return !it
+                  || it === variables.password
+              },
+              message: 'password confirmation must be the same as password',
+            }),
+          ],
+        },
+        fieldCases: [
+          {
+            field: 'password',
+            variables: {
+              password: 'pass0008',
+              'password-confirmation': 'miss0008',
+            },
+            expected: null,
+          },
+          {
+            field: 'password',
+            variables: {
+              password: '',
+              'password-confirmation': '',
+            },
+            expected: 'password is required',
+          },
+          {
+            field: 'password-confirmation',
+            variables: {
+              password: 'pass0008',
+              'password-confirmation': 'miss0008',
+            },
+            expected: 'password confirmation must be the same as password',
+          },
+          {
+            field: 'password-confirmation',
+            variables: {
+              password: '',
+              'password-confirmation': '',
+            },
+            expected: null,
+          },
+        ],
+      },
+    ]
+
+    describe.each(cases)('validators: $args.validators.length', ({ args, fieldCases }) => {
+      test.each(fieldCases)('[$#] field: $field', ({ field, variables, expected }) => {
+        const validator = VariablesPerSchemaValidator.create({
+          variables,
+          validators: args.validators,
+        })
+
+        const actual = validator.getOneMessage({
+          field,
+        })
+
+        expect(actual)
+          .toEqual(expected)
+      })
+    })
+  })
+})
