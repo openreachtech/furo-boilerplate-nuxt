@@ -127,6 +127,24 @@ export default class VariablesPerSchemaValidator {
         it !== null
       )
   }
+
+  /**
+   * Get one message by field.
+   *
+   * @param {{
+   *   field: string
+   * }} params - Parameters.
+   * @returns {string | null} Error message.
+   */
+  getOneMessage ({
+    field,
+  }) {
+    return this.getAllMessages({
+      field,
+    })
+      .at(0)
+      ?? null
+  }
 }
 
 /**
