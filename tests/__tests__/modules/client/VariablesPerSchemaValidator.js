@@ -267,3 +267,157 @@ describe('VariablesPerSchemaValidator', () => {
     })
   })
 })
+
+describe('VariablesPerSchemaValidator', () => {
+  describe('#extractValidators()', () => {
+    const cases = [
+      {
+        args: {
+          variables: {
+            username: 'Alice',
+            password: 'password$001',
+            email: 'info@example.com',
+            bio: 'Because I am Stew Eucen.',
+          },
+          validators: [
+            FieldValidator.create({
+              field: 'username',
+              body: () => true,
+              message: 'error message 001',
+            }),
+            FieldValidator.create({
+              field: 'username',
+              body: () => true,
+              message: 'error message 002',
+            }),
+            FieldValidator.create({
+              field: 'password',
+              body: () => true,
+              message: 'error message 003',
+            }),
+            FieldValidator.create({
+              field: 'email',
+              body: () => true,
+              message: 'error message 004',
+            }),
+          ],
+        },
+        fieldCases: [
+          {
+            field: 'username',
+            expected: [
+              FieldValidator.create({
+                field: 'username',
+                body: expect.any(Function),
+                message: 'error message 001',
+              }),
+              FieldValidator.create({
+                field: 'username',
+                body: expect.any(Function),
+                message: 'error message 002',
+              }),
+            ],
+          },
+          {
+            field: 'password',
+            expected: [
+              FieldValidator.create({
+                field: 'password',
+                body: expect.any(Function),
+                message: 'error message 003',
+              }),
+            ],
+          },
+          {
+            field: 'email',
+            expected: [
+              FieldValidator.create({
+                field: 'email',
+                body: expect.any(Function),
+                message: 'error message 004',
+              }),
+            ],
+          },
+          {
+            field: 'bio',
+            expected: [],
+          },
+        ],
+      },
+      {
+        args: {
+          variables: {
+            password: 'password$001',
+            'password-confirmation': 'password$001',
+          },
+          validators: [
+            FieldValidator.create({
+              field: 'password',
+              body: () => true,
+              message: 'error message 001',
+            }),
+            FieldValidator.create({
+              field: 'password-confirmation',
+              body: () => true,
+              message: 'error message 002',
+            }),
+          ],
+        },
+        fieldCases: [
+          {
+            field: 'password',
+            expected: [
+              FieldValidator.create({
+                field: 'password',
+                body: expect.any(Function),
+                message: 'error message 001',
+              }),
+            ],
+          },
+          {
+            field: 'password-confirmation',
+            expected: [
+              FieldValidator.create({
+                field: 'password-confirmation',
+                body: expect.any(Function),
+                message: 'error message 002',
+              }),
+            ],
+          },
+        ],
+      },
+      {
+        args: {
+          variables: {
+            alpha: 1,
+            beta: 2,
+          },
+          validators: [],
+        },
+        fieldCases: [
+          {
+            field: 'alpha',
+            expected: [],
+          },
+          {
+            field: 'beta',
+            expected: [],
+          },
+        ],
+      },
+    ]
+
+    describe.each(cases)('variables: $args.variables', ({ args, fieldCases }) => {
+      const validator = VariablesPerSchemaValidator.create(args)
+
+      test.each(fieldCases)('field: $field', ({ field, expected }) => {
+        const actual = validator.extractValidators({
+          field,
+        })
+
+        expect(actual)
+          .toEqual(expected)
+      })
+    })
+  })
+})
