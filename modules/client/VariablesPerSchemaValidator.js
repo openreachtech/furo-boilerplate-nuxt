@@ -97,6 +97,36 @@ export default class VariablesPerSchemaValidator {
         })
       )
   }
+
+  /**
+   * Get all messages by field.
+   *
+   * @param {{
+   *   field: string
+   * }} params - Parameters.
+   * @returns {Array<string>} Error messages.
+   */
+  getAllMessages ({
+    field,
+  }) {
+    const validators = this.extractValidators({
+      field,
+    })
+
+    return validators
+      .filter(it =>
+        it.isInvalid({
+          target: this.variables[field],
+          variables: this.variables,
+        })
+      )
+      .map(it =>
+        it.getMessage()
+      )
+      .filter(it =>
+        it !== null
+      )
+  }
 }
 
 /**
