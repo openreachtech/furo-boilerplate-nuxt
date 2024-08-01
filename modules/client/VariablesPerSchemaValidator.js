@@ -24,6 +24,15 @@ export default class VariablesPerSchemaValidator {
   static create (params) {
     return new this(params)
   }
+
+  /**
+   * Extract schema names.
+   *
+   * @returns {Array<string>} Schema names.
+   */
+  extractSchemaNames () {
+    return Object.keys(this.variables)
+  }
 }
 
 /**
