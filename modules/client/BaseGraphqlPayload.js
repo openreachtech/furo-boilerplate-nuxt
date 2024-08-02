@@ -149,45 +149,10 @@ export default class BaseGraphqlPayload {
       return true
     }
 
-    const validatorHash = this.resolveValidatorHash({
-      validators: this.Ctor.validators,
-    })
+    const validatorHash = this.generateSchemaValidatorHash()
 
-    /**
-     * @type {Array<[
-     *   Array<[string, any]>,
-     *   VariablesType,
-     *   Array<FieldValidator>
-     * ]>}
-     */
-    const validations = Object.entries(this.variables)
-      .map(([
-        group,
-        variables,
-      ]) => [
-        Object.entries(variables),
-        variables,
-        validatorHash[group].map(it =>
-          FieldValidator.create(it)
-        ),
-      ])
-
-    return validations
-      .flatMap(([
-        entries,
-        variables,
-        validators,
-      ]) =>
-        entries.flatMap(([field, target]) =>
-          validators
-            .filter(it => it.accepts({ field }))
-            .every(validator => validator.isValid({
-              target,
-              variables,
-            }))
-        )
-      )
-      .every(it => it)
+    return Object.values(validatorHash)
+      .every(it => it.isValid())
   }
 
   /**
