@@ -95,6 +95,22 @@ export default class VariablesPerSchemaValidator {
   }
 
   /**
+   * Is invalid field.
+   *
+   * @param {{
+   *   field: string
+   * }} params - Parameters.
+   * @returns {boolean} true: invalid.
+   */
+  isInvalidField ({
+    field,
+  }) {
+    return !this.isValidField({
+      field,
+    })
+  }
+
+  /**
    * Extract field names.
    *
    * @returns {Array<string>} Field names.
