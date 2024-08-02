@@ -1,4 +1,5 @@
 import FieldValidator from '~/modules/client/FieldValidator'
+import VariablesPerSchemaValidator from '~/modules/client/VariablesPerSchemaValidator'
 
 /**
  * Base class of GraphQL payload.
@@ -215,6 +216,39 @@ export default class BaseGraphqlPayload {
           validators,
         ]
       )
+    )
+  }
+
+  /**
+   * Is invalid variables.
+   *
+   * @returns {{
+   *   [schema: string]: VariablesPerSchemaValidator
+   * }} true: invalid, false: valid.
+   */
+  generateSchemaValidatorHash () {
+    const targetVariables = this.variables ?? {}
+
+    const validatorOptionHash = this.resolveValidatorHash({
+      validators: this.Ctor.validators,
+    })
+
+    return Object.fromEntries(
+      Object.keys(targetVariables)
+        .map(schema => [
+          schema,
+          VariablesPerSchemaValidator.create({
+            variables:
+              targetVariables[schema]
+              ?? {},
+            validators:
+              validatorOptionHash[schema]
+                .map(it =>
+                  FieldValidator.create(it)
+                )
+              ?? [],
+          }),
+        ])
     )
   }
 }
