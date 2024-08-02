@@ -71,6 +71,30 @@ export default class VariablesPerSchemaValidator {
   }
 
   /**
+   * Is valid field.
+   *
+   * @param {{
+   *   field: string
+   * }} params - Parameters.
+   * @returns {boolean} true: valid.
+   */
+  isValidField ({
+    field,
+  }) {
+    const validators = this.extractValidators({
+      field,
+    })
+
+    return validators
+      .every(it =>
+        it.isValid({
+          target: this.variables[field],
+          variables: this.variables,
+        })
+      )
+  }
+
+  /**
    * Extract field names.
    *
    * @returns {Array<string>} Field names.
