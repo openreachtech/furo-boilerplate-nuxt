@@ -158,6 +158,15 @@ export default class BaseGraphqlPayload {
   /**
    * Is invalid variables.
    *
+   * @returns {boolean} true: invalid, false: valid.
+   */
+  isInvalidVariables () {
+    return !this.isValidVariables()
+  }
+
+  /**
+   * Is invalid variables.
+   *
    * @returns {{
    *   [schema: string]: VariablesPerSchemaValidator
    * }} true: invalid, false: valid.
