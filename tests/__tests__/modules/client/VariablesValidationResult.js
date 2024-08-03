@@ -40,7 +40,7 @@ describe('VariablesValidationResult', () => {
               validatorHash: {
                 input: VariablesPerSchemaValidator.create({
                   variables: {
-                    email: 'password$001',
+                    email: 'www@example.com',
                   },
                   validators: [],
                 }),
@@ -92,7 +92,7 @@ describe('VariablesValidationResult', () => {
           validatorHash: {
             input: VariablesPerSchemaValidator.create({
               variables: {
-                email: 'password$001',
+                email: 'www@example.com',
               },
               validators: [],
             }),
