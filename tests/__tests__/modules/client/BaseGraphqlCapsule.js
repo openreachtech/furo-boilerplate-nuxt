@@ -583,6 +583,161 @@ describe('BaseGraphqlCapsule', () => {
 })
 
 describe('BaseGraphqlCapsule', () => {
+  describe('#hasInvalidVariablesError()', () => {
+    /** @extends BaseGraphqlPayload<typeof DerivedPayload> */
+    class DerivedPayload extends BaseGraphqlPayload {
+      /** @override */
+      static get document () {
+        return /* GraphQL */ `
+          query {
+            customer {
+              id
+            }
+          }
+        `
+      }
+
+      /** @override */
+      static get validators () {
+        return [
+          {
+            field: 'username',
+            body: (it, variables) => it,
+            message: 'username must be set',
+          },
+          {
+            field: 'username',
+            body: (it, variables) => /^\w+$/.test(it),
+            message: 'username must be alphanumeric',
+          },
+          {
+            field: 'password',
+            body: (it, variables) => {
+              return it
+                && it.length >= 1
+                && it.length <= 16
+            },
+            message: 'password must be set with at least 1 character and no more than 16 characters',
+          },
+          {
+            field: 'password-confirmation',
+            body: (it, variables) => {
+              return it
+                && it === variables.password
+            },
+            message: 'passwords do not match.',
+          },
+        ]
+      }
+    }
+
+    describe('to has invalid variables error (truthy)', () => {
+      const cases = [
+        {
+          params: {
+            variables: {
+              input: {
+                username: 'John Doe', // ❌
+                password: 'password$01',
+                'password-confirmation': 'password$01',
+              },
+            },
+          },
+        },
+        {
+          params: {
+            variables: {
+              input: {
+                username: 'Alice',
+                password: 'password$01',
+                'password-confirmation': 'password$99', // ❌
+              },
+            },
+          },
+        },
+        {
+          params: {
+            variables: {
+              input: {
+                username: 'Alice',
+                password: '', // ❌
+                'password-confirmation': '', // ❌
+              },
+            },
+          },
+        },
+      ]
+
+      test.each(cases)('username: $params.variables.input.username', ({ params }) => {
+        const targetPayload = DerivedPayload.create({
+          variables: params.variables,
+        })
+
+        const args = {
+          rawResponse: null,
+          payload: targetPayload,
+          result: null,
+        }
+        const capsule = new BaseGraphqlCapsule(args)
+
+        const actual = capsule.hasInvalidVariablesError()
+
+        expect(actual)
+          .toBeTruthy()
+      })
+    })
+
+    describe('to has no invalid variables error (falsy)', () => {
+      const cases = [
+        {
+          params: {
+            variables: {
+              input: {
+                username: 'John_Doe',
+                password: 'password$01',
+                'password-confirmation': 'password$01',
+              },
+            },
+          },
+        },
+      ]
+
+      test.each(cases)('username: $params.variables.input.username', ({ params }) => {
+        const targetPayload = DerivedPayload.create({
+          variables: params.variables,
+        })
+
+        const args = {
+          rawResponse: null,
+          payload: targetPayload,
+          result: null,
+        }
+        const capsule = new BaseGraphqlCapsule(args)
+
+        const actual = capsule.hasInvalidVariablesError()
+
+        expect(actual)
+          .toBeFalsy()
+      })
+
+      test('when payload is null', () => {
+        const args = {
+          rawResponse: null,
+          payload: null,
+          result: null,
+        }
+        const capsule = new BaseGraphqlCapsule(args)
+
+        const actual = capsule.hasInvalidVariablesError()
+
+        expect(actual)
+          .toBeFalsy()
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlCapsule', () => {
   describe('#hasNetworkError()', () => {
     const mockPayload = new BaseGraphqlPayload({
       queryTemplate: /* GraphQL */ `
