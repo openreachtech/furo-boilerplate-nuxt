@@ -1361,8 +1361,53 @@ describe('BaseGraphqlCapsule', () => {
       variables: null,
     })
 
+    /** @extends BaseGraphqlPayload<typeof DerivedPayload> */
+    class DerivedPayload extends BaseGraphqlPayload {
+      /** @override */
+      static get document () {
+        return /* GraphQL */ `
+          query {
+            customer {
+              id
+            }
+          }
+        `
+      }
+
+      /** @override */
+      static get validators () {
+        return [
+          {
+            field: 'username',
+            body: (it, variables) => it,
+            message: 'username must be set',
+          },
+          {
+            field: 'username',
+            body: (it, variables) => /^\w+$/.test(it),
+            message: 'username must be alphanumeric',
+          },
+        ]
+      }
+    }
+
     describe('when has error', () => {
       const cases = [
+        // on invalid variables error
+        {
+          params: {
+            payload: DerivedPayload.create({
+              variables: {
+                input: {
+                  username: 'John Doe', // ❌
+                },
+              },
+            }),
+            rawResponse: null,
+            result: null,
+          },
+          expected: 'Invalid variables',
+        },
         // on network error
         {
           params: {
