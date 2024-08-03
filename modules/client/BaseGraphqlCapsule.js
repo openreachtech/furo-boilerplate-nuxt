@@ -177,6 +177,10 @@ export default class BaseGraphqlCapsule {
       return null
     }
 
+    if (this.hasInvalidVariablesError()) {
+      return 'Invalid variables' // TODO: resolve embedded text
+    }
+
     if (this.hasNetworkError()) {
       return 'Network error' // TODO: resolve embedded text
     }
