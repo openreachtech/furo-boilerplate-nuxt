@@ -125,17 +125,6 @@ export default class BaseGraphqlCapsule {
   }
 
   /**
-   * Check to have query error.
-   *
-   * @returns {BooleanLike} true: has query error.
-   */
-  hasQueryError () {
-    return this.result
-      ?.errors
-      ?? false
-  }
-
-  /**
    * Check to have network error.
    *
    * @returns {BooleanLike} true: has network error.
@@ -152,6 +141,17 @@ export default class BaseGraphqlCapsule {
   hasJsonParseError () {
     return this.rawResponse
       && !this.result
+  }
+
+  /**
+   * Check to have query error.
+   *
+   * @returns {BooleanLike} true: has query error.
+   */
+  hasQueryError () {
+    return this.result
+      ?.errors
+      ?? false
   }
 
   /**
