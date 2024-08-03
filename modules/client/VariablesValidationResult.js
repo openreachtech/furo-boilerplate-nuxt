@@ -29,57 +29,8 @@ export default class VariablesValidationResult {
    * @returns {Record<string, any | Record<string, any>>} Proxy instance.
    */
   get valid () {
-    const resultInstance = this
-
-    return new Proxy({}, {
-      /**
-       * Get handler.
-       *
-       * @param {*} _
-       * @param {string} field
-       * @param {VariablesValidationResult} receiver
-       * @returns {boolean | *} true: valid.
-       */
-      get (_, field, receiver) {
-        if (!field.startsWith('$')) {
-          const firstValidator =
-            Object.values(resultInstance.validatorHash)
-              .at(0)
-
-          if (!firstValidator) {
-            return true // when no validator, always true.
-          }
-
-          return firstValidator.isValidField({ field })
-        }
-
-        // ordered schema
-        const schemaCore = field.slice(1)
-        const schemaValidator = resultInstance.validatorHash[schemaCore]
-
-        // When no validators of the schema
-        if (!schemaValidator) {
-          return new Proxy({}, {
-            get (target, field, receiver) {
-              return true // when no validators, always true.
-            },
-          })
-        }
-
-        return new Proxy({}, {
-          /**
-           * Get handler.
-           *
-           * @param {*} _
-           * @param {string} field
-           * @param {VariablesValidationResult} receiver
-           * @returns {boolean | *} true: valid.
-           */
-          get (_, field, receiver) {
-            return schemaValidator.isValidField({ field })
-          },
-        })
-      },
+    return this.generateValidationHandler({
+      delegate: ({ field, validator }) => validator.isValidField({ field }),
     })
   }
 
@@ -89,57 +40,8 @@ export default class VariablesValidationResult {
    * @returns {Record<string, any | Record<string, any>>} Proxy instance.
    */
   get invalid () {
-    const resultInstance = this
-
-    return new Proxy({}, {
-      /**
-       * Get handler.
-       *
-       * @param {*} _
-       * @param {string} field
-       * @param {VariablesValidationResult} receiver
-       * @returns {boolean | *} true: valid.
-       */
-      get (_, field, receiver) {
-        if (!field.startsWith('$')) {
-          const firstValidator =
-            Object.values(resultInstance.validatorHash)
-              .at(0)
-
-          if (!firstValidator) {
-            return true // when no validator, always true.
-          }
-
-          return firstValidator.isInvalidField({ field })
-        }
-
-        // ordered schema
-        const schemaCore = field.slice(1)
-        const schemaValidator = resultInstance.validatorHash[schemaCore]
-
-        // When no validators of the schema
-        if (!schemaValidator) {
-          return new Proxy({}, {
-            get (target, field, receiver) {
-              return true // when no validators, always true.
-            },
-          })
-        }
-
-        return new Proxy({}, {
-          /**
-           * Get handler.
-           *
-           * @param {*} _
-           * @param {string} field
-           * @param {VariablesValidationResult} receiver
-           * @returns {boolean | *} true: valid.
-           */
-          get (_, field, receiver) {
-            return schemaValidator.isInvalidField({ field })
-          },
-        })
-      },
+    return this.generateValidationHandler({
+      delegate: ({ field, validator }) => validator.isInvalidField({ field }),
     })
   }
 
@@ -149,57 +51,8 @@ export default class VariablesValidationResult {
    * @returns {Record<string, any | Record<string, any>>} Proxy instance.
    */
   get messages () {
-    const resultInstance = this
-
-    return new Proxy({}, {
-      /**
-       * Get handler.
-       *
-       * @param {*} _
-       * @param {string} field
-       * @param {VariablesValidationResult} receiver
-       * @returns {boolean | *} true: valid.
-       */
-      get (_, field, receiver) {
-        if (!field.startsWith('$')) {
-          const firstValidator =
-            Object.values(resultInstance.validatorHash)
-              .at(0)
-
-          if (!firstValidator) {
-            return true // when no validator, always true.
-          }
-
-          return firstValidator.getAllMessages({ field })
-        }
-
-        // ordered schema
-        const schemaCore = field.slice(1)
-        const schemaValidator = resultInstance.validatorHash[schemaCore]
-
-        // When no validators of the schema
-        if (!schemaValidator) {
-          return new Proxy({}, {
-            get (target, field, receiver) {
-              return true // when no validators, always true.
-            },
-          })
-        }
-
-        return new Proxy({}, {
-          /**
-           * Get handler.
-           *
-           * @param {*} _
-           * @param {string} field
-           * @param {VariablesValidationResult} receiver
-           * @returns {boolean | *} true: valid.
-           */
-          get (_, field, receiver) {
-            return schemaValidator.getAllMessages({ field })
-          },
-        })
-      },
+    return this.generateValidationHandler({
+      delegate: ({ field, validator }) => validator.getAllMessages({ field }),
     })
   }
 
@@ -209,6 +62,25 @@ export default class VariablesValidationResult {
    * @returns {Record<string, any | Record<string, any>>} Proxy instance.
    */
   get message () {
+    return this.generateValidationHandler({
+      delegate: ({ field, validator }) => validator.getOneMessage({ field }),
+    })
+  }
+
+  /**
+   * get: generate Proxy instance with delegate callback.
+   *
+   * @param {{
+   *   delegate: (params: {
+   *     field: string
+   *     validator: import('~/modules/client/VariablesPerSchemaValidator').default
+   *   }) => *,
+   * }} params - Parameters.
+   * @returns {Record<string, any | Record<string, any>>} Proxy instance.
+   */
+  generateValidationHandler ({
+    delegate,
+  }) {
     const resultInstance = this
 
     return new Proxy({}, {
@@ -230,7 +102,10 @@ export default class VariablesValidationResult {
             return true // when no validator, always true.
           }
 
-          return firstValidator.getOneMessage({ field })
+          return delegate({
+            field,
+            validator: firstValidator,
+          })
         }
 
         // ordered schema
@@ -256,7 +131,10 @@ export default class VariablesValidationResult {
            * @returns {boolean | *} true: valid.
            */
           get (_, field, receiver) {
-            return schemaValidator.getOneMessage({ field })
+            return delegate({
+              field,
+              validator: schemaValidator,
+            })
           },
         })
       },
