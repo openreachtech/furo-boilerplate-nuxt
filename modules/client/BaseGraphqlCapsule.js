@@ -125,6 +125,19 @@ export default class BaseGraphqlCapsule {
   }
 
   /**
+   * Check to have invalid variables error
+   *
+   * @returns {BooleanLike} true: has query error.
+   */
+  hasInvalidVariablesError () {
+    if (!this.payload) {
+      return false
+    }
+
+    return this.payload.isInvalidVariables()
+  }
+
+  /**
    * Check to have network error.
    *
    * @returns {BooleanLike} true: has network error.
