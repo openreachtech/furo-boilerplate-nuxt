@@ -4,6 +4,9 @@ import {
 
 import BaseGraphqlCapsule from '~/modules/client/BaseGraphqlCapsule'
 import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
+import FieldValidator from '~/modules/client/FieldValidator'
+import VariablesPerSchemaValidator from '~/modules/client/VariablesPerSchemaValidator'
+import VariablesValidationResult from '~/modules/client/VariablesValidationResult'
 
 describe('BaseGraphqlCapsule', () => {
   describe('constructor', () => {
@@ -1652,6 +1655,174 @@ describe('BaseGraphqlCapsule', () => {
 
         expect(actual)
           .toBeNull()
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlCapsule', () => {
+  describe('#createVariablesValidationResult()', () => {
+    const validators = [
+      {
+        field: 'username',
+        body: (it, variables) => it,
+        message: 'username must be set',
+      },
+      {
+        field: 'username',
+        body: (it, variables) => /^\w+$/.test(it),
+        message: 'username must be alphanumeric',
+      },
+      {
+        field: 'password',
+        body: (it, variables) => {
+          return it
+            && it.length >= 1
+            && it.length <= 16
+        },
+        message: 'password must be set with at least 1 character and no more than 16 characters',
+      },
+      {
+        field: 'password-confirmation',
+        body: (it, variables) => {
+          return it
+            && it === variables.password
+        },
+        message: 'passwords do not match',
+      },
+    ]
+
+    const expectedValidators = validators.map(it => FieldValidator.create(it))
+
+    /** @extends BaseGraphqlPayload<typeof DerivedPayload> */
+    class DerivedPayload extends BaseGraphqlPayload {
+      /** @override */
+      static get document () {
+        return /* GraphQL */ `
+          query {
+            customer {
+              id
+            }
+          }
+        `
+      }
+
+      /** @override */
+      static get validators () {
+        return validators
+      }
+    }
+
+    describe('to create an instance of VariablesValidationResult', () => {
+      /**
+       * @type {Array<{
+       *   params: {
+       *     variables: Record<string, any>
+       *   }
+       *   expected: VariablesValidationResult
+       * }>}
+       */
+      const cases = [
+        {
+          params: {
+            variables: {
+              input: {
+                username: 'John Doe', // ❌
+                password: 'password$01',
+                'password-confirmation': 'password$01',
+              },
+            },
+          },
+          expected: VariablesValidationResult.create({
+            validatorHash: {
+              input: VariablesPerSchemaValidator.create({
+                variables: {
+                  username: 'John Doe',
+                  password: 'password$01',
+                  'password-confirmation': 'password$01',
+                },
+                validators: expectedValidators,
+              }),
+            },
+          }),
+        },
+        {
+          params: {
+            variables: {
+              group: {
+                username: 'Alice',
+                password: 'password$01',
+                'password-confirmation': 'password$99', // ❌
+              },
+            },
+          },
+          expected: VariablesValidationResult.create({
+            validatorHash: {
+              group: VariablesPerSchemaValidator.create({
+                variables: {
+                  username: 'Alice',
+                  password: 'password$01',
+                  'password-confirmation': 'password$99',
+                },
+                validators: expectedValidators,
+              }),
+            },
+          }),
+        },
+        {
+          params: {
+            variables: {
+              alphaInput: {
+                username: 'Betty001',
+                password: 'alpha$pass',
+                'password-confirmation': 'alpha$pass',
+              },
+              betaInput: {
+                username: 'Betty002',
+                password: 'beta$pass',
+                'password-confirmation': 'beta$pass',
+              },
+            },
+          },
+          expected: VariablesValidationResult.create({
+            validatorHash: {
+              alphaInput: VariablesPerSchemaValidator.create({
+                variables: {
+                  username: 'Betty001',
+                  password: 'alpha$pass',
+                  'password-confirmation': 'alpha$pass',
+                },
+                validators: expectedValidators,
+              }),
+              betaInput: VariablesPerSchemaValidator.create({
+                variables: {
+                  username: 'Betty002',
+                  password: 'beta$pass',
+                  'password-confirmation': 'beta$pass',
+                },
+                validators: expectedValidators,
+              }),
+            },
+          }),
+        },
+      ]
+
+      test.each(cases)('variables: $params.variables', ({ params, expected }) => {
+        const targetPayload = DerivedPayload.create({
+          variables: params.variables,
+        })
+
+        const args = {
+          rawResponse: null,
+          payload: targetPayload,
+          result: null,
+        }
+        const capsule = new BaseGraphqlCapsule(args)
+
+        const actual = capsule.createVariablesValidationResult()
+
+        expect(actual)
+          .toEqual(expected)
       })
     })
   })
