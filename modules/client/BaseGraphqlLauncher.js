@@ -197,6 +197,12 @@ export default class BaseGraphqlLauncher {
   async launchRequest ({
     payload,
   }) {
+    if (payload.isInvalidVariables()) {
+      return this.Ctor.createResultCapsuleAsInvalidVariablesError({
+        payload,
+      })
+    }
+
     const response = await this.invokeFetchQuery({
       payload,
     })
