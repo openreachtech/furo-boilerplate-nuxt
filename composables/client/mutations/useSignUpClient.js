@@ -1,4 +1,4 @@
-import SignUpMutationGraphqlLauncher from '~/app/graphql/client/signUp/SignUpMutationGraphqlLauncher'
+import SignUpMutationGraphqlLauncher from '~/app/graphql/client/mutations/signUp/SignUpMutationGraphqlLauncher'
 
 export function useSignUpClient () {
   return {
@@ -19,7 +19,7 @@ export function useSignUpClient () {
    *     }
    *   }
    * }} params - Parameters.
-   * @returns {Promise<import('~/app/graphql/client/signUp/SignUpMutationGraphqlCapsule')>}
+   * @returns {Promise<import('~/app/graphql/client/mutations/signUp/SignUpMutationGraphqlCapsule')>}
    */
   async function sendSignUp ({
     variables,
