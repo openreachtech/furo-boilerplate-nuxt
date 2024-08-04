@@ -71,6 +71,78 @@ export default class VariablesPerSchemaValidator {
   }
 
   /**
+   * Generate isValid hash.
+   *
+   * @returns {Record<string, boolean>} Validation result.
+   */
+  generateIsValidHash () {
+    const fieldNames = this.extractFieldNames()
+
+    return Object.fromEntries(
+      fieldNames.map(field => [
+        field,
+        this.isValidField({
+          field,
+        }),
+      ])
+    )
+  }
+
+  /**
+   * Generate isInvalid hash.
+   *
+   * @returns {Record<string, boolean>} Validation result.
+   */
+  generateIsInvalidHash () {
+    const fieldNames = this.extractFieldNames()
+
+    return Object.fromEntries(
+      fieldNames.map(field => [
+        field,
+        this.isInvalidField({
+          field,
+        }),
+      ])
+    )
+  }
+
+  /**
+   * Generate all messages hash.
+   *
+   * @returns {Record<string, Array<string>>} Validation result.
+   */
+  generateAllMessagesHash () {
+    const fieldNames = this.extractFieldNames()
+
+    return Object.fromEntries(
+      fieldNames.map(field => [
+        field,
+        this.getAllMessages({
+          field,
+        }),
+      ])
+    )
+  }
+
+  /**
+   * Generate one message hash.
+   *
+   * @returns {Record<string, string | null>} Validation result.
+   */
+  generateOneMessageHash () {
+    const fieldNames = this.extractFieldNames()
+
+    return Object.fromEntries(
+      fieldNames.map(field => [
+        field,
+        this.getOneMessage({
+          field,
+        }),
+      ])
+    )
+  }
+
+  /**
    * Is valid field.
    *
    * @param {{
