@@ -125,6 +125,24 @@ export default class VariablesPerSchemaValidator {
   }
 
   /**
+   * Generate one message hash.
+   *
+   * @returns {Record<string, string | null>} Validation result.
+   */
+  generateOneMessageHash () {
+    const fieldNames = this.extractFieldNames()
+
+    return Object.fromEntries(
+      fieldNames.map(field => [
+        field,
+        this.getOneMessage({
+          field,
+        }),
+      ])
+    )
+  }
+
+  /**
    * Is valid field.
    *
    * @param {{
