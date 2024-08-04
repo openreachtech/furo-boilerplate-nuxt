@@ -1,3 +1,5 @@
+import VariablesValidationResult from '~/modules/client/VariablesValidationResult'
+
 /**
  * Base class for GraphQL capsule.
  *
@@ -125,14 +127,16 @@ export default class BaseGraphqlCapsule {
   }
 
   /**
-   * Check to have query error.
+   * Check to have invalid variables error
    *
    * @returns {BooleanLike} true: has query error.
    */
-  hasQueryError () {
-    return this.result
-      ?.errors
-      ?? false
+  hasInvalidVariablesError () {
+    if (!this.payload) {
+      return false
+    }
+
+    return this.payload.isInvalidVariables()
   }
 
   /**
@@ -155,6 +159,17 @@ export default class BaseGraphqlCapsule {
   }
 
   /**
+   * Check to have query error.
+   *
+   * @returns {BooleanLike} true: has query error.
+   */
+  hasQueryError () {
+    return this.result
+      ?.errors
+      ?? false
+  }
+
+  /**
    * Get error message.
    *
    * @returns {string | null} Error message.
@@ -162,6 +177,10 @@ export default class BaseGraphqlCapsule {
   getErrorMessage () {
     if (this.isPending()) {
       return null
+    }
+
+    if (this.hasInvalidVariablesError()) {
+      return 'Invalid variables' // TODO: resolve embedded text
     }
 
     if (this.hasNetworkError()) {
@@ -208,6 +227,21 @@ export default class BaseGraphqlCapsule {
         ?.data
         ?? null
     )
+  }
+
+  /**
+   * Create variables validation result.
+   *
+   * @returns {VariablesValidationResult} Result.
+   */
+  createVariablesValidationResult () {
+    const validatorHash = this.payload
+      ? this.payload.generateSchemaValidatorHash()
+      : {}
+
+    return VariablesValidationResult.create({
+      validatorHash,
+    })
   }
 }
 

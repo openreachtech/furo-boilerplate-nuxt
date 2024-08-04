@@ -1068,3 +1068,311 @@ describe('VariablesPerSchemaValidator', () => {
     })
   })
 })
+
+describe('VariablesPerSchemaValidator', () => {
+  describe('#isValidField()', () => {
+    /**
+     * @type {Array<{
+     *   args: {
+     *     validators: Array<import('~/modules/client/FieldValidator').default>
+     *   }
+     *   fieldCases: Array<{
+     *     field: string
+     *     variables: Record<string, any>
+     *     expected: boolean
+     *   }>
+     * }>}
+     */
+    const cases = [
+      {
+        args: {
+          validators: [
+            FieldValidator.create({
+              field: 'username',
+              body: (it, variables) => it,
+              message: 'username is required',
+            }),
+            FieldValidator.create({
+              field: 'username',
+              body: (it, variables) =>
+                it
+                && it.length >= 1
+                && it.length <= 8,
+              message: 'username length 1 - 8 characters',
+            }),
+            FieldValidator.create({
+              field: 'username',
+              body: (it, variables) => {
+                return !it
+                  || /^\w+$/.test(it)
+              },
+              message: 'username must be alphanumeric',
+            }),
+            FieldValidator.create({
+              field: 'password',
+              body: (it, variables) => it,
+              message: 'password is required',
+            }),
+          ],
+        },
+        fieldCases: [
+          {
+            field: 'username',
+            variables: {
+              username: 'Alice',
+              password: 'pass0004',
+            },
+            expected: true,
+          },
+          {
+            field: 'username',
+            variables: {
+              username: '',
+              password: 'pass0004',
+            },
+            expected: false,
+          },
+          {
+            field: 'username',
+            variables: {
+              username: 'John Doe',
+              password: 'pass0004',
+            },
+            expected: false,
+          },
+          {
+            field: 'password',
+            variables: {
+              username: '',
+              password: '',
+            },
+            expected: false,
+          },
+        ],
+      },
+      {
+        args: {
+          validators: [
+            FieldValidator.create({
+              field: 'password',
+              body: (it, variables) => it,
+              message: 'password is required',
+            }),
+            FieldValidator.create({
+              field: 'password-confirmation',
+              body: (it, variables) => {
+                return !it
+                  || it === variables.password
+              },
+              message: 'password confirmation must be the same as password',
+            }),
+          ],
+        },
+        fieldCases: [
+          {
+            field: 'password',
+            variables: {
+              password: 'pass0008',
+              'password-confirmation': 'miss0008',
+            },
+            expected: true,
+          },
+          {
+            field: 'password',
+            variables: {
+              password: '',
+              'password-confirmation': '',
+            },
+            expected: false,
+          },
+          {
+            field: 'password-confirmation',
+            variables: {
+              password: 'pass0008',
+              'password-confirmation': 'miss0008',
+            },
+            expected: false,
+          },
+          {
+            field: 'password-confirmation',
+            variables: {
+              password: '',
+              'password-confirmation': '',
+            },
+            expected: true,
+          },
+        ],
+      },
+    ]
+
+    describe.each(cases)('validators: $args.validators.length', ({ args, fieldCases }) => {
+      test.each(fieldCases)('[$#] field: $field', ({ field, variables, expected }) => {
+        const validator = VariablesPerSchemaValidator.create({
+          variables,
+          validators: args.validators,
+        })
+
+        const actual = validator.isValidField({
+          field,
+        })
+
+        expect(actual)
+          .toBe(expected)
+      })
+    })
+  })
+})
+
+describe('VariablesPerSchemaValidator', () => {
+  describe('#isInvalidField()', () => {
+    /**
+     * @type {Array<{
+     *   args: {
+     *     validators: Array<import('~/modules/client/FieldValidator').default>
+     *   }
+     *   fieldCases: Array<{
+     *     field: string
+     *     variables: Record<string, any>
+     *     expected: boolean
+     *   }>
+     * }>}
+     */
+    const cases = [
+      {
+        args: {
+          validators: [
+            FieldValidator.create({
+              field: 'username',
+              body: (it, variables) => it,
+              message: 'username is required',
+            }),
+            FieldValidator.create({
+              field: 'username',
+              body: (it, variables) =>
+                it
+                && it.length >= 1
+                && it.length <= 8,
+              message: 'username length 1 - 8 characters',
+            }),
+            FieldValidator.create({
+              field: 'username',
+              body: (it, variables) => {
+                return !it
+                  || /^\w+$/.test(it)
+              },
+              message: 'username must be alphanumeric',
+            }),
+            FieldValidator.create({
+              field: 'password',
+              body: (it, variables) => it,
+              message: 'password is required',
+            }),
+          ],
+        },
+        fieldCases: [
+          {
+            field: 'username',
+            variables: {
+              username: 'Alice',
+              password: 'pass0004',
+            },
+            expected: false,
+          },
+          {
+            field: 'username',
+            variables: {
+              username: '',
+              password: 'pass0004',
+            },
+            expected: true,
+          },
+          {
+            field: 'username',
+            variables: {
+              username: 'John Doe',
+              password: 'pass0004',
+            },
+            expected: true,
+          },
+          {
+            field: 'password',
+            variables: {
+              username: '',
+              password: '',
+            },
+            expected: true,
+          },
+        ],
+      },
+      {
+        args: {
+          validators: [
+            FieldValidator.create({
+              field: 'password',
+              body: (it, variables) => it,
+              message: 'password is required',
+            }),
+            FieldValidator.create({
+              field: 'password-confirmation',
+              body: (it, variables) => {
+                return !it
+                  || it === variables.password
+              },
+              message: 'password confirmation must be the same as password',
+            }),
+          ],
+        },
+        fieldCases: [
+          {
+            field: 'password',
+            variables: {
+              password: 'pass0008',
+              'password-confirmation': 'miss0008',
+            },
+            expected: false,
+          },
+          {
+            field: 'password',
+            variables: {
+              password: '',
+              'password-confirmation': '',
+            },
+            expected: true,
+          },
+          {
+            field: 'password-confirmation',
+            variables: {
+              password: 'pass0008',
+              'password-confirmation': 'miss0008',
+            },
+            expected: true,
+          },
+          {
+            field: 'password-confirmation',
+            variables: {
+              password: '',
+              'password-confirmation': '',
+            },
+            expected: false,
+          },
+        ],
+      },
+    ]
+
+    describe.each(cases)('validators: $args.validators.length', ({ args, fieldCases }) => {
+      test.each(fieldCases)('[$#] field: $field', ({ field, variables, expected }) => {
+        const validator = VariablesPerSchemaValidator.create({
+          variables,
+          validators: args.validators,
+        })
+
+        const actual = validator.isInvalidField({
+          field,
+        })
+
+        expect(actual)
+          .toBe(expected)
+      })
+    })
+  })
+})

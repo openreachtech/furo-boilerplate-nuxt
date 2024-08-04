@@ -4,6 +4,9 @@ import {
 
 import BaseGraphqlCapsule from '~/modules/client/BaseGraphqlCapsule'
 import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
+import FieldValidator from '~/modules/client/FieldValidator'
+import VariablesPerSchemaValidator from '~/modules/client/VariablesPerSchemaValidator'
+import VariablesValidationResult from '~/modules/client/VariablesValidationResult'
 
 describe('BaseGraphqlCapsule', () => {
   describe('constructor', () => {
@@ -583,185 +586,152 @@ describe('BaseGraphqlCapsule', () => {
 })
 
 describe('BaseGraphqlCapsule', () => {
-  describe('#hasContent()', () => {
-    const mockResponse = new Response()
-    const mockPayload = new BaseGraphqlPayload({
-      queryTemplate: /* GraphQL */ `
-        query {
-          customer {
-            id
+  describe('#hasInvalidVariablesError()', () => {
+    /** @extends BaseGraphqlPayload<typeof DerivedPayload> */
+    class DerivedPayload extends BaseGraphqlPayload {
+      /** @override */
+      static get document () {
+        return /* GraphQL */ `
+          query {
+            customer {
+              id
+            }
           }
-        }
-      `,
-      variables: null,
-    })
+        `
+      }
 
-    describe('to has content (truthy)', () => {
+      /** @override */
+      static get validators () {
+        return [
+          {
+            field: 'username',
+            body: (it, variables) => it,
+            message: 'username must be set',
+          },
+          {
+            field: 'username',
+            body: (it, variables) => /^\w+$/.test(it),
+            message: 'username must be alphanumeric',
+          },
+          {
+            field: 'password',
+            body: (it, variables) => {
+              return it
+                && it.length >= 1
+                && it.length <= 16
+            },
+            message: 'password must be set with at least 1 character and no more than 16 characters',
+          },
+          {
+            field: 'password-confirmation',
+            body: (it, variables) => {
+              return it
+                && it === variables.password
+            },
+            message: 'passwords do not match.',
+          },
+        ]
+      }
+    }
+
+    describe('to has invalid variables error (truthy)', () => {
       const cases = [
         {
           params: {
-            result: {
-              data: {
-                customer: {
-                  id: 10001,
-                },
+            variables: {
+              input: {
+                username: 'John Doe', // ❌
+                password: 'password$01',
+                'password-confirmation': 'password$01',
               },
             },
           },
         },
         {
           params: {
-            result: {
-              data: {
-                customer: {
-                  id: 10002,
-                },
+            variables: {
+              input: {
+                username: 'Alice',
+                password: 'password$01',
+                'password-confirmation': 'password$99', // ❌
+              },
+            },
+          },
+        },
+        {
+          params: {
+            variables: {
+              input: {
+                username: 'Alice',
+                password: '', // ❌
+                'password-confirmation': '', // ❌
               },
             },
           },
         },
       ]
 
-      test.each(cases)('result: $params.result', ({ params }) => {
+      test.each(cases)('username: $params.variables.input.username', ({ params }) => {
+        const targetPayload = DerivedPayload.create({
+          variables: params.variables,
+        })
+
         const args = {
-          rawResponse: mockResponse,
-          payload: mockPayload,
-          result: params.result,
+          rawResponse: null,
+          payload: targetPayload,
+          result: null,
         }
         const capsule = new BaseGraphqlCapsule(args)
 
-        const actual = capsule.hasContent()
+        const actual = capsule.hasInvalidVariablesError()
 
         expect(actual)
           .toBeTruthy()
       })
     })
 
-    describe('to has no content (falsy)', () => {
+    describe('to has no invalid variables error (falsy)', () => {
       const cases = [
         {
           params: {
-            result: {
-              errors: [
-                {
-                  message: 'error message-01',
-                },
-                {
-                  message: 'error message-02',
-                },
-              ],
+            variables: {
+              input: {
+                username: 'John_Doe',
+                password: 'password$01',
+                'password-confirmation': 'password$01',
+              },
             },
-          },
-        },
-        {
-          params: {
-            result: null, // network error or json parse error, etc.
           },
         },
       ]
 
-      test.each(cases)('result: $params.result', ({ params }) => {
+      test.each(cases)('username: $params.variables.input.username', ({ params }) => {
+        const targetPayload = DerivedPayload.create({
+          variables: params.variables,
+        })
+
         const args = {
-          rawResponse: mockResponse,
-          payload: mockPayload,
-          result: params.result,
+          rawResponse: null,
+          payload: targetPayload,
+          result: null,
         }
         const capsule = new BaseGraphqlCapsule(args)
 
-        const actual = capsule.hasContent()
+        const actual = capsule.hasInvalidVariablesError()
 
         expect(actual)
           .toBeFalsy()
       })
-    })
-  })
-})
 
-describe('BaseGraphqlCapsule', () => {
-  describe('#hasQueryError()', () => {
-    const mockResponse = new Response()
-    const mockPayload = new BaseGraphqlPayload({
-      queryTemplate: /* GraphQL */ `
-        query {
-          customer {
-            id
-          }
-        }
-      `,
-      variables: null,
-    })
-
-    describe('to has errors (truthy)', () => {
-      const cases = [
-        {
-          params: {
-            result: {
-              errors: [
-                {
-                  message: 'error message-01',
-                },
-                {
-                  message: 'error message-02',
-                },
-              ],
-            },
-          },
-        },
-        {
-          params: {
-            result: {
-              // Even if empty array, it is considered as query error.
-              // Because it is not a normal response, not network error and not json parse error.
-              errors: [],
-            },
-          },
-        },
-      ]
-
-      test.each(cases)('result: $params.result', ({ params }) => {
+      test('when payload is null', () => {
         const args = {
-          rawResponse: mockResponse,
-          payload: mockPayload,
-          result: params.result,
+          rawResponse: null,
+          payload: null,
+          result: null,
         }
         const capsule = new BaseGraphqlCapsule(args)
 
-        const actual = capsule.hasQueryError()
-
-        expect(actual)
-          .toBeTruthy()
-      })
-    })
-
-    describe('to has no errors (falsy)', () => {
-      const cases = [
-        {
-          params: {
-            result: {
-              data: {
-                customer: {
-                  id: 10001,
-                },
-              },
-            },
-          },
-        },
-        {
-          params: {
-            result: null, // network error or json parse error, etc.
-          },
-        },
-      ]
-
-      test.each(cases)('result: $params.result', ({ params }) => {
-        const args = {
-          rawResponse: mockResponse,
-          payload: mockPayload,
-          result: params.result,
-        }
-        const capsule = new BaseGraphqlCapsule(args)
-
-        const actual = capsule.hasQueryError()
+        const actual = capsule.hasInvalidVariablesError()
 
         expect(actual)
           .toBeFalsy()
@@ -971,6 +941,99 @@ describe('BaseGraphqlCapsule', () => {
 })
 
 describe('BaseGraphqlCapsule', () => {
+  describe('#hasQueryError()', () => {
+    const mockResponse = new Response()
+    const mockPayload = new BaseGraphqlPayload({
+      queryTemplate: /* GraphQL */ `
+        query {
+          customer {
+            id
+          }
+        }
+      `,
+      variables: null,
+    })
+
+    describe('to has errors (truthy)', () => {
+      const cases = [
+        {
+          params: {
+            result: {
+              errors: [
+                {
+                  message: 'error message-01',
+                },
+                {
+                  message: 'error message-02',
+                },
+              ],
+            },
+          },
+        },
+        {
+          params: {
+            result: {
+              // Even if empty array, it is considered as query error.
+              // Because it is not a normal response, not network error and not json parse error.
+              errors: [],
+            },
+          },
+        },
+      ]
+
+      test.each(cases)('result: $params.result', ({ params }) => {
+        const args = {
+          rawResponse: mockResponse,
+          payload: mockPayload,
+          result: params.result,
+        }
+        const capsule = new BaseGraphqlCapsule(args)
+
+        const actual = capsule.hasQueryError()
+
+        expect(actual)
+          .toBeTruthy()
+      })
+    })
+
+    describe('to has no errors (falsy)', () => {
+      const cases = [
+        {
+          params: {
+            result: {
+              data: {
+                customer: {
+                  id: 10001,
+                },
+              },
+            },
+          },
+        },
+        {
+          params: {
+            result: null, // network error or json parse error, etc.
+          },
+        },
+      ]
+
+      test.each(cases)('result: $params.result', ({ params }) => {
+        const args = {
+          rawResponse: mockResponse,
+          payload: mockPayload,
+          result: params.result,
+        }
+        const capsule = new BaseGraphqlCapsule(args)
+
+        const actual = capsule.hasQueryError()
+
+        expect(actual)
+          .toBeFalsy()
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlCapsule', () => {
   describe('#hasError()', () => {
     const mockResponse = new Response()
     const mockPayload = new BaseGraphqlPayload({
@@ -1066,6 +1129,101 @@ describe('BaseGraphqlCapsule', () => {
         const capsule = new BaseGraphqlCapsule(args)
 
         const actual = capsule.hasError()
+
+        expect(actual)
+          .toBeFalsy()
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlCapsule', () => {
+  describe('#hasContent()', () => {
+    const mockResponse = new Response()
+    const mockPayload = new BaseGraphqlPayload({
+      queryTemplate: /* GraphQL */ `
+        query {
+          customer {
+            id
+          }
+        }
+      `,
+      variables: null,
+    })
+
+    describe('to has content (truthy)', () => {
+      const cases = [
+        {
+          params: {
+            result: {
+              data: {
+                customer: {
+                  id: 10001,
+                },
+              },
+            },
+          },
+        },
+        {
+          params: {
+            result: {
+              data: {
+                customer: {
+                  id: 10002,
+                },
+              },
+            },
+          },
+        },
+      ]
+
+      test.each(cases)('result: $params.result', ({ params }) => {
+        const args = {
+          rawResponse: mockResponse,
+          payload: mockPayload,
+          result: params.result,
+        }
+        const capsule = new BaseGraphqlCapsule(args)
+
+        const actual = capsule.hasContent()
+
+        expect(actual)
+          .toBeTruthy()
+      })
+    })
+
+    describe('to has no content (falsy)', () => {
+      const cases = [
+        {
+          params: {
+            result: {
+              errors: [
+                {
+                  message: 'error message-01',
+                },
+                {
+                  message: 'error message-02',
+                },
+              ],
+            },
+          },
+        },
+        {
+          params: {
+            result: null, // network error or json parse error, etc.
+          },
+        },
+      ]
+
+      test.each(cases)('result: $params.result', ({ params }) => {
+        const args = {
+          rawResponse: mockResponse,
+          payload: mockPayload,
+          result: params.result,
+        }
+        const capsule = new BaseGraphqlCapsule(args)
+
+        const actual = capsule.hasContent()
 
         expect(actual)
           .toBeFalsy()
@@ -1206,8 +1364,53 @@ describe('BaseGraphqlCapsule', () => {
       variables: null,
     })
 
+    /** @extends BaseGraphqlPayload<typeof DerivedPayload> */
+    class DerivedPayload extends BaseGraphqlPayload {
+      /** @override */
+      static get document () {
+        return /* GraphQL */ `
+          query {
+            customer {
+              id
+            }
+          }
+        `
+      }
+
+      /** @override */
+      static get validators () {
+        return [
+          {
+            field: 'username',
+            body: (it, variables) => it,
+            message: 'username must be set',
+          },
+          {
+            field: 'username',
+            body: (it, variables) => /^\w+$/.test(it),
+            message: 'username must be alphanumeric',
+          },
+        ]
+      }
+    }
+
     describe('when has error', () => {
       const cases = [
+        // on invalid variables error
+        {
+          params: {
+            payload: DerivedPayload.create({
+              variables: {
+                input: {
+                  username: 'John Doe', // ❌
+                },
+              },
+            }),
+            rawResponse: null,
+            result: null,
+          },
+          expected: 'Invalid variables',
+        },
         // on network error
         {
           params: {
@@ -1452,6 +1655,174 @@ describe('BaseGraphqlCapsule', () => {
 
         expect(actual)
           .toBeNull()
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlCapsule', () => {
+  describe('#createVariablesValidationResult()', () => {
+    const validators = [
+      {
+        field: 'username',
+        body: (it, variables) => it,
+        message: 'username must be set',
+      },
+      {
+        field: 'username',
+        body: (it, variables) => /^\w+$/.test(it),
+        message: 'username must be alphanumeric',
+      },
+      {
+        field: 'password',
+        body: (it, variables) => {
+          return it
+            && it.length >= 1
+            && it.length <= 16
+        },
+        message: 'password must be set with at least 1 character and no more than 16 characters',
+      },
+      {
+        field: 'password-confirmation',
+        body: (it, variables) => {
+          return it
+            && it === variables.password
+        },
+        message: 'passwords do not match',
+      },
+    ]
+
+    const expectedValidators = validators.map(it => FieldValidator.create(it))
+
+    /** @extends BaseGraphqlPayload<typeof DerivedPayload> */
+    class DerivedPayload extends BaseGraphqlPayload {
+      /** @override */
+      static get document () {
+        return /* GraphQL */ `
+          query {
+            customer {
+              id
+            }
+          }
+        `
+      }
+
+      /** @override */
+      static get validators () {
+        return validators
+      }
+    }
+
+    describe('to create an instance of VariablesValidationResult', () => {
+      /**
+       * @type {Array<{
+       *   params: {
+       *     variables: Record<string, any>
+       *   }
+       *   expected: VariablesValidationResult
+       * }>}
+       */
+      const cases = [
+        {
+          params: {
+            variables: {
+              input: {
+                username: 'John Doe', // ❌
+                password: 'password$01',
+                'password-confirmation': 'password$01',
+              },
+            },
+          },
+          expected: VariablesValidationResult.create({
+            validatorHash: {
+              input: VariablesPerSchemaValidator.create({
+                variables: {
+                  username: 'John Doe',
+                  password: 'password$01',
+                  'password-confirmation': 'password$01',
+                },
+                validators: expectedValidators,
+              }),
+            },
+          }),
+        },
+        {
+          params: {
+            variables: {
+              group: {
+                username: 'Alice',
+                password: 'password$01',
+                'password-confirmation': 'password$99', // ❌
+              },
+            },
+          },
+          expected: VariablesValidationResult.create({
+            validatorHash: {
+              group: VariablesPerSchemaValidator.create({
+                variables: {
+                  username: 'Alice',
+                  password: 'password$01',
+                  'password-confirmation': 'password$99',
+                },
+                validators: expectedValidators,
+              }),
+            },
+          }),
+        },
+        {
+          params: {
+            variables: {
+              alphaInput: {
+                username: 'Betty001',
+                password: 'alpha$pass',
+                'password-confirmation': 'alpha$pass',
+              },
+              betaInput: {
+                username: 'Betty002',
+                password: 'beta$pass',
+                'password-confirmation': 'beta$pass',
+              },
+            },
+          },
+          expected: VariablesValidationResult.create({
+            validatorHash: {
+              alphaInput: VariablesPerSchemaValidator.create({
+                variables: {
+                  username: 'Betty001',
+                  password: 'alpha$pass',
+                  'password-confirmation': 'alpha$pass',
+                },
+                validators: expectedValidators,
+              }),
+              betaInput: VariablesPerSchemaValidator.create({
+                variables: {
+                  username: 'Betty002',
+                  password: 'beta$pass',
+                  'password-confirmation': 'beta$pass',
+                },
+                validators: expectedValidators,
+              }),
+            },
+          }),
+        },
+      ]
+
+      test.each(cases)('variables: $params.variables', ({ params, expected }) => {
+        const targetPayload = DerivedPayload.create({
+          variables: params.variables,
+        })
+
+        const args = {
+          rawResponse: null,
+          payload: targetPayload,
+          result: null,
+        }
+        const capsule = new BaseGraphqlCapsule(args)
+
+        const actual = capsule.createVariablesValidationResult()
+
+        expect(actual)
+          .toEqual(expected)
       })
     })
   })

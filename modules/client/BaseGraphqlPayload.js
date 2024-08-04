@@ -1,4 +1,5 @@
 import FieldValidator from '~/modules/client/FieldValidator'
+import VariablesPerSchemaValidator from '~/modules/client/VariablesPerSchemaValidator'
 
 /**
  * Base class of GraphQL payload.
@@ -148,45 +149,52 @@ export default class BaseGraphqlPayload {
       return true
     }
 
-    const validatorHash = this.resolveValidatorHash({
+    const validatorHash = this.generateSchemaValidatorHash()
+
+    return Object.values(validatorHash)
+      .every(it => it.isValid())
+  }
+
+  /**
+   * Is invalid variables.
+   *
+   * @returns {boolean} true: invalid, false: valid.
+   */
+  isInvalidVariables () {
+    return !this.isValidVariables()
+  }
+
+  /**
+   * Is invalid variables.
+   *
+   * @returns {{
+   *   [schema: string]: VariablesPerSchemaValidator
+   * }} true: invalid, false: valid.
+   */
+  generateSchemaValidatorHash () {
+    const targetVariables = this.variables ?? {}
+
+    const validatorOptionHash = this.resolveValidatorHash({
       validators: this.Ctor.validators,
     })
 
-    /**
-     * @type {Array<[
-     *   Array<[string, any]>,
-     *   VariablesType,
-     *   Array<FieldValidator>
-     * ]>}
-     */
-    const validations = Object.entries(this.variables)
-      .map(([
-        group,
-        variables,
-      ]) => [
-        Object.entries(variables),
-        variables,
-        validatorHash[group].map(it =>
-          FieldValidator.create(it)
-        ),
-      ])
-
-    return validations
-      .flatMap(([
-        entries,
-        variables,
-        validators,
-      ]) =>
-        entries.flatMap(([field, target]) =>
-          validators
-            .filter(it => it.accepts({ field }))
-            .every(validator => validator.isValid({
-              target,
-              variables,
-            }))
-        )
-      )
-      .every(it => it)
+    return Object.fromEntries(
+      Object.keys(targetVariables)
+        .map(schema => [
+          schema,
+          VariablesPerSchemaValidator.create({
+            variables:
+              targetVariables[schema]
+              ?? {},
+            validators:
+              validatorOptionHash[schema]
+                .map(it =>
+                  FieldValidator.create(it)
+                )
+              ?? [],
+          }),
+        ])
+    )
   }
 
   /**

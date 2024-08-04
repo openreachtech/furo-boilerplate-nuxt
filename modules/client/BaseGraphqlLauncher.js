@@ -109,6 +109,27 @@ export default class BaseGraphqlLauncher {
    * @template C, D
    * @returns {InstanceType<CapsuleClass<C, D>>} Instance of capsule.
    */
+  static createResultCapsuleAsInvalidVariablesError ({
+    payload,
+  }) {
+    const args = {
+      rawResponse: null,
+      payload,
+      result: null,
+    }
+
+    return this.createResultCapsule(args)
+  }
+
+  /**
+   * Create instance of capsule with result as network error.
+   *
+   * @param {{
+   *   payload: InstanceType<PayloadClass>
+   * }} params - Parameters.
+   * @template C, D
+   * @returns {InstanceType<CapsuleClass<C, D>>} Instance of capsule.
+   */
   static createResultCapsuleAsNetworkError ({
     payload,
   }) {
@@ -176,6 +197,12 @@ export default class BaseGraphqlLauncher {
   async launchRequest ({
     payload,
   }) {
+    if (payload.isInvalidVariables()) {
+      return this.Ctor.createResultCapsuleAsInvalidVariablesError({
+        payload,
+      })
+    }
+
     const response = await this.invokeFetchQuery({
       payload,
     })
