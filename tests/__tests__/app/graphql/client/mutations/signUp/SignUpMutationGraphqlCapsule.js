@@ -1,4 +1,4 @@
-import SignUpMutationGraphqlCapsule from '@/app/graphql/client/signUp/SignUpMutationGraphqlCapsule'
+import SignUpMutationGraphqlCapsule from '~/app/graphql/client/mutations/signUp/SignUpMutationGraphqlCapsule'
 import BaseGraphqlCapsule from '~/modules/client/BaseGraphqlCapsule'
 
 describe('SignUpMutationGraphqlCapsule', () => {
