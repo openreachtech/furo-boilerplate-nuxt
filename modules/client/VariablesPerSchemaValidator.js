@@ -89,6 +89,24 @@ export default class VariablesPerSchemaValidator {
   }
 
   /**
+   * Generate isInvalid hash.
+   *
+   * @returns {Record<string, boolean>} Validation result.
+   */
+  generateIsInvalidHash () {
+    const fieldNames = this.extractFieldNames()
+
+    return Object.fromEntries(
+      fieldNames.map(field => [
+        field,
+        this.isInvalidField({
+          field,
+        }),
+      ])
+    )
+  }
+
+  /**
    * Is valid field.
    *
    * @param {{
