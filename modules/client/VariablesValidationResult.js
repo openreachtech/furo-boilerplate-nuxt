@@ -95,9 +95,20 @@ export default class VariablesValidationResult {
    * @returns {Record<string, any | Record<string, any>>} Proxy instance.
    */
   get message () {
-    return this.generateValidationHandler({
-      delegate: ({ field, validator }) => validator.getOneMessage({ field }),
-    })
+    return Object.fromEntries(
+      Object.entries(this.validatorHash)
+        .map(([schema, validator]) => [
+          schema,
+          validator.generateOneMessageHash(),
+        ])
+        .flatMap(([schema, hash]) => [
+          [
+            `$${schema}`,
+            hash,
+          ],
+          ...Object.entries(hash),
+        ])
+    )
   }
 
   /**
