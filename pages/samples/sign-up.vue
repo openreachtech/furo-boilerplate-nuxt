@@ -13,12 +13,7 @@ const {
 } = useSignUpClient()
 
 const formRef = ref(null)
-const formReactive = reactive({
-  email: '',
-  password: '',
-  username: '',
-  confirmPassword: '',
-})
+
 const statusReactive = reactive({
   allowsToSubmit: false,
 })
@@ -27,7 +22,6 @@ async function submitForm ({
   formElement,
 }) {
   await console.log('submitForm()', formElement)
-  await console.log('formReactive', formReactive)
 
   const capsule = await sendSignUp({
     variables: {
@@ -58,7 +52,6 @@ async function submitForm ({
     <label class="row">
       <span>メールアドレス</span>
       <input
-        v-model="formReactive.email"
         name="email"
         type="text"
         placeholder="メールアドレスを入力してください。"
@@ -68,7 +61,6 @@ async function submitForm ({
     <label class="row">
       <span>ユーザ名</span>
       <input
-        v-model="formReactive.username"
         name="username"
         type="text"
         placeholder="ユーザ名を入力してください。"
@@ -78,7 +70,6 @@ async function submitForm ({
     <label class="row">
       <span>パスワード</span>
       <input
-        v-model="formReactive.password"
         name="password"
         type="password"
         placeholder="パスワードを入力してください。"
@@ -88,7 +79,6 @@ async function submitForm ({
     <label class="row">
       <span>パスワード (確認用)</span>
       <input
-        v-model="formReactive.confirmPassword"
         name="confirm-password"
         type="password"
         placeholder="パスワードを入力してください。"
