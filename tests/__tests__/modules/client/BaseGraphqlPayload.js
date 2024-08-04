@@ -3,6 +3,8 @@ import {
 } from '@openreachtech/renchan-test-tools'
 
 import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
+import FieldValidator from '~/modules/client/FieldValidator'
+import VariablesPerSchemaValidator from '~/modules/client/VariablesPerSchemaValidator'
 
 describe('BaseGraphqlPayload', () => {
   describe('constructor', () => {
@@ -214,6 +216,21 @@ describe('BaseGraphqlPayload', () => {
 
       expect(() => BaseGraphqlPayload.document)
         .toThrow(expected)
+    })
+  })
+})
+
+describe('BaseGraphqlPayload', () => {
+  describe('.get:validators', () => {
+    describe('to be []', () => {
+      test('with no arguments', () => {
+        const actual = BaseGraphqlPayload.validators
+
+        expect(actual)
+          .toBeInstanceOf(Array)
+        expect(actual)
+          .toHaveLength(0)
+      })
     })
   })
 })
@@ -442,6 +459,86 @@ describe('BaseGraphqlPayload', () => {
           expect(() => BaseGraphqlPayload.create(params))
             .toThrow(expected)
         })
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlPayload', () => {
+  describe('#get:Ctor', () => {
+    describe('to be own class', () => {
+      const cases = [
+        {
+          params: {
+            variables: {},
+            queryTemplate: /* GraphQL */ `
+              query PickUpForumTopicsQuery {
+                pickUpForumTopics {
+                  pickUpForumTopics {
+                    id
+                    forumCategory {
+                      id
+                      name
+                    }
+                    name
+                    descriptionHtml
+                    proposer {
+                      customerId
+                      username
+                      avatarUrl
+                      customerRoles {
+                        id
+                        name
+                      }
+                    }
+                    proposedAt
+                    editedAt
+                    totalForumPost
+                    latestForumPostPostedAt
+                  }
+                }
+              }
+            `,
+          },
+        },
+        {
+          params: {
+            variables: {
+              input: {
+                id: 10001,
+              },
+            },
+            queryTemplate: /* GraphQL */ `
+              query CurriculumsQuery ($input: CurriculumsSearchInput!) {
+                curriculums(input: $input) {
+                  curriculums {
+                    id
+                    title
+                    description
+                    thumbnailUrl
+                    postedAt
+                  }
+                  pagination {
+                    limit
+                    offset
+                    sort {
+                      targetColumn
+                      orderBy
+                    }
+                    totalRecords
+                  }
+                }
+              }
+            `,
+          },
+        },
+      ]
+
+      test.each(cases)('variables: $params.variables', ({ params }) => {
+        const payload = new BaseGraphqlPayload(params)
+
+        expect(payload.Ctor)
+          .toBe(BaseGraphqlPayload)
       })
     })
   })
@@ -965,6 +1062,958 @@ describe('BaseGraphqlPayload', () => {
 
         expect(actual)
           .toBeInstanceOf(Request)
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlPayload', () => {
+  describe('#resolveValidatorHash()', () => {
+    describe('to return as is for object hash validators', () => {
+      const queryTemplate = /* GraphQL */ `
+        query CurriculumsQuery ($input: CurriculumsSearchInput!) {
+          curriculums(input: $input) {
+            curriculums {
+              id
+              title
+            }
+          }
+        }
+      `
+
+      /**
+       * @type {Array<{
+       *   args: {
+       *     validators: {
+       *       [group: string]: Array<import('~/modules/client/BaseGraphqlPayload').ValidatorOptionsType>
+       *     }
+       *   }
+       * }>}
+       */
+      const cases = [
+        {
+          args: {
+            validators: {
+              input: [
+                { field: 'username', body: (it, variables) => it },
+                { field: 'username', body: (it, variables) => it && it.length >= 1 && it.length <= 8 },
+                { field: 'password', body: (it, variables) => it },
+              ],
+            },
+          },
+        },
+        {
+          args: {
+            validators: {
+              alphaInput: [
+                { field: 'invite-code', body: (it, variables) => it && it.length === 16 },
+              ],
+              betaInput: [
+                { field: 'hidden-secret', body: (it, variables) => it && it.length === 32 },
+              ],
+            },
+          },
+        },
+      ]
+
+      test.each(cases)('validators: $args.validators', ({ args }) => {
+        const payload = new BaseGraphqlPayload({
+          queryTemplate,
+          variables: {},
+        })
+
+        const actual = payload.resolveValidatorHash({
+          validators: args.validators,
+        })
+
+        expect(actual)
+          .toEqual(args.validators)
+      })
+    })
+
+    describe('to return mapped by #variables', () => {
+      const queryTemplate = /* GraphQL */ `
+        query CurriculumsQuery ($input: CurriculumsSearchInput!) {
+          curriculums(input: $input) {
+            curriculums {
+              id
+              title
+            }
+          }
+        }
+      `
+
+      /**
+       * @type {Array<{
+       *   args: {
+       *     variables: import('~/modules/client/BaseGraphqlPayload').VariablesType
+       *     validators: Array<import('~/modules/client/BaseGraphqlPayload').ValidatorOptionsType>
+       *   }
+       *   expected: import('~/modules/client/BaseGraphqlPayload').ValidatorHashType
+       * }>}
+       */
+      const cases = [
+        {
+          args: {
+            variables: {
+              alphaInput: {
+                username: 'Alice',
+                password: 'password$001',
+              },
+              betaInput: {
+                username: 'Bob',
+                password: 'password$002',
+              },
+            },
+            validators: [
+              { field: 'username', message: 'message 001', body: (it, variables) => it },
+              { field: 'username', message: 'message 002', body: (it, variables) => it && it.length >= 1 && it.length <= 8 },
+              { field: 'password', message: 'message 003', body: (it, variables) => it },
+            ],
+          },
+          expected: {
+            alphaInput: [
+              expect.objectContaining({ field: 'username', message: 'message 001' }),
+              expect.objectContaining({ field: 'username', message: 'message 002' }),
+              expect.objectContaining({ field: 'password', message: 'message 003' }),
+            ],
+            betaInput: [
+              expect.objectContaining({ field: 'username', message: 'message 001' }),
+              expect.objectContaining({ field: 'username', message: 'message 002' }),
+              expect.objectContaining({ field: 'password', message: 'message 003' }),
+            ],
+          },
+        },
+        {
+          args: {
+            variables: {
+              alphaInput: {
+                'invite-code': '1234567890abcdef',
+              },
+              betaInput: {
+                'invite-code': '1234567890abcdef',
+              },
+            },
+            validators: [
+              { field: 'invite-code', body: (it, variables) => it && it.length === 16 },
+              { field: 'hidden-secret', body: (it, variables) => it && it.length === 32 },
+            ],
+          },
+          expected: {
+            alphaInput: [
+              expect.objectContaining({ field: 'invite-code' }),
+              expect.objectContaining({ field: 'hidden-secret' }),
+            ],
+            betaInput: [
+              expect.objectContaining({ field: 'invite-code' }),
+              expect.objectContaining({ field: 'hidden-secret' }),
+            ],
+          },
+        },
+      ]
+
+      test.each(cases)('variables: $args.variables', ({ args, expected }) => {
+        const payload = new BaseGraphqlPayload({
+          queryTemplate,
+          variables: args.variables,
+        })
+
+        const actual = payload.resolveValidatorHash({
+          validators: args.validators,
+        })
+
+        expect(actual)
+          .toEqual(expected)
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlPayload', () => {
+  describe('#generateSchemaValidatorHash()', () => {
+    describe('to return object hash of validators', () => {
+      const queryTemplate = /* GraphQL */ `
+        query CurriculumsQuery ($input: CurriculumsSearchInput!) {
+          curriculums(input: $input) {
+            curriculums {
+              id
+              title
+            }
+          }
+        }
+      `
+
+      /**
+       * @type {Array<{
+       *   args: {
+       *     variables: any
+       *     validators: {
+       *       [group: string]: Array<import('~/modules/client/BaseGraphqlPayload').ValidatorOptionsType>
+       *     }
+       *   }
+       *   expected: {
+       *     [schema: string]: VariablesPerSchemaValidator
+       *   }
+       * }>}
+       */
+      const cases = [
+        {
+          args: {
+            variables: {
+              input: {
+                username: 'Alice',
+                password: 'password$001',
+              },
+            },
+            validators: {
+              input: [
+                { field: 'username', body: (it, variables) => it },
+                { field: 'username', body: (it, variables) => it && it.length >= 1 && it.length <= 8 },
+                { field: 'password', body: (it, variables) => it },
+              ],
+            },
+          },
+          expected: {
+            input: VariablesPerSchemaValidator.create({
+              variables: {
+                username: 'Alice',
+                password: 'password$001',
+              },
+              validators: [
+                FieldValidator.create({ field: 'username', body: expect.any(Function) }),
+                FieldValidator.create({ field: 'username', body: expect.any(Function) }),
+                FieldValidator.create({ field: 'password', body: expect.any(Function) }),
+              ],
+            }),
+          },
+        },
+        {
+          args: {
+            variables: {
+              alphaInput: {
+                'invite-code': 'invite-code-001',
+                'hidden-secret': 'secret$001',
+              },
+              betaInput: {
+                'invite-code': 'invite-code-002',
+                'hidden-secret': 'secret$002',
+              },
+            },
+            validators: {
+              alphaInput: [
+                { field: 'invite-code', body: (it, variables) => it && it.length === 16 },
+              ],
+              betaInput: [
+                { field: 'hidden-secret', body: (it, variables) => it && it.length === 32 },
+              ],
+            },
+          },
+          expected: {
+            alphaInput: VariablesPerSchemaValidator.create({
+              variables: {
+                'invite-code': 'invite-code-001',
+                'hidden-secret': 'secret$001',
+              },
+              validators: [
+                FieldValidator.create({ field: 'invite-code', body: expect.any(Function) }),
+              ],
+            }),
+            betaInput: VariablesPerSchemaValidator.create({
+              variables: {
+                'invite-code': 'invite-code-002',
+                'hidden-secret': 'secret$002',
+              },
+              validators: [
+                FieldValidator.create({ field: 'hidden-secret', body: expect.any(Function) }),
+              ],
+            }),
+          },
+        },
+      ]
+
+      test.each(cases)('validators: $args.validators', ({ args, expected }) => {
+        const validatorsSpy = jest.spyOn(BaseGraphqlPayload, 'validators', 'get')
+          .mockReturnValue(args.validators)
+
+        const payload = new BaseGraphqlPayload({
+          queryTemplate,
+          variables: args.variables,
+        })
+
+        const actual = payload.generateSchemaValidatorHash()
+
+        expect(actual)
+          .toEqual(expected)
+
+        validatorsSpy.mockRestore()
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlPayload', () => {
+  describe('#isValidVariables()', () => {
+    const queryTemplateMock = /* GraphQL */ `
+      query CurriculumsQuery ($input: CurriculumsSearchInput!) {
+        curriculums(input: $input) {
+          curriculums {
+            id
+            title
+          }
+        }
+      }
+    `
+
+    /**
+     * @type {Array<import('~/modules/client/FieldValidator').FieldValidatorParams>}
+     */
+    const inputValidators = [
+      {
+        field: 'username',
+        body: (it, variables) => it,
+        message: 'username must be set',
+      },
+      {
+        field: 'username',
+        body: (it, variables) => /^\w+$/.test(it),
+        message: 'username must be alphanumeric',
+      },
+      {
+        field: 'password',
+        body: (it, variables) => {
+          return it
+            && it.length >= 1
+            && it.length <= 16
+        },
+        message: 'password must be set with at least 1 character and no more than 16 characters',
+      },
+      {
+        field: 'password-confirmation',
+        body: (it, variables) => {
+          return it
+            && it === variables.password
+        },
+        message: 'passwords do not match.',
+      },
+    ]
+
+    /** @extends BaseGraphqlPayload<typeof AlphaPayload> */
+    class AlphaPayload extends BaseGraphqlPayload {
+      /** @override */
+      static get document () {
+        return queryTemplateMock
+      }
+
+      /** @override */
+      static get validators () {
+        return {
+          input: inputValidators,
+        }
+      }
+    }
+
+    /** @extends BaseGraphqlPayload<typeof AlphaPayload> */
+    class BetaPayload extends BaseGraphqlPayload {
+      /** @override */
+      static get document () {
+        return queryTemplateMock
+      }
+
+      /** @override */
+      static get validators () {
+        return inputValidators
+      }
+    }
+
+    /**
+     * @type {Array<{
+     *   args: {
+     *     Payload: typeof BaseGraphqlPayload
+     *     truthyCases: Array<import('~/modules/client/BaseGraphqlPayload').VariablesType>
+     *     falsyCases: Array<import('~/modules/client/BaseGraphqlPayload').VariablesType>
+     *   }
+     * }>
+     */
+    const cases = [
+      {
+        args: {
+          Payload: AlphaPayload,
+          truthyCases: [
+            {
+              variables: {
+                input: {
+                  username: 'Alice',
+                  password: 'password$001',
+                  'password-confirmation': 'password$001',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'Betty',
+                  password: 'password$002',
+                  // 'password-confirmation': 'password$002',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'Carol',
+                  // password: 'password$003',
+                  // 'password-confirmation': 'password$003',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'Underscored_Name',
+                  password: 'password$004',
+                  'password-confirmation': 'password$004',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  // username: 'john_doe',
+                  // password: 'password$999',
+                  // 'password-confirmation': 'password$999',
+                },
+              },
+            },
+          ],
+          falsyCases: [
+            {
+              variables: {
+                input: {
+                  username: 'Space Split Name',
+                  password: 'password$001',
+                  'password-confirmation': 'password$001',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'Hyphen-Split-Name',
+                  password: 'password$002',
+                  'password-confirmation': 'password$002',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: null,
+                  password: 'password$003',
+                  'password-confirmation': 'password$003',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: '',
+                  password: 'password$004',
+                  'password-confirmation': 'password$004',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: undefined,
+                  password: 'password$005',
+                  'password-confirmation': 'password$005',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'John Doe',
+                  password: 'password$999',
+                  'password-confirmation': 'password$999',
+                },
+              },
+            },
+          ],
+        },
+      },
+      {
+        args: {
+          Payload: BetaPayload,
+          truthyCases: [
+            {
+              variables: {
+                input: {
+                  username: 'Alice',
+                  password: 'password$001',
+                  'password-confirmation': 'password$001',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'Betty',
+                  password: 'password$002',
+                  // 'password-confirmation': 'password$002',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'Carol',
+                  // password: 'password$003',
+                  // 'password-confirmation': 'password$003',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'Underscored_Name',
+                  password: 'password$004',
+                  'password-confirmation': 'password$004',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  // username: 'john_doe',
+                  // password: 'password$999',
+                  // 'password-confirmation': 'password$999',
+                },
+              },
+            },
+          ],
+          falsyCases: [
+            {
+              variables: {
+                input: {
+                  username: 'Space Split Name',
+                  password: 'password$001',
+                  'password-confirmation': 'password$001',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'Hyphen-Split-Name',
+                  password: 'password$002',
+                  'password-confirmation': 'password$002',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: null,
+                  password: 'password$003',
+                  'password-confirmation': 'password$003',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: '',
+                  password: 'password$004',
+                  'password-confirmation': 'password$004',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: undefined,
+                  password: 'password$005',
+                  'password-confirmation': 'password$005',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'John Doe',
+                  password: 'password$999',
+                  'password-confirmation': 'password$999',
+                },
+              },
+            },
+          ],
+        },
+      },
+    ]
+
+    describe.each(cases)('Payload: $args.Payload.name', ({ args }) => {
+      describe('to be truthy', () => {
+        test.each(args.truthyCases)('username: $variables.input.username', ({ variables }) => {
+          const payload = new args.Payload({
+            queryTemplate: queryTemplateMock,
+            variables,
+          })
+
+          const actual = payload.isValidVariables()
+
+          expect(actual)
+            .toBeTruthy()
+        })
+      })
+
+      describe('to be falsy', () => {
+        test.each(args.falsyCases)('username: $variables.input.username', ({ variables }) => {
+          const payload = new args.Payload({
+            queryTemplate: queryTemplateMock,
+            variables,
+          })
+
+          const actual = payload.isValidVariables()
+
+          expect(actual)
+            .toBeFalsy()
+        })
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlPayload', () => {
+  describe('#isInvalidVariables()', () => {
+    const queryTemplateMock = /* GraphQL */ `
+      query CurriculumsQuery ($input: CurriculumsSearchInput!) {
+        curriculums(input: $input) {
+          curriculums {
+            id
+            title
+          }
+        }
+      }
+    `
+
+    /**
+     * @type {Array<import('~/modules/client/FieldValidator').FieldValidatorParams>}
+     */
+    const inputValidators = [
+      {
+        field: 'username',
+        body: (it, variables) => it,
+        message: 'username must be set',
+      },
+      {
+        field: 'username',
+        body: (it, variables) => /^\w+$/.test(it),
+        message: 'username must be alphanumeric',
+      },
+      {
+        field: 'password',
+        body: (it, variables) => {
+          return it
+            && it.length >= 1
+            && it.length <= 16
+        },
+        message: 'password must be set with at least 1 character and no more than 16 characters',
+      },
+      {
+        field: 'password-confirmation',
+        body: (it, variables) => {
+          return it
+            && it === variables.password
+        },
+        message: 'passwords do not match.',
+      },
+    ]
+
+    /** @extends BaseGraphqlPayload<typeof AlphaPayload> */
+    class AlphaPayload extends BaseGraphqlPayload {
+      /** @override */
+      static get document () {
+        return queryTemplateMock
+      }
+
+      /** @override */
+      static get validators () {
+        return {
+          input: inputValidators,
+        }
+      }
+    }
+
+    /** @extends BaseGraphqlPayload<typeof AlphaPayload> */
+    class BetaPayload extends BaseGraphqlPayload {
+      /** @override */
+      static get document () {
+        return queryTemplateMock
+      }
+
+      /** @override */
+      static get validators () {
+        return inputValidators
+      }
+    }
+
+    /**
+     * @type {Array<{
+     *   args: {
+     *     Payload: typeof BaseGraphqlPayload
+     *     truthyCases: Array<import('~/modules/client/BaseGraphqlPayload').VariablesType>
+     *     falsyCases: Array<import('~/modules/client/BaseGraphqlPayload').VariablesType>
+     *   }
+     * }>
+     */
+    const cases = [
+      {
+        args: {
+          Payload: AlphaPayload,
+          truthyCases: [
+            {
+              variables: {
+                input: {
+                  username: 'Space Split Name',
+                  password: 'password$001',
+                  'password-confirmation': 'password$001',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'Hyphen-Split-Name',
+                  password: 'password$002',
+                  'password-confirmation': 'password$002',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: null,
+                  password: 'password$003',
+                  'password-confirmation': 'password$003',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: '',
+                  password: 'password$004',
+                  'password-confirmation': 'password$004',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: undefined,
+                  password: 'password$005',
+                  'password-confirmation': 'password$005',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'John Doe',
+                  password: 'password$999',
+                  'password-confirmation': 'password$999',
+                },
+              },
+            },
+          ],
+          falsyCases: [
+            {
+              variables: {
+                input: {
+                  username: 'Alice',
+                  password: 'password$001',
+                  'password-confirmation': 'password$001',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'Betty',
+                  password: 'password$002',
+                  // 'password-confirmation': 'password$002',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'Carol',
+                  // password: 'password$003',
+                  // 'password-confirmation': 'password$003',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'Underscored_Name',
+                  password: 'password$004',
+                  'password-confirmation': 'password$004',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  // username: 'john_doe',
+                  // password: 'password$999',
+                  // 'password-confirmation': 'password$999',
+                },
+              },
+            },
+          ],
+        },
+      },
+      {
+        args: {
+          Payload: BetaPayload,
+          truthyCases: [
+            {
+              variables: {
+                input: {
+                  username: 'Space Split Name',
+                  password: 'password$001',
+                  'password-confirmation': 'password$001',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'Hyphen-Split-Name',
+                  password: 'password$002',
+                  'password-confirmation': 'password$002',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: null,
+                  password: 'password$003',
+                  'password-confirmation': 'password$003',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: '',
+                  password: 'password$004',
+                  'password-confirmation': 'password$004',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: undefined,
+                  password: 'password$005',
+                  'password-confirmation': 'password$005',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'John Doe',
+                  password: 'password$999',
+                  'password-confirmation': 'password$999',
+                },
+              },
+            },
+          ],
+          falsyCases: [
+            {
+              variables: {
+                input: {
+                  username: 'Alice',
+                  password: 'password$001',
+                  'password-confirmation': 'password$001',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'Betty',
+                  password: 'password$002',
+                  // 'password-confirmation': 'password$002',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'Carol',
+                  // password: 'password$003',
+                  // 'password-confirmation': 'password$003',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  username: 'Underscored_Name',
+                  password: 'password$004',
+                  'password-confirmation': 'password$004',
+                },
+              },
+            },
+            {
+              variables: {
+                input: {
+                  // username: 'john_doe',
+                  // password: 'password$999',
+                  // 'password-confirmation': 'password$999',
+                },
+              },
+            },
+          ],
+        },
+      },
+    ]
+
+    describe.each(cases)('Payload: $args.Payload.name', ({ args }) => {
+      describe('to be truthy', () => {
+        test.each(args.truthyCases)('username: $variables.input.username', ({ variables }) => {
+          const payload = new args.Payload({
+            queryTemplate: queryTemplateMock,
+            variables,
+          })
+
+          const actual = payload.isInvalidVariables()
+
+          expect(actual)
+            .toBeTruthy()
+        })
+      })
+
+      describe('to be falsy', () => {
+        test.each(args.falsyCases)('username: $variables.input.username', ({ variables }) => {
+          const payload = new args.Payload({
+            queryTemplate: queryTemplateMock,
+            variables,
+          })
+
+          const actual = payload.isInvalidVariables()
+
+          expect(actual)
+            .toBeFalsy()
+        })
       })
     })
   })

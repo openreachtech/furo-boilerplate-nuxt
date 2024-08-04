@@ -212,6 +212,146 @@ describe('BaseGraphqlLauncher', () => {
 })
 
 describe('BaseGraphqlLauncher', () => {
+  describe('.createResultCapsuleAsInvalidVariablesError()', () => {
+    describe('to be instance of BaseGraphqlCapsule', () => {
+      const capsuleCases = [
+        {
+          params: {
+            CapsuleClass: class AlphaCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+        {
+          params: {
+            CapsuleClass: class BetaCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+      ]
+
+      describe.each(capsuleCases)('Capsule: $params.CapsuleClass.name', ({ params }) => {
+        const cases = [
+          {
+            args: {
+              payload: new BaseGraphqlPayload({
+                queryTemplate: /* GraphQL */ `
+                  query {
+                    customer: {
+                      id
+                    }
+                  }
+                }`,
+                variables: null,
+              }),
+            },
+          },
+          {
+            args: {
+              payload: new BaseGraphqlPayload({
+                queryTemplate: /* GraphQL */ `
+                  query {
+                    admin: {
+                      id
+                    }
+                  }
+                }`,
+                variables: null,
+              }),
+            },
+          },
+        ]
+
+        test.each(cases)('payload: $args.payload', ({ args }) => {
+          const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
+            .mockReturnValue(params.CapsuleClass)
+
+          const currentArgs = {
+            payload: args.payload,
+          }
+
+          const capsule = BaseGraphqlLauncher.createResultCapsuleAsInvalidVariablesError(currentArgs)
+
+          expect(capsule)
+            .toBeInstanceOf(params.CapsuleClass)
+
+          CapsuleSpy.mockRestore()
+        })
+      })
+    })
+
+    describe('to call Capsule factory method', () => {
+      const capsuleCases = [
+        {
+          params: {
+            CapsuleClass: class AlphaCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+        {
+          params: {
+            CapsuleClass: class BetaCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+      ]
+
+      describe.each(capsuleCases)('Capsule: $params.CapsuleClass.name', ({ params }) => {
+        const cases = [
+          {
+            args: {
+              payload: new BaseGraphqlPayload({
+                queryTemplate: /* GraphQL */ `
+                  query {
+                    customer: {
+                      id
+                    }
+                  }
+                }`,
+                variables: null,
+              }),
+            },
+          },
+          {
+            args: {
+              payload: new BaseGraphqlPayload({
+                queryTemplate: /* GraphQL */ `
+                  query {
+                    admin: {
+                      id
+                    }
+                  }
+                }`,
+                variables: null,
+              }),
+            },
+          },
+        ]
+
+        test.each(cases)('payload: $args.payload', ({ args }) => {
+          const expected = {
+            rawResponse: null,
+            payload: args.payload,
+            result: null,
+          }
+
+          const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
+            .mockReturnValue(params.CapsuleClass)
+          const createSpy = jest.spyOn(params.CapsuleClass, 'create')
+
+          const currentArgs = {
+            payload: args.payload,
+          }
+
+          BaseGraphqlLauncher.createResultCapsuleAsInvalidVariablesError(currentArgs)
+
+          expect(createSpy)
+            .toHaveBeenCalledWith(expected)
+
+          CapsuleSpy.mockRestore()
+          createSpy.mockRestore()
+        })
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlLauncher', () => {
   describe('.createResultCapsuleAsNetworkError()', () => {
     describe('to be instance of BaseGraphqlCapsule', () => {
       const capsuleCases = [
@@ -1252,6 +1392,87 @@ describe('BaseGraphqlLauncher', () => {
           .toEqual(expected)
 
         fetchSpy.mockRestore()
+        CapsuleSpy.mockRestore()
+      })
+    })
+
+    describe('to return Invalid variables error capsule', () => {
+      /** @extends {BaseGraphqlCapsule<typeof DerivedCapsule, *>} */
+      class DerivedCapsule extends BaseGraphqlCapsule {}
+
+      /** @extends BaseGraphqlPayload<typeof DerivedPayload> */
+      class DerivedPayload extends BaseGraphqlPayload {
+        /** @override */
+        static get document () {
+          return /* GraphQL */ `
+            query {
+              customer {
+                id
+              }
+            }
+          `
+        }
+
+        /** @override */
+        static get validators () {
+          return [
+            {
+              field: 'username',
+              body: (it, variables) => it,
+              message: 'username must be set',
+            },
+            {
+              field: 'username',
+              body: (it, variables) => /^\w+$/.test(it),
+              message: 'username must be alphanumeric',
+            },
+          ]
+        }
+      }
+
+      test('to not call #invokeFetchQuery() with invalid variables', async () => {
+        const launcher = BaseGraphqlLauncher.create({
+          config: {
+            ENDPOINT_URL: 'http://example.com/graphql-customer',
+          },
+        })
+        const invalidVariablesPayload = DerivedPayload.create({
+          variables: {
+            input: {
+              username: 'John Doe', // ❌
+            },
+          },
+        })
+
+        const expectedCapsule = DerivedCapsule.create({
+          rawResponse: null,
+          payload: invalidVariablesPayload,
+          result: null,
+        })
+
+        const createResultCapsuleAsInvalidVariablesErrorSpy = jest.spyOn(BaseGraphqlLauncher, 'createResultCapsuleAsInvalidVariablesError')
+        const invokeFetchQuerySpy = jest.spyOn(launcher, 'invokeFetchQuery')
+          .mockRejectedValue(null)
+        const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
+          .mockReturnValue(DerivedCapsule)
+
+        const args = {
+          payload: invalidVariablesPayload,
+        }
+
+        const actual = await launcher.launchRequest(args)
+
+        expect(actual)
+          .toEqual(expectedCapsule)
+
+        expect(createResultCapsuleAsInvalidVariablesErrorSpy)
+          .toHaveBeenCalledWith(args)
+        expect(invokeFetchQuerySpy)
+          .not
+          .toHaveBeenCalledWith()
+
+        createResultCapsuleAsInvalidVariablesErrorSpy.mockRestore()
+        invokeFetchQuerySpy.mockRestore()
         CapsuleSpy.mockRestore()
       })
     })
