@@ -11,6 +11,7 @@ import FormElementClerk from '~/modules/domClerks/FormElementClerk'
 const formRef = ref(null)
 const statusReactive = reactive({
   allowsToSubmit: false,
+  isLoading: false,
 })
 
 const {
@@ -139,6 +140,7 @@ async function submitForm ({
   </form>
 
   <div
+    v-if="statusReactive.isLoading"
     class="unit-loading"
   >
     Loading ...
