@@ -9,7 +9,7 @@ export default class BaseGraphqlCapsule {
   /**
    * Constructor.
    *
-   * @param {BaseGraphqlCapsuleParams<PayloadClass<*>>} params
+   * @param {BaseGraphqlCapsuleParams<*>} params
    */
   constructor ({
     rawResponse,
@@ -24,8 +24,8 @@ export default class BaseGraphqlCapsule {
   /**
    * Factory method.
    *
-   * @template P
-   * @param {BaseGraphqlCapsuleFactoryParams<PayloadClass<P>>} params - Parameters of factory method.
+   * @template {PayloadClass<P>} P
+   * @param {BaseGraphqlCapsuleFactoryParams<P>} params - Parameters of factory method.
    * @template {typeof BaseGraphqlCapsule<C, D>} C, D
    * @this {C}
    * @returns {InstanceType<C>} Instance of this class.
@@ -246,16 +246,16 @@ export default class BaseGraphqlCapsule {
 }
 
 /**
- * @template P
+ * @template {PayloadClass<P>} P
  * @typedef {{
  *   rawResponse: Response | null
- *   payload: PayloadClass<P> | null
+ *   payload: P | null
  *   result: GraphqlCapsuleResult | null
  * }} BaseGraphqlCapsuleParams
  */
 
 /**
- * @template P
+ * @template {PayloadClass<P>} P
  * @typedef {BaseGraphqlCapsuleParams<P>} BaseGraphqlCapsuleFactoryParams
  */
 
