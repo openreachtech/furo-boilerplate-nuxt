@@ -4,39 +4,47 @@ import {
   ref,
 } from 'vue'
 
-import {
-  useSignUpClient,
-} from '~/composables/useSignUpClient'
+import useSignUpClient from '~/composables/client/mutations/useSignUpClient'
 
-const {
-  sendSignUp,
-} = useSignUpClient()
+import FormElementClerk from '~/modules/domClerks/FormElementClerk'
 
 const formRef = ref(null)
-
 const statusReactive = reactive({
   allowsToSubmit: false,
 })
 
+const {
+  // capsuleRef,
+  validationRef,
+  invokeRequestOnEvent,
+  // invokeRequestOnMounted,
+} = useSignUpClient()
+
+/**
+ * Submit form event handler.
+ *
+ * @param {{
+ *   formElement: HTMLFormElement | null
+ * }} params - Parameters.
+ */
 async function submitForm ({
   formElement,
 }) {
-  await console.log('submitForm()', formElement)
+  if (!formElement) {
+    return
+  }
 
-  const capsule = await sendSignUp({
-    variables: {
-      input: {
-        email: 'stew.eucen@openreach.tech',
-        username: 'EucenSama',
-        firstName: 'Eucen',
-        lastName: 'Stew',
-
-        password: 'passwordIsString',
-      },
-    },
+  const formElementClerk = FormElementClerk.create({
+    formElement,
   })
 
-  console.log('@@@@@@@@@@@', capsule)
+  const formValueHash = formElementClerk.extractValueHash()
+
+  await invokeRequestOnEvent({
+    variables: {
+      input: formValueHash,
+    },
+  })
 }
 </script>
 
