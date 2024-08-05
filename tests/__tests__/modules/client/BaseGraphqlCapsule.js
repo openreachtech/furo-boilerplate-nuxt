@@ -2,7 +2,9 @@ import {
   ConstructorSpyGenerator,
 } from '@openreachtech/renchan-test-tools'
 
-import BaseGraphqlCapsule from '~/modules/client/BaseGraphqlCapsule'
+import BaseGraphqlCapsule, {
+  LAUNCH_ABORTED_REASON,
+} from '~/modules/client/BaseGraphqlCapsule'
 import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
 import FieldValidator from '~/modules/client/FieldValidator'
 import VariablesPerSchemaValidator from '~/modules/client/VariablesPerSchemaValidator'
@@ -139,6 +141,67 @@ describe('BaseGraphqlCapsule', () => {
 
           expect(actual)
             .toHaveProperty('result', params.result)
+        })
+      })
+
+      describe('#abortedReason', () => {
+        /**
+         * @type {Array<{
+         *   params: {
+         *     abortedReason: LAUNCH_ABORTED_REASON
+         *   }
+         * }>}
+         */
+        const cases = [
+          {
+            params: {
+              abortedReason: LAUNCH_ABORTED_REASON.NONE,
+            },
+          },
+          {
+            params: {
+              abortedReason: LAUNCH_ABORTED_REASON.UNKNOWN,
+            },
+          },
+          {
+            params: {
+              abortedReason: LAUNCH_ABORTED_REASON.INVALID_VARIABLES,
+            },
+          },
+          {
+            params: {
+              abortedReason: LAUNCH_ABORTED_REASON.BEFORE_REQUEST_HOOK,
+            },
+          },
+        ]
+
+        test.each(cases)('result: $params.result', ({ params }) => {
+          const args = {
+            rawResponse: null,
+            payload: mockPayload,
+            result: null,
+            abortedReason: params.abortedReason,
+          }
+
+          const actual = new BaseGraphqlCapsule(args)
+
+          expect(actual)
+            .toHaveProperty('abortedReason', params.abortedReason)
+        })
+
+        test('with no arguments', () => {
+          const expected = LAUNCH_ABORTED_REASON.NONE
+
+          const args = {
+            rawResponse: null,
+            payload: mockPayload,
+            result: null,
+          }
+
+          const actual = new BaseGraphqlCapsule(args)
+
+          expect(actual)
+            .toHaveProperty('abortedReason', expected)
         })
       })
     })
