@@ -74,11 +74,13 @@ export default class BaseGraphqlLauncher {
     rawResponse,
     payload,
     result,
+    abortedReason,
   }) {
     const args = {
       rawResponse,
       payload,
       result,
+      abortedReason,
     }
 
     return this.Capsule.create(args)
