@@ -263,6 +263,7 @@ export default class BaseGraphqlLauncher {
    * @param {{
    *   variables?: object | null
    *   options?: RequestInit
+   *   hooks?: GraphqlLauncherHooks
    * }} Params - Parameters.
    * @template C, D
    * @returns {Promise<InstanceType<CapsuleClass<C, D>>>} Promise of instance of capsule.
@@ -271,6 +272,7 @@ export default class BaseGraphqlLauncher {
   async launchRequestWithVariables ({
     variables = {},
     options = {},
+    hooks = {},
   } = {}) {
     const updatedOptions = this.updateOptions({
       options,
@@ -281,9 +283,31 @@ export default class BaseGraphqlLauncher {
       options: updatedOptions,
     })
 
-    const capsule = await this.launchRequest({
-      payload,
-    })
+    const {
+      beforeRequest = async () => false,
+      afterRequest = async () => {},
+    } = hooks
+
+    /*
+     * Before request.
+     */
+    const aborted = await beforeRequest(payload)
+
+    /*
+     * Create capsule.
+     */
+    const capsule = aborted
+      ? this.Ctor.createResultCapsuleAsAbortedByHooks({
+        payload,
+      })
+      : await this.launchRequest({
+        payload,
+      })
+
+    /*
+     * After request.
+     */
+    await afterRequest(capsule)
 
     return capsule
   }
