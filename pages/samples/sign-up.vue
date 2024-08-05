@@ -137,6 +137,12 @@ async function submitForm ({
       新規登録
     </button>
   </form>
+
+  <div
+    class="unit-loading"
+  >
+    Loading ...
+  </div>
 </template>
 
 <style>
