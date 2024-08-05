@@ -422,3 +422,10 @@ export default class BaseGraphqlLauncher {
  *   abortedReason?: import('./BaseGraphqlCapsule').LAUNCH_ABORTED_REASON
  * }} CapsuleParams
  */
+
+/**
+ * @typedef {{
+ *   beforeRequest?: (payload: InstanceType<PayloadClass>) => Promise<boolean>
+ *   afterRequest?: (capsule: InstanceType<CapsuleClass<*, *>>) => Promise<void>
+ * }} GraphqlLauncherHooks
+ */
