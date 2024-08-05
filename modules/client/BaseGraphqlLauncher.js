@@ -391,5 +391,6 @@ export default class BaseGraphqlLauncher {
  *   rawResponse: Response | null
  *   payload: InstanceType<PayloadClass> | null
  *   result: object | null
+ *   abortedReason?: import('./BaseGraphqlCapsule').LAUNCH_ABORTED_REASON
  * }} CapsuleParams
  */
