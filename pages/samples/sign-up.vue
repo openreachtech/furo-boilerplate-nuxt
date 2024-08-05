@@ -11,6 +11,7 @@ import FormElementClerk from '~/modules/domClerks/FormElementClerk'
 const formRef = ref(null)
 const statusReactive = reactive({
   allowsToSubmit: false,
+  isLoading: false,
 })
 
 const {
@@ -137,6 +138,13 @@ async function submitForm ({
       新規登録
     </button>
   </form>
+
+  <div
+    v-if="statusReactive.isLoading"
+    class="unit-loading"
+  >
+    Loading ...
+  </div>
 </template>
 
 <style>
@@ -180,5 +188,20 @@ form button[disabled] {
   background-color: #ccc;
 }
 
-/* CSS styles here */
+.unit-loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  border: 1rem red solid;
+
+  display: grid;
+  place-items: center;
+
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  font-size: 3rem;
+}
 </style>
