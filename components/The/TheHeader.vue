@@ -4,7 +4,7 @@
 
 <style>
 header {
-  position: fixed;
+  position: sticky;
   top: 0;
 
   width: 100dvw;
