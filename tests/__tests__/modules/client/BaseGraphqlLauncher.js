@@ -2050,6 +2050,100 @@ describe('BaseGraphqlLauncher', () => {
       })
     })
 
+    describe('to return aborted hooks capsule', () => {
+      const cases = [
+        {
+          params: {
+            endpointUrl: 'http://example.com/graphql-customer',
+            variables: {
+              input: {
+                id: 10001,
+              },
+            },
+            options: {
+              headers: new Headers({
+                'x-access-token': 'access-token-01',
+              }),
+            },
+            Payload: class CustomerPayload extends BaseGraphqlPayload {
+              /** @inheritdoc */
+              static get document () {
+                return /* GraphQL */ `
+                query CustomerQuery ($input: CustomerSearchInput!) {
+                  customer (input: $input) {
+                    id
+                  }
+                }`
+              }
+            },
+            Capsule: class CustomerCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+        {
+          params: {
+            endpointUrl: 'http://example.com/graphql-admin',
+            variables: {
+              input: null,
+            },
+            options: {
+              headers: new Headers({
+                'x-access-token': 'access-token-02',
+              }),
+            },
+            Payload: class AdminPayload extends BaseGraphqlPayload {
+              /** @inheritdoc */
+              static get document () {
+                return /* GraphQL */ `
+                query {
+                  admin {
+                    id
+                  }
+                }`
+              }
+            },
+            Capsule: class AdminCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+      ]
+
+      test.each(cases)('endpointUrl: $params.endpointUrl', async ({ params }) => {
+        const PayloadSpy = jest.spyOn(BaseGraphqlLauncher, 'Payload', 'get')
+          .mockReturnValue(params.Payload)
+        const fetchSpy = jest.spyOn(globalThis, 'fetch')
+          .mockRejectedValue(new Error('Network Error'))
+        const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
+          .mockReturnValue(params.Capsule)
+
+        const launcher = BaseGraphqlLauncher.create({
+          config: {
+            ENDPOINT_URL: params.endpointUrl,
+          },
+        })
+        const args = {
+          variables: params.variables,
+          options: params.options,
+          hooks: {
+            beforeRequest: async _ => true,
+          },
+        }
+
+        const actual = await launcher.launchRequestWithVariables(args)
+
+        expect(actual)
+          .toBeInstanceOf(params.Capsule)
+        expect(actual)
+          .toHaveProperty('rawResponse', null)
+        expect(actual)
+          .toHaveProperty('abortedReason', LAUNCH_ABORTED_REASON.BEFORE_REQUEST_HOOK)
+        expect(actual.extractContent())
+          .toBeNull()
+
+        PayloadSpy.mockRestore()
+        fetchSpy.mockRestore()
+        CapsuleSpy.mockRestore()
+      })
+    })
+
     describe('to return Network error capsule', () => {
       const cases = [
         {
@@ -2401,6 +2495,115 @@ describe('BaseGraphqlLauncher', () => {
           createPayloadSpy.mockRestore()
           invokeFetchQuerySpy.mockRestore()
         })
+      })
+    })
+
+    describe('to call hooks', () => {
+      const cases = [
+        {
+          params: {
+            endpointUrl: 'http://example.com/graphql-customer',
+            variables: {
+              input: {
+                id: 10001,
+              },
+            },
+            options: {
+              headers: new Headers({
+                'x-access-token': 'access-token-01',
+              }),
+            },
+            Payload: class CustomerPayload extends BaseGraphqlPayload {
+              /** @inheritdoc */
+              static get document () {
+                return /* GraphQL */ `
+                query CustomerQuery ($input: CustomerSearchInput!) {
+                  customer (input: $input) {
+                    id
+                  }
+                }`
+              }
+            },
+            Capsule: class CustomerCapsule extends BaseGraphqlCapsule {},
+            hooks: {
+              beforeRequest: async () => true,
+              afterRequest: async () => {},
+            },
+          },
+        },
+        {
+          params: {
+            endpointUrl: 'http://example.com/graphql-admin',
+            variables: {
+              input: null,
+            },
+            options: {
+              headers: new Headers({
+                'x-access-token': 'access-token-02',
+              }),
+            },
+            Payload: class AdminPayload extends BaseGraphqlPayload {
+              /** @inheritdoc */
+              static get document () {
+                return /* GraphQL */ `
+                query {
+                  admin {
+                    id
+                  }
+                }`
+              }
+            },
+            Capsule: class AdminCapsule extends BaseGraphqlCapsule {},
+            hooks: {
+              beforeRequest: async () => false,
+              afterRequest: async () => {},
+            },
+          },
+        },
+      ]
+
+      test.each(cases)('endpointUrl: $params.endpointUrl', async ({ params }) => {
+        const PayloadSpy = jest.spyOn(BaseGraphqlLauncher, 'Payload', 'get')
+          .mockReturnValue(params.Payload)
+        const fetchSpy = jest.spyOn(globalThis, 'fetch')
+          .mockRejectedValue(new Error('Network Error'))
+        const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
+          .mockReturnValue(params.Capsule)
+
+        const beforeRequestSpy = jest.spyOn(params.hooks, 'beforeRequest')
+        const afterRequestSpy = jest.spyOn(params.hooks, 'afterRequest')
+
+        const launcher = BaseGraphqlLauncher.create({
+          config: {
+            ENDPOINT_URL: params.endpointUrl,
+          },
+        })
+        const args = {
+          variables: params.variables,
+          options: params.options,
+          hooks: params.hooks,
+        }
+
+        const actual = await launcher.launchRequestWithVariables(args)
+
+        expect(beforeRequestSpy)
+          .toHaveBeenCalledWith(expect.any(params.Payload))
+        expect(afterRequestSpy)
+          .toHaveBeenCalledWith(expect.any(params.Capsule))
+
+        expect(actual)
+          .toBeInstanceOf(params.Capsule)
+        expect(actual)
+          .toHaveProperty('rawResponse', null)
+        expect(actual.extractContent())
+          .toBeNull()
+
+        PayloadSpy.mockRestore()
+        fetchSpy.mockRestore()
+        CapsuleSpy.mockRestore()
+
+        beforeRequestSpy.mockRestore()
+        afterRequestSpy.mockRestore()
       })
     })
   })
