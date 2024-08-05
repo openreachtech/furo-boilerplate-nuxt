@@ -14,6 +14,6 @@ header {
   place-items: center;
 
   background-color: rgba(0, 255, 0, .5);
-  color: #000;
+  color: #fff;
 }
 </style>

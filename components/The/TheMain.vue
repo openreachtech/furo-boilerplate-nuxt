@@ -10,5 +10,6 @@ main {
 
   padding-block: .5rem;
   padding-inline: 1rem;
+  background: #eee;
 }
 </style>
