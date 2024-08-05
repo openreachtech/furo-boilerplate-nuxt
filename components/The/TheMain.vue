@@ -6,10 +6,10 @@
 
 <style>
 main {
-  min-height: calc(100dvh - var(--size-footer-height));
+  min-height: 100dvh;
 
-  padding-top: var(--size-header-height);
-
-  border: .5rem #000 solid;
+  padding-block: .5rem;
+  padding-inline: 1rem;
+  background: #eee;
 }
 </style>

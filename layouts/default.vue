@@ -1,8 +1,10 @@
 <!-- layouts/default.vue -->
 <template>
-  <TheHeader />
-  <TheMain />
-  <TheFooter />
+  <div class="unit-body">
+    <TheHeader />
+    <TheMain />
+    <TheFooter />
+  </div>
 </template>
 
 <script>
@@ -33,9 +35,11 @@ body {
 
 /* Layout */
 
-body {
-  min-height: 100dvh;
-  position: relative;
+.unit-body {
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
 }
 
 </style>
