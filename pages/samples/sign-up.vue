@@ -1,3 +1,53 @@
+<script setup>
+import {
+  reactive,
+  ref,
+} from 'vue'
+
+import useSignUpClient from '~/composables/client/mutations/useSignUpClient'
+
+import FormElementClerk from '~/modules/domClerks/FormElementClerk'
+
+const formRef = ref(null)
+const statusReactive = reactive({
+  allowsToSubmit: false,
+})
+
+const {
+  // capsuleRef,
+  validationRef,
+  invokeRequestOnEvent,
+  // invokeRequestOnMounted,
+} = useSignUpClient()
+
+/**
+ * Submit form event handler.
+ *
+ * @param {{
+ *   formElement: HTMLFormElement | null
+ * }} params - Parameters.
+ */
+async function submitForm ({
+  formElement,
+}) {
+  if (!formElement) {
+    return
+  }
+
+  const formElementClerk = FormElementClerk.create({
+    formElement,
+  })
+
+  const formValueHash = formElementClerk.extractValueHash()
+
+  await invokeRequestOnEvent({
+    variables: {
+      input: formValueHash,
+    },
+  })
+}
+</script>
+
 <template>
   <h1>Hello I&#39;m pages/signUp.vue!</h1>
 
@@ -10,41 +60,65 @@
     <label class="row">
       <span>メールアドレス</span>
       <input
-        v-model="formReactive.email"
         name="email"
         type="text"
         placeholder="メールアドレスを入力してください。"
+        value="stew.eucen@openreach.tech"
       >
+      <div>{{ validationRef.message.email }}&nbsp;</div>
     </label>
 
     <label class="row">
       <span>ユーザ名</span>
       <input
-        v-model="formReactive.username"
         name="username"
         type="text"
         placeholder="ユーザ名を入力してください。"
+        value="John Doe"
       >
+      <div>{{ validationRef.message.username }}&nbsp;</div>
+    </label>
+
+    <label class="row">
+      <span>First Name</span>
+      <input
+        name="firstName"
+        type="text"
+        placeholder="Please enter your first name."
+        value="Eucen"
+      >
+      <div>{{ validationRef.message.firstName }}&nbsp;</div>
+    </label>
+
+    <label class="row">
+      <span>First Name</span>
+      <input
+        name="lastName"
+        type="text"
+        placeholder="Please enter your last name."
+        value="Stew"
+      >
+      <div>{{ validationRef.message.lastName }}&nbsp;</div>
     </label>
 
     <label class="row">
       <span>パスワード</span>
       <input
-        v-model="formReactive.password"
         name="password"
         type="password"
         placeholder="パスワードを入力してください。"
       >
+      <div>{{ validationRef.message.password }}&nbsp;</div>
     </label>
 
     <label class="row">
       <span>パスワード (確認用)</span>
       <input
-        v-model="formReactive.confirmPassword"
         name="confirm-password"
         type="password"
         placeholder="パスワードを入力してください。"
       >
+      <div>{{ validationRef.message['password-confirmation'] }}&nbsp;</div>
     </label>
 
     <label class="column">
@@ -64,31 +138,6 @@
     </button>
   </form>
 </template>
-
-<script setup>
-import {
-  reactive,
-  ref,
-} from 'vue'
-
-const formRef = ref(null)
-const formReactive = reactive({
-  email: '',
-  password: '',
-  username: '',
-  confirmPassword: '',
-})
-const statusReactive = reactive({
-  allowsToSubmit: false,
-})
-
-async function submitForm ({
-  formElement,
-}) {
-  await console.log('submitForm()', formElement)
-  await console.log('formReactive', formReactive)
-}
-</script>
 
 <style>
 form {
