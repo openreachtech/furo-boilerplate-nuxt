@@ -1,35 +1,104 @@
-import SignUpMutationGraphqlLauncher from '~/app/graphql/client/mutations/signUp/SignUpMutationGraphqlLauncher'
+import {
+  onMounted,
+  ref,
+} from 'vue'
 
-export function useSignUpClient () {
+import SignUpMutationGraphqlLauncher from '~/app/graphql/client/mutations/signUp/SignUpMutationGraphqlLauncher'
+import SignUpMutationGraphqlCapsule from '~/app/graphql/client/mutations/signUp/SignUpMutationGraphqlCapsule'
+
+/**
+ * Use signUp GraphQL client
+ *
+ * @returns {{
+ *   capsuleRef: import('vue').Ref<GraphqlResponseCapsule>
+ *   validationRef: import('vue').Ref<import('~/modules/client/VariablesValidationResult').default>
+ *   invokeRequestOnEvent: (args: GraphqlRequestParams) => Promise<void>
+ *   invokeRequestOnMounted: (args: GraphqlRequestParams) => void
+ * }}
+ */
+export default function useSignUpClient () {
+  const capsuleRef = ref(
+    SignUpMutationGraphqlCapsule.createAsPending()
+  )
+  const validationRef = ref(
+    capsuleRef.value.createVariablesValidationResult()
+  )
+
   return {
-    sendSignUp,
+    capsuleRef,
+    validationRef,
+
+    /**
+     * Invoke request.
+     *
+     * @param {GraphqlRequestParams} args - Arguments.
+     * @returns {Promise<void>}
+     */
+    async invokeRequestOnEvent (args) {
+      await invokeRequest(args)
+    },
+
+    /**
+     * Invoke request.
+     *
+     * @param {GraphqlRequestParams} args - Arguments.
+     * @returns {void}
+     */
+    invokeRequestOnMounted (args) {
+      onMounted(async () => {
+        await invokeRequest(args)
+      })
+    },
   }
 
   /**
-   * Fetch signUp.
+   * Invoke request.
    *
-   * @param {{
-   *   variables: {
-   *     input: {
-   *       email: string
-   *       username?: string
-   *       firstName?: string
-   *       lastName?: string
-   *       password: string
-   *     }
-   *   }
-   * }} params - Parameters.
-   * @returns {Promise<import('~/app/graphql/client/mutations/signUp/SignUpMutationGraphqlCapsule')>}
+   * @param {GraphqlRequestParams} args - Arguments.
+   * @returns {Promise<void>}
    */
-  async function sendSignUp ({
-    variables,
-  }) {
-    const launcher = SignUpMutationGraphqlLauncher.create()
+  async function invokeRequest (args) {
+    const capsule = await fetchCapsule(args)
 
-    const capsule = await launcher.launchRequestWithVariables({
-      variables,
-    })
+    capsuleRef.value = capsule
 
-    return capsule
+    validationRef.value = capsule.createVariablesValidationResult()
   }
 }
+
+/**
+ * Fetch GraphQL client capsule.
+ *
+ * @param {GraphqlRequestParams} params - Parameters.
+ * @returns {Promise<GraphqlResponseCapsule>}
+ */
+export async function fetchCapsule ({
+  variables,
+}) {
+  const launcher = SignUpMutationGraphqlLauncher.create()
+
+  const capsule = await launcher.launchRequestWithVariables({
+    variables,
+  })
+
+  return /** @type {*} */ (capsule)
+}
+
+/**
+ * @typedef {import('~/app/graphql/client/mutations/signUp/SignUpMutationGraphqlCapsule').default} GraphqlResponseCapsule
+ */
+
+/**
+ * @typedef {{
+ *   variables?: {
+ *     input: {
+ *       email?: string
+ *       username?: string
+ *       firstName?: string
+ *       lastName?: string
+ *       password?: string
+ *       'password-confirmation'?: string
+ *     }
+ *   }
+ * }} GraphqlRequestParams
+ */
