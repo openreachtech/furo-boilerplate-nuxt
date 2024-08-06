@@ -67,3 +67,16 @@ describe('BaseFormElementClerk', () => {
     })
   })
 })
+
+describe('BaseFormElementClerk', () => {
+  describe('.get:validators', () => {
+    test('to return fixed value', () => {
+      const actual = BaseFormElementClerk.validators
+
+      expect(actual)
+        .toBeInstanceOf(Array)
+      expect(actual)
+        .toHaveLength(0)
+    })
+  })
+})
