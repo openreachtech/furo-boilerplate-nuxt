@@ -74,11 +74,13 @@ export default class BaseGraphqlLauncher {
     rawResponse,
     payload,
     result,
+    abortedReason,
   }) {
     const args = {
       rawResponse,
       payload,
       result,
+      abortedReason,
     }
 
     return this.Capsule.create(args)
@@ -391,5 +393,6 @@ export default class BaseGraphqlLauncher {
  *   rawResponse: Response | null
  *   payload: InstanceType<PayloadClass> | null
  *   result: object | null
+ *   abortedReason?: import('./BaseGraphqlCapsule').LAUNCH_ABORTED_REASON
  * }} CapsuleParams
  */
