@@ -4,7 +4,9 @@ import {
 
 import BaseGraphqlLauncher from '~/modules/client/BaseGraphqlLauncher'
 import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
-import BaseGraphqlCapsule from '~/modules/client/BaseGraphqlCapsule'
+import BaseGraphqlCapsule, {
+  LAUNCH_ABORTED_REASON,
+} from '~/modules/client/BaseGraphqlCapsule'
 
 describe('BaseGraphqlLauncher', () => {
   describe('constructor', () => {
@@ -820,6 +822,58 @@ describe('BaseGraphqlLauncher', () => {
             },
           },
         },
+        {
+          params: {
+            rawResponse: new Response(),
+            payload: new BaseGraphqlPayload({
+              queryTemplate: /* GraphQL */ `
+                query {
+                  user {
+                    id
+                  }
+                }
+              `,
+              variables: {
+                input: {
+                  userId: 30001,
+                },
+              },
+            }),
+            result: {
+              data: {
+                user: {
+                  id: 30001,
+                },
+              },
+            },
+          },
+        },
+        {
+          params: {
+            rawResponse: new Response(),
+            payload: new BaseGraphqlPayload({
+              queryTemplate: /* GraphQL */ `
+                query {
+                  unknown {
+                    id
+                  }
+                }
+              `,
+              variables: {
+                input: {
+                  unknownId: 40001,
+                },
+              },
+            }),
+            result: {
+              data: {
+                user: {
+                  id: 40001,
+                },
+              },
+            },
+          },
+        },
       ]
 
       test.each(cases)('result: $params.result', ({ params }) => {
@@ -863,6 +917,7 @@ describe('BaseGraphqlLauncher', () => {
                 },
               },
             },
+            abortedReason: LAUNCH_ABORTED_REASON.INVALID_VARIABLES,
           },
         },
         {
@@ -889,6 +944,61 @@ describe('BaseGraphqlLauncher', () => {
                 },
               },
             },
+            abortedReason: LAUNCH_ABORTED_REASON.BEFORE_REQUEST_HOOK,
+          },
+        },
+        {
+          params: {
+            rawResponse: new Response(),
+            payload: new BaseGraphqlPayload({
+              queryTemplate: /* GraphQL */ `
+                query {
+                  unknown {
+                    id
+                  }
+                }
+              `,
+              variables: {
+                input: {
+                  unknownId: 40001,
+                },
+              },
+            }),
+            result: {
+              data: {
+                unknown: {
+                  id: 40001,
+                },
+              },
+            },
+            abortedReason: LAUNCH_ABORTED_REASON.UNKNOWN,
+          },
+        },
+        {
+          params: {
+            rawResponse: new Response(),
+            payload: new BaseGraphqlPayload({
+              queryTemplate: /* GraphQL */ `
+                query {
+                  user {
+                    id
+                  }
+                }
+              `,
+              variables: {
+                input: {
+                  userId: 30001,
+                },
+              },
+            }),
+            result: {
+              data: {
+                user: {
+                  id: 30001,
+                },
+              },
+            },
+            // abortedReason: LAUNCH_ABORTED_REASON.NONE,
           },
         },
       ]
