@@ -129,4 +129,10 @@ export default [
       ],
     },
   },
+
+  {
+    rules: {
+      'require-await': 'off',
+    },
+  },
 ]
