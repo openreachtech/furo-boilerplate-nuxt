@@ -122,6 +122,7 @@ export default class BaseGraphqlLauncher {
       rawResponse: null,
       payload,
       result: null,
+      abortedReason: LAUNCH_ABORTED_REASON.INVALID_VARIABLES,
     }
 
     return this.createResultCapsule(args)

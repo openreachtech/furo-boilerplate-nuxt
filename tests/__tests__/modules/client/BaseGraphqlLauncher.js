@@ -330,6 +330,7 @@ describe('BaseGraphqlLauncher', () => {
             rawResponse: null,
             payload: args.payload,
             result: null,
+            abortedReason: LAUNCH_ABORTED_REASON.INVALID_VARIABLES,
           }
 
           const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
@@ -1713,6 +1714,7 @@ describe('BaseGraphqlLauncher', () => {
           rawResponse: null,
           payload: invalidVariablesPayload,
           result: null,
+          abortedReason: LAUNCH_ABORTED_REASON.INVALID_VARIABLES,
         })
 
         const createResultCapsuleAsInvalidVariablesErrorSpy = jest.spyOn(BaseGraphqlLauncher, 'createResultCapsuleAsInvalidVariablesError')
