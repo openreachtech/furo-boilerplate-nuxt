@@ -15,10 +15,12 @@ export default class BaseGraphqlCapsule {
     rawResponse,
     payload,
     result,
+    abortedReason = LAUNCH_ABORTED_REASON.NONE,
   }) {
     this.rawResponse = rawResponse
     this.payload = payload
     this.result = result
+    this.abortedReason = abortedReason
   }
 
   /**
@@ -263,6 +265,7 @@ export const LAUNCH_ABORTED_REASON = {
  *   rawResponse: Response | null
  *   payload: P | null
  *   result: GraphqlCapsuleResult | null
+ *   abortedReason?: LAUNCH_ABORTED_REASON
  * }} BaseGraphqlCapsuleParams
  */
 
