@@ -124,3 +124,7 @@ export default class BaseFormElementClerk {
  *   | HTMLTextAreaElement
  * } FormControlElementType
  */
+
+/**
+ * @typedef {import('~/modules/client/FieldValidator').FieldValidatorFactoryParams} ValidatorOptionsType
+ */
