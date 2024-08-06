@@ -1,5 +1,10 @@
 import FormControlElementClerk from '~/modules/domClerks/FormControlElementClerk'
 
+/**
+ * Base class of form element clerk.
+ *
+ * @template T
+ */
 export default class BaseFormElementClerk {
   /**
    * Constructor of BaseFormElementClerk.
@@ -15,15 +20,19 @@ export default class BaseFormElementClerk {
   /**
    * Factory method of BaseFormElementClerk.
    *
-   * @param {BaseFormElementClerkFactoryParams} params
-   * @returns
+   * @param {BaseFormElementClerkFactoryParams} params - Parameters of factory method.
+   * @template {typeof BaseFormElementClerk} T
+   * @this {T}
+   * @returns {InstanceType<T>} Instance of this class.
    */
   static create ({
     formElement,
   }) {
-    return new this({
-      formElement,
-    })
+    return /** @type {*} */ (
+      new this({
+        formElement,
+      })
+    )
   }
 
   /**
