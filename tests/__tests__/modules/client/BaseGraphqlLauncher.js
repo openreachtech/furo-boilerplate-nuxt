@@ -4,7 +4,9 @@ import {
 
 import BaseGraphqlLauncher from '~/modules/client/BaseGraphqlLauncher'
 import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
-import BaseGraphqlCapsule from '~/modules/client/BaseGraphqlCapsule'
+import BaseGraphqlCapsule, {
+  LAUNCH_ABORTED_REASON,
+} from '~/modules/client/BaseGraphqlCapsule'
 
 describe('BaseGraphqlLauncher', () => {
   describe('constructor', () => {
@@ -328,6 +330,7 @@ describe('BaseGraphqlLauncher', () => {
             rawResponse: null,
             payload: args.payload,
             result: null,
+            abortedReason: LAUNCH_ABORTED_REASON.INVALID_VARIABLES,
           }
 
           const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
@@ -339,6 +342,161 @@ describe('BaseGraphqlLauncher', () => {
           }
 
           BaseGraphqlLauncher.createResultCapsuleAsInvalidVariablesError(currentArgs)
+
+          expect(createSpy)
+            .toHaveBeenCalledWith(expected)
+
+          CapsuleSpy.mockRestore()
+          createSpy.mockRestore()
+        })
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlLauncher', () => {
+  describe('.createResultCapsuleAsAbortedByHooks()', () => {
+    describe('to be instance of BaseGraphqlCapsule', () => {
+      const capsuleCases = [
+        {
+          params: {
+            CapsuleClass: class AlphaCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+        {
+          params: {
+            CapsuleClass: class BetaCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+      ]
+
+      describe.each(capsuleCases)('Capsule: $params.CapsuleClass.name', ({ params }) => {
+        const cases = [
+          {
+            args: {
+              payload: new BaseGraphqlPayload({
+                queryTemplate: /* GraphQL */ `
+                  query {
+                    customer: {
+                      id
+                    }
+                  }
+                }`,
+                variables: null,
+              }),
+            },
+          },
+          {
+            args: {
+              payload: new BaseGraphqlPayload({
+                queryTemplate: /* GraphQL */ `
+                  query {
+                    admin: {
+                      id
+                    }
+                  }
+                }`,
+                variables: null,
+              }),
+            },
+          },
+        ]
+
+        test.each(cases)('payload: $args.payload', ({ args }) => {
+          const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
+            .mockReturnValue(params.CapsuleClass)
+
+          const currentArgs = {
+            payload: args.payload,
+          }
+
+          const capsule = BaseGraphqlLauncher.createResultCapsuleAsAbortedByHooks(currentArgs)
+
+          expect(capsule)
+            .toBeInstanceOf(params.CapsuleClass)
+
+          CapsuleSpy.mockRestore()
+        })
+      })
+    })
+
+    describe('to call Capsule factory method', () => {
+      const capsuleCases = [
+        {
+          params: {
+            CapsuleClass: class AlphaCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+        {
+          params: {
+            CapsuleClass: class BetaCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+      ]
+
+      describe.each(capsuleCases)('Capsule: $params.CapsuleClass.name', ({ params }) => {
+        const cases = [
+          {
+            args: {
+              payload: new BaseGraphqlPayload({
+                queryTemplate: /* GraphQL */ `
+                  query {
+                    customer: {
+                      id
+                    }
+                  }
+                }`,
+                variables: null,
+              }),
+            },
+          },
+          {
+            args: {
+              payload: new BaseGraphqlPayload({
+                queryTemplate: /* GraphQL */ `
+                  query {
+                    admin: {
+                      id
+                    }
+                  }
+                }`,
+                variables: null,
+              }),
+            },
+          },
+          {
+            args: {
+              payload: new BaseGraphqlPayload({
+                queryTemplate: /* GraphQL */ `
+                  query {
+                    unknown: {
+                      id
+                    }
+                  }
+                }`,
+                variables: null,
+              }),
+            },
+          },
+        ]
+
+        test.each(cases)('payload: $args.payload', ({ args }) => {
+          const expected = {
+            rawResponse: null,
+            payload: args.payload,
+            result: null,
+            abortedReason: LAUNCH_ABORTED_REASON.BEFORE_REQUEST_HOOK,
+          }
+
+          const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
+            .mockReturnValue(params.CapsuleClass)
+          const createSpy = jest.spyOn(params.CapsuleClass, 'create')
+
+          const currentArgs = {
+            payload: args.payload,
+          }
+
+          BaseGraphqlLauncher.createResultCapsuleAsAbortedByHooks(currentArgs)
 
           expect(createSpy)
             .toHaveBeenCalledWith(expected)
@@ -820,6 +978,58 @@ describe('BaseGraphqlLauncher', () => {
             },
           },
         },
+        {
+          params: {
+            rawResponse: new Response(),
+            payload: new BaseGraphqlPayload({
+              queryTemplate: /* GraphQL */ `
+                query {
+                  user {
+                    id
+                  }
+                }
+              `,
+              variables: {
+                input: {
+                  userId: 30001,
+                },
+              },
+            }),
+            result: {
+              data: {
+                user: {
+                  id: 30001,
+                },
+              },
+            },
+          },
+        },
+        {
+          params: {
+            rawResponse: new Response(),
+            payload: new BaseGraphqlPayload({
+              queryTemplate: /* GraphQL */ `
+                query {
+                  unknown {
+                    id
+                  }
+                }
+              `,
+              variables: {
+                input: {
+                  unknownId: 40001,
+                },
+              },
+            }),
+            result: {
+              data: {
+                user: {
+                  id: 40001,
+                },
+              },
+            },
+          },
+        },
       ]
 
       test.each(cases)('result: $params.result', ({ params }) => {
@@ -863,6 +1073,7 @@ describe('BaseGraphqlLauncher', () => {
                 },
               },
             },
+            abortedReason: LAUNCH_ABORTED_REASON.INVALID_VARIABLES,
           },
         },
         {
@@ -889,6 +1100,61 @@ describe('BaseGraphqlLauncher', () => {
                 },
               },
             },
+            abortedReason: LAUNCH_ABORTED_REASON.BEFORE_REQUEST_HOOK,
+          },
+        },
+        {
+          params: {
+            rawResponse: new Response(),
+            payload: new BaseGraphqlPayload({
+              queryTemplate: /* GraphQL */ `
+                query {
+                  unknown {
+                    id
+                  }
+                }
+              `,
+              variables: {
+                input: {
+                  unknownId: 40001,
+                },
+              },
+            }),
+            result: {
+              data: {
+                unknown: {
+                  id: 40001,
+                },
+              },
+            },
+            abortedReason: LAUNCH_ABORTED_REASON.UNKNOWN,
+          },
+        },
+        {
+          params: {
+            rawResponse: new Response(),
+            payload: new BaseGraphqlPayload({
+              queryTemplate: /* GraphQL */ `
+                query {
+                  user {
+                    id
+                  }
+                }
+              `,
+              variables: {
+                input: {
+                  userId: 30001,
+                },
+              },
+            }),
+            result: {
+              data: {
+                user: {
+                  id: 30001,
+                },
+              },
+            },
+            // abortedReason: LAUNCH_ABORTED_REASON.NONE,
           },
         },
       ]
@@ -1448,6 +1714,7 @@ describe('BaseGraphqlLauncher', () => {
           rawResponse: null,
           payload: invalidVariablesPayload,
           result: null,
+          abortedReason: LAUNCH_ABORTED_REASON.INVALID_VARIABLES,
         })
 
         const createResultCapsuleAsInvalidVariablesErrorSpy = jest.spyOn(BaseGraphqlLauncher, 'createResultCapsuleAsInvalidVariablesError')
@@ -1778,6 +2045,100 @@ describe('BaseGraphqlLauncher', () => {
           .toBeInstanceOf(params.Capsule)
         expect(actual.extractContent())
           .toEqual(expected)
+
+        PayloadSpy.mockRestore()
+        fetchSpy.mockRestore()
+        CapsuleSpy.mockRestore()
+      })
+    })
+
+    describe('to return aborted hooks capsule', () => {
+      const cases = [
+        {
+          params: {
+            endpointUrl: 'http://example.com/graphql-customer',
+            variables: {
+              input: {
+                id: 10001,
+              },
+            },
+            options: {
+              headers: new Headers({
+                'x-access-token': 'access-token-01',
+              }),
+            },
+            Payload: class CustomerPayload extends BaseGraphqlPayload {
+              /** @inheritdoc */
+              static get document () {
+                return /* GraphQL */ `
+                query CustomerQuery ($input: CustomerSearchInput!) {
+                  customer (input: $input) {
+                    id
+                  }
+                }`
+              }
+            },
+            Capsule: class CustomerCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+        {
+          params: {
+            endpointUrl: 'http://example.com/graphql-admin',
+            variables: {
+              input: null,
+            },
+            options: {
+              headers: new Headers({
+                'x-access-token': 'access-token-02',
+              }),
+            },
+            Payload: class AdminPayload extends BaseGraphqlPayload {
+              /** @inheritdoc */
+              static get document () {
+                return /* GraphQL */ `
+                query {
+                  admin {
+                    id
+                  }
+                }`
+              }
+            },
+            Capsule: class AdminCapsule extends BaseGraphqlCapsule {},
+          },
+        },
+      ]
+
+      test.each(cases)('endpointUrl: $params.endpointUrl', async ({ params }) => {
+        const PayloadSpy = jest.spyOn(BaseGraphqlLauncher, 'Payload', 'get')
+          .mockReturnValue(params.Payload)
+        const fetchSpy = jest.spyOn(globalThis, 'fetch')
+          .mockRejectedValue(new Error('Network Error'))
+        const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
+          .mockReturnValue(params.Capsule)
+
+        const launcher = BaseGraphqlLauncher.create({
+          config: {
+            ENDPOINT_URL: params.endpointUrl,
+          },
+        })
+        const args = {
+          variables: params.variables,
+          options: params.options,
+          hooks: {
+            beforeRequest: async _ => true,
+          },
+        }
+
+        const actual = await launcher.launchRequestWithVariables(args)
+
+        expect(actual)
+          .toBeInstanceOf(params.Capsule)
+        expect(actual)
+          .toHaveProperty('rawResponse', null)
+        expect(actual)
+          .toHaveProperty('abortedReason', LAUNCH_ABORTED_REASON.BEFORE_REQUEST_HOOK)
+        expect(actual.extractContent())
+          .toBeNull()
 
         PayloadSpy.mockRestore()
         fetchSpy.mockRestore()
@@ -2136,6 +2497,115 @@ describe('BaseGraphqlLauncher', () => {
           createPayloadSpy.mockRestore()
           invokeFetchQuerySpy.mockRestore()
         })
+      })
+    })
+
+    describe('to call hooks', () => {
+      const cases = [
+        {
+          params: {
+            endpointUrl: 'http://example.com/graphql-customer',
+            variables: {
+              input: {
+                id: 10001,
+              },
+            },
+            options: {
+              headers: new Headers({
+                'x-access-token': 'access-token-01',
+              }),
+            },
+            Payload: class CustomerPayload extends BaseGraphqlPayload {
+              /** @inheritdoc */
+              static get document () {
+                return /* GraphQL */ `
+                query CustomerQuery ($input: CustomerSearchInput!) {
+                  customer (input: $input) {
+                    id
+                  }
+                }`
+              }
+            },
+            Capsule: class CustomerCapsule extends BaseGraphqlCapsule {},
+            hooks: {
+              beforeRequest: async () => true,
+              afterRequest: async () => {},
+            },
+          },
+        },
+        {
+          params: {
+            endpointUrl: 'http://example.com/graphql-admin',
+            variables: {
+              input: null,
+            },
+            options: {
+              headers: new Headers({
+                'x-access-token': 'access-token-02',
+              }),
+            },
+            Payload: class AdminPayload extends BaseGraphqlPayload {
+              /** @inheritdoc */
+              static get document () {
+                return /* GraphQL */ `
+                query {
+                  admin {
+                    id
+                  }
+                }`
+              }
+            },
+            Capsule: class AdminCapsule extends BaseGraphqlCapsule {},
+            hooks: {
+              beforeRequest: async () => false,
+              afterRequest: async () => {},
+            },
+          },
+        },
+      ]
+
+      test.each(cases)('endpointUrl: $params.endpointUrl', async ({ params }) => {
+        const PayloadSpy = jest.spyOn(BaseGraphqlLauncher, 'Payload', 'get')
+          .mockReturnValue(params.Payload)
+        const fetchSpy = jest.spyOn(globalThis, 'fetch')
+          .mockRejectedValue(new Error('Network Error'))
+        const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
+          .mockReturnValue(params.Capsule)
+
+        const beforeRequestSpy = jest.spyOn(params.hooks, 'beforeRequest')
+        const afterRequestSpy = jest.spyOn(params.hooks, 'afterRequest')
+
+        const launcher = BaseGraphqlLauncher.create({
+          config: {
+            ENDPOINT_URL: params.endpointUrl,
+          },
+        })
+        const args = {
+          variables: params.variables,
+          options: params.options,
+          hooks: params.hooks,
+        }
+
+        const actual = await launcher.launchRequestWithVariables(args)
+
+        expect(beforeRequestSpy)
+          .toHaveBeenCalledWith(expect.any(params.Payload))
+        expect(afterRequestSpy)
+          .toHaveBeenCalledWith(expect.any(params.Capsule))
+
+        expect(actual)
+          .toBeInstanceOf(params.Capsule)
+        expect(actual)
+          .toHaveProperty('rawResponse', null)
+        expect(actual.extractContent())
+          .toBeNull()
+
+        PayloadSpy.mockRestore()
+        fetchSpy.mockRestore()
+        CapsuleSpy.mockRestore()
+
+        beforeRequestSpy.mockRestore()
+        afterRequestSpy.mockRestore()
       })
     })
   })

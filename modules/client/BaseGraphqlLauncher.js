@@ -1,3 +1,7 @@
+import {
+  LAUNCH_ABORTED_REASON,
+} from './BaseGraphqlCapsule.js'
+
 /**
  * Base class of GraphQL launcher.
  *
@@ -74,11 +78,13 @@ export default class BaseGraphqlLauncher {
     rawResponse,
     payload,
     result,
+    abortedReason,
   }) {
     const args = {
       rawResponse,
       payload,
       result,
+      abortedReason,
     }
 
     return this.Capsule.create(args)
@@ -116,6 +122,29 @@ export default class BaseGraphqlLauncher {
       rawResponse: null,
       payload,
       result: null,
+      abortedReason: LAUNCH_ABORTED_REASON.INVALID_VARIABLES,
+    }
+
+    return this.createResultCapsule(args)
+  }
+
+  /**
+   * Create instance of capsule with result as aborted by hooks.
+   *
+   * @param {{
+   *   payload: InstanceType<PayloadClass>
+   * }} params - Parameters.
+   * @template C, D
+   * @returns {InstanceType<CapsuleClass<C, D>>} Instance of capsule.
+   */
+  static createResultCapsuleAsAbortedByHooks ({
+    payload,
+  }) {
+    const args = {
+      rawResponse: null,
+      payload,
+      result: null,
+      abortedReason: LAUNCH_ABORTED_REASON.BEFORE_REQUEST_HOOK,
     }
 
     return this.createResultCapsule(args)
@@ -235,6 +264,7 @@ export default class BaseGraphqlLauncher {
    * @param {{
    *   variables?: object | null
    *   options?: RequestInit
+   *   hooks?: GraphqlLauncherHooks
    * }} Params - Parameters.
    * @template C, D
    * @returns {Promise<InstanceType<CapsuleClass<C, D>>>} Promise of instance of capsule.
@@ -243,6 +273,7 @@ export default class BaseGraphqlLauncher {
   async launchRequestWithVariables ({
     variables = {},
     options = {},
+    hooks = {},
   } = {}) {
     const updatedOptions = this.updateOptions({
       options,
@@ -253,9 +284,31 @@ export default class BaseGraphqlLauncher {
       options: updatedOptions,
     })
 
-    const capsule = await this.launchRequest({
-      payload,
-    })
+    const {
+      beforeRequest = async () => false,
+      afterRequest = async () => {},
+    } = hooks
+
+    /*
+     * Before request.
+     */
+    const aborted = await beforeRequest(payload)
+
+    /*
+     * Create capsule.
+     */
+    const capsule = aborted
+      ? this.Ctor.createResultCapsuleAsAbortedByHooks({
+        payload,
+      })
+      : await this.launchRequest({
+        payload,
+      })
+
+    /*
+     * After request.
+     */
+    await afterRequest(capsule)
 
     return capsule
   }
@@ -391,5 +444,13 @@ export default class BaseGraphqlLauncher {
  *   rawResponse: Response | null
  *   payload: InstanceType<PayloadClass> | null
  *   result: object | null
+ *   abortedReason?: import('./BaseGraphqlCapsule').LAUNCH_ABORTED_REASON
  * }} CapsuleParams
+ */
+
+/**
+ * @typedef {{
+ *   beforeRequest?: (payload: InstanceType<PayloadClass>) => Promise<boolean>
+ *   afterRequest?: (capsule: InstanceType<CapsuleClass<*, *>>) => Promise<void>
+ * }} GraphqlLauncherHooks
  */
