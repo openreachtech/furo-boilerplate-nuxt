@@ -1,3 +1,7 @@
+import {
+  LAUNCH_ABORTED_REASON,
+} from './BaseGraphqlCapsule.js'
+
 /**
  * Base class of GraphQL launcher.
  *
@@ -118,6 +122,28 @@ export default class BaseGraphqlLauncher {
       rawResponse: null,
       payload,
       result: null,
+    }
+
+    return this.createResultCapsule(args)
+  }
+
+  /**
+   * Create instance of capsule with result as aborted by hooks.
+   *
+   * @param {{
+   *   payload: InstanceType<PayloadClass>
+   * }} params - Parameters.
+   * @template C, D
+   * @returns {InstanceType<CapsuleClass<C, D>>} Instance of capsule.
+   */
+  static createResultCapsuleAsAbortedByHooks ({
+    payload,
+  }) {
+    const args = {
+      rawResponse: null,
+      payload,
+      result: null,
+      abortedReason: LAUNCH_ABORTED_REASON.BEFORE_REQUEST_HOOK,
     }
 
     return this.createResultCapsule(args)
