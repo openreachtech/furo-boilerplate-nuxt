@@ -36,6 +36,16 @@ export default class BaseFormElementClerk {
   }
 
   /**
+   * get: Validators.
+   *
+   * @abstract
+   * @returns {Array<ValidatorOptionsType>} Array of arguments to create an instance of FieldValidator.
+   */
+  static get validators () {
+    return []
+  }
+
+  /**
    * get: All control elements of the form.
    *
    * @returns {Array<FormControlElementType>}
