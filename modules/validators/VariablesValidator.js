@@ -71,6 +71,26 @@ export default class VariablesValidator {
   }
 
   /**
+   * Generate validation hash.
+   *
+   * @returns {{
+   *   valid: Record<string, boolean>
+   *   invalid: Record<string, boolean>
+   *   messages: Record<string, Array<string>>
+   *   message: Record<string, string | null>
+   * }} Validation hash.
+   * @public
+   */
+  generateValidationHash () {
+    return {
+      valid: this.generateIsValidHash(),
+      invalid: this.generateIsInvalidHash(),
+      messages: this.generateAllMessagesHash(),
+      message: this.generateOneMessageHash(),
+    }
+  }
+
+  /**
    * Generate isValid hash.
    *
    * @returns {Record<string, boolean>} Validation result.
