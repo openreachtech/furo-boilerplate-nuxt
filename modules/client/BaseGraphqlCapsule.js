@@ -246,6 +246,18 @@ export default class BaseGraphqlCapsule {
 }
 
 /**
+ * enum: Launch aborted reason.
+ *
+ * @enum {symbol}
+ */
+export const LAUNCH_ABORTED_REASON = {
+  NONE: Symbol('not aborted'),
+  INVALID_VARIABLES: Symbol('aborted by invalid variables'),
+  BEFORE_REQUEST_HOOK: Symbol('aborted by before request hook'),
+  UNKNOWN: Symbol('aborted by unknown cause'),
+}
+
+/**
  * @template {PayloadClass<P>} P
  * @typedef {{
  *   rawResponse: Response | null
