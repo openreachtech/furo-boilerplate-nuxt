@@ -25,7 +25,9 @@ export default class BaseFormElementClerk {
    * Factory method of BaseFormElementClerk.
    *
    * @param {BaseFormElementClerkFactoryParams} params - Parameters of factory method.
-   * @template {typeof BaseFormElementClerk<*, *, *>} T
+   * @template {Record<string, string | Array<string> | null>} FV - Form value hash.
+   * @template {Record<string, *>} SV - Schema variable hash.
+   * @template {typeof BaseFormElementClerk<T, FV, SV>} T
    * @this {T}
    * @returns {InstanceType<T>} Instance of this class.
    */
