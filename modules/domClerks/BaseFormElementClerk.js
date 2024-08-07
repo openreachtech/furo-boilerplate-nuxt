@@ -95,11 +95,16 @@ export default class BaseFormElementClerk {
   /**
    * Generate schema variable hash.
    * The return value is set to Payload's variables.
+   * NOTE: When all <form> controls are used as is for Payload's variables,
+   *   does not need to override this method.
+   * Why we use the complex structure of parameter?
+   * It is for the resolve the input value and of the type definition of the return value.
    *
    * @param {{
    *   variableHash: FV
-   * }} params - Parameters
+   * }} params - Parameters.
    * @returns {SV} Hash of schema variables.
+   * @public
    */
   generateSchemaVariableHash ({
     variableHash,
