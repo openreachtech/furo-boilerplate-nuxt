@@ -91,6 +91,21 @@ export default class BaseFormElementClerk {
   }
 
   /**
+   * Generate schema variable hash.
+   * The return value is set to Payload's variables.
+   *
+   * @param {{
+   *   variableHash: FV
+   * }} params - Parameters
+   * @returns {SV} Hash of schema variables.
+   */
+  generateSchemaVariableHash ({
+    variableHash,
+  }) {
+    return /** @type {*} */ (variableHash)
+  }
+
+  /**
    * Is valid.
    *
    * @returns {boolean} true: valid.
