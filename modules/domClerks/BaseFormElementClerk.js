@@ -129,31 +129,29 @@ export default class BaseFormElementClerk {
   /**
    * Extract value hash from the form element.
    *
-   * @returns {{
-   *   [key: string]: string | Array<string> | null
-   * }}
+   * @returns {FV} Hash of form control value.
    */
   extractValueHash () {
     const controlHash = this.extractControlElements()
 
-    return Object.fromEntries(
-      Object.entries(controlHash)
-        .map(([name, control]) => [
-          name,
-          FormControlElementClerk.create({
-            control,
-          })
-            .extractValueHash(),
-        ])
+    return /** @type {*} */ (
+      Object.fromEntries(
+        Object.entries(controlHash)
+          .map(([name, control]) => [
+            name,
+            FormControlElementClerk.create({
+              control,
+            })
+              .extractValueHash(),
+          ])
+      )
     )
   }
 
   /**
    * Extract control elements by object hash.
    *
-   * @returns {{
-   *   [key: string]: FormControlElementHash
-   * }}
+   * @returns {Record<string, FormControlElementHash>} Hash of form control elements.
    */
   extractControlElements () {
     const names = this.extractNames()
