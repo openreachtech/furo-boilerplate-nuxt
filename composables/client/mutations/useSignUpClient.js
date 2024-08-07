@@ -11,18 +11,26 @@ import SignUpMutationGraphqlCapsule from '~/app/graphql/client/mutations/signUp/
  *
  * @returns {{
  *   capsuleRef: import('vue').Ref<GraphqlResponseCapsule>
- *   validationRef: import('vue').Ref<import('~/modules/client/VariablesValidationResult').default>
+ *   validationRef: import('vue').Ref<import('~/modules/validators/VariablesValidator').ValidatorHashType>
  *   invokeRequestOnEvent: (args: GraphqlRequestParams) => Promise<void>
  *   invokeRequestOnMounted: (args: GraphqlRequestParams) => void
  * }}
  */
 export default function useSignUpClient () {
   const capsuleRef = ref(
+    // TODO: Launcher から生成させる様に変更
     SignUpMutationGraphqlCapsule.createAsPending()
   )
-  const validationRef = ref(
-    capsuleRef.value.createVariablesValidationResult()
-  )
+
+  // TODO: VariablesValidator から生成させる様に変更
+  //   理由は、VariablesValidator が型情報を持っている為 → ValidatorHashType
+  // VariablesValidator.generateStubValidationHash()
+  const validationRef = ref({
+    valid: {},
+    invalid: {},
+    messages: {},
+    message: {},
+  })
 
   return {
     capsuleRef,
@@ -61,8 +69,6 @@ export default function useSignUpClient () {
     const capsule = await fetchCapsule(args)
 
     capsuleRef.value = capsule
-
-    validationRef.value = capsule.createVariablesValidationResult()
   }
 }
 
@@ -76,6 +82,11 @@ export async function fetchCapsule ({
   variables,
 }) {
   const launcher = SignUpMutationGraphqlLauncher.create()
+
+  // const payload = launcher.createPayload({
+  //   variables,
+  //   options: {},
+  // })
 
   const capsule = await launcher.launchRequestWithVariables({
     variables,
@@ -97,7 +108,6 @@ export async function fetchCapsule ({
  *       firstName?: string
  *       lastName?: string
  *       password?: string
- *       'password-confirmation'?: string
  *     }
  *   }
  * }} GraphqlRequestParams

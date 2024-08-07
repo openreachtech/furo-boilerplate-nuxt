@@ -3,10 +3,9 @@ import {
   reactive,
   ref,
 } from 'vue'
+import SignUpFormElementClerk from '~/app/domClerk/SignUpFormElementClerk'
 
 import useSignUpClient from '~/composables/client/mutations/useSignUpClient'
-
-import FormElementClerk from '~/modules/domClerks/FormElementClerk'
 
 const formRef = ref(null)
 const statusReactive = reactive({
@@ -34,15 +33,32 @@ async function submitForm ({
     return
   }
 
-  const formElementClerk = FormElementClerk.create({
+  /*
+   * <form> 窓口を生成
+   */
+  const formClerk = SignUpFormElementClerk.create({
     formElement,
   })
 
-  const formValueHash = formElementClerk.extractValueHash()
+  validationRef.value = formClerk.generateValidationHash()
+
+  /*
+   * フォームのバリデーションを確認
+   */
+  if (formClerk.isInvalid()) {
+    // バリデーションエラーなら、launchRequest() は実行しないで終了。
+
+    return
+  }
+
+  /**
+   * フォーム送信
+   */
+  const schemaVariableHash = formClerk.generateSchemaVariableHash()
 
   await invokeRequestOnEvent({
     variables: {
-      input: formValueHash,
+      input: schemaVariableHash,
     },
   })
 }
@@ -74,7 +90,7 @@ async function submitForm ({
         name="username"
         type="text"
         placeholder="ユーザ名を入力してください。"
-        value="John Doe"
+        value="JohnDoe"
       >
       <div>{{ validationRef.message.username }}&nbsp;</div>
     </label>
