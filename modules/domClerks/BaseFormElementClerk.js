@@ -6,6 +6,8 @@ import FieldValidator from '~/modules/client/FieldValidator'
  * Base class of form element clerk.
  *
  * @template T
+ * @template {Record<string, string | Array<string> | null>} FV
+ * @template {Record<string, *>} SV
  */
 export default class BaseFormElementClerk {
   /**
@@ -23,7 +25,7 @@ export default class BaseFormElementClerk {
    * Factory method of BaseFormElementClerk.
    *
    * @param {BaseFormElementClerkFactoryParams} params - Parameters of factory method.
-   * @template {typeof BaseFormElementClerk} T
+   * @template {typeof BaseFormElementClerk<*, *, *>} T
    * @this {T}
    * @returns {InstanceType<T>} Instance of this class.
    */
@@ -86,6 +88,21 @@ export default class BaseFormElementClerk {
     })
 
     return validator.generateValidationHash()
+  }
+
+  /**
+   * Generate schema variable hash.
+   * The return value is set to Payload's variables.
+   *
+   * @param {{
+   *   variableHash: FV
+   * }} params - Parameters
+   * @returns {SV} Hash of schema variables.
+   */
+  generateSchemaVariableHash ({
+    variableHash,
+  }) {
+    return /** @type {*} */ (variableHash)
   }
 
   /**
