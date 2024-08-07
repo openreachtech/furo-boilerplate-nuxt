@@ -8,10 +8,10 @@ export default class VariablesValidator {
    * @param {VariablesValidatorParams} params - Parameters.
    */
   constructor ({
-    variables,
+    valueHash,
     validators,
   }) {
-    this.valueHash = variables
+    this.valueHash = valueHash
     this.validators = validators
   }
 
@@ -276,7 +276,7 @@ export default class VariablesValidator {
 
 /**
  * @typedef {{
- *   variables: Record<string, any>
+ *   valueHash: Record<string, any>
  *   validators: Array<import('~/modules/client/FieldValidator').default>
  * }} VariablesValidatorParams
  */
