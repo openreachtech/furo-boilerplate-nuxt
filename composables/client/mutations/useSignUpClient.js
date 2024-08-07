@@ -11,7 +11,7 @@ import SignUpMutationGraphqlCapsule from '~/app/graphql/client/mutations/signUp/
  *
  * @returns {{
  *   capsuleRef: import('vue').Ref<GraphqlResponseCapsule>
- *   validationRef: import('vue').Ref<import('~/modules/validators/VariablesValidator').ValidatorHashType>
+ *   validationRef: import('vue').Ref<import('~/modules/validators/ValueHashValidator').ValidatorHashType>
  *   invokeRequestOnEvent: (args: GraphqlRequestParams) => Promise<void>
  *   invokeRequestOnMounted: (args: GraphqlRequestParams) => void
  * }}
