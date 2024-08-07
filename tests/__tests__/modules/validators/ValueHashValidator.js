@@ -2,7 +2,7 @@ import {
   ConstructorSpyGenerator,
 } from '@openreachtech/renchan-test-tools'
 
-import VariablesValidator from '~/modules/validators/VariablesValidator'
+import VariablesValidator from '~/modules/validators/ValueHashValidator'
 import FieldValidator from '~/modules/client/FieldValidator'
 
 describe('VariablesValidator', () => {
