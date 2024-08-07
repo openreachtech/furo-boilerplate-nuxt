@@ -289,3 +289,12 @@ export default class VariablesValidator {
 /**
  * @typedef {VariablesValidatorParams} VariablesValidatorFactoryParams
  */
+
+/**
+ * @typedef {{
+ *   valid: Record<string, boolean>
+ *   invalid: Record<string, boolean>
+ *   messages: Record<string, Array<string>>
+ *   message: Record<string, string | null>
+ * }} ValidatorHashType
+ */
