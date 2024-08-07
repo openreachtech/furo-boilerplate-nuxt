@@ -89,6 +89,18 @@ export default class BaseFormElementClerk {
   }
 
   /**
+   * Is valid.
+   *
+   * @returns {boolean} true: valid.
+   */
+  isValid () {
+    const validationHash = this.generateValidationHash()
+
+    return Object.values(validationHash)
+      .every(it => it)
+  }
+
+  /**
    * Extract value hash from the form element.
    *
    * @returns {{
