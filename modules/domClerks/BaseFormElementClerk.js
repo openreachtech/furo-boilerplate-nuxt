@@ -101,6 +101,15 @@ export default class BaseFormElementClerk {
   }
 
   /**
+   * Is invalid.
+   *
+   * @returns {boolean} true: invalid.
+   */
+  isInvalid () {
+    return !this.isValid()
+  }
+
+  /**
    * Extract value hash from the form element.
    *
    * @returns {{
