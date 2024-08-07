@@ -8,7 +8,7 @@ import FieldValidator from '~/modules/client/FieldValidator'
 describe('VariablesValidator', () => {
   describe('constructor', () => {
     describe('to keep property', () => {
-      describe('#variables', () => {
+      describe('#valueHash', () => {
         const cases = [
           {
             args: {
@@ -42,8 +42,8 @@ describe('VariablesValidator', () => {
           const actual = new VariablesValidator(constructorArgs)
 
           expect(actual)
-            .toHaveProperty('variables', args.variables)
-          expect(actual.variables)
+            .toHaveProperty('valueHash', args.variables)
+          expect(actual.valueHash)
             .toBe(args.variables) // same reference
         })
       })
