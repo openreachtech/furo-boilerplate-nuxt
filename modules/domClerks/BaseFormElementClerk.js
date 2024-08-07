@@ -46,6 +46,16 @@ export default class BaseFormElementClerk {
   }
 
   /**
+   * get: Constructor from instance.
+   *
+   * @template {typeof BaseFormElementClerk} T
+   * @returns {T} Constructor of the instance.
+   */
+  get Ctor () {
+    return /** @type {*} */ (this.constructor)
+  }
+
+  /**
    * get: All control elements of the form.
    *
    * @returns {Array<FormControlElementType>}
