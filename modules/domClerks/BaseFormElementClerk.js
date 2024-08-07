@@ -85,7 +85,7 @@ export default class BaseFormElementClerk {
       )
 
     const validator = VariablesValidator.create({
-      variables: this.extractValueHash(),
+      valueHash: this.extractValueHash(),
       validators: fieldValidators,
     })
 
