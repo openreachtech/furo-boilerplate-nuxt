@@ -101,15 +101,15 @@ export default class BaseFormElementClerk {
    * It is for the resolve the input value and of the type definition of the return value.
    *
    * @param {{
-   *   variableHash: FV
+   *   formValueHash?: FV
    * }} params - Parameters.
    * @returns {SV} Hash of schema variables.
    * @public
    */
   generateSchemaVariableHash ({
-    variableHash,
-  }) {
-    return /** @type {*} */ (variableHash)
+    formValueHash = this.extractValueHash(),
+  } = {}) {
+    return /** @type {*} */ (formValueHash)
   }
 
   /**
