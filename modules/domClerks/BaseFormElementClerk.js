@@ -6,8 +6,8 @@ import FieldValidator from '~/modules/client/FieldValidator'
  * Base class of form element clerk.
  *
  * @template T
- * @template {Record<string, string | Array<string> | null>} FV
- * @template {Record<string, *>} SV
+ * @template {Record<string, string | Array<string> | null>} FV - Form value hash.
+ * @template {Record<string, *>} SV - Schema variable hash.
  */
 export default class BaseFormElementClerk {
   /**
