@@ -1,4 +1,6 @@
 import FormControlElementClerk from '~/modules/domClerks/FormControlElementClerk'
+import VariablesValidator from '~/modules/validators/VariablesValidator'
+import FieldValidator from '~/modules/client/FieldValidator'
 
 /**
  * Base class of form element clerk.
@@ -64,6 +66,26 @@ export default class BaseFormElementClerk {
     return /** @type {Array<*>} */ (
       [...this.formElement.elements]
     )
+  }
+
+  /**
+   * Generate validation hash.
+   *
+   * @returns {import('~/modules/validators/VariablesValidator').ValidatorHashType} Validation result.
+   * @public
+   */
+  generateValidationHash () {
+    const fieldValidators = this.Ctor.validators
+      .map(it =>
+        FieldValidator.create(it)
+      )
+
+    const validator = VariablesValidator.create({
+      variables: this.extractValueHash(),
+      validators: fieldValidators,
+    })
+
+    return validator.generateValidationHash()
   }
 
   /**
