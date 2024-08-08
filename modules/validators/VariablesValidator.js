@@ -8,10 +8,10 @@ export default class VariablesValidator {
    * @param {VariablesValidatorParams} params - Parameters.
    */
   constructor ({
-    variables,
+    valueHash,
     validators,
   }) {
-    this.variables = variables
+    this.valueHash = valueHash
     this.validators = validators
   }
 
@@ -53,8 +53,8 @@ export default class VariablesValidator {
       }) =>
         validators.every(it =>
           it.isValid({
-            target: this.variables[field],
-            variables: this.variables,
+            target: this.valueHash[field],
+            variables: this.valueHash,
           })
         )
       )
@@ -175,8 +175,8 @@ export default class VariablesValidator {
     return validators
       .every(it =>
         it.isValid({
-          target: this.variables[field],
-          variables: this.variables,
+          target: this.valueHash[field],
+          variables: this.valueHash,
         })
       )
   }
@@ -203,7 +203,7 @@ export default class VariablesValidator {
    * @returns {Array<string>} Field names.
    */
   extractFieldNames () {
-    return Object.keys(this.variables)
+    return Object.keys(this.valueHash)
   }
 
   /**
@@ -243,8 +243,8 @@ export default class VariablesValidator {
     return validators
       .filter(it =>
         it.isInvalid({
-          target: this.variables[field],
-          variables: this.variables,
+          target: this.valueHash[field],
+          variables: this.valueHash,
         })
       )
       .map(it =>
@@ -276,7 +276,7 @@ export default class VariablesValidator {
 
 /**
  * @typedef {{
- *   variables: Record<string, any>
+ *   valueHash: Record<string, any>
  *   validators: Array<import('~/modules/client/FieldValidator').default>
  * }} VariablesValidatorParams
  */
