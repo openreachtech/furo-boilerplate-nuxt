@@ -264,7 +264,7 @@ export default class BaseGraphqlPayload {
 
 /**
  * @typedef {{
- *   [group: string]: {
+ *   [schema: string]: {
  *     [field: string]: any
  *   }
  * }} VariablesType
