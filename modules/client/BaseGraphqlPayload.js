@@ -27,7 +27,7 @@ export default class BaseGraphqlPayload {
    * Factory method.
    *
    * @param {BaseGraphqlPayloadFactoryParams} params - Parameters of factory method.
-   * @template {typeof BaseGraphqlPayload} T
+   * @template {typeof BaseGraphqlPayload<T, *>} T
    * @this {T}
    * @returns {InstanceType<T>} Instance of this class.
    */
