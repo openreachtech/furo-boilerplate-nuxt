@@ -700,6 +700,85 @@ describe('BaseGraphqlPayload', () => {
 })
 
 describe('BaseGraphqlPayload', () => {
+  describe('#extractFilteredVariables()', () => {
+    describe('to return as is', () => {
+      const queryTemplate = /* GraphQL */ `
+        query PickUpForumTopicsQuery {
+          pickUpForumTopics {
+            pickUpForumTopics {
+              id
+              forumCategory {
+                id
+                name
+              }
+              name
+              descriptionHtml
+              proposer {
+                customerId
+                username
+                avatarUrl
+                customerRoles {
+                  id
+                  name
+                }
+              }
+              proposedAt
+              editedAt
+              totalForumPost
+              latestForumPostPostedAt
+            }
+          }
+        }
+      `
+
+      /**
+       * @type {Array<{
+       *   params: {
+       *     variables: {
+       *       input: {
+       *         id: number
+       *       }
+       *     }
+       *   }
+       * }>}
+       */
+      const cases = [
+        {
+          params: {
+            variables: {
+              input: {
+                id: 10001,
+              },
+            },
+          },
+        },
+        {
+          params: {
+            variables: {
+              input: {
+                id: 10002,
+              },
+            },
+          },
+        },
+      ]
+
+      test.each(cases)('variables: $params.variables', ({ params }) => {
+        const payload = new BaseGraphqlPayload({
+          queryTemplate,
+          variables: params.variables,
+        })
+
+        const actual = payload.extractFilteredVariables()
+
+        expect(actual)
+          .toBe(params.variables) // same reference
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlPayload', () => {
   describe('#generateFetchRequestOptions()', () => {
     const queryTemplate = /* GraphQL */ `
                 query CurriculumsQuery ($input: CurriculumsInput!) {
