@@ -334,7 +334,7 @@ describe('FieldValidator', () => {
       {
         args: {
           field: 'username',
-          body: (it, variables) => it,
+          body: (it, valueHash) => it,
         },
         truthyCases: [
           {
@@ -364,9 +364,9 @@ describe('FieldValidator', () => {
       {
         args: {
           field: 'password',
-          body: (it, variables) =>
+          body: (it, valueHash) =>
             it
-            && it === variables.passwordConfirmation
+            && it === valueHash.passwordConfirmation
           ,
         },
         truthyCases: [
@@ -479,7 +479,7 @@ describe('FieldValidator', () => {
       {
         args: {
           field: 'username',
-          body: (it, variables) => it,
+          body: (it, valueHash) => it,
         },
         truthyCases: [
           {
@@ -509,9 +509,9 @@ describe('FieldValidator', () => {
       {
         args: {
           field: 'password',
-          body: (it, variables) =>
+          body: (it, valueHash) =>
             it
-            && it === variables.passwordConfirmation
+            && it === valueHash.passwordConfirmation
           ,
         },
         truthyCases: [
