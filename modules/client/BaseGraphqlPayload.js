@@ -165,14 +165,32 @@ export default class BaseGraphqlPayload {
    * @returns {boolean} true: valid, false: invalid.
    */
   isValidVariables () {
-    if (!this.variables) {
-      return true
-    }
-
-    const validatorHash = this.generateSchemaValidatorHash()
-
-    return Object.values(validatorHash)
-      .every(it => it.isValid())
+    return Object.entries(this.Ctor.fieldHash)
+      .map(([
+        schema,
+        fields,
+      ]) => [
+        fields,
+        Object.keys(
+          this.variables?.[schema]
+          ?? {}
+        ),
+      ])
+      .map(([
+        fields,
+        variableFields,
+      ]) => ({
+        fields,
+        unifiedFields: [...new Set(
+          variableFields.concat(fields)
+        )],
+      }))
+      .every(({
+        fields,
+        unifiedFields,
+      }) =>
+        unifiedFields.length === fields.length
+      )
   }
 
   /**
