@@ -5,6 +5,7 @@ import VariablesPerSchemaValidator from '~/modules/client/VariablesPerSchemaVali
  * Base class of GraphQL payload.
  *
  * @template T
+ * @template {VariablesType} SV
  */
 export default class BaseGraphqlPayload {
   /**
