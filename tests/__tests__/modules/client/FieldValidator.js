@@ -26,7 +26,7 @@ describe('FieldValidator', () => {
         test.each(cases)('field: $args.field', ({ args, expected }) => {
           const constructorArgs = {
             field: args.field,
-            body: () => true,
+            ok: () => true,
           }
 
           const actual = new FieldValidator(constructorArgs)
@@ -41,13 +41,13 @@ describe('FieldValidator', () => {
           {
             args: {
               field: 'customer',
-              body: () => true,
+              ok: () => true,
             },
           },
           {
             args: {
               field: 'customer',
-              body: () => false,
+              ok: () => false,
             },
           },
         ]
@@ -55,15 +55,15 @@ describe('FieldValidator', () => {
         test.each(cases)('field: $args.field', ({ args }) => {
           const constructorArgs = {
             field: args.field,
-            body: args.body,
+            ok: args.ok,
           }
 
           const actual = new FieldValidator(constructorArgs)
 
           expect(actual)
-            .toHaveProperty('body', args.body)
+            .toHaveProperty('body', args.ok)
           expect(actual.body)
-            .toBe(args.body) // same reference
+            .toBe(args.ok) // same reference
         })
       })
 
@@ -86,7 +86,7 @@ describe('FieldValidator', () => {
         test.each(cases)('message: $args.message', ({ args, expected }) => {
           const constructorArgs = {
             field: 'extra',
-            body: () => true,
+            ok: () => true,
             message: args.message,
           }
 
@@ -107,13 +107,13 @@ describe('FieldValidator', () => {
         {
           params: {
             field: 'customer',
-            body: () => true,
+            ok: () => true,
           },
         },
         {
           params: {
             field: 'message',
-            body: () => false,
+            ok: () => false,
           },
         },
       ]
@@ -131,13 +131,13 @@ describe('FieldValidator', () => {
         {
           args: {
             field: 'customer',
-            body: () => true,
+            ok: () => true,
           },
         },
         {
           args: {
             field: 'message',
-            body: () => false,
+            ok: () => false,
           },
         },
       ]
@@ -162,7 +162,7 @@ describe('FieldValidator', () => {
         {
           args: {
             field: 'customer',
-            body: () => true,
+            ok: () => true,
           },
           fieldCases: [
             { field: 'customer' },
@@ -171,7 +171,7 @@ describe('FieldValidator', () => {
         {
           args: {
             field: 'message',
-            body: () => false,
+            ok: () => false,
           },
           fieldCases: [
             { field: 'message' },
@@ -196,7 +196,7 @@ describe('FieldValidator', () => {
         {
           args: {
             field: 'customer',
-            body: () => true,
+            ok: () => true,
           },
           fieldCases: [
             { field: 'notCustomer' },
@@ -206,7 +206,7 @@ describe('FieldValidator', () => {
         {
           args: {
             field: 'message',
-            body: () => false,
+            ok: () => false,
           },
           fieldCases: [
             { field: 'notMessage' },
@@ -236,7 +236,7 @@ describe('FieldValidator', () => {
         {
           args: {
             field: 'customer',
-            body: () => true,
+            ok: () => true,
           },
           fieldCases: [
             { field: 'notCustomer' },
@@ -246,7 +246,7 @@ describe('FieldValidator', () => {
         {
           args: {
             field: 'message',
-            body: () => false,
+            ok: () => false,
           },
           fieldCases: [
             { field: 'notMessage' },
@@ -272,7 +272,7 @@ describe('FieldValidator', () => {
         {
           args: {
             field: 'customer',
-            body: () => true,
+            ok: () => true,
           },
           fieldCases: [
             { field: 'customer' },
@@ -281,7 +281,7 @@ describe('FieldValidator', () => {
         {
           args: {
             field: 'message',
-            body: () => false,
+            ok: () => false,
           },
           fieldCases: [
             { field: 'message' },
@@ -309,7 +309,7 @@ describe('FieldValidator', () => {
      * @type {Array<{
      *   args: {
      *     field: string
-     *     body: (
+     *     ok: (
      *       it: any,
      *       variables: {
      *         [key: string]: any
@@ -334,7 +334,7 @@ describe('FieldValidator', () => {
       {
         args: {
           field: 'username',
-          body: (it, valueHash) => it,
+          ok: (it, valueHash) => it,
         },
         truthyCases: [
           {
@@ -364,7 +364,7 @@ describe('FieldValidator', () => {
       {
         args: {
           field: 'password',
-          body: (it, valueHash) =>
+          ok: (it, valueHash) =>
             it
             && it === valueHash.passwordConfirmation
           ,
@@ -454,7 +454,7 @@ describe('FieldValidator', () => {
      * @type {Array<{
      *   args: {
      *     field: string
-     *     body: (
+     *     ok: (
      *       it: any,
      *       variables: {
      *         [key: string]: any
@@ -479,7 +479,7 @@ describe('FieldValidator', () => {
       {
         args: {
           field: 'username',
-          body: (it, valueHash) => it,
+          ok: (it, valueHash) => it,
         },
         truthyCases: [
           {
@@ -509,7 +509,7 @@ describe('FieldValidator', () => {
       {
         args: {
           field: 'password',
-          body: (it, valueHash) =>
+          ok: (it, valueHash) =>
             it
             && it === valueHash.passwordConfirmation
           ,
@@ -600,7 +600,7 @@ describe('FieldValidator', () => {
         {
           args: {
             field: 'username',
-            body: () => true,
+            ok: () => true,
             message: 'error message 01',
           },
           expected: 'error message 01',
@@ -608,7 +608,7 @@ describe('FieldValidator', () => {
         {
           args: {
             field: 'password',
-            body: () => false,
+            ok: () => false,
             message: 'error message-02',
           },
           expected: 'error message-02',
@@ -616,7 +616,7 @@ describe('FieldValidator', () => {
         {
           args: {
             field: 'gender',
-            body: () => false,
+            ok: () => false,
           },
           expected: null,
         },
