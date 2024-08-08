@@ -9,11 +9,11 @@ export default class FieldValidator {
    */
   constructor ({
     field,
-    body,
+    ok,
     message = null,
   }) {
     this.field = field
-    this.body = body
+    this.okFunction = ok
     this.message = message
   }
 
@@ -68,7 +68,7 @@ export default class FieldValidator {
     target,
     variables,
   }) {
-    return this.body(target, variables)
+    return this.okFunction(target, variables)
   }
 
   /**
@@ -103,16 +103,20 @@ export default class FieldValidator {
 /**
  * @typedef {{
  *   field: string
- *   body: (
- *     it: any,
- *     variables: {
- *       [group: string]: any
- *     }
- *   ) => boolean
+ *   ok: ValidationCallback
  *   message?: string | null
  * }} FieldValidatorParams
  */
 
 /**
  * @typedef {FieldValidatorParams} FieldValidatorFactoryParams
+ */
+
+/**
+ * @typedef {(
+ *   it: any,
+ *   valueHash: {
+ *     [group: string]: any
+ *   }
+ * ) => boolean | *} ValidationCallback
  */

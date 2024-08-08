@@ -1095,9 +1095,9 @@ describe('BaseGraphqlPayload', () => {
           args: {
             validators: {
               input: [
-                { field: 'username', body: (it, variables) => it },
-                { field: 'username', body: (it, variables) => it && it.length >= 1 && it.length <= 8 },
-                { field: 'password', body: (it, variables) => it },
+                { field: 'username', ok: (it, valueHash) => it },
+                { field: 'username', ok: (it, valueHash) => it && it.length >= 1 && it.length <= 8 },
+                { field: 'password', ok: (it, valueHash) => it },
               ],
             },
           },
@@ -1106,10 +1106,10 @@ describe('BaseGraphqlPayload', () => {
           args: {
             validators: {
               alphaInput: [
-                { field: 'invite-code', body: (it, variables) => it && it.length === 16 },
+                { field: 'invite-code', ok: (it, valueHash) => it && it.length === 16 },
               ],
               betaInput: [
-                { field: 'hidden-secret', body: (it, variables) => it && it.length === 32 },
+                { field: 'hidden-secret', ok: (it, valueHash) => it && it.length === 32 },
               ],
             },
           },
@@ -1166,9 +1166,9 @@ describe('BaseGraphqlPayload', () => {
               },
             },
             validators: [
-              { field: 'username', message: 'message 001', body: (it, variables) => it },
-              { field: 'username', message: 'message 002', body: (it, variables) => it && it.length >= 1 && it.length <= 8 },
-              { field: 'password', message: 'message 003', body: (it, variables) => it },
+              { field: 'username', message: 'message 001', ok: (it, valueHash) => it },
+              { field: 'username', message: 'message 002', ok: (it, valueHash) => it && it.length >= 1 && it.length <= 8 },
+              { field: 'password', message: 'message 003', ok: (it, valueHash) => it },
             ],
           },
           expected: {
@@ -1195,8 +1195,8 @@ describe('BaseGraphqlPayload', () => {
               },
             },
             validators: [
-              { field: 'invite-code', body: (it, variables) => it && it.length === 16 },
-              { field: 'hidden-secret', body: (it, variables) => it && it.length === 32 },
+              { field: 'invite-code', ok: (it, valueHash) => it && it.length === 16 },
+              { field: 'hidden-secret', ok: (it, valueHash) => it && it.length === 32 },
             ],
           },
           expected: {
@@ -1267,9 +1267,9 @@ describe('BaseGraphqlPayload', () => {
             },
             validators: {
               input: [
-                { field: 'username', body: (it, variables) => it },
-                { field: 'username', body: (it, variables) => it && it.length >= 1 && it.length <= 8 },
-                { field: 'password', body: (it, variables) => it },
+                { field: 'username', ok: (it, valueHash) => it },
+                { field: 'username', ok: (it, valueHash) => it && it.length >= 1 && it.length <= 8 },
+                { field: 'password', ok: (it, valueHash) => it },
               ],
             },
           },
@@ -1280,9 +1280,9 @@ describe('BaseGraphqlPayload', () => {
                 password: 'password$001',
               },
               validators: [
-                FieldValidator.create({ field: 'username', body: expect.any(Function) }),
-                FieldValidator.create({ field: 'username', body: expect.any(Function) }),
-                FieldValidator.create({ field: 'password', body: expect.any(Function) }),
+                FieldValidator.create({ field: 'username', ok: expect.any(Function) }),
+                FieldValidator.create({ field: 'username', ok: expect.any(Function) }),
+                FieldValidator.create({ field: 'password', ok: expect.any(Function) }),
               ],
             }),
           },
@@ -1301,10 +1301,10 @@ describe('BaseGraphqlPayload', () => {
             },
             validators: {
               alphaInput: [
-                { field: 'invite-code', body: (it, variables) => it && it.length === 16 },
+                { field: 'invite-code', ok: (it, valueHash) => it && it.length === 16 },
               ],
               betaInput: [
-                { field: 'hidden-secret', body: (it, variables) => it && it.length === 32 },
+                { field: 'hidden-secret', ok: (it, valueHash) => it && it.length === 32 },
               ],
             },
           },
@@ -1315,7 +1315,7 @@ describe('BaseGraphqlPayload', () => {
                 'hidden-secret': 'secret$001',
               },
               validators: [
-                FieldValidator.create({ field: 'invite-code', body: expect.any(Function) }),
+                FieldValidator.create({ field: 'invite-code', ok: expect.any(Function) }),
               ],
             }),
             betaInput: VariablesPerSchemaValidator.create({
@@ -1324,7 +1324,7 @@ describe('BaseGraphqlPayload', () => {
                 'hidden-secret': 'secret$002',
               },
               validators: [
-                FieldValidator.create({ field: 'hidden-secret', body: expect.any(Function) }),
+                FieldValidator.create({ field: 'hidden-secret', ok: expect.any(Function) }),
               ],
             }),
           },
@@ -1370,17 +1370,17 @@ describe('BaseGraphqlPayload', () => {
     const inputValidators = [
       {
         field: 'username',
-        body: (it, variables) => it,
+        ok: (it, valueHash) => it,
         message: 'username must be set',
       },
       {
         field: 'username',
-        body: (it, variables) => /^\w+$/.test(it),
+        ok: (it, valueHash) => /^\w+$/.test(it),
         message: 'username must be alphanumeric',
       },
       {
         field: 'password',
-        body: (it, variables) => {
+        ok: (it, valueHash) => {
           return it
             && it.length >= 1
             && it.length <= 16
@@ -1389,9 +1389,9 @@ describe('BaseGraphqlPayload', () => {
       },
       {
         field: 'password-confirmation',
-        body: (it, variables) => {
+        ok: (it, valueHash) => {
           return it
-            && it === variables.password
+            && it === valueHash.password
         },
         message: 'passwords do not match.',
       },
@@ -1704,17 +1704,17 @@ describe('BaseGraphqlPayload', () => {
     const inputValidators = [
       {
         field: 'username',
-        body: (it, variables) => it,
+        ok: (it, valueHash) => it,
         message: 'username must be set',
       },
       {
         field: 'username',
-        body: (it, variables) => /^\w+$/.test(it),
+        ok: (it, valueHash) => /^\w+$/.test(it),
         message: 'username must be alphanumeric',
       },
       {
         field: 'password',
-        body: (it, variables) => {
+        ok: (it, valueHash) => {
           return it
             && it.length >= 1
             && it.length <= 16
@@ -1723,9 +1723,9 @@ describe('BaseGraphqlPayload', () => {
       },
       {
         field: 'password-confirmation',
-        body: (it, variables) => {
+        ok: (it, valueHash) => {
           return it
-            && it === variables.password
+            && it === valueHash.password
         },
         message: 'passwords do not match.',
       },

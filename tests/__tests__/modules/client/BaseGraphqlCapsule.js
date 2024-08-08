@@ -668,17 +668,17 @@ describe('BaseGraphqlCapsule', () => {
         return [
           {
             field: 'username',
-            body: (it, variables) => it,
+            ok: (it, valueHash) => it,
             message: 'username must be set',
           },
           {
             field: 'username',
-            body: (it, variables) => /^\w+$/.test(it),
+            ok: (it, valueHash) => /^\w+$/.test(it),
             message: 'username must be alphanumeric',
           },
           {
             field: 'password',
-            body: (it, variables) => {
+            ok: (it, valueHash) => {
               return it
                 && it.length >= 1
                 && it.length <= 16
@@ -687,9 +687,9 @@ describe('BaseGraphqlCapsule', () => {
           },
           {
             field: 'password-confirmation',
-            body: (it, variables) => {
+            ok: (it, valueHash) => {
               return it
-                && it === variables.password
+                && it === valueHash.password
             },
             message: 'passwords do not match.',
           },
@@ -1445,12 +1445,12 @@ describe('BaseGraphqlCapsule', () => {
         return [
           {
             field: 'username',
-            body: (it, variables) => it,
+            ok: (it, valueHash) => it,
             message: 'username must be set',
           },
           {
             field: 'username',
-            body: (it, variables) => /^\w+$/.test(it),
+            ok: (it, valueHash) => /^\w+$/.test(it),
             message: 'username must be alphanumeric',
           },
         ]
@@ -1728,17 +1728,17 @@ describe('BaseGraphqlCapsule', () => {
     const validators = [
       {
         field: 'username',
-        body: (it, variables) => it,
+        ok: (it, valueHash) => it,
         message: 'username must be set',
       },
       {
         field: 'username',
-        body: (it, variables) => /^\w+$/.test(it),
+        ok: (it, valueHash) => /^\w+$/.test(it),
         message: 'username must be alphanumeric',
       },
       {
         field: 'password',
-        body: (it, variables) => {
+        ok: (it, valueHash) => {
           return it
             && it.length >= 1
             && it.length <= 16
@@ -1747,9 +1747,9 @@ describe('BaseGraphqlCapsule', () => {
       },
       {
         field: 'password-confirmation',
-        body: (it, variables) => {
+        ok: (it, valueHash) => {
           return it
-            && it === variables.password
+            && it === valueHash.password
         },
         message: 'passwords do not match',
       },
