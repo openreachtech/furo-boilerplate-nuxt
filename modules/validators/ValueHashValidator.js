@@ -26,7 +26,7 @@ export default class ValueHashValidator {
   }
 
   /**
-   * Is valid variables.
+   * Is valid valueHash.
    *
    * @returns {boolean} true: valid.
    */
@@ -62,7 +62,7 @@ export default class ValueHashValidator {
   }
 
   /**
-   * Is invalid variables.
+   * Is invalid valueHash.
    *
    * @returns {boolean} true: invalid.
    */

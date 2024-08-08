@@ -1684,12 +1684,12 @@ describe('BaseGraphqlLauncher', () => {
           return [
             {
               field: 'username',
-              body: (it, variables) => it,
+              body: (it, valueHash) => it,
               message: 'username must be set',
             },
             {
               field: 'username',
-              body: (it, variables) => /^\w+$/.test(it),
+              body: (it, valueHash) => /^\w+$/.test(it),
               message: 'username must be alphanumeric',
             },
           ]
