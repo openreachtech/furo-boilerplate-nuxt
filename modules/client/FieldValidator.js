@@ -118,5 +118,5 @@ export default class FieldValidator {
  *   variables: {
  *     [group: string]: any
  *   }
- * ) => boolean} ValidationCallback
+ * ) => boolean | *} ValidationCallback
  */
