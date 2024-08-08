@@ -103,16 +103,20 @@ export default class FieldValidator {
 /**
  * @typedef {{
  *   field: string
- *   body: (
- *     it: any,
- *     variables: {
- *       [group: string]: any
- *     }
- *   ) => boolean
+ *   body: ValidationCallback
  *   message?: string | null
  * }} FieldValidatorParams
  */
 
 /**
  * @typedef {FieldValidatorParams} FieldValidatorFactoryParams
+ */
+
+/**
+ * @typedef {(
+ *   it: any,
+ *   variables: {
+ *     [group: string]: any
+ *   }
+ * ) => boolean} ValidationCallback
  */
