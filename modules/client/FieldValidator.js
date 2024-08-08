@@ -103,7 +103,7 @@ export default class FieldValidator {
 /**
  * @typedef {{
  *   field: string
- *   body: ValidationCallback
+ *   ok: ValidationCallback
  *   message?: string | null
  * }} FieldValidatorParams
  */
