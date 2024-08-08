@@ -1095,9 +1095,9 @@ describe('BaseGraphqlPayload', () => {
           args: {
             validators: {
               input: [
-                { field: 'username', body: (it, variables) => it },
-                { field: 'username', body: (it, variables) => it && it.length >= 1 && it.length <= 8 },
-                { field: 'password', body: (it, variables) => it },
+                { field: 'username', body: (it, valueHash) => it },
+                { field: 'username', body: (it, valueHash) => it && it.length >= 1 && it.length <= 8 },
+                { field: 'password', body: (it, valueHash) => it },
               ],
             },
           },
@@ -1106,10 +1106,10 @@ describe('BaseGraphqlPayload', () => {
           args: {
             validators: {
               alphaInput: [
-                { field: 'invite-code', body: (it, variables) => it && it.length === 16 },
+                { field: 'invite-code', body: (it, valueHash) => it && it.length === 16 },
               ],
               betaInput: [
-                { field: 'hidden-secret', body: (it, variables) => it && it.length === 32 },
+                { field: 'hidden-secret', body: (it, valueHash) => it && it.length === 32 },
               ],
             },
           },
@@ -1166,9 +1166,9 @@ describe('BaseGraphqlPayload', () => {
               },
             },
             validators: [
-              { field: 'username', message: 'message 001', body: (it, variables) => it },
-              { field: 'username', message: 'message 002', body: (it, variables) => it && it.length >= 1 && it.length <= 8 },
-              { field: 'password', message: 'message 003', body: (it, variables) => it },
+              { field: 'username', message: 'message 001', body: (it, valueHash) => it },
+              { field: 'username', message: 'message 002', body: (it, valueHash) => it && it.length >= 1 && it.length <= 8 },
+              { field: 'password', message: 'message 003', body: (it, valueHash) => it },
             ],
           },
           expected: {
@@ -1195,8 +1195,8 @@ describe('BaseGraphqlPayload', () => {
               },
             },
             validators: [
-              { field: 'invite-code', body: (it, variables) => it && it.length === 16 },
-              { field: 'hidden-secret', body: (it, variables) => it && it.length === 32 },
+              { field: 'invite-code', body: (it, valueHash) => it && it.length === 16 },
+              { field: 'hidden-secret', body: (it, valueHash) => it && it.length === 32 },
             ],
           },
           expected: {
@@ -1267,9 +1267,9 @@ describe('BaseGraphqlPayload', () => {
             },
             validators: {
               input: [
-                { field: 'username', body: (it, variables) => it },
-                { field: 'username', body: (it, variables) => it && it.length >= 1 && it.length <= 8 },
-                { field: 'password', body: (it, variables) => it },
+                { field: 'username', body: (it, valueHash) => it },
+                { field: 'username', body: (it, valueHash) => it && it.length >= 1 && it.length <= 8 },
+                { field: 'password', body: (it, valueHash) => it },
               ],
             },
           },
@@ -1301,10 +1301,10 @@ describe('BaseGraphqlPayload', () => {
             },
             validators: {
               alphaInput: [
-                { field: 'invite-code', body: (it, variables) => it && it.length === 16 },
+                { field: 'invite-code', body: (it, valueHash) => it && it.length === 16 },
               ],
               betaInput: [
-                { field: 'hidden-secret', body: (it, variables) => it && it.length === 32 },
+                { field: 'hidden-secret', body: (it, valueHash) => it && it.length === 32 },
               ],
             },
           },
@@ -1370,17 +1370,17 @@ describe('BaseGraphqlPayload', () => {
     const inputValidators = [
       {
         field: 'username',
-        body: (it, variables) => it,
+        body: (it, valueHash) => it,
         message: 'username must be set',
       },
       {
         field: 'username',
-        body: (it, variables) => /^\w+$/.test(it),
+        body: (it, valueHash) => /^\w+$/.test(it),
         message: 'username must be alphanumeric',
       },
       {
         field: 'password',
-        body: (it, variables) => {
+        body: (it, valueHash) => {
           return it
             && it.length >= 1
             && it.length <= 16
@@ -1389,9 +1389,9 @@ describe('BaseGraphqlPayload', () => {
       },
       {
         field: 'password-confirmation',
-        body: (it, variables) => {
+        body: (it, valueHash) => {
           return it
-            && it === variables.password
+            && it === valueHash.password
         },
         message: 'passwords do not match.',
       },
@@ -1704,17 +1704,17 @@ describe('BaseGraphqlPayload', () => {
     const inputValidators = [
       {
         field: 'username',
-        body: (it, variables) => it,
+        body: (it, valueHash) => it,
         message: 'username must be set',
       },
       {
         field: 'username',
-        body: (it, variables) => /^\w+$/.test(it),
+        body: (it, valueHash) => /^\w+$/.test(it),
         message: 'username must be alphanumeric',
       },
       {
         field: 'password',
-        body: (it, variables) => {
+        body: (it, valueHash) => {
           return it
             && it.length >= 1
             && it.length <= 16
@@ -1723,9 +1723,9 @@ describe('BaseGraphqlPayload', () => {
       },
       {
         field: 'password-confirmation',
-        body: (it, variables) => {
+        body: (it, valueHash) => {
           return it
-            && it === variables.password
+            && it === valueHash.password
         },
         message: 'passwords do not match.',
       },

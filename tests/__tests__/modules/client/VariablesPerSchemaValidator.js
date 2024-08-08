@@ -443,12 +443,12 @@ describe('VariablesPerSchemaValidator', () => {
           validators: [
             FieldValidator.create({
               field: 'username',
-              body: (it, variables) => it,
+              body: (it, valueHash) => it,
               message: 'username is required',
             }),
             FieldValidator.create({
               field: 'username',
-              body: (it, variables) =>
+              body: (it, valueHash) =>
                 it
                 && it.length >= 1
                 && it.length <= 8,
@@ -456,7 +456,7 @@ describe('VariablesPerSchemaValidator', () => {
             }),
             FieldValidator.create({
               field: 'password',
-              body: (it, variables) => it,
+              body: (it, valueHash) => it,
               message: 'password is required',
             }),
           ],
@@ -507,12 +507,12 @@ describe('VariablesPerSchemaValidator', () => {
           validators: [
             FieldValidator.create({
               field: 'password',
-              body: (it, variables) => it,
+              body: (it, valueHash) => it,
               message: 'password is required',
             }),
             FieldValidator.create({
               field: 'password-confirmation',
-              body: (it, variables) => it === variables.password,
+              body: (it, valueHash) => it === valueHash.password,
               message: 'password confirmation must be the same as password',
             }),
           ],
@@ -607,12 +607,12 @@ describe('VariablesPerSchemaValidator', () => {
           validators: [
             FieldValidator.create({
               field: 'username',
-              body: (it, variables) => it,
+              body: (it, valueHash) => it,
               message: 'username is required',
             }),
             FieldValidator.create({
               field: 'username',
-              body: (it, variables) =>
+              body: (it, valueHash) =>
                 it
                 && it.length >= 1
                 && it.length <= 8,
@@ -620,7 +620,7 @@ describe('VariablesPerSchemaValidator', () => {
             }),
             FieldValidator.create({
               field: 'password',
-              body: (it, variables) => it,
+              body: (it, valueHash) => it,
               message: 'password is required',
             }),
           ],
@@ -671,12 +671,12 @@ describe('VariablesPerSchemaValidator', () => {
           validators: [
             FieldValidator.create({
               field: 'password',
-              body: (it, variables) => it,
+              body: (it, valueHash) => it,
               message: 'password is required',
             }),
             FieldValidator.create({
               field: 'password-confirmation',
-              body: (it, variables) => it === variables.password,
+              body: (it, valueHash) => it === valueHash.password,
               message: 'password confirmation must be the same as password',
             }),
           ],
@@ -770,12 +770,12 @@ describe('VariablesPerSchemaValidator', () => {
           validators: [
             FieldValidator.create({
               field: 'username',
-              body: (it, variables) => it,
+              body: (it, valueHash) => it,
               message: 'username is required',
             }),
             FieldValidator.create({
               field: 'username',
-              body: (it, variables) =>
+              body: (it, valueHash) =>
                 it
                 && it.length >= 1
                 && it.length <= 8,
@@ -783,7 +783,7 @@ describe('VariablesPerSchemaValidator', () => {
             }),
             FieldValidator.create({
               field: 'username',
-              body: (it, variables) => {
+              body: (it, valueHash) => {
                 return !it
                   || /^\w+$/.test(it)
               },
@@ -791,7 +791,7 @@ describe('VariablesPerSchemaValidator', () => {
             }),
             FieldValidator.create({
               field: 'password',
-              body: (it, variables) => it,
+              body: (it, valueHash) => it,
               message: 'password is required',
             }),
           ],
@@ -843,14 +843,14 @@ describe('VariablesPerSchemaValidator', () => {
           validators: [
             FieldValidator.create({
               field: 'password',
-              body: (it, variables) => it,
+              body: (it, valueHash) => it,
               message: 'password is required',
             }),
             FieldValidator.create({
               field: 'password-confirmation',
-              body: (it, variables) => {
+              body: (it, valueHash) => {
                 return !it
-                  || it === variables.password
+                  || it === valueHash.password
               },
               message: 'password confirmation must be the same as password',
             }),
@@ -935,12 +935,12 @@ describe('VariablesPerSchemaValidator', () => {
           validators: [
             FieldValidator.create({
               field: 'username',
-              body: (it, variables) => it,
+              body: (it, valueHash) => it,
               message: 'username is required',
             }),
             FieldValidator.create({
               field: 'username',
-              body: (it, variables) =>
+              body: (it, valueHash) =>
                 it
                 && it.length >= 1
                 && it.length <= 8,
@@ -948,7 +948,7 @@ describe('VariablesPerSchemaValidator', () => {
             }),
             FieldValidator.create({
               field: 'username',
-              body: (it, variables) => {
+              body: (it, valueHash) => {
                 return !it
                   || /^\w+$/.test(it)
               },
@@ -956,7 +956,7 @@ describe('VariablesPerSchemaValidator', () => {
             }),
             FieldValidator.create({
               field: 'password',
-              body: (it, variables) => it,
+              body: (it, valueHash) => it,
               message: 'password is required',
             }),
           ],
@@ -1001,14 +1001,14 @@ describe('VariablesPerSchemaValidator', () => {
           validators: [
             FieldValidator.create({
               field: 'password',
-              body: (it, variables) => it,
+              body: (it, valueHash) => it,
               message: 'password is required',
             }),
             FieldValidator.create({
               field: 'password-confirmation',
-              body: (it, variables) => {
+              body: (it, valueHash) => {
                 return !it
-                  || it === variables.password
+                  || it === valueHash.password
               },
               message: 'password confirmation must be the same as password',
             }),
@@ -1089,12 +1089,12 @@ describe('VariablesPerSchemaValidator', () => {
           validators: [
             FieldValidator.create({
               field: 'username',
-              body: (it, variables) => it,
+              body: (it, valueHash) => it,
               message: 'username is required',
             }),
             FieldValidator.create({
               field: 'username',
-              body: (it, variables) =>
+              body: (it, valueHash) =>
                 it
                 && it.length >= 1
                 && it.length <= 8,
@@ -1102,7 +1102,7 @@ describe('VariablesPerSchemaValidator', () => {
             }),
             FieldValidator.create({
               field: 'username',
-              body: (it, variables) => {
+              body: (it, valueHash) => {
                 return !it
                   || /^\w+$/.test(it)
               },
@@ -1110,7 +1110,7 @@ describe('VariablesPerSchemaValidator', () => {
             }),
             FieldValidator.create({
               field: 'password',
-              body: (it, variables) => it,
+              body: (it, valueHash) => it,
               message: 'password is required',
             }),
           ],
@@ -1155,14 +1155,14 @@ describe('VariablesPerSchemaValidator', () => {
           validators: [
             FieldValidator.create({
               field: 'password',
-              body: (it, variables) => it,
+              body: (it, valueHash) => it,
               message: 'password is required',
             }),
             FieldValidator.create({
               field: 'password-confirmation',
-              body: (it, variables) => {
+              body: (it, valueHash) => {
                 return !it
-                  || it === variables.password
+                  || it === valueHash.password
               },
               message: 'password confirmation must be the same as password',
             }),
@@ -1243,12 +1243,12 @@ describe('VariablesPerSchemaValidator', () => {
           validators: [
             FieldValidator.create({
               field: 'username',
-              body: (it, variables) => it,
+              body: (it, valueHash) => it,
               message: 'username is required',
             }),
             FieldValidator.create({
               field: 'username',
-              body: (it, variables) =>
+              body: (it, valueHash) =>
                 it
                 && it.length >= 1
                 && it.length <= 8,
@@ -1256,7 +1256,7 @@ describe('VariablesPerSchemaValidator', () => {
             }),
             FieldValidator.create({
               field: 'username',
-              body: (it, variables) => {
+              body: (it, valueHash) => {
                 return !it
                   || /^\w+$/.test(it)
               },
@@ -1264,7 +1264,7 @@ describe('VariablesPerSchemaValidator', () => {
             }),
             FieldValidator.create({
               field: 'password',
-              body: (it, variables) => it,
+              body: (it, valueHash) => it,
               message: 'password is required',
             }),
           ],
@@ -1309,14 +1309,14 @@ describe('VariablesPerSchemaValidator', () => {
           validators: [
             FieldValidator.create({
               field: 'password',
-              body: (it, variables) => it,
+              body: (it, valueHash) => it,
               message: 'password is required',
             }),
             FieldValidator.create({
               field: 'password-confirmation',
-              body: (it, variables) => {
+              body: (it, valueHash) => {
                 return !it
-                  || it === variables.password
+                  || it === valueHash.password
               },
               message: 'password confirmation must be the same as password',
             }),

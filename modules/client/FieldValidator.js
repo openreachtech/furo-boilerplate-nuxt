@@ -115,7 +115,7 @@ export default class FieldValidator {
 /**
  * @typedef {(
  *   it: any,
- *   variables: {
+ *   valueHash: {
  *     [group: string]: any
  *   }
  * ) => boolean | *} ValidationCallback
