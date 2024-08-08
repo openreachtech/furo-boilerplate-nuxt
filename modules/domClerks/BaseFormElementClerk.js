@@ -6,8 +6,8 @@ import FieldValidator from '~/modules/client/FieldValidator'
  * Base class of form element clerk.
  *
  * @template T
- * @template {Record<string, string | Array<string> | null>} FV
- * @template {Record<string, *>} SV
+ * @template {Record<string, string | Array<string> | null>} FV - Form value hash.
+ * @template {Record<string, *>} SV - Schema variable hash.
  */
 export default class BaseFormElementClerk {
   /**
@@ -25,7 +25,9 @@ export default class BaseFormElementClerk {
    * Factory method of BaseFormElementClerk.
    *
    * @param {BaseFormElementClerkFactoryParams} params - Parameters of factory method.
-   * @template {typeof BaseFormElementClerk<*, *, *>} T
+   * @template {Record<string, string | Array<string> | null>} FV - Form value hash.
+   * @template {Record<string, *>} SV - Schema variable hash.
+   * @template {typeof BaseFormElementClerk<T, FV, SV>} T
    * @this {T}
    * @returns {InstanceType<T>} Instance of this class.
    */
@@ -93,16 +95,21 @@ export default class BaseFormElementClerk {
   /**
    * Generate schema variable hash.
    * The return value is set to Payload's variables.
+   * NOTE: When all <form> controls are used as is for Payload's variables,
+   *   does not need to override this method.
+   * Why we use the complex structure of parameter?
+   * It is for the resolve the input value and of the type definition of the return value.
    *
    * @param {{
-   *   variableHash: FV
-   * }} params - Parameters
+   *   formValueHash?: FV
+   * }} params - Parameters.
    * @returns {SV} Hash of schema variables.
+   * @public
    */
   generateSchemaVariableHash ({
-    variableHash,
-  }) {
-    return /** @type {*} */ (variableHash)
+    formValueHash = this.extractValueHash(),
+  } = {}) {
+    return /** @type {*} */ (formValueHash)
   }
 
   /**
@@ -129,31 +136,29 @@ export default class BaseFormElementClerk {
   /**
    * Extract value hash from the form element.
    *
-   * @returns {{
-   *   [key: string]: string | Array<string> | null
-   * }}
+   * @returns {FV} Hash of form control value.
    */
   extractValueHash () {
     const controlHash = this.extractControlElements()
 
-    return Object.fromEntries(
-      Object.entries(controlHash)
-        .map(([name, control]) => [
-          name,
-          FormControlElementClerk.create({
-            control,
-          })
-            .extractValueHash(),
-        ])
+    return /** @type {*} */ (
+      Object.fromEntries(
+        Object.entries(controlHash)
+          .map(([name, control]) => [
+            name,
+            FormControlElementClerk.create({
+              control,
+            })
+              .extractValueHash(),
+          ])
+      )
     )
   }
 
   /**
    * Extract control elements by object hash.
    *
-   * @returns {{
-   *   [key: string]: FormControlElementHash
-   * }}
+   * @returns {Record<string, FormControlElementHash>} Hash of form control elements.
    */
   extractControlElements () {
     const names = this.extractNames()
