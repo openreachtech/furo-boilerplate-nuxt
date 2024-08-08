@@ -250,21 +250,21 @@ export default class BaseGraphqlPayload {
 /**
  * @typedef {{
  *   queryTemplate: string
- *   variables: VariablesType | null
+ *   variables: VariablesType
  *   options?: RequestInit
  * }} BaseGraphqlPayloadParams
  */
 
 /**
  * @typedef {{
- *   variables?: VariablesType | null
+ *   variables?: VariablesType
  *   options?: RequestInit
  * }} BaseGraphqlPayloadFactoryParams
  */
 
 /**
  * @typedef {{
- *   [group: string]: {
+ *   [schema: string]: {
  *     [field: string]: any
  *   }
  * }} VariablesType
@@ -272,7 +272,7 @@ export default class BaseGraphqlPayload {
 
 /**
  * @typedef {Array<ValidatorOptionsType> | {
- *   [group: string]: Array<ValidatorOptionsType>
+ *   [schema: string]: Array<ValidatorOptionsType>
  * }} ValidatorHashType
  */
 
