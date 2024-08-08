@@ -55,6 +55,15 @@ export default class BaseGraphqlPayload {
   }
 
   /**
+   * get: field hash.
+   *
+   * @returns {Record<string, Array<string>>} Array of fields.
+   */
+  static get fieldHash () {
+    return {}
+  }
+
+  /**
    * get: validators.
    *
    * @returns {ValidatorHashType} Array of arguments to create an instance of FieldValidator.
