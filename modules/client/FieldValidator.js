@@ -9,7 +9,7 @@ export default class FieldValidator {
    */
   constructor ({
     field,
-    body,
+    ok: body,
     message = null,
   }) {
     this.field = field
