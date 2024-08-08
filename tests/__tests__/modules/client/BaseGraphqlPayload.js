@@ -221,6 +221,19 @@ describe('BaseGraphqlPayload', () => {
 })
 
 describe('BaseGraphqlPayload', () => {
+  describe('.get:fieldHash', () => {
+    describe('to be []', () => {
+      test('with no arguments', () => {
+        const actual = BaseGraphqlPayload.fieldHash
+
+        expect(actual)
+          .toEqual({})
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlPayload', () => {
   describe('.get:validators', () => {
     describe('to be []', () => {
       test('with no arguments', () => {
