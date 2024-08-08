@@ -130,12 +130,12 @@ describe('VariablesValidationResult', () => {
     const alphaValidators = [
       FieldValidator.create({
         field: 'username',
-        body: (it, valueHash) => it,
+        ok: (it, valueHash) => it,
         message: 'username is required',
       }),
       FieldValidator.create({
         field: 'username',
-        body: (it, valueHash) =>
+        ok: (it, valueHash) =>
           it
           && it.length >= 1
           && it.length <= 8,
@@ -143,7 +143,7 @@ describe('VariablesValidationResult', () => {
       }),
       FieldValidator.create({
         field: 'username',
-        body: (it, valueHash) => {
+        ok: (it, valueHash) => {
           return !it
             || /^\w+$/.test(it)
         },
@@ -151,12 +151,12 @@ describe('VariablesValidationResult', () => {
       }),
       FieldValidator.create({
         field: 'password',
-        body: (it, valueHash) => it,
+        ok: (it, valueHash) => it,
         message: 'password is required',
       }),
       FieldValidator.create({
         field: 'bio',
-        body: (it, valueHash) => !(
+        ok: (it, valueHash) => !(
           [
             'ace',
             'deuce',
@@ -169,12 +169,12 @@ describe('VariablesValidationResult', () => {
     const betaValidators = [
       FieldValidator.create({
         field: 'email',
-        body: (it, valueHash) => it,
+        ok: (it, valueHash) => it,
         message: 'email is required',
       }),
       FieldValidator.create({
         field: 'email',
-        body: (it, valueHash) => {
+        ok: (it, valueHash) => {
           return !it
             || /^[^@]+@[^@]+\.[^@]+$/.test(it)
         },
@@ -182,17 +182,17 @@ describe('VariablesValidationResult', () => {
       }),
       FieldValidator.create({
         field: 'password',
-        body: (it, valueHash) => it,
+        ok: (it, valueHash) => it,
         message: 'password is required',
       }),
       FieldValidator.create({
         field: 'password-confirmation',
-        body: (it, valueHash) => it,
+        ok: (it, valueHash) => it,
         message: 'password confirmation is required',
       }),
       FieldValidator.create({
         field: 'password-confirmation',
-        body: (it, valueHash) => it === valueHash.password,
+        ok: (it, valueHash) => it === valueHash.password,
         message: 'password confirmation must match password',
       }),
     ]
@@ -200,7 +200,7 @@ describe('VariablesValidationResult', () => {
     const firstValidators = [
       FieldValidator.create({
         field: 'bio',
-        body: (it, valueHash) => !it.includes('$'),
+        ok: (it, valueHash) => !it.includes('$'),
         message: 'bio must not include `$`',
       }),
     ]
@@ -208,7 +208,7 @@ describe('VariablesValidationResult', () => {
     const secondValidators = [
       FieldValidator.create({
         field: 'bio',
-        body: (it, valueHash) => !it.includes('%'),
+        ok: (it, valueHash) => !it.includes('%'),
         message: 'bio must not include `%`',
       }),
     ]
@@ -465,12 +465,12 @@ describe('VariablesValidationResult', () => {
     const alphaValidators = [
       FieldValidator.create({
         field: 'username',
-        body: (it, valueHash) => it,
+        ok: (it, valueHash) => it,
         message: 'username is required',
       }),
       FieldValidator.create({
         field: 'username',
-        body: (it, valueHash) =>
+        ok: (it, valueHash) =>
           it
           && it.length >= 1
           && it.length <= 8,
@@ -478,7 +478,7 @@ describe('VariablesValidationResult', () => {
       }),
       FieldValidator.create({
         field: 'username',
-        body: (it, valueHash) => {
+        ok: (it, valueHash) => {
           return !it
             || /^\w+$/.test(it)
         },
@@ -486,12 +486,12 @@ describe('VariablesValidationResult', () => {
       }),
       FieldValidator.create({
         field: 'password',
-        body: (it, valueHash) => it,
+        ok: (it, valueHash) => it,
         message: 'password is required',
       }),
       FieldValidator.create({
         field: 'bio',
-        body: (it, valueHash) => !(
+        ok: (it, valueHash) => !(
           [
             'ace',
             'deuce',
@@ -504,12 +504,12 @@ describe('VariablesValidationResult', () => {
     const betaValidators = [
       FieldValidator.create({
         field: 'email',
-        body: (it, valueHash) => it,
+        ok: (it, valueHash) => it,
         message: 'email is required',
       }),
       FieldValidator.create({
         field: 'email',
-        body: (it, valueHash) => {
+        ok: (it, valueHash) => {
           return !it
             || /^[^@]+@[^@]+\.[^@]+$/.test(it)
         },
@@ -517,17 +517,17 @@ describe('VariablesValidationResult', () => {
       }),
       FieldValidator.create({
         field: 'password',
-        body: (it, valueHash) => it,
+        ok: (it, valueHash) => it,
         message: 'password is required',
       }),
       FieldValidator.create({
         field: 'password-confirmation',
-        body: (it, valueHash) => it,
+        ok: (it, valueHash) => it,
         message: 'password confirmation is required',
       }),
       FieldValidator.create({
         field: 'password-confirmation',
-        body: (it, valueHash) => it === valueHash.password,
+        ok: (it, valueHash) => it === valueHash.password,
         message: 'password confirmation must match password',
       }),
     ]
@@ -535,7 +535,7 @@ describe('VariablesValidationResult', () => {
     const firstValidators = [
       FieldValidator.create({
         field: 'bio',
-        body: (it, valueHash) => !it.includes('$'),
+        ok: (it, valueHash) => !it.includes('$'),
         message: 'bio must not include `$`',
       }),
     ]
@@ -543,7 +543,7 @@ describe('VariablesValidationResult', () => {
     const secondValidators = [
       FieldValidator.create({
         field: 'bio',
-        body: (it, valueHash) => !it.includes('%'),
+        ok: (it, valueHash) => !it.includes('%'),
         message: 'bio must not include `%`',
       }),
     ]
@@ -800,12 +800,12 @@ describe('VariablesValidationResult', () => {
     const alphaValidators = [
       FieldValidator.create({
         field: 'username',
-        body: (it, valueHash) => it,
+        ok: (it, valueHash) => it,
         message: 'username is required',
       }),
       FieldValidator.create({
         field: 'username',
-        body: (it, valueHash) =>
+        ok: (it, valueHash) =>
           it
           && it.length >= 1
           && it.length <= 8,
@@ -813,7 +813,7 @@ describe('VariablesValidationResult', () => {
       }),
       FieldValidator.create({
         field: 'username',
-        body: (it, valueHash) => {
+        ok: (it, valueHash) => {
           return !it
             || /^\w+$/.test(it)
         },
@@ -821,12 +821,12 @@ describe('VariablesValidationResult', () => {
       }),
       FieldValidator.create({
         field: 'password',
-        body: (it, valueHash) => it,
+        ok: (it, valueHash) => it,
         message: 'password is required',
       }),
       FieldValidator.create({
         field: 'bio',
-        body: (it, valueHash) => !(
+        ok: (it, valueHash) => !(
           [
             'ace',
             'deuce',
@@ -839,12 +839,12 @@ describe('VariablesValidationResult', () => {
     const betaValidators = [
       FieldValidator.create({
         field: 'email',
-        body: (it, valueHash) => it,
+        ok: (it, valueHash) => it,
         message: 'email is required',
       }),
       FieldValidator.create({
         field: 'email',
-        body: (it, valueHash) => {
+        ok: (it, valueHash) => {
           return !it
             || /^[^@]+@[^@]+\.[^@]+$/.test(it)
         },
@@ -852,17 +852,17 @@ describe('VariablesValidationResult', () => {
       }),
       FieldValidator.create({
         field: 'password',
-        body: (it, valueHash) => it,
+        ok: (it, valueHash) => it,
         message: 'password is required',
       }),
       FieldValidator.create({
         field: 'password-confirmation',
-        body: (it, valueHash) => it,
+        ok: (it, valueHash) => it,
         message: 'password confirmation is required',
       }),
       FieldValidator.create({
         field: 'password-confirmation',
-        body: (it, valueHash) => it === valueHash.password,
+        ok: (it, valueHash) => it === valueHash.password,
         message: 'password confirmation must match password',
       }),
     ]
@@ -870,7 +870,7 @@ describe('VariablesValidationResult', () => {
     const firstValidators = [
       FieldValidator.create({
         field: 'bio',
-        body: (it, valueHash) => !it.includes('$'),
+        ok: (it, valueHash) => !it.includes('$'),
         message: 'bio must not include `$`',
       }),
     ]
@@ -878,7 +878,7 @@ describe('VariablesValidationResult', () => {
     const secondValidators = [
       FieldValidator.create({
         field: 'bio',
-        body: (it, valueHash) => !it.includes('%'),
+        ok: (it, valueHash) => !it.includes('%'),
         message: 'bio must not include `%`',
       }),
     ]
@@ -1317,12 +1317,12 @@ describe('VariablesValidationResult', () => {
     const alphaValidators = [
       FieldValidator.create({
         field: 'username',
-        body: (it, valueHash) => it,
+        ok: (it, valueHash) => it,
         message: 'username is required',
       }),
       FieldValidator.create({
         field: 'username',
-        body: (it, valueHash) =>
+        ok: (it, valueHash) =>
           it
           && it.length >= 1
           && it.length <= 8,
@@ -1330,7 +1330,7 @@ describe('VariablesValidationResult', () => {
       }),
       FieldValidator.create({
         field: 'username',
-        body: (it, valueHash) => {
+        ok: (it, valueHash) => {
           return !it
             || /^\w+$/.test(it)
         },
@@ -1338,12 +1338,12 @@ describe('VariablesValidationResult', () => {
       }),
       FieldValidator.create({
         field: 'password',
-        body: (it, valueHash) => it,
+        ok: (it, valueHash) => it,
         message: 'password is required',
       }),
       FieldValidator.create({
         field: 'bio',
-        body: (it, valueHash) => !(
+        ok: (it, valueHash) => !(
           [
             'ace',
             'deuce',
@@ -1356,12 +1356,12 @@ describe('VariablesValidationResult', () => {
     const betaValidators = [
       FieldValidator.create({
         field: 'email',
-        body: (it, valueHash) => it,
+        ok: (it, valueHash) => it,
         message: 'email is required',
       }),
       FieldValidator.create({
         field: 'email',
-        body: (it, valueHash) => {
+        ok: (it, valueHash) => {
           return !it
             || /^[^@]+@[^@]+\.[^@]+$/.test(it)
         },
@@ -1369,17 +1369,17 @@ describe('VariablesValidationResult', () => {
       }),
       FieldValidator.create({
         field: 'password',
-        body: (it, valueHash) => it,
+        ok: (it, valueHash) => it,
         message: 'password is required',
       }),
       FieldValidator.create({
         field: 'password-confirmation',
-        body: (it, valueHash) => it,
+        ok: (it, valueHash) => it,
         message: 'password confirmation is required',
       }),
       FieldValidator.create({
         field: 'password-confirmation',
-        body: (it, valueHash) => it === valueHash.password,
+        ok: (it, valueHash) => it === valueHash.password,
         message: 'password confirmation must match password',
       }),
     ]
@@ -1387,7 +1387,7 @@ describe('VariablesValidationResult', () => {
     const firstValidators = [
       FieldValidator.create({
         field: 'bio',
-        body: (it, valueHash) => !it.includes('$'),
+        ok: (it, valueHash) => !it.includes('$'),
         message: 'bio must not include `$`',
       }),
     ]
@@ -1395,7 +1395,7 @@ describe('VariablesValidationResult', () => {
     const secondValidators = [
       FieldValidator.create({
         field: 'bio',
-        body: (it, valueHash) => !it.includes('%'),
+        ok: (it, valueHash) => !it.includes('%'),
         message: 'bio must not include `%`',
       }),
     ]
