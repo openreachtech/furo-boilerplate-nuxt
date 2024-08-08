@@ -1,5 +1,5 @@
 import FormControlElementClerk from '~/modules/domClerks/FormControlElementClerk'
-import VariablesValidator from '~/modules/validators/VariablesValidator'
+import VariablesValidator from '~/modules/validators/ValueHashValidator'
 import FieldValidator from '~/modules/client/FieldValidator'
 
 /**
@@ -75,7 +75,7 @@ export default class BaseFormElementClerk {
   /**
    * Generate validation hash.
    *
-   * @returns {import('~/modules/validators/VariablesValidator').ValidatorHashType} Validation result.
+   * @returns {import('~/modules/validators/ValueHashValidator').ValidatorHashType} Validation result.
    * @public
    */
   generateValidationHash () {

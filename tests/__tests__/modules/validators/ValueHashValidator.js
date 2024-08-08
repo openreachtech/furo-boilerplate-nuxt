@@ -2,10 +2,10 @@ import {
   ConstructorSpyGenerator,
 } from '@openreachtech/renchan-test-tools'
 
-import VariablesValidator from '~/modules/validators/VariablesValidator'
+import ValueHashValidator from '~/modules/validators/ValueHashValidator'
 import FieldValidator from '~/modules/client/FieldValidator'
 
-describe('VariablesValidator', () => {
+describe('ValueHashValidator', () => {
   describe('constructor', () => {
     describe('to keep property', () => {
       describe('#valueHash', () => {
@@ -39,7 +39,7 @@ describe('VariablesValidator', () => {
             validators: [],
           }
 
-          const actual = new VariablesValidator(constructorArgs)
+          const actual = new ValueHashValidator(constructorArgs)
 
           expect(actual)
             .toHaveProperty('valueHash', args.valueHash)
@@ -115,7 +115,7 @@ describe('VariablesValidator', () => {
             validators: args.validators,
           }
 
-          const actual = new VariablesValidator(constructorArgs)
+          const actual = new ValueHashValidator(constructorArgs)
 
           expect(actual)
             .toHaveProperty('validators', args.validators)
@@ -127,7 +127,7 @@ describe('VariablesValidator', () => {
   })
 })
 
-describe('VariablesValidator', () => {
+describe('ValueHashValidator', () => {
   describe('.create()', () => {
     const cases = [
       {
@@ -203,17 +203,17 @@ describe('VariablesValidator', () => {
 
     describe('to be instance of own class', () => {
       test.each(cases)('field: $params.field', ({ args }) => {
-        const actual = VariablesValidator.create(args)
+        const actual = ValueHashValidator.create(args)
 
         expect(actual)
-          .toBeInstanceOf(VariablesValidator)
+          .toBeInstanceOf(ValueHashValidator)
       })
     })
 
     describe('to call constructor', () => {
       test.each(cases)('field: $args.field', ({ args }) => {
         const DerivedClass = ConstructorSpyGenerator.create({ jest })
-          .generateSpyKitClass(VariablesValidator)
+          .generateSpyKitClass(ValueHashValidator)
 
         DerivedClass.create(args)
 
@@ -224,7 +224,7 @@ describe('VariablesValidator', () => {
   })
 })
 
-describe('VariablesValidator', () => {
+describe('ValueHashValidator', () => {
   describe('#extractFieldNames()', () => {
     const cases = [
       {
@@ -258,7 +258,7 @@ describe('VariablesValidator', () => {
     ]
 
     test.each(cases)('valueHash: $args.valueHash', ({ args, expected }) => {
-      const validator = VariablesValidator.create(args)
+      const validator = ValueHashValidator.create(args)
 
       const actual = validator.extractFieldNames()
 
@@ -268,7 +268,7 @@ describe('VariablesValidator', () => {
   })
 })
 
-describe('VariablesValidator', () => {
+describe('ValueHashValidator', () => {
   describe('#extractValidators()', () => {
     const cases = [
       {
@@ -408,7 +408,7 @@ describe('VariablesValidator', () => {
     ]
 
     describe.each(cases)('valueHash: $args.valueHash', ({ args, fieldCases }) => {
-      const validator = VariablesValidator.create(args)
+      const validator = ValueHashValidator.create(args)
 
       test.each(fieldCases)('field: $field', ({ field, expected }) => {
         const actual = validator.extractValidators({
@@ -422,7 +422,7 @@ describe('VariablesValidator', () => {
   })
 })
 
-describe('VariablesValidator', () => {
+describe('ValueHashValidator', () => {
   describe('#isValid()', () => {
     /**
      * @type {Array<{
@@ -557,7 +557,7 @@ describe('VariablesValidator', () => {
     describe.each(cases)('validators: $args.validators.length', ({ args, truthyCases, falsyCases }) => {
       describe('to be truthy', () => {
         test.each(truthyCases)('valueHash: $valueHash', ({ valueHash }) => {
-          const validator = VariablesValidator.create({
+          const validator = ValueHashValidator.create({
             valueHash,
             validators: args.validators,
           })
@@ -571,7 +571,7 @@ describe('VariablesValidator', () => {
 
       describe('to be falsy', () => {
         test.each(falsyCases)('valueHash: $valueHash', ({ valueHash }) => {
-          const validator = VariablesValidator.create({
+          const validator = ValueHashValidator.create({
             valueHash,
             validators: args.validators,
           })
@@ -586,7 +586,7 @@ describe('VariablesValidator', () => {
   })
 })
 
-describe('VariablesValidator', () => {
+describe('ValueHashValidator', () => {
   describe('#isInvalid()', () => {
     /**
      * @type {Array<{
@@ -721,7 +721,7 @@ describe('VariablesValidator', () => {
     describe.each(cases)('validators: $args.validators.length', ({ args, truthyCases, falsyCases }) => {
       describe('to be truthy', () => {
         test.each(truthyCases)('valueHash: $valueHash', ({ valueHash }) => {
-          const validator = VariablesValidator.create({
+          const validator = ValueHashValidator.create({
             valueHash,
             validators: args.validators,
           })
@@ -735,7 +735,7 @@ describe('VariablesValidator', () => {
 
       describe('to be falsy', () => {
         test.each(falsyCases)('valueHash: $valueHash', ({ valueHash }) => {
-          const validator = VariablesValidator.create({
+          const validator = ValueHashValidator.create({
             valueHash,
             validators: args.validators,
           })
@@ -750,7 +750,7 @@ describe('VariablesValidator', () => {
   })
 })
 
-describe('VariablesValidator', () => {
+describe('ValueHashValidator', () => {
   describe('#getAllMessages()', () => {
     /**
      * @type {Array<{
@@ -899,7 +899,7 @@ describe('VariablesValidator', () => {
 
     describe.each(cases)('validators: $args.validators.length', ({ args, fieldCases }) => {
       test.each(fieldCases)('[$#] field: $field', ({ field, valueHash, expected }) => {
-        const validator = VariablesValidator.create({
+        const validator = ValueHashValidator.create({
           valueHash,
           validators: args.validators,
         })
@@ -915,7 +915,7 @@ describe('VariablesValidator', () => {
   })
 })
 
-describe('VariablesValidator', () => {
+describe('ValueHashValidator', () => {
   describe('#getOneMessage()', () => {
     /**
      * @type {Array<{
@@ -1053,7 +1053,7 @@ describe('VariablesValidator', () => {
 
     describe.each(cases)('validators: $args.validators.length', ({ args, fieldCases }) => {
       test.each(fieldCases)('[$#] field: $field', ({ field, valueHash, expected }) => {
-        const validator = VariablesValidator.create({
+        const validator = ValueHashValidator.create({
           valueHash,
           validators: args.validators,
         })
@@ -1069,7 +1069,7 @@ describe('VariablesValidator', () => {
   })
 })
 
-describe('VariablesValidator', () => {
+describe('ValueHashValidator', () => {
   describe('#isValidField()', () => {
     /**
      * @type {Array<{
@@ -1207,7 +1207,7 @@ describe('VariablesValidator', () => {
 
     describe.each(cases)('validators: $args.validators.length', ({ args, fieldCases }) => {
       test.each(fieldCases)('[$#] field: $field', ({ field, valueHash, expected }) => {
-        const validator = VariablesValidator.create({
+        const validator = ValueHashValidator.create({
           valueHash,
           validators: args.validators,
         })
@@ -1223,7 +1223,7 @@ describe('VariablesValidator', () => {
   })
 })
 
-describe('VariablesValidator', () => {
+describe('ValueHashValidator', () => {
   describe('#isInvalidField()', () => {
     /**
      * @type {Array<{
@@ -1361,7 +1361,7 @@ describe('VariablesValidator', () => {
 
     describe.each(cases)('validators: $args.validators.length', ({ args, fieldCases }) => {
       test.each(fieldCases)('[$#] field: $field', ({ field, valueHash, expected }) => {
-        const validator = VariablesValidator.create({
+        const validator = ValueHashValidator.create({
           valueHash,
           validators: args.validators,
         })
