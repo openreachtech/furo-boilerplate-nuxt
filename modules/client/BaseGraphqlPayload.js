@@ -250,14 +250,14 @@ export default class BaseGraphqlPayload {
 /**
  * @typedef {{
  *   queryTemplate: string
- *   variables: VariablesType | null
+ *   variables: VariablesType
  *   options?: RequestInit
  * }} BaseGraphqlPayloadParams
  */
 
 /**
  * @typedef {{
- *   variables?: VariablesType | null
+ *   variables?: VariablesType
  *   options?: RequestInit
  * }} BaseGraphqlPayloadFactoryParams
  */
