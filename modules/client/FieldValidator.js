@@ -9,11 +9,11 @@ export default class FieldValidator {
    */
   constructor ({
     field,
-    ok: body,
+    ok,
     message = null,
   }) {
     this.field = field
-    this.body = body
+    this.okFunction = ok
     this.message = message
   }
 
@@ -68,7 +68,7 @@ export default class FieldValidator {
     target,
     variables,
   }) {
-    return this.body(target, variables)
+    return this.okFunction(target, variables)
   }
 
   /**
