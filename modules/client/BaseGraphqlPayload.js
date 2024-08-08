@@ -115,9 +115,11 @@ export default class BaseGraphqlPayload {
       ),
     })
 
+    const extractedVariables = this.extractFilteredVariables()
+
     const body = JSON.stringify({
       query: this.queryTemplate,
-      variables: this.variables,
+      variables: extractedVariables,
     })
 
     return {
