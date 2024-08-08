@@ -1,11 +1,11 @@
 /**
  * Field validation result.
  */
-export default class VariablesValidator {
+export default class ValueHashValidator {
   /**
-   * Constructor of VariablesValidator
+   * Constructor of ValueHashValidator
    *
-   * @param {VariablesValidatorParams} params - Parameters.
+   * @param {ValueHashValidatorParams} params - Parameters.
    */
   constructor ({
     valueHash,
@@ -18,8 +18,8 @@ export default class VariablesValidator {
   /**
    * Factory method.
    *
-   * @param {VariablesValidatorFactoryParams} params - Parameters.
-   * @returns {VariablesValidator} An instance of this class.
+   * @param {ValueHashValidatorFactoryParams} params - Parameters.
+   * @returns {ValueHashValidator} An instance of this class.
    */
   static create (params) {
     return new this(params)
@@ -278,11 +278,11 @@ export default class VariablesValidator {
  * @typedef {{
  *   valueHash: Record<string, any>
  *   validators: Array<import('~/modules/client/FieldValidator').default>
- * }} VariablesValidatorParams
+ * }} ValueHashValidatorParams
  */
 
 /**
- * @typedef {VariablesValidatorParams} VariablesValidatorFactoryParams
+ * @typedef {ValueHashValidatorParams} ValueHashValidatorFactoryParams
  */
 
 /**
