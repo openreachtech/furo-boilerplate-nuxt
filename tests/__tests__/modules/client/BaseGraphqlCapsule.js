@@ -650,7 +650,7 @@ describe('BaseGraphqlCapsule', () => {
 
 describe('BaseGraphqlCapsule', () => {
   describe('#hasInvalidVariablesError()', () => {
-    /** @extends BaseGraphqlPayload<typeof DerivedPayload> */
+    /** @extends BaseGraphqlPayload<typeof DerivedPayload, *> */
     class DerivedPayload extends BaseGraphqlPayload {
       /** @override */
       static get document () {
@@ -664,46 +664,32 @@ describe('BaseGraphqlCapsule', () => {
       }
 
       /** @override */
-      static get validators () {
-        return [
-          {
-            field: 'username',
-            ok: (it, valueHash) => it,
-            message: 'username must be set',
-          },
-          {
-            field: 'username',
-            ok: (it, valueHash) => /^\w+$/.test(it),
-            message: 'username must be alphanumeric',
-          },
-          {
-            field: 'password',
-            ok: (it, valueHash) => {
-              return it
-                && it.length >= 1
-                && it.length <= 16
-            },
-            message: 'password must be set with at least 1 character and no more than 16 characters',
-          },
-          {
-            field: 'password-confirmation',
-            ok: (it, valueHash) => {
-              return it
-                && it === valueHash.password
-            },
-            message: 'passwords do not match.',
-          },
-        ]
+      static get fieldHash () {
+        return {
+          input: [
+            'email',
+            'username',
+            'password',
+          ],
+        }
       }
     }
 
     describe('to has invalid variables error (truthy)', () => {
+      /**
+       * @type {Array<{
+       *   params: {
+       *     variables: Record<string, any>
+       *   }
+       * }>}
+       */
       const cases = [
         {
           params: {
             variables: {
               input: {
-                username: 'John Doe', // ❌
+                email: 'eucen@example.com',
+                username: 'JohnDoe',
                 password: 'password$01',
                 'password-confirmation': 'password$01',
               },
@@ -714,9 +700,10 @@ describe('BaseGraphqlCapsule', () => {
           params: {
             variables: {
               input: {
-                username: 'Alice',
+                email: 'eucen@example.com',
+                // username: 'JohnDoe',
                 password: 'password$01',
-                'password-confirmation': 'password$99', // ❌
+                'password-confirmation': 'password$01',
               },
             },
           },
@@ -725,16 +712,17 @@ describe('BaseGraphqlCapsule', () => {
           params: {
             variables: {
               input: {
-                username: 'Alice',
-                password: '', // ❌
-                'password-confirmation': '', // ❌
+                // email: 'eucen@example.com',
+                // username: 'JohnDoe',
+                // password: 'password$01',
+                'password-confirmation': 'password$01',
               },
             },
           },
         },
       ]
 
-      test.each(cases)('username: $params.variables.input.username', ({ params }) => {
+      test.each(cases)('variables: $params.variables', ({ params }) => {
         const targetPayload = DerivedPayload.create({
           variables: params.variables,
         })
@@ -759,16 +747,49 @@ describe('BaseGraphqlCapsule', () => {
           params: {
             variables: {
               input: {
-                username: 'John_Doe',
+                email: 'eucen@example.com',
+                username: 'JohnDoe',
                 password: 'password$01',
-                'password-confirmation': 'password$01',
               },
+            },
+          },
+        },
+        {
+          params: {
+            variables: {
+              input: {
+                email: 'eucen@example.com',
+                // username: 'JohnDoe',
+                password: 'password$01',
+              },
+            },
+          },
+        },
+        {
+          params: {
+            variables: {
+              input: {
+                // email: 'eucen@example.com',
+                // username: 'JohnDoe',
+                // password: 'password$01',
+              },
+            },
+          },
+        },
+        {
+          params: {
+            variables: {
+              // input: {
+              //   email: 'eucen@example.com',
+              //   username: 'JohnDoe',
+              //   password: 'password$01',
+              // },
             },
           },
         },
       ]
 
-      test.each(cases)('username: $params.variables.input.username', ({ params }) => {
+      test.each(cases)('variables: $params.variables', ({ params }) => {
         const targetPayload = DerivedPayload.create({
           variables: params.variables,
         })
@@ -1441,19 +1462,13 @@ describe('BaseGraphqlCapsule', () => {
       }
 
       /** @override */
-      static get validators () {
-        return [
-          {
-            field: 'username',
-            ok: (it, valueHash) => it,
-            message: 'username must be set',
-          },
-          {
-            field: 'username',
-            ok: (it, valueHash) => /^\w+$/.test(it),
-            message: 'username must be alphanumeric',
-          },
-        ]
+      static get fieldHash () {
+        return {
+          input: [
+            'username',
+            'password',
+          ],
+        }
       }
     }
 
@@ -1465,7 +1480,9 @@ describe('BaseGraphqlCapsule', () => {
             payload: DerivedPayload.create({
               variables: {
                 input: {
-                  username: 'John Doe', // ❌
+                  username: 'JohnDoe',
+                  password: 'password$01',
+                  'confirm-password': 'password$01', // ❌
                 },
               },
             }),
