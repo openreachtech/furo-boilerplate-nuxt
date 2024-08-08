@@ -65,15 +65,6 @@ export default class BaseGraphqlPayload {
   }
 
   /**
-   * get: validators.
-   *
-   * @returns {ValidatorHashType} Array of arguments to create an instance of FieldValidator.
-   */
-  static get validators () {
-    return []
-  }
-
-  /**
    * get: Ctor.
    *
    * @template {typeof BaseGraphqlPayload} T
