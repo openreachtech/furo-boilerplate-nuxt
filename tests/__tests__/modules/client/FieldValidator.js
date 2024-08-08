@@ -36,7 +36,7 @@ describe('FieldValidator', () => {
         })
       })
 
-      describe('#body', () => {
+      describe('#okFunction', () => {
         const cases = [
           {
             args: {
@@ -61,8 +61,8 @@ describe('FieldValidator', () => {
           const actual = new FieldValidator(constructorArgs)
 
           expect(actual)
-            .toHaveProperty('body', args.ok)
-          expect(actual.body)
+            .toHaveProperty('okFunction', args.ok)
+          expect(actual.okFunction)
             .toBe(args.ok) // same reference
         })
       })
