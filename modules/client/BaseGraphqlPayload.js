@@ -150,6 +150,16 @@ export default class BaseGraphqlPayload {
   }
 
   /**
+   * Extract filtered variables.
+   *
+   * @abstract
+   * @returns {SV} Filtered variables
+   */
+  extractFilteredVariables () {
+    return /** @type {*} */ (this.variables)
+  }
+
+  /**
    * Is valid variables.
    *
    * @returns {boolean} true: valid, false: invalid.
