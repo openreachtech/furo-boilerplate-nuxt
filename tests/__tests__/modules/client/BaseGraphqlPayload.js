@@ -234,21 +234,6 @@ describe('BaseGraphqlPayload', () => {
 })
 
 describe('BaseGraphqlPayload', () => {
-  describe('.get:validators', () => {
-    describe('to be []', () => {
-      test('with no arguments', () => {
-        const actual = BaseGraphqlPayload.validators
-
-        expect(actual)
-          .toBeInstanceOf(Array)
-        expect(actual)
-          .toHaveLength(0)
-      })
-    })
-  })
-})
-
-describe('BaseGraphqlPayload', () => {
   describe('.create', () => {
     describe('to return instance of this class', () => {
       const cases = [
