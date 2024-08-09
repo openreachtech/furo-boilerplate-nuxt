@@ -2039,6 +2039,7 @@ describe('BaseGraphqlLauncher', () => {
                 'x-access-token': 'access-token-01',
               }),
             },
+            /** @extends {BaseGraphqlPayload<*, *>} */
             Payload: class CustomerPayload extends BaseGraphqlPayload {
               /** @inheritdoc */
               static get document () {
@@ -2050,6 +2051,7 @@ describe('BaseGraphqlLauncher', () => {
                 }`
               }
             },
+            /** @extends {BaseGraphqlCapsule<*, *>} */
             Capsule: class CustomerCapsule extends BaseGraphqlCapsule {},
           },
           tally: {
@@ -2070,12 +2072,17 @@ describe('BaseGraphqlLauncher', () => {
         {
           params: {
             endpointUrl: 'http://example.com/graphql-admin',
-            variables: {},
+            variables: {
+              input: {
+                id: 20001,
+              },
+            },
             options: {
               headers: new Headers({
                 'x-access-token': 'access-token-02',
               }),
             },
+            /** @extends {BaseGraphqlPayload<*, *>} */
             Payload: class AdminPayload extends BaseGraphqlPayload {
               /** @inheritdoc */
               static get document () {
@@ -2087,6 +2094,7 @@ describe('BaseGraphqlLauncher', () => {
                 }`
               }
             },
+            /** @extends {BaseGraphqlCapsule<*, *>} */
             Capsule: class AdminCapsule extends BaseGraphqlCapsule {},
           },
           tally: {
@@ -2154,6 +2162,7 @@ describe('BaseGraphqlLauncher', () => {
                 'x-access-token': 'access-token-01',
               }),
             },
+            /** @extends {BaseGraphqlPayload<*, *>} */
             Payload: class CustomerPayload extends BaseGraphqlPayload {
               /** @inheritdoc */
               static get document () {
@@ -2165,6 +2174,7 @@ describe('BaseGraphqlLauncher', () => {
                 }`
               }
             },
+            /** @extends {BaseGraphqlCapsule<*, *>} */
             Capsule: class CustomerCapsule extends BaseGraphqlCapsule {},
           },
         },
@@ -2172,13 +2182,16 @@ describe('BaseGraphqlLauncher', () => {
           params: {
             endpointUrl: 'http://example.com/graphql-admin',
             variables: {
-              input: null,
+              input: {
+                id: 20001,
+              },
             },
             options: {
               headers: new Headers({
                 'x-access-token': 'access-token-02',
               }),
             },
+            /** @extends {BaseGraphqlPayload<*, *>} */
             Payload: class AdminPayload extends BaseGraphqlPayload {
               /** @inheritdoc */
               static get document () {
@@ -2190,6 +2203,7 @@ describe('BaseGraphqlLauncher', () => {
                 }`
               }
             },
+            /** @extends {BaseGraphqlCapsule<*, *>} */
             Capsule: class AdminCapsule extends BaseGraphqlCapsule {},
           },
         },
@@ -2248,6 +2262,7 @@ describe('BaseGraphqlLauncher', () => {
                 'x-access-token': 'access-token-01',
               }),
             },
+            /** @extends {BaseGraphqlPayload<*, *>} */
             Payload: class CustomerPayload extends BaseGraphqlPayload {
               /** @inheritdoc */
               static get document () {
@@ -2259,6 +2274,7 @@ describe('BaseGraphqlLauncher', () => {
                 }`
               }
             },
+            /** @extends {BaseGraphqlCapsule<*, *>} */
             Capsule: class CustomerCapsule extends BaseGraphqlCapsule {},
           },
         },
@@ -2273,6 +2289,7 @@ describe('BaseGraphqlLauncher', () => {
                 'x-access-token': 'access-token-02',
               }),
             },
+            /** @extends {BaseGraphqlPayload<*, *>} */
             Payload: class AdminPayload extends BaseGraphqlPayload {
               /** @inheritdoc */
               static get document () {
@@ -2284,6 +2301,7 @@ describe('BaseGraphqlLauncher', () => {
                 }`
               }
             },
+            /** @extends {BaseGraphqlCapsule<*, *>} */
             Capsule: class AdminCapsule extends BaseGraphqlCapsule {},
           },
         },
@@ -2337,6 +2355,7 @@ describe('BaseGraphqlLauncher', () => {
                 'x-access-token': 'access-token-01',
               }),
             },
+            /** @extends {BaseGraphqlPayload<*, *>} */
             Payload: class CustomerPayload extends BaseGraphqlPayload {
               /** @inheritdoc */
               static get document () {
@@ -2348,6 +2367,7 @@ describe('BaseGraphqlLauncher', () => {
                 }`
               }
             },
+            /** @extends {BaseGraphqlCapsule<*, *>} */
             Capsule: class CustomerCapsule extends BaseGraphqlCapsule {},
           },
           tally: {
@@ -2371,6 +2391,7 @@ describe('BaseGraphqlLauncher', () => {
                 'x-access-token': 'access-token-02',
               }),
             },
+            /** @extends {BaseGraphqlPayload<*, *>} */
             Payload: class AdminPayload extends BaseGraphqlPayload {
               /** @inheritdoc */
               static get document () {
@@ -2382,6 +2403,7 @@ describe('BaseGraphqlLauncher', () => {
                 }`
               }
             },
+            /** @extends {BaseGraphqlCapsule<*, *>} */
             Capsule: class AdminCapsule extends BaseGraphqlCapsule {},
           },
           tally: {
@@ -2435,6 +2457,7 @@ describe('BaseGraphqlLauncher', () => {
         ENDPOINT_URL: 'http://example.com/graphql-customer',
       }
 
+      /** @extends {BaseGraphqlPayload<*, *>} */
       class DerivedGraphqlPayload extends BaseGraphqlPayload {
         /** @inheritdoc */
         static get document () {
@@ -2447,6 +2470,7 @@ describe('BaseGraphqlLauncher', () => {
         }
       }
 
+      /** @extends {BaseGraphqlCapsule<*, *>} */
       class DerivedGraphqlCapsule extends BaseGraphqlCapsule {
 
       }
@@ -2456,7 +2480,9 @@ describe('BaseGraphqlLauncher', () => {
           {
             params: {
               variables: {
-                id: 10001,
+                input: {
+                  id: 10001,
+                },
               },
               options: {
                 headers: new Headers({
@@ -2469,7 +2495,9 @@ describe('BaseGraphqlLauncher', () => {
           {
             params: {
               variables: {
-                id: 10002,
+                input: {
+                  id: 10002,
+                },
               },
               options: {
                 headers: new Headers({
@@ -2511,7 +2539,7 @@ describe('BaseGraphqlLauncher', () => {
         })
       })
 
-      describe('for #createPayload()', () => {
+      describe('for .createPayload()', () => {
         const cases = [
           {
             params: {
@@ -2569,7 +2597,7 @@ describe('BaseGraphqlLauncher', () => {
             config: graphqlConfig,
           })
 
-          const createPayloadSpy = jest.spyOn(launcher, 'createPayload')
+          const createPayloadSpy = jest.spyOn(BaseGraphqlLauncher, 'createPayload')
           const invokeFetchQuerySpy = jest.spyOn(launcher, 'invokeFetchQuery')
             .mockResolvedValue(new Response())
 
@@ -2602,6 +2630,7 @@ describe('BaseGraphqlLauncher', () => {
                 'x-access-token': 'access-token-01',
               }),
             },
+            /** @extends {BaseGraphqlPayload<*, *>} */
             Payload: class CustomerPayload extends BaseGraphqlPayload {
               /** @inheritdoc */
               static get document () {
@@ -2613,6 +2642,7 @@ describe('BaseGraphqlLauncher', () => {
                 }`
               }
             },
+            /** @extends {BaseGraphqlCapsule<*, *>} */
             Capsule: class CustomerCapsule extends BaseGraphqlCapsule {},
             hooks: {
               beforeRequest: async () => true,
@@ -2631,6 +2661,7 @@ describe('BaseGraphqlLauncher', () => {
                 'x-access-token': 'access-token-02',
               }),
             },
+            /** @extends {BaseGraphqlPayload<*, *>} */
             Payload: class AdminPayload extends BaseGraphqlPayload {
               /** @inheritdoc */
               static get document () {
@@ -2642,6 +2673,7 @@ describe('BaseGraphqlLauncher', () => {
                 }`
               }
             },
+            /** @extends {BaseGraphqlCapsule<*, *>} */
             Capsule: class AdminCapsule extends BaseGraphqlCapsule {},
             hooks: {
               beforeRequest: async () => false,
