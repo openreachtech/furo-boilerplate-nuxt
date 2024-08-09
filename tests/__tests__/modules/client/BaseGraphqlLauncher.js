@@ -510,7 +510,7 @@ describe('BaseGraphqlLauncher', () => {
 })
 
 describe('BaseGraphqlLauncher', () => {
-  describe('.createResultCapsuleAsNetworkError()', () => {
+  describe('.createCapsuleAsNetworkError()', () => {
     describe('to be instance of BaseGraphqlCapsule', () => {
       const capsuleCases = [
         {
@@ -565,7 +565,7 @@ describe('BaseGraphqlLauncher', () => {
             payload: args.payload,
           }
 
-          const capsule = BaseGraphqlLauncher.createResultCapsuleAsNetworkError(currentArgs)
+          const capsule = BaseGraphqlLauncher.createCapsuleAsNetworkError(currentArgs)
 
           expect(capsule)
             .toBeInstanceOf(params.CapsuleClass)
@@ -636,7 +636,7 @@ describe('BaseGraphqlLauncher', () => {
             payload: args.payload,
           }
 
-          BaseGraphqlLauncher.createResultCapsuleAsNetworkError(currentArgs)
+          BaseGraphqlLauncher.createCapsuleAsNetworkError(currentArgs)
 
           expect(createSpy)
             .toHaveBeenCalledWith(expected)
