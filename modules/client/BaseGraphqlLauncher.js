@@ -159,7 +159,7 @@ export default class BaseGraphqlLauncher {
    * @template C, D
    * @returns {InstanceType<CapsuleClass<C, D>>} Instance of capsule.
    */
-  static createResultCapsuleAsNetworkError ({
+  static createCapsuleAsNetworkError ({
     payload,
   }) {
     const args = {
@@ -236,7 +236,7 @@ export default class BaseGraphqlLauncher {
       payload,
     })
     if (response === null) {
-      return this.Ctor.createResultCapsuleAsNetworkError({
+      return this.Ctor.createCapsuleAsNetworkError({
         payload,
       })
     }
