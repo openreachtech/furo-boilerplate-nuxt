@@ -94,8 +94,8 @@ export default class BaseGraphqlLauncher {
    * Create instance of capsule with result.
    *
    * @param {CapsuleParams} params - Parameters.
-   * @template C, D
-   * @returns {InstanceType<CapsuleClass<C, D>>} Instance of capsule.
+   * @template C
+   * @returns {InstanceType<C>} Instance of capsule.
    */
   static createCapsule ({
     rawResponse,
@@ -110,14 +110,16 @@ export default class BaseGraphqlLauncher {
       abortedReason,
     }
 
-    return this.Capsule.create(args)
+    return /** @type {*} */ (
+      this.Capsule.create(args)
+    )
   }
 
   /**
    * Create instance of capsule with result as pending.
    *
-   * @template C, D
-   * @returns {InstanceType<CapsuleClass<C, D>>} Instance of capsule.
+   * @template C
+   * @returns {InstanceType<C>} Instance of capsule.
    */
   static createCapsuleAsPending () {
     const args = {
