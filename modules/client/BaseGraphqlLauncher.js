@@ -300,7 +300,7 @@ export default class BaseGraphqlLauncher {
       options,
     })
 
-    const payload = this.createPayload({
+    const payload = this.Ctor.createPayload({
       variables,
       options: updatedOptions,
     })
