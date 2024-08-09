@@ -68,6 +68,27 @@ export default class BaseGraphqlLauncher {
   }
 
   /**
+   * Create payload.
+   *
+   * @param {{
+   *   variables: import('./BaseGraphqlPayload').VariablesType
+   *   options: RequestInit
+   * }} params - Parameters.
+   * @template P, D
+   * @returns {InstanceType<PayloadClass<P, D>>} Instance of Payload.
+   */
+  static createPayload ({
+    variables,
+    options,
+  }) {
+    return this.Payload
+      .create({
+        variables,
+        options,
+      })
+  }
+
+  /**
    * Create instance of capsule with result.
    *
    * @param {CapsuleParams} params - Parameters.
