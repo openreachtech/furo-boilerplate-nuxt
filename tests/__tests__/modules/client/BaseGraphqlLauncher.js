@@ -650,7 +650,7 @@ describe('BaseGraphqlLauncher', () => {
 })
 
 describe('BaseGraphqlLauncher', () => {
-  describe('.createResultCapsuleAsJsonParseError()', () => {
+  describe('.createCapsuleAsJsonParseError()', () => {
     describe('to be instance of BaseGraphqlCapsule', () => {
       const capsuleCases = [
         {
@@ -708,7 +708,7 @@ describe('BaseGraphqlLauncher', () => {
             payload: args.payload,
           }
 
-          const capsule = BaseGraphqlLauncher.createResultCapsuleAsJsonParseError(currentArgs)
+          const capsule = BaseGraphqlLauncher.createCapsuleAsJsonParseError(currentArgs)
 
           expect(capsule)
             .toBeInstanceOf(params.CapsuleClass)
@@ -782,7 +782,7 @@ describe('BaseGraphqlLauncher', () => {
             payload: args.payload,
           }
 
-          BaseGraphqlLauncher.createResultCapsuleAsJsonParseError(currentArgs)
+          BaseGraphqlLauncher.createCapsuleAsJsonParseError(currentArgs)
 
           expect(createSpy)
             .toHaveBeenCalledWith(expected)
