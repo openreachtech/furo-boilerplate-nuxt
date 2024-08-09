@@ -979,7 +979,6 @@ describe('BaseGraphqlLauncher', () => {
 
         const args = {
           variables: params.variables,
-          options: {},
         }
 
         const payload = BaseGraphqlLauncher.createPayload(args)
