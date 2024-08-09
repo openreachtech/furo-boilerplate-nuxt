@@ -131,7 +131,7 @@ export default class BaseGraphqlLauncher {
    * Create instance of capsule with result as network error.
    *
    * @param {{
-   *   payload: InstanceType<PayloadClass>
+   *   payload: InstanceType<PayloadClass<*, *>>
    * }} params - Parameters.
    * @template C, D
    * @returns {InstanceType<CapsuleClass<C, D>>} Instance of capsule.
@@ -153,7 +153,7 @@ export default class BaseGraphqlLauncher {
    * Create instance of capsule with result as aborted by hooks.
    *
    * @param {{
-   *   payload: InstanceType<PayloadClass>
+   *   payload: InstanceType<PayloadClass<*, *>>
    * }} params - Parameters.
    * @template C, D
    * @returns {InstanceType<CapsuleClass<C, D>>} Instance of capsule.
@@ -175,7 +175,7 @@ export default class BaseGraphqlLauncher {
    * Create instance of capsule with result as network error.
    *
    * @param {{
-   *   payload: InstanceType<PayloadClass>
+   *   payload: InstanceType<PayloadClass<*, *>>
    * }} params - Parameters.
    * @template C, D
    * @returns {InstanceType<CapsuleClass<C, D>>} Instance of capsule.
@@ -197,7 +197,7 @@ export default class BaseGraphqlLauncher {
    *
    * @param {{
    *   rawResponse: Response
-   *   payload: InstanceType<PayloadClass>
+   *   payload: InstanceType<PayloadClass<*, *>>
    * }} params - Parameters.
    * @template C, D
    * @returns {InstanceType<CapsuleClass<C, D>>} Instance of capsule.
@@ -237,9 +237,8 @@ export default class BaseGraphqlLauncher {
   /**
    * Launch query with direct variables.
    *
-   * @template {PayloadClass} P
    * @param {{
-   *   payload: InstanceType<P>
+   *   payload: InstanceType<PayloadClass<*, *>>
    * }} Params - Parameters.
    * @returns {Promise<InstanceType<CapsuleClass<*, *>>>} Promise of instance of capsule.
    * @public
@@ -376,7 +375,7 @@ export default class BaseGraphqlLauncher {
    * Fetch query.
    *
    * @param {{
-   *   payload: InstanceType<PayloadClass>
+   *   payload: InstanceType<PayloadClass<*, *>>
    * }} params - Parameters.
    * @returns {Promise<Response | null>} Instance of fetch API response.
    */
