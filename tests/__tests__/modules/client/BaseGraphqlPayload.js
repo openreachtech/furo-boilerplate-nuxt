@@ -3,8 +3,6 @@ import {
 } from '@openreachtech/renchan-test-tools'
 
 import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
-import FieldValidator from '~/modules/client/FieldValidator'
-import VariablesPerSchemaValidator from '~/modules/client/VariablesPerSchemaValidator'
 
 describe('BaseGraphqlPayload', () => {
   describe('constructor', () => {
@@ -228,21 +226,6 @@ describe('BaseGraphqlPayload', () => {
 
         expect(actual)
           .toEqual({})
-      })
-    })
-  })
-})
-
-describe('BaseGraphqlPayload', () => {
-  describe('.get:validators', () => {
-    describe('to be []', () => {
-      test('with no arguments', () => {
-        const actual = BaseGraphqlPayload.validators
-
-        expect(actual)
-          .toBeInstanceOf(Array)
-        expect(actual)
-          .toHaveLength(0)
       })
     })
   })
@@ -1316,128 +1299,6 @@ describe('BaseGraphqlPayload', () => {
 
         expect(actual)
           .toEqual(expected)
-      })
-    })
-  })
-})
-
-describe('BaseGraphqlPayload', () => {
-  describe('#generateSchemaValidatorHash()', () => {
-    describe('to return object hash of validators', () => {
-      const queryTemplate = /* GraphQL */ `
-        query CurriculumsQuery ($input: CurriculumsSearchInput!) {
-          curriculums(input: $input) {
-            curriculums {
-              id
-              title
-            }
-          }
-        }
-      `
-
-      /**
-       * @type {Array<{
-       *   args: {
-       *     variables: any
-       *     validators: {
-       *       [group: string]: Array<import('~/modules/client/BaseGraphqlPayload').ValidatorOptionsType>
-       *     }
-       *   }
-       *   expected: {
-       *     [schema: string]: VariablesPerSchemaValidator
-       *   }
-       * }>}
-       */
-      const cases = [
-        {
-          args: {
-            variables: {
-              input: {
-                username: 'Alice',
-                password: 'password$001',
-              },
-            },
-            validators: {
-              input: [
-                { field: 'username', ok: (it, valueHash) => it },
-                { field: 'username', ok: (it, valueHash) => it && it.length >= 1 && it.length <= 8 },
-                { field: 'password', ok: (it, valueHash) => it },
-              ],
-            },
-          },
-          expected: {
-            input: VariablesPerSchemaValidator.create({
-              variables: {
-                username: 'Alice',
-                password: 'password$001',
-              },
-              validators: [
-                FieldValidator.create({ field: 'username', ok: expect.any(Function) }),
-                FieldValidator.create({ field: 'username', ok: expect.any(Function) }),
-                FieldValidator.create({ field: 'password', ok: expect.any(Function) }),
-              ],
-            }),
-          },
-        },
-        {
-          args: {
-            variables: {
-              alphaInput: {
-                'invite-code': 'invite-code-001',
-                'hidden-secret': 'secret$001',
-              },
-              betaInput: {
-                'invite-code': 'invite-code-002',
-                'hidden-secret': 'secret$002',
-              },
-            },
-            validators: {
-              alphaInput: [
-                { field: 'invite-code', ok: (it, valueHash) => it && it.length === 16 },
-              ],
-              betaInput: [
-                { field: 'hidden-secret', ok: (it, valueHash) => it && it.length === 32 },
-              ],
-            },
-          },
-          expected: {
-            alphaInput: VariablesPerSchemaValidator.create({
-              variables: {
-                'invite-code': 'invite-code-001',
-                'hidden-secret': 'secret$001',
-              },
-              validators: [
-                FieldValidator.create({ field: 'invite-code', ok: expect.any(Function) }),
-              ],
-            }),
-            betaInput: VariablesPerSchemaValidator.create({
-              variables: {
-                'invite-code': 'invite-code-002',
-                'hidden-secret': 'secret$002',
-              },
-              validators: [
-                FieldValidator.create({ field: 'hidden-secret', ok: expect.any(Function) }),
-              ],
-            }),
-          },
-        },
-      ]
-
-      test.each(cases)('validators: $args.validators', ({ args, expected }) => {
-        const validatorsSpy = jest.spyOn(BaseGraphqlPayload, 'validators', 'get')
-          .mockReturnValue(args.validators)
-
-        const payload = new BaseGraphqlPayload({
-          queryTemplate,
-          variables: args.variables,
-        })
-
-        const actual = payload.generateSchemaValidatorHash()
-
-        expect(actual)
-          .toEqual(expected)
-
-        validatorsSpy.mockRestore()
       })
     })
   })
