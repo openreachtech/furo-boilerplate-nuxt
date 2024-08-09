@@ -442,6 +442,10 @@ export default class BaseGraphqlLauncher {
  */
 
 /**
+ * @typedef {import('./BaseGraphqlPayload').VariablesType} VariablesType
+ */
+
+/**
  * @typedef {{
  *   rawResponse: Response | null
  *   payload: InstanceType<PayloadClass<*, *>> | null
