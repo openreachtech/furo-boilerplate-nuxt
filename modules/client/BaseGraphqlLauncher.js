@@ -283,7 +283,7 @@ export default class BaseGraphqlLauncher {
    * Launch query with direct variables.
    *
    * @param {{
-   *   variables?: object | null
+   *   variables?: import('./BaseGraphqlPayload').VariablesType
    *   options?: RequestInit
    *   hooks?: GraphqlLauncherHooks
    * }} Params - Parameters.
@@ -300,7 +300,7 @@ export default class BaseGraphqlLauncher {
       options,
     })
 
-    const payload = this.createPayload({
+    const payload = this.Ctor.createPayload({
       variables,
       options: updatedOptions,
     })
