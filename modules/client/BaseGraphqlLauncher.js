@@ -74,18 +74,20 @@ export default class BaseGraphqlLauncher {
    *   variables: VariablesType
    *   options: RequestInit
    * }} params - Parameters.
-   * @template P, D
-   * @returns {InstanceType<PayloadClass<P, D>>} Instance of Payload.
+   * @template P
+   * @returns {InstanceType<P>} Instance of Payload.
    */
   static createPayload ({
     variables,
     options,
   }) {
-    return this.Payload
-      .create({
-        variables,
-        options,
-      })
+    return /** @type {*} */ (
+      this.Payload
+        .create({
+          variables,
+          options,
+        })
+    )
   }
 
   /**
