@@ -355,7 +355,7 @@ describe('BaseGraphqlLauncher', () => {
 })
 
 describe('BaseGraphqlLauncher', () => {
-  describe('.createResultCapsuleAsAbortedByHooks()', () => {
+  describe('.createCapsuleAsAbortedByHooks()', () => {
     describe('to be instance of BaseGraphqlCapsule', () => {
       const capsuleCases = [
         {
@@ -410,7 +410,7 @@ describe('BaseGraphqlLauncher', () => {
             payload: args.payload,
           }
 
-          const capsule = BaseGraphqlLauncher.createResultCapsuleAsAbortedByHooks(currentArgs)
+          const capsule = BaseGraphqlLauncher.createCapsuleAsAbortedByHooks(currentArgs)
 
           expect(capsule)
             .toBeInstanceOf(params.CapsuleClass)
@@ -496,7 +496,7 @@ describe('BaseGraphqlLauncher', () => {
             payload: args.payload,
           }
 
-          BaseGraphqlLauncher.createResultCapsuleAsAbortedByHooks(currentArgs)
+          BaseGraphqlLauncher.createCapsuleAsAbortedByHooks(currentArgs)
 
           expect(createSpy)
             .toHaveBeenCalledWith(expected)
