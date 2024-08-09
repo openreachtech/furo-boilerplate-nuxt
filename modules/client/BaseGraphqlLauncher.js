@@ -71,21 +71,23 @@ export default class BaseGraphqlLauncher {
    * Create payload.
    *
    * @param {{
-   *   variables: import('./BaseGraphqlPayload').VariablesType
+   *   variables: VariablesType
    *   options: RequestInit
    * }} params - Parameters.
-   * @template P, D
-   * @returns {InstanceType<PayloadClass<P, D>>} Instance of Payload.
+   * @template P
+   * @returns {InstanceType<P>} Instance of Payload.
    */
   static createPayload ({
     variables,
     options,
   }) {
-    return this.Payload
-      .create({
-        variables,
-        options,
-      })
+    return /** @type {*} */ (
+      this.Payload
+        .create({
+          variables,
+          options,
+        })
+    )
   }
 
   /**
@@ -131,7 +133,7 @@ export default class BaseGraphqlLauncher {
    * Create instance of capsule with result as network error.
    *
    * @param {{
-   *   payload: InstanceType<PayloadClass>
+   *   payload: InstanceType<PayloadClass<*, *>>
    * }} params - Parameters.
    * @template C, D
    * @returns {InstanceType<CapsuleClass<C, D>>} Instance of capsule.
@@ -153,7 +155,7 @@ export default class BaseGraphqlLauncher {
    * Create instance of capsule with result as aborted by hooks.
    *
    * @param {{
-   *   payload: InstanceType<PayloadClass>
+   *   payload: InstanceType<PayloadClass<*, *>>
    * }} params - Parameters.
    * @template C, D
    * @returns {InstanceType<CapsuleClass<C, D>>} Instance of capsule.
@@ -175,7 +177,7 @@ export default class BaseGraphqlLauncher {
    * Create instance of capsule with result as network error.
    *
    * @param {{
-   *   payload: InstanceType<PayloadClass>
+   *   payload: InstanceType<PayloadClass<*, *>>
    * }} params - Parameters.
    * @template C, D
    * @returns {InstanceType<CapsuleClass<C, D>>} Instance of capsule.
@@ -197,7 +199,7 @@ export default class BaseGraphqlLauncher {
    *
    * @param {{
    *   rawResponse: Response
-   *   payload: InstanceType<PayloadClass>
+   *   payload: InstanceType<PayloadClass<*, *>>
    * }} params - Parameters.
    * @template C, D
    * @returns {InstanceType<CapsuleClass<C, D>>} Instance of capsule.
@@ -237,9 +239,8 @@ export default class BaseGraphqlLauncher {
   /**
    * Launch query with direct variables.
    *
-   * @template {PayloadClass} P
    * @param {{
-   *   payload: InstanceType<P>
+   *   payload: InstanceType<PayloadClass<*, *>>
    * }} Params - Parameters.
    * @returns {Promise<InstanceType<CapsuleClass<*, *>>>} Promise of instance of capsule.
    * @public
@@ -283,7 +284,7 @@ export default class BaseGraphqlLauncher {
    * Launch query with direct variables.
    *
    * @param {{
-   *   variables?: import('./BaseGraphqlPayload').VariablesType
+   *   variables?: VariablesType
    *   options?: RequestInit
    *   hooks?: GraphqlLauncherHooks
    * }} Params - Parameters.
@@ -376,7 +377,7 @@ export default class BaseGraphqlLauncher {
    * Fetch query.
    *
    * @param {{
-   *   payload: InstanceType<PayloadClass>
+   *   payload: InstanceType<PayloadClass<*, *>>
    * }} params - Parameters.
    * @returns {Promise<Response | null>} Instance of fetch API response.
    */
@@ -432,13 +433,17 @@ export default class BaseGraphqlLauncher {
 
 /**
  * @template {typeof import('./BaseGraphqlPayload')} P
- * @template {import('./BaseGraphqlPayload').VariablesType} D
- * @typedef {typeof import('./BaseGraphqlPayload').default<P, D>} PayloadClass
+ * @template {VariablesType} SV
+ * @typedef {typeof import('./BaseGraphqlPayload').default<P, SV>} PayloadClass
  */
 
 /**
  * @template {typeof import('./BaseGraphqlCapsule')} C, D
  * @typedef {typeof import('./BaseGraphqlCapsule').default<C, D>} CapsuleClass
+ */
+
+/**
+ * @typedef {import('./BaseGraphqlPayload').VariablesType} VariablesType
  */
 
 /**
