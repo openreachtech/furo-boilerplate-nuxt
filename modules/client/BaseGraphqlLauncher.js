@@ -96,7 +96,7 @@ export default class BaseGraphqlLauncher {
    * @template C, D
    * @returns {InstanceType<CapsuleClass<C, D>>} Instance of capsule.
    */
-  static createResultCapsuleAsPending () {
+  static createCapsuleAsPending () {
     const args = {
       rawResponse: null,
       payload: null,
