@@ -214,7 +214,7 @@ describe('BaseGraphqlLauncher', () => {
 })
 
 describe('BaseGraphqlLauncher', () => {
-  describe('.createResultCapsuleAsInvalidVariablesError()', () => {
+  describe('.createCapsuleAsInvalidVariablesError()', () => {
     describe('to be instance of BaseGraphqlCapsule', () => {
       const capsuleCases = [
         {
@@ -269,7 +269,7 @@ describe('BaseGraphqlLauncher', () => {
             payload: args.payload,
           }
 
-          const capsule = BaseGraphqlLauncher.createResultCapsuleAsInvalidVariablesError(currentArgs)
+          const capsule = BaseGraphqlLauncher.createCapsuleAsInvalidVariablesError(currentArgs)
 
           expect(capsule)
             .toBeInstanceOf(params.CapsuleClass)
@@ -341,7 +341,7 @@ describe('BaseGraphqlLauncher', () => {
             payload: args.payload,
           }
 
-          BaseGraphqlLauncher.createResultCapsuleAsInvalidVariablesError(currentArgs)
+          BaseGraphqlLauncher.createCapsuleAsInvalidVariablesError(currentArgs)
 
           expect(createSpy)
             .toHaveBeenCalledWith(expected)
@@ -1728,7 +1728,7 @@ describe('BaseGraphqlLauncher', () => {
           abortedReason: LAUNCH_ABORTED_REASON.INVALID_VARIABLES,
         })
 
-        const createResultCapsuleAsInvalidVariablesErrorSpy = jest.spyOn(BaseGraphqlLauncher, 'createResultCapsuleAsInvalidVariablesError')
+        const createCapsuleAsInvalidVariablesErrorSpy = jest.spyOn(BaseGraphqlLauncher, 'createCapsuleAsInvalidVariablesError')
         const invokeFetchQuerySpy = jest.spyOn(launcher, 'invokeFetchQuery')
           .mockRejectedValue(null)
         const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
@@ -1743,13 +1743,13 @@ describe('BaseGraphqlLauncher', () => {
         expect(actual)
           .toEqual(expectedCapsule)
 
-        expect(createResultCapsuleAsInvalidVariablesErrorSpy)
+        expect(createCapsuleAsInvalidVariablesErrorSpy)
           .toHaveBeenCalledWith(args)
         expect(invokeFetchQuerySpy)
           .not
           .toHaveBeenCalledWith()
 
-        createResultCapsuleAsInvalidVariablesErrorSpy.mockRestore()
+        createCapsuleAsInvalidVariablesErrorSpy.mockRestore()
         invokeFetchQuerySpy.mockRestore()
         CapsuleSpy.mockRestore()
       })
