@@ -2539,7 +2539,7 @@ describe('BaseGraphqlLauncher', () => {
         })
       })
 
-      describe('for #createPayload()', () => {
+      describe('for .createPayload()', () => {
         const cases = [
           {
             params: {
@@ -2597,7 +2597,7 @@ describe('BaseGraphqlLauncher', () => {
             config: graphqlConfig,
           })
 
-          const createPayloadSpy = jest.spyOn(launcher, 'createPayload')
+          const createPayloadSpy = jest.spyOn(BaseGraphqlLauncher, 'createPayload')
           const invokeFetchQuerySpy = jest.spyOn(launcher, 'invokeFetchQuery')
             .mockResolvedValue(new Response())
 
