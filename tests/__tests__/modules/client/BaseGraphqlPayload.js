@@ -3,8 +3,6 @@ import {
 } from '@openreachtech/renchan-test-tools'
 
 import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
-import FieldValidator from '~/modules/client/FieldValidator'
-import VariablesPerSchemaValidator from '~/modules/client/VariablesPerSchemaValidator'
 
 describe('BaseGraphqlPayload', () => {
   describe('constructor', () => {
@@ -221,15 +219,13 @@ describe('BaseGraphqlPayload', () => {
 })
 
 describe('BaseGraphqlPayload', () => {
-  describe('.get:validators', () => {
+  describe('.get:fieldHash', () => {
     describe('to be []', () => {
       test('with no arguments', () => {
-        const actual = BaseGraphqlPayload.validators
+        const actual = BaseGraphqlPayload.fieldHash
 
         expect(actual)
-          .toBeInstanceOf(Array)
-        expect(actual)
-          .toHaveLength(0)
+          .toEqual({})
       })
     })
   })
@@ -687,6 +683,85 @@ describe('BaseGraphqlPayload', () => {
 })
 
 describe('BaseGraphqlPayload', () => {
+  describe('#extractFilteredVariables()', () => {
+    describe('to return as is', () => {
+      const queryTemplate = /* GraphQL */ `
+        query PickUpForumTopicsQuery {
+          pickUpForumTopics {
+            pickUpForumTopics {
+              id
+              forumCategory {
+                id
+                name
+              }
+              name
+              descriptionHtml
+              proposer {
+                customerId
+                username
+                avatarUrl
+                customerRoles {
+                  id
+                  name
+                }
+              }
+              proposedAt
+              editedAt
+              totalForumPost
+              latestForumPostPostedAt
+            }
+          }
+        }
+      `
+
+      /**
+       * @type {Array<{
+       *   params: {
+       *     variables: {
+       *       input: {
+       *         id: number
+       *       }
+       *     }
+       *   }
+       * }>}
+       */
+      const cases = [
+        {
+          params: {
+            variables: {
+              input: {
+                id: 10001,
+              },
+            },
+          },
+        },
+        {
+          params: {
+            variables: {
+              input: {
+                id: 10002,
+              },
+            },
+          },
+        },
+      ]
+
+      test.each(cases)('variables: $params.variables', ({ params }) => {
+        const payload = new BaseGraphqlPayload({
+          queryTemplate,
+          variables: params.variables,
+        })
+
+        const actual = payload.extractFilteredVariables()
+
+        expect(actual)
+          .toBe(params.variables) // same reference
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlPayload', () => {
   describe('#generateFetchRequestOptions()', () => {
     const queryTemplate = /* GraphQL */ `
                 query CurriculumsQuery ($input: CurriculumsInput!) {
@@ -1095,9 +1170,9 @@ describe('BaseGraphqlPayload', () => {
           args: {
             validators: {
               input: [
-                { field: 'username', body: (it, variables) => it },
-                { field: 'username', body: (it, variables) => it && it.length >= 1 && it.length <= 8 },
-                { field: 'password', body: (it, variables) => it },
+                { field: 'username', ok: (it, valueHash) => it },
+                { field: 'username', ok: (it, valueHash) => it && it.length >= 1 && it.length <= 8 },
+                { field: 'password', ok: (it, valueHash) => it },
               ],
             },
           },
@@ -1106,10 +1181,10 @@ describe('BaseGraphqlPayload', () => {
           args: {
             validators: {
               alphaInput: [
-                { field: 'invite-code', body: (it, variables) => it && it.length === 16 },
+                { field: 'invite-code', ok: (it, valueHash) => it && it.length === 16 },
               ],
               betaInput: [
-                { field: 'hidden-secret', body: (it, variables) => it && it.length === 32 },
+                { field: 'hidden-secret', ok: (it, valueHash) => it && it.length === 32 },
               ],
             },
           },
@@ -1166,9 +1241,9 @@ describe('BaseGraphqlPayload', () => {
               },
             },
             validators: [
-              { field: 'username', message: 'message 001', body: (it, variables) => it },
-              { field: 'username', message: 'message 002', body: (it, variables) => it && it.length >= 1 && it.length <= 8 },
-              { field: 'password', message: 'message 003', body: (it, variables) => it },
+              { field: 'username', message: 'message 001', ok: (it, valueHash) => it },
+              { field: 'username', message: 'message 002', ok: (it, valueHash) => it && it.length >= 1 && it.length <= 8 },
+              { field: 'password', message: 'message 003', ok: (it, valueHash) => it },
             ],
           },
           expected: {
@@ -1195,8 +1270,8 @@ describe('BaseGraphqlPayload', () => {
               },
             },
             validators: [
-              { field: 'invite-code', body: (it, variables) => it && it.length === 16 },
-              { field: 'hidden-secret', body: (it, variables) => it && it.length === 32 },
+              { field: 'invite-code', ok: (it, valueHash) => it && it.length === 16 },
+              { field: 'hidden-secret', ok: (it, valueHash) => it && it.length === 32 },
             ],
           },
           expected: {
@@ -1230,130 +1305,8 @@ describe('BaseGraphqlPayload', () => {
 })
 
 describe('BaseGraphqlPayload', () => {
-  describe('#generateSchemaValidatorHash()', () => {
-    describe('to return object hash of validators', () => {
-      const queryTemplate = /* GraphQL */ `
-        query CurriculumsQuery ($input: CurriculumsSearchInput!) {
-          curriculums(input: $input) {
-            curriculums {
-              id
-              title
-            }
-          }
-        }
-      `
-
-      /**
-       * @type {Array<{
-       *   args: {
-       *     variables: any
-       *     validators: {
-       *       [group: string]: Array<import('~/modules/client/BaseGraphqlPayload').ValidatorOptionsType>
-       *     }
-       *   }
-       *   expected: {
-       *     [schema: string]: VariablesPerSchemaValidator
-       *   }
-       * }>}
-       */
-      const cases = [
-        {
-          args: {
-            variables: {
-              input: {
-                username: 'Alice',
-                password: 'password$001',
-              },
-            },
-            validators: {
-              input: [
-                { field: 'username', body: (it, variables) => it },
-                { field: 'username', body: (it, variables) => it && it.length >= 1 && it.length <= 8 },
-                { field: 'password', body: (it, variables) => it },
-              ],
-            },
-          },
-          expected: {
-            input: VariablesPerSchemaValidator.create({
-              variables: {
-                username: 'Alice',
-                password: 'password$001',
-              },
-              validators: [
-                FieldValidator.create({ field: 'username', body: expect.any(Function) }),
-                FieldValidator.create({ field: 'username', body: expect.any(Function) }),
-                FieldValidator.create({ field: 'password', body: expect.any(Function) }),
-              ],
-            }),
-          },
-        },
-        {
-          args: {
-            variables: {
-              alphaInput: {
-                'invite-code': 'invite-code-001',
-                'hidden-secret': 'secret$001',
-              },
-              betaInput: {
-                'invite-code': 'invite-code-002',
-                'hidden-secret': 'secret$002',
-              },
-            },
-            validators: {
-              alphaInput: [
-                { field: 'invite-code', body: (it, variables) => it && it.length === 16 },
-              ],
-              betaInput: [
-                { field: 'hidden-secret', body: (it, variables) => it && it.length === 32 },
-              ],
-            },
-          },
-          expected: {
-            alphaInput: VariablesPerSchemaValidator.create({
-              variables: {
-                'invite-code': 'invite-code-001',
-                'hidden-secret': 'secret$001',
-              },
-              validators: [
-                FieldValidator.create({ field: 'invite-code', body: expect.any(Function) }),
-              ],
-            }),
-            betaInput: VariablesPerSchemaValidator.create({
-              variables: {
-                'invite-code': 'invite-code-002',
-                'hidden-secret': 'secret$002',
-              },
-              validators: [
-                FieldValidator.create({ field: 'hidden-secret', body: expect.any(Function) }),
-              ],
-            }),
-          },
-        },
-      ]
-
-      test.each(cases)('validators: $args.validators', ({ args, expected }) => {
-        const validatorsSpy = jest.spyOn(BaseGraphqlPayload, 'validators', 'get')
-          .mockReturnValue(args.validators)
-
-        const payload = new BaseGraphqlPayload({
-          queryTemplate,
-          variables: args.variables,
-        })
-
-        const actual = payload.generateSchemaValidatorHash()
-
-        expect(actual)
-          .toEqual(expected)
-
-        validatorsSpy.mockRestore()
-      })
-    })
-  })
-})
-
-describe('BaseGraphqlPayload', () => {
   describe('#isValidVariables()', () => {
-    const queryTemplateMock = /* GraphQL */ `
+    const queryTemplate = /* GraphQL */ `
       query CurriculumsQuery ($input: CurriculumsSearchInput!) {
         curriculums(input: $input) {
           curriculums {
@@ -1364,302 +1317,406 @@ describe('BaseGraphqlPayload', () => {
       }
     `
 
-    /**
-     * @type {Array<import('~/modules/client/FieldValidator').FieldValidatorParams>}
-     */
-    const inputValidators = [
-      {
-        field: 'username',
-        body: (it, variables) => it,
-        message: 'username must be set',
-      },
-      {
-        field: 'username',
-        body: (it, variables) => /^\w+$/.test(it),
-        message: 'username must be alphanumeric',
-      },
-      {
-        field: 'password',
-        body: (it, variables) => {
-          return it
-            && it.length >= 1
-            && it.length <= 16
-        },
-        message: 'password must be set with at least 1 character and no more than 16 characters',
-      },
-      {
-        field: 'password-confirmation',
-        body: (it, variables) => {
-          return it
-            && it === variables.password
-        },
-        message: 'passwords do not match.',
-      },
-    ]
-
-    /** @extends BaseGraphqlPayload<typeof AlphaPayload> */
+    /** @extends BaseGraphqlPayload<typeof AlphaPayload, *> */
     class AlphaPayload extends BaseGraphqlPayload {
       /** @override */
       static get document () {
-        return queryTemplateMock
+        return queryTemplate
       }
 
       /** @override */
-      static get validators () {
+      static get fieldHash () {
         return {
-          input: inputValidators,
+          input: [
+            'email',
+            'username',
+            'firstName',
+            'lastName',
+            'password',
+          ],
         }
       }
     }
 
-    /** @extends BaseGraphqlPayload<typeof AlphaPayload> */
+    /** @extends BaseGraphqlPayload<typeof BetaPayload, *> */
     class BetaPayload extends BaseGraphqlPayload {
       /** @override */
       static get document () {
-        return queryTemplateMock
+        return queryTemplate
       }
 
       /** @override */
-      static get validators () {
-        return inputValidators
+      static get fieldHash () {
+        return {
+          products: [
+            'customerId',
+            'productId',
+          ],
+          members: [
+            'gender',
+            'language',
+            'minAge',
+            'maxAge',
+          ],
+        }
       }
     }
 
     /**
      * @type {Array<{
-     *   args: {
-     *     Payload: typeof BaseGraphqlPayload
-     *     truthyCases: Array<import('~/modules/client/BaseGraphqlPayload').VariablesType>
-     *     falsyCases: Array<import('~/modules/client/BaseGraphqlPayload').VariablesType>
-     *   }
-     * }>
+     *   Payload: typeof BaseGraphqlPayload,
+     *   truthyCases: Array<import('~/modules/client/BaseGraphqlPayload').VariablesType>,
+     *   falsyCases: Array<import('~/modules/client/BaseGraphqlPayload').VariablesType>,
+     * }>}
      */
     const cases = [
       {
-        args: {
-          Payload: AlphaPayload,
-          truthyCases: [
-            {
-              variables: {
-                input: {
-                  username: 'Alice',
-                  password: 'password$001',
-                  'password-confirmation': 'password$001',
-                },
+        Payload: AlphaPayload,
+        truthyCases: [
+          {
+            variables: {
+              input: {
+                email: 'eucen@example.com',
+                username: 'StewEucen',
+                firstName: 'Eucen',
+                lastName: 'Stew',
+                password: 'password$001',
               },
             },
-            {
-              variables: {
-                input: {
-                  username: 'Betty',
-                  password: 'password$002',
-                  // 'password-confirmation': 'password$002',
-                },
+          },
+          {
+            variables: {
+              input: {
+                email: 'eucen@example.com',
+                username: 'StewEucen',
+                // firstName: 'Eucen',
+                lastName: 'Stew',
+                password: 'password$001',
               },
             },
-            {
-              variables: {
-                input: {
-                  username: 'Carol',
-                  // password: 'password$003',
-                  // 'password-confirmation': 'password$003',
-                },
+          },
+          {
+            variables: {
+              input: {
+                // email: 'eucen@example.com',
+                // username: 'StewEucen',
+                // firstName: 'Eucen',
+                // lastName: 'Stew',
+                // password: 'password$001',
               },
             },
-            {
-              variables: {
-                input: {
-                  username: 'Underscored_Name',
-                  password: 'password$004',
-                  'password-confirmation': 'password$004',
-                },
+          },
+          {
+            variables: {
+              // input: {
+              //   email: 'eucen@example.com',
+              //   username: 'StewEucen',
+              //   firstName: 'Eucen',
+              //   lastName: 'Stew',
+              //   password: 'password$001',
+              // },
+            },
+          },
+        ],
+        falsyCases: [
+          {
+            variables: {
+              input: {
+                email: 'eucen@example.com',
+                username: 'StewEucen',
+                firstName: 'Eucen',
+                lastName: 'Stew',
+                password: 'password$001',
+                extra: 'extra value', // ❌
               },
             },
-            {
-              variables: {
-                input: {
-                  // username: 'john_doe',
-                  // password: 'password$999',
-                  // 'password-confirmation': 'password$999',
-                },
+          },
+          {
+            variables: {
+              input: {
+                email: 'eucen@example.com',
+                username: 'StewEucen',
+                // firstName: 'Eucen',
+                lastName: 'Stew',
+                password: 'password$001',
+                extra: 'extra value', // ❌
               },
             },
-          ],
-          falsyCases: [
-            {
-              variables: {
-                input: {
-                  username: 'Space Split Name',
-                  password: 'password$001',
-                  'password-confirmation': 'password$001',
-                },
+          },
+          {
+            variables: {
+              input: {
+                // email: 'eucen@example.com',
+                // username: 'StewEucen',
+                // firstName: 'Eucen',
+                // lastName: 'Stew',
+                // password: 'password$001',
+                extra: 'extra value', // ❌
               },
             },
-            {
-              variables: {
-                input: {
-                  username: 'Hyphen-Split-Name',
-                  password: 'password$002',
-                  'password-confirmation': 'password$002',
-                },
-              },
-            },
-            {
-              variables: {
-                input: {
-                  username: null,
-                  password: 'password$003',
-                  'password-confirmation': 'password$003',
-                },
-              },
-            },
-            {
-              variables: {
-                input: {
-                  username: '',
-                  password: 'password$004',
-                  'password-confirmation': 'password$004',
-                },
-              },
-            },
-            {
-              variables: {
-                input: {
-                  username: undefined,
-                  password: 'password$005',
-                  'password-confirmation': 'password$005',
-                },
-              },
-            },
-            {
-              variables: {
-                input: {
-                  username: 'John Doe',
-                  password: 'password$999',
-                  'password-confirmation': 'password$999',
-                },
-              },
-            },
-          ],
-        },
+          },
+        ],
       },
       {
-        args: {
-          Payload: BetaPayload,
-          truthyCases: [
-            {
-              variables: {
-                input: {
-                  username: 'Alice',
-                  password: 'password$001',
-                  'password-confirmation': 'password$001',
-                },
+        Payload: BetaPayload,
+        truthyCases: [
+          {
+            variables: {
+              products: {
+                customerId: 10001,
+                productId: 20001,
+              },
+              members: {
+                gender: 'male',
+                language: 'en',
+                minAge: 18,
+                maxAge: 65,
               },
             },
-            {
-              variables: {
-                input: {
-                  username: 'Betty',
-                  password: 'password$002',
-                  // 'password-confirmation': 'password$002',
-                },
+          },
+          {
+            variables: {
+              products: {
+                customerId: 10001,
+                // productId: 20001,
+              },
+              members: {
+                gender: 'male',
+                language: 'en',
+                minAge: 18,
+                maxAge: 65,
               },
             },
-            {
-              variables: {
-                input: {
-                  username: 'Carol',
-                  // password: 'password$003',
-                  // 'password-confirmation': 'password$003',
-                },
+          },
+          {
+            variables: {
+              products: {
+                customerId: 10001,
+                productId: 20001,
+              },
+              members: {
+                // gender: 'male',
+                language: 'en',
+                minAge: 18,
+                maxAge: 65,
               },
             },
-            {
-              variables: {
-                input: {
-                  username: 'Underscored_Name',
-                  password: 'password$004',
-                  'password-confirmation': 'password$004',
-                },
+          },
+          {
+            variables: {
+              products: {
+                // customerId: 10001,
+                // productId: 20001,
+              },
+              members: {
+                gender: 'male',
+                language: 'en',
+                minAge: 18,
+                maxAge: 65,
               },
             },
-            {
-              variables: {
-                input: {
-                  // username: 'john_doe',
-                  // password: 'password$999',
-                  // 'password-confirmation': 'password$999',
-                },
+          },
+          {
+            variables: {
+              products: {
+                customerId: 10001,
+                productId: 20001,
+              },
+              members: {
+                // gender: 'male',
+                // language: 'en',
+                // minAge: 18,
+                // maxAge: 65,
               },
             },
-          ],
-          falsyCases: [
-            {
-              variables: {
-                input: {
-                  username: 'Space Split Name',
-                  password: 'password$001',
-                  'password-confirmation': 'password$001',
-                },
+          },
+          {
+            variables: {
+              products: {
+                // customerId: 10001,
+                // productId: 20001,
+              },
+              members: {
+                // gender: 'male',
+                // language: 'en',
+                // minAge: 18,
+                // maxAge: 65,
               },
             },
-            {
-              variables: {
-                input: {
-                  username: 'Hyphen-Split-Name',
-                  password: 'password$002',
-                  'password-confirmation': 'password$002',
-                },
+          },
+          {
+            variables: {
+              // products: {
+              //   customerId: 10001,
+              //   productId: 20001,
+              // },
+              members: {
+                gender: 'male',
+                language: 'en',
+                minAge: 18,
+                maxAge: 65,
               },
             },
-            {
-              variables: {
-                input: {
-                  username: null,
-                  password: 'password$003',
-                  'password-confirmation': 'password$003',
-                },
+          },
+          {
+            variables: {
+              products: {
+                customerId: 10001,
+                productId: 20001,
+              },
+              // members: {
+              //   gender: 'male',
+              //   language: 'en',
+              //   minAge: 18,
+              //   maxAge: 65,
+              // },
+            },
+          },
+          {
+            variables: {
+              // products: {
+              //   customerId: 10001,
+              //   productId: 20001,
+              // },
+              // members: {
+              //   gender: 'male',
+              //   language: 'en',
+              //   minAge: 18,
+              //   maxAge: 65,
+              // },
+            },
+          },
+        ],
+        falsyCases: [
+          {
+            variables: {
+              products: {
+                customerId: 10001,
+                productId: 20001,
+                extra: 'extra value', // ❌
+              },
+              members: {
+                gender: 'male',
+                language: 'en',
+                minAge: 18,
+                maxAge: 65,
               },
             },
-            {
-              variables: {
-                input: {
-                  username: '',
-                  password: 'password$004',
-                  'password-confirmation': 'password$004',
-                },
+          },
+          {
+            variables: {
+              products: {
+                customerId: 10001,
+                productId: 20001,
+              },
+              members: {
+                gender: 'male',
+                language: 'en',
+                minAge: 18,
+                maxAge: 65,
+                extra: 'extra value', // ❌
               },
             },
-            {
-              variables: {
-                input: {
-                  username: undefined,
-                  password: 'password$005',
-                  'password-confirmation': 'password$005',
-                },
+          },
+          {
+            variables: {
+              products: {
+                customerId: 10001,
+                productId: 20001,
+                extra: 'extra value', // ❌
+              },
+              members: {
+                gender: 'male',
+                language: 'en',
+                minAge: 18,
+                maxAge: 65,
+                extra: 'extra value', // ❌
               },
             },
-            {
-              variables: {
-                input: {
-                  username: 'John Doe',
-                  password: 'password$999',
-                  'password-confirmation': 'password$999',
-                },
+          },
+          {
+            variables: {
+              products: {
+                customerId: 10001,
+                // productId: 20001,
+                extra: 'extra value', // ❌
+              },
+              members: {
+                gender: 'male',
+                language: 'en',
+                minAge: 18,
+                maxAge: 65,
               },
             },
-          ],
-        },
+          },
+          {
+            variables: {
+              products: {
+                customerId: 10001,
+                productId: 20001,
+              },
+              members: {
+                gender: 'male',
+                // language: 'en',
+                minAge: 18,
+                maxAge: 65,
+                extra: 'extra value', // ❌
+              },
+            },
+          },
+          {
+            variables: {
+              products: {
+                // customerId: 10001,
+                // productId: 20001,
+                extra: 'extra value', // ❌
+              },
+              members: {
+                gender: 'male',
+                language: 'en',
+                minAge: 18,
+                maxAge: 65,
+              },
+            },
+          },
+          {
+            variables: {
+              products: {
+                customerId: 10001,
+                productId: 20001,
+              },
+              members: {
+                // gender: 'male',
+                // language: 'en',
+                // minAge: 18,
+                // maxAge: 65,
+                extra: 'extra value', // ❌
+              },
+            },
+          },
+          {
+            variables: {
+              products: {
+                customerId: 10001,
+                productId: 20001,
+                extra: 'extra value', // ❌
+              },
+              // members: {
+              //   gender: 'male',
+              //   language: 'en',
+              //   minAge: 18,
+              //   maxAge: 65,
+              // },
+            },
+          },
+        ],
       },
     ]
 
-    describe.each(cases)('Payload: $args.Payload.name', ({ args }) => {
+    describe.each(cases)('Payload: $Payload.name', ({ Payload, truthyCases, falsyCases }) => {
       describe('to be truthy', () => {
-        test.each(args.truthyCases)('username: $variables.input.username', ({ variables }) => {
-          const payload = new args.Payload({
-            queryTemplate: queryTemplateMock,
-            variables,
-          })
+        test.each(truthyCases)('variables: $variables', ({ variables }) => {
+          const payload = Payload.create({ variables })
 
           const actual = payload.isValidVariables()
 
@@ -1669,11 +1726,8 @@ describe('BaseGraphqlPayload', () => {
       })
 
       describe('to be falsy', () => {
-        test.each(args.falsyCases)('username: $variables.input.username', ({ variables }) => {
-          const payload = new args.Payload({
-            queryTemplate: queryTemplateMock,
-            variables,
-          })
+        test.each(falsyCases)('variables: $variables', ({ variables }) => {
+          const payload = Payload.create({ variables })
 
           const actual = payload.isValidVariables()
 
@@ -1687,7 +1741,7 @@ describe('BaseGraphqlPayload', () => {
 
 describe('BaseGraphqlPayload', () => {
   describe('#isInvalidVariables()', () => {
-    const queryTemplateMock = /* GraphQL */ `
+    const queryTemplate = /* GraphQL */ `
       query CurriculumsQuery ($input: CurriculumsSearchInput!) {
         curriculums(input: $input) {
           curriculums {
@@ -1699,301 +1753,434 @@ describe('BaseGraphqlPayload', () => {
     `
 
     /**
-     * @type {Array<import('~/modules/client/FieldValidator').FieldValidatorParams>}
+     * @extends {BaseGraphqlPayload<
+     *   typeof AlphaPayload,
+     *   {
+     *     input: {
+     *       email: string
+     *       username: string
+     *       firstName: string
+     *       lastName: string
+     *       password: string
+     *     }
+     *   }
+     * >}
      */
-    const inputValidators = [
-      {
-        field: 'username',
-        body: (it, variables) => it,
-        message: 'username must be set',
-      },
-      {
-        field: 'username',
-        body: (it, variables) => /^\w+$/.test(it),
-        message: 'username must be alphanumeric',
-      },
-      {
-        field: 'password',
-        body: (it, variables) => {
-          return it
-            && it.length >= 1
-            && it.length <= 16
-        },
-        message: 'password must be set with at least 1 character and no more than 16 characters',
-      },
-      {
-        field: 'password-confirmation',
-        body: (it, variables) => {
-          return it
-            && it === variables.password
-        },
-        message: 'passwords do not match.',
-      },
-    ]
-
-    /** @extends BaseGraphqlPayload<typeof AlphaPayload> */
     class AlphaPayload extends BaseGraphqlPayload {
       /** @override */
       static get document () {
-        return queryTemplateMock
+        return queryTemplate
       }
 
       /** @override */
-      static get validators () {
+      static get fieldHash () {
         return {
-          input: inputValidators,
+          input: [
+            'email',
+            'username',
+            'firstName',
+            'lastName',
+            'password',
+          ],
         }
       }
     }
 
-    /** @extends BaseGraphqlPayload<typeof AlphaPayload> */
+    /**
+     * @extends {BaseGraphqlPayload<
+     *   typeof BetaPayload,
+     *   {
+     *     products: {
+     *       customerId: number
+     *       productId: number
+     *     }
+     *     members: {
+     *       gender: string
+     *       language: string
+     *       minAge: number
+     *       maxAge: number
+     *     }
+     *   }
+     * >}
+     */
     class BetaPayload extends BaseGraphqlPayload {
       /** @override */
       static get document () {
-        return queryTemplateMock
+        return queryTemplate
       }
 
       /** @override */
-      static get validators () {
-        return inputValidators
+      static get fieldHash () {
+        return {
+          products: [
+            'customerId',
+            'productId',
+          ],
+          members: [
+            'gender',
+            'language',
+            'minAge',
+            'maxAge',
+          ],
+        }
       }
     }
 
     /**
      * @type {Array<{
-     *   args: {
-     *     Payload: typeof BaseGraphqlPayload
-     *     truthyCases: Array<import('~/modules/client/BaseGraphqlPayload').VariablesType>
-     *     falsyCases: Array<import('~/modules/client/BaseGraphqlPayload').VariablesType>
-     *   }
-     * }>
+     *   Payload: typeof BaseGraphqlPayload<*, *>,
+     *   truthyCases: Array<import('~/modules/client/BaseGraphqlPayload').VariablesType>,
+     *   falsyCases: Array<import('~/modules/client/BaseGraphqlPayload').VariablesType>,
+     * }>}
      */
     const cases = [
       {
-        args: {
-          Payload: AlphaPayload,
-          truthyCases: [
-            {
-              variables: {
-                input: {
-                  username: 'Space Split Name',
-                  password: 'password$001',
-                  'password-confirmation': 'password$001',
-                },
+        Payload: AlphaPayload,
+        truthyCases: [
+          {
+            variables: {
+              input: {
+                email: 'eucen@example.com',
+                username: 'StewEucen',
+                firstName: 'Eucen',
+                lastName: 'Stew',
+                password: 'password$001',
+                extra: 'extra value', // ❌
               },
             },
-            {
-              variables: {
-                input: {
-                  username: 'Hyphen-Split-Name',
-                  password: 'password$002',
-                  'password-confirmation': 'password$002',
-                },
+          },
+          {
+            variables: {
+              input: {
+                email: 'eucen@example.com',
+                username: 'StewEucen',
+                // firstName: 'Eucen',
+                lastName: 'Stew',
+                password: 'password$001',
+                extra: 'extra value', // ❌
               },
             },
-            {
-              variables: {
-                input: {
-                  username: null,
-                  password: 'password$003',
-                  'password-confirmation': 'password$003',
-                },
+          },
+          {
+            variables: {
+              input: {
+                // email: 'eucen@example.com',
+                // username: 'StewEucen',
+                // firstName: 'Eucen',
+                // lastName: 'Stew',
+                // password: 'password$001',
+                extra: 'extra value', // ❌
               },
             },
-            {
-              variables: {
-                input: {
-                  username: '',
-                  password: 'password$004',
-                  'password-confirmation': 'password$004',
-                },
+          },
+        ],
+        falsyCases: [
+          {
+            variables: {
+              input: {
+                email: 'eucen@example.com',
+                username: 'StewEucen',
+                firstName: 'Eucen',
+                lastName: 'Stew',
+                password: 'password$001',
               },
             },
-            {
-              variables: {
-                input: {
-                  username: undefined,
-                  password: 'password$005',
-                  'password-confirmation': 'password$005',
-                },
+          },
+          {
+            variables: {
+              input: {
+                email: 'eucen@example.com',
+                username: 'StewEucen',
+                // firstName: 'Eucen',
+                lastName: 'Stew',
+                password: 'password$001',
               },
             },
-            {
-              variables: {
-                input: {
-                  username: 'John Doe',
-                  password: 'password$999',
-                  'password-confirmation': 'password$999',
-                },
+          },
+          {
+            variables: {
+              input: {
+                // email: 'eucen@example.com',
+                // username: 'StewEucen',
+                // firstName: 'Eucen',
+                // lastName: 'Stew',
+                // password: 'password$001',
               },
             },
-          ],
-          falsyCases: [
-            {
-              variables: {
-                input: {
-                  username: 'Alice',
-                  password: 'password$001',
-                  'password-confirmation': 'password$001',
-                },
-              },
+          },
+          {
+            variables: {
+              // input: {
+              //   email: 'eucen@example.com',
+              //   username: 'StewEucen',
+              //   firstName: 'Eucen',
+              //   lastName: 'Stew',
+              //   password: 'password$001',
+              // },
             },
-            {
-              variables: {
-                input: {
-                  username: 'Betty',
-                  password: 'password$002',
-                  // 'password-confirmation': 'password$002',
-                },
-              },
-            },
-            {
-              variables: {
-                input: {
-                  username: 'Carol',
-                  // password: 'password$003',
-                  // 'password-confirmation': 'password$003',
-                },
-              },
-            },
-            {
-              variables: {
-                input: {
-                  username: 'Underscored_Name',
-                  password: 'password$004',
-                  'password-confirmation': 'password$004',
-                },
-              },
-            },
-            {
-              variables: {
-                input: {
-                  // username: 'john_doe',
-                  // password: 'password$999',
-                  // 'password-confirmation': 'password$999',
-                },
-              },
-            },
-          ],
-        },
+          },
+        ],
       },
       {
-        args: {
-          Payload: BetaPayload,
-          truthyCases: [
-            {
-              variables: {
-                input: {
-                  username: 'Space Split Name',
-                  password: 'password$001',
-                  'password-confirmation': 'password$001',
-                },
+        Payload: BetaPayload,
+        truthyCases: [
+          {
+            variables: {
+              products: {
+                customerId: 10001,
+                productId: 20001,
+                extra: 'extra value', // ❌
+              },
+              members: {
+                gender: 'male',
+                language: 'en',
+                minAge: 18,
+                maxAge: 65,
               },
             },
-            {
-              variables: {
-                input: {
-                  username: 'Hyphen-Split-Name',
-                  password: 'password$002',
-                  'password-confirmation': 'password$002',
-                },
+          },
+          {
+            variables: {
+              products: {
+                customerId: 10001,
+                productId: 20001,
+              },
+              members: {
+                gender: 'male',
+                language: 'en',
+                minAge: 18,
+                maxAge: 65,
+                extra: 'extra value', // ❌
               },
             },
-            {
-              variables: {
-                input: {
-                  username: null,
-                  password: 'password$003',
-                  'password-confirmation': 'password$003',
-                },
+          },
+          {
+            variables: {
+              products: {
+                customerId: 10001,
+                productId: 20001,
+                extra: 'extra value', // ❌
+              },
+              members: {
+                gender: 'male',
+                language: 'en',
+                minAge: 18,
+                maxAge: 65,
+                extra: 'extra value', // ❌
               },
             },
-            {
-              variables: {
-                input: {
-                  username: '',
-                  password: 'password$004',
-                  'password-confirmation': 'password$004',
-                },
+          },
+          {
+            variables: {
+              products: {
+                customerId: 10001,
+                // productId: 20001,
+                extra: 'extra value', // ❌
+              },
+              members: {
+                gender: 'male',
+                language: 'en',
+                minAge: 18,
+                maxAge: 65,
               },
             },
-            {
-              variables: {
-                input: {
-                  username: undefined,
-                  password: 'password$005',
-                  'password-confirmation': 'password$005',
-                },
+          },
+          {
+            variables: {
+              products: {
+                customerId: 10001,
+                productId: 20001,
+              },
+              members: {
+                gender: 'male',
+                // language: 'en',
+                minAge: 18,
+                maxAge: 65,
+                extra: 'extra value', // ❌
               },
             },
-            {
-              variables: {
-                input: {
-                  username: 'John Doe',
-                  password: 'password$999',
-                  'password-confirmation': 'password$999',
-                },
+          },
+          {
+            variables: {
+              products: {
+                // customerId: 10001,
+                // productId: 20001,
+                extra: 'extra value', // ❌
+              },
+              members: {
+                gender: 'male',
+                language: 'en',
+                minAge: 18,
+                maxAge: 65,
               },
             },
-          ],
-          falsyCases: [
-            {
-              variables: {
-                input: {
-                  username: 'Alice',
-                  password: 'password$001',
-                  'password-confirmation': 'password$001',
-                },
+          },
+          {
+            variables: {
+              products: {
+                customerId: 10001,
+                productId: 20001,
+              },
+              members: {
+                // gender: 'male',
+                // language: 'en',
+                // minAge: 18,
+                // maxAge: 65,
+                extra: 'extra value', // ❌
               },
             },
-            {
-              variables: {
-                input: {
-                  username: 'Betty',
-                  password: 'password$002',
-                  // 'password-confirmation': 'password$002',
-                },
+          },
+          {
+            variables: {
+              products: {
+                customerId: 10001,
+                productId: 20001,
+                extra: 'extra value', // ❌
+              },
+              // members: {
+              //   gender: 'male',
+              //   language: 'en',
+              //   minAge: 18,
+              //   maxAge: 65,
+              // },
+            },
+          },
+        ],
+        falsyCases: [
+          {
+            variables: {
+              products: {
+                customerId: 10001,
+                productId: 20001,
+              },
+              members: {
+                gender: 'male',
+                language: 'en',
+                minAge: 18,
+                maxAge: 65,
               },
             },
-            {
-              variables: {
-                input: {
-                  username: 'Carol',
-                  // password: 'password$003',
-                  // 'password-confirmation': 'password$003',
-                },
+          },
+          {
+            variables: {
+              products: {
+                customerId: 10001,
+                // productId: 20001,
+              },
+              members: {
+                gender: 'male',
+                language: 'en',
+                minAge: 18,
+                maxAge: 65,
               },
             },
-            {
-              variables: {
-                input: {
-                  username: 'Underscored_Name',
-                  password: 'password$004',
-                  'password-confirmation': 'password$004',
-                },
+          },
+          {
+            variables: {
+              products: {
+                customerId: 10001,
+                productId: 20001,
+              },
+              members: {
+                // gender: 'male',
+                language: 'en',
+                minAge: 18,
+                maxAge: 65,
               },
             },
-            {
-              variables: {
-                input: {
-                  // username: 'john_doe',
-                  // password: 'password$999',
-                  // 'password-confirmation': 'password$999',
-                },
+          },
+          {
+            variables: {
+              products: {
+                // customerId: 10001,
+                // productId: 20001,
+              },
+              members: {
+                gender: 'male',
+                language: 'en',
+                minAge: 18,
+                maxAge: 65,
               },
             },
-          ],
-        },
+          },
+          {
+            variables: {
+              products: {
+                customerId: 10001,
+                productId: 20001,
+              },
+              members: {
+                // gender: 'male',
+                // language: 'en',
+                // minAge: 18,
+                // maxAge: 65,
+              },
+            },
+          },
+          {
+            variables: {
+              products: {
+                // customerId: 10001,
+                // productId: 20001,
+              },
+              members: {
+                // gender: 'male',
+                // language: 'en',
+                // minAge: 18,
+                // maxAge: 65,
+              },
+            },
+          },
+          {
+            variables: {
+              // products: {
+              //   customerId: 10001,
+              //   productId: 20001,
+              // },
+              members: {
+                gender: 'male',
+                language: 'en',
+                minAge: 18,
+                maxAge: 65,
+              },
+            },
+          },
+          {
+            variables: {
+              products: {
+                customerId: 10001,
+                productId: 20001,
+              },
+              // members: {
+              //   gender: 'male',
+              //   language: 'en',
+              //   minAge: 18,
+              //   maxAge: 65,
+              // },
+            },
+          },
+          {
+            variables: {
+              // products: {
+              //   customerId: 10001,
+              //   productId: 20001,
+              // },
+              // members: {
+              //   gender: 'male',
+              //   language: 'en',
+              //   minAge: 18,
+              //   maxAge: 65,
+              // },
+            },
+          },
+        ],
       },
     ]
 
-    describe.each(cases)('Payload: $args.Payload.name', ({ args }) => {
+    describe.each(cases)('Payload: $Payload.name', ({ Payload, truthyCases, falsyCases }) => {
       describe('to be truthy', () => {
-        test.each(args.truthyCases)('username: $variables.input.username', ({ variables }) => {
-          const payload = new args.Payload({
-            queryTemplate: queryTemplateMock,
-            variables,
-          })
+        test.each(truthyCases)('variables: $variables', ({ variables }) => {
+          const payload = Payload.create({ variables })
 
           const actual = payload.isInvalidVariables()
 
@@ -2003,11 +2190,8 @@ describe('BaseGraphqlPayload', () => {
       })
 
       describe('to be falsy', () => {
-        test.each(args.falsyCases)('username: $variables.input.username', ({ variables }) => {
-          const payload = new args.Payload({
-            queryTemplate: queryTemplateMock,
-            variables,
-          })
+        test.each(falsyCases)('variables: $variables', ({ variables }) => {
+          const payload = Payload.create({ variables })
 
           const actual = payload.isInvalidVariables()
 

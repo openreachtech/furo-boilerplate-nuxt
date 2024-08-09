@@ -1,10 +1,8 @@
-import FieldValidator from '~/modules/client/FieldValidator'
-import VariablesPerSchemaValidator from '~/modules/client/VariablesPerSchemaValidator'
-
 /**
  * Base class of GraphQL payload.
  *
  * @template T
+ * @template {VariablesType} SV
  */
 export default class BaseGraphqlPayload {
   /**
@@ -26,7 +24,7 @@ export default class BaseGraphqlPayload {
    * Factory method.
    *
    * @param {BaseGraphqlPayloadFactoryParams} params - Parameters of factory method.
-   * @template {typeof BaseGraphqlPayload} T
+   * @template {typeof BaseGraphqlPayload<T, *>} T
    * @this {T}
    * @returns {InstanceType<T>} Instance of this class.
    */
@@ -55,12 +53,12 @@ export default class BaseGraphqlPayload {
   }
 
   /**
-   * get: validators.
+   * get: field hash.
    *
-   * @returns {ValidatorHashType} Array of arguments to create an instance of FieldValidator.
+   * @returns {Record<string, Array<string>>} Array of fields.
    */
-  static get validators () {
-    return []
+  static get fieldHash () {
+    return {}
   }
 
   /**
@@ -105,9 +103,11 @@ export default class BaseGraphqlPayload {
       ),
     })
 
+    const extractedVariables = this.extractFilteredVariables()
+
     const body = JSON.stringify({
       query: this.queryTemplate,
-      variables: this.variables,
+      variables: extractedVariables,
     })
 
     return {
@@ -140,19 +140,47 @@ export default class BaseGraphqlPayload {
   }
 
   /**
+   * Extract filtered variables.
+   *
+   * @abstract
+   * @returns {SV} Filtered variables
+   */
+  extractFilteredVariables () {
+    return /** @type {*} */ (this.variables)
+  }
+
+  /**
    * Is valid variables.
    *
    * @returns {boolean} true: valid, false: invalid.
    */
   isValidVariables () {
-    if (!this.variables) {
-      return true
-    }
-
-    const validatorHash = this.generateSchemaValidatorHash()
-
-    return Object.values(validatorHash)
-      .every(it => it.isValid())
+    return Object.entries(this.Ctor.fieldHash)
+      .map(([
+        schema,
+        fields,
+      ]) => [
+        fields,
+        Object.keys(
+          this.variables?.[schema]
+          ?? {}
+        ),
+      ])
+      .map(([
+        fields,
+        variableFields,
+      ]) => ({
+        fields,
+        unifiedFields: [...new Set(
+          variableFields.concat(fields)
+        )],
+      }))
+      .every(({
+        fields,
+        unifiedFields,
+      }) =>
+        unifiedFields.length === fields.length
+      )
   }
 
   /**
@@ -162,39 +190,6 @@ export default class BaseGraphqlPayload {
    */
   isInvalidVariables () {
     return !this.isValidVariables()
-  }
-
-  /**
-   * Is invalid variables.
-   *
-   * @returns {{
-   *   [schema: string]: VariablesPerSchemaValidator
-   * }} true: invalid, false: valid.
-   */
-  generateSchemaValidatorHash () {
-    const targetVariables = this.variables ?? {}
-
-    const validatorOptionHash = this.resolveValidatorHash({
-      validators: this.Ctor.validators,
-    })
-
-    return Object.fromEntries(
-      Object.keys(targetVariables)
-        .map(schema => [
-          schema,
-          VariablesPerSchemaValidator.create({
-            variables:
-              targetVariables[schema]
-              ?? {},
-            validators:
-              validatorOptionHash[schema]
-                .map(it =>
-                  FieldValidator.create(it)
-                )
-              ?? [],
-          }),
-        ])
-    )
   }
 
   /**
@@ -230,21 +225,21 @@ export default class BaseGraphqlPayload {
 /**
  * @typedef {{
  *   queryTemplate: string
- *   variables: VariablesType | null
+ *   variables: VariablesType
  *   options?: RequestInit
  * }} BaseGraphqlPayloadParams
  */
 
 /**
  * @typedef {{
- *   variables?: VariablesType | null
+ *   variables?: VariablesType
  *   options?: RequestInit
  * }} BaseGraphqlPayloadFactoryParams
  */
 
 /**
  * @typedef {{
- *   [group: string]: {
+ *   [schema: string]: {
  *     [field: string]: any
  *   }
  * }} VariablesType
@@ -252,7 +247,7 @@ export default class BaseGraphqlPayload {
 
 /**
  * @typedef {Array<ValidatorOptionsType> | {
- *   [group: string]: Array<ValidatorOptionsType>
+ *   [schema: string]: Array<ValidatorOptionsType>
  * }} ValidatorHashType
  */
 

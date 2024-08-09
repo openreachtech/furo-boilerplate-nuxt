@@ -2,49 +2,49 @@ import {
   ConstructorSpyGenerator,
 } from '@openreachtech/renchan-test-tools'
 
-import VariablesPerSchemaValidator from '~/modules/client/VariablesPerSchemaValidator'
+import ValueHashValidator from '~/modules/validators/ValueHashValidator'
 import FieldValidator from '~/modules/client/FieldValidator'
 
-describe('VariablesPerSchemaValidator', () => {
+describe('ValueHashValidator', () => {
   describe('constructor', () => {
     describe('to keep property', () => {
-      describe('#variables', () => {
+      describe('#valueHash', () => {
         const cases = [
           {
             args: {
-              variables: {
+              valueHash: {
                 username: 'Alice',
               },
             },
           },
           {
             args: {
-              variables: {
+              valueHash: {
                 password: 'password$001',
               },
             },
           },
           {
             args: {
-              variables: {
+              valueHash: {
                 email: 'info@example.com',
               },
             },
           },
         ]
 
-        test.each(cases)('variables: $args.variables', ({ args }) => {
+        test.each(cases)('valueHash: $args.valueHash', ({ args }) => {
           const constructorArgs = {
-            variables: args.variables,
+            valueHash: args.valueHash,
             validators: [],
           }
 
-          const actual = new VariablesPerSchemaValidator(constructorArgs)
+          const actual = new ValueHashValidator(constructorArgs)
 
           expect(actual)
-            .toHaveProperty('variables', args.variables)
-          expect(actual.variables)
-            .toBe(args.variables) // same reference
+            .toHaveProperty('valueHash', args.valueHash)
+          expect(actual.valueHash)
+            .toBe(args.valueHash) // same reference
         })
       })
 
@@ -107,7 +107,7 @@ describe('VariablesPerSchemaValidator', () => {
 
         test.each(cases)('message: $args.message', ({ args }) => {
           const constructorArgs = {
-            variables: {
+            valueHash: {
               password: 'password$001',
               email: 'info@example.com',
               bio: 'Because I am Stew Eucen.',
@@ -115,7 +115,7 @@ describe('VariablesPerSchemaValidator', () => {
             validators: args.validators,
           }
 
-          const actual = new VariablesPerSchemaValidator(constructorArgs)
+          const actual = new ValueHashValidator(constructorArgs)
 
           expect(actual)
             .toHaveProperty('validators', args.validators)
@@ -127,13 +127,13 @@ describe('VariablesPerSchemaValidator', () => {
   })
 })
 
-describe('VariablesPerSchemaValidator', () => {
+describe('ValueHashValidator', () => {
   describe('.create()', () => {
     const cases = [
       {
         args: {
           field: 'username',
-          variables: {
+          valueHash: {
             username: 'Alice',
           },
           validators: [
@@ -153,7 +153,7 @@ describe('VariablesPerSchemaValidator', () => {
       {
         args: {
           field: 'password',
-          variables: {
+          valueHash: {
             password: 'password$001',
           },
           validators: [
@@ -173,7 +173,7 @@ describe('VariablesPerSchemaValidator', () => {
       {
         args: {
           field: 'email',
-          variables: {
+          valueHash: {
             email: 'info@example.com',
           },
           validators: [
@@ -193,7 +193,7 @@ describe('VariablesPerSchemaValidator', () => {
       {
         args: {
           field: 'bio',
-          variables: {
+          valueHash: {
             bio: 'Because I am Stew Eucen.',
           },
           validators: [],
@@ -203,17 +203,17 @@ describe('VariablesPerSchemaValidator', () => {
 
     describe('to be instance of own class', () => {
       test.each(cases)('field: $params.field', ({ args }) => {
-        const actual = VariablesPerSchemaValidator.create(args)
+        const actual = ValueHashValidator.create(args)
 
         expect(actual)
-          .toBeInstanceOf(VariablesPerSchemaValidator)
+          .toBeInstanceOf(ValueHashValidator)
       })
     })
 
     describe('to call constructor', () => {
       test.each(cases)('field: $args.field', ({ args }) => {
         const DerivedClass = ConstructorSpyGenerator.create({ jest })
-          .generateSpyKitClass(VariablesPerSchemaValidator)
+          .generateSpyKitClass(ValueHashValidator)
 
         DerivedClass.create(args)
 
@@ -224,12 +224,12 @@ describe('VariablesPerSchemaValidator', () => {
   })
 })
 
-describe('VariablesPerSchemaValidator', () => {
+describe('ValueHashValidator', () => {
   describe('#extractFieldNames()', () => {
     const cases = [
       {
         args: {
-          variables: {
+          valueHash: {
             username: 'Alice',
             password: 'password$001',
             email: 'info@example.com',
@@ -244,7 +244,7 @@ describe('VariablesPerSchemaValidator', () => {
       },
       {
         args: {
-          variables: {
+          valueHash: {
             password: 'password$001',
             'password-confirmation': 'password$001',
           },
@@ -257,8 +257,8 @@ describe('VariablesPerSchemaValidator', () => {
       },
     ]
 
-    test.each(cases)('variables: $args.variables', ({ args, expected }) => {
-      const validator = VariablesPerSchemaValidator.create(args)
+    test.each(cases)('valueHash: $args.valueHash', ({ args, expected }) => {
+      const validator = ValueHashValidator.create(args)
 
       const actual = validator.extractFieldNames()
 
@@ -268,12 +268,12 @@ describe('VariablesPerSchemaValidator', () => {
   })
 })
 
-describe('VariablesPerSchemaValidator', () => {
+describe('ValueHashValidator', () => {
   describe('#extractValidators()', () => {
     const cases = [
       {
         args: {
-          variables: {
+          valueHash: {
             username: 'Alice',
             password: 'password$001',
             email: 'info@example.com',
@@ -346,7 +346,7 @@ describe('VariablesPerSchemaValidator', () => {
       },
       {
         args: {
-          variables: {
+          valueHash: {
             password: 'password$001',
             'password-confirmation': 'password$001',
           },
@@ -388,7 +388,7 @@ describe('VariablesPerSchemaValidator', () => {
       },
       {
         args: {
-          variables: {
+          valueHash: {
             alpha: 1,
             beta: 2,
           },
@@ -407,8 +407,8 @@ describe('VariablesPerSchemaValidator', () => {
       },
     ]
 
-    describe.each(cases)('variables: $args.variables', ({ args, fieldCases }) => {
-      const validator = VariablesPerSchemaValidator.create(args)
+    describe.each(cases)('valueHash: $args.valueHash', ({ args, fieldCases }) => {
+      const validator = ValueHashValidator.create(args)
 
       test.each(fieldCases)('field: $field', ({ field, expected }) => {
         const actual = validator.extractValidators({
@@ -422,7 +422,7 @@ describe('VariablesPerSchemaValidator', () => {
   })
 })
 
-describe('VariablesPerSchemaValidator', () => {
+describe('ValueHashValidator', () => {
   describe('#isValid()', () => {
     /**
      * @type {Array<{
@@ -430,10 +430,10 @@ describe('VariablesPerSchemaValidator', () => {
      *     validators: Array<import('~/modules/client/FieldValidator').default>
      *   }
      *   truthyCases: Array<{
-     *     variables: Record<string, any>
+     *     valueHash: Record<string, any>
      *   }>
      *   falsyCases: Array<{
-     *     variables: Record<string, any>
+     *     valueHash: Record<string, any>
      *   }>
      * }>}
      */
@@ -463,19 +463,19 @@ describe('VariablesPerSchemaValidator', () => {
         },
         truthyCases: [
           {
-            variables: {
+            valueHash: {
               username: 'Alice',
               password: 'pass01',
             },
           },
           {
-            variables: {
+            valueHash: {
               username: 'Bob',
               password: 'pass002',
             },
           },
           {
-            variables: {
+            valueHash: {
               username: 'Charlie',
               password: 'pass0003',
             },
@@ -483,19 +483,19 @@ describe('VariablesPerSchemaValidator', () => {
         ],
         falsyCases: [
           {
-            variables: {
+            valueHash: {
               username: '',
               password: 'pass0004',
             },
           },
           {
-            variables: {
+            valueHash: {
               username: 'David',
               password: '',
             },
           },
           {
-            variables: {
+            valueHash: {
               username: '',
               password: '',
             },
@@ -519,13 +519,13 @@ describe('VariablesPerSchemaValidator', () => {
         },
         truthyCases: [
           {
-            variables: {
+            valueHash: {
               password: 'pass0006',
               'password-confirmation': 'pass0006',
             },
           },
           {
-            variables: {
+            valueHash: {
               password: 'pass0007',
               'password-confirmation': 'pass0007',
             },
@@ -533,19 +533,19 @@ describe('VariablesPerSchemaValidator', () => {
         ],
         falsyCases: [
           {
-            variables: {
+            valueHash: {
               password: 'pass0008',
               'password-confirmation': 'miss0008',
             },
           },
           {
-            variables: {
+            valueHash: {
               password: 'pass0009',
               'password-confirmation': '',
             },
           },
           {
-            variables: {
+            valueHash: {
               password: '',
               'password-confirmation': 'miss0010',
             },
@@ -556,9 +556,9 @@ describe('VariablesPerSchemaValidator', () => {
 
     describe.each(cases)('validators: $args.validators.length', ({ args, truthyCases, falsyCases }) => {
       describe('to be truthy', () => {
-        test.each(truthyCases)('variables: $variables', ({ variables }) => {
-          const validator = VariablesPerSchemaValidator.create({
-            variables,
+        test.each(truthyCases)('valueHash: $valueHash', ({ valueHash }) => {
+          const validator = ValueHashValidator.create({
+            valueHash,
             validators: args.validators,
           })
 
@@ -570,9 +570,9 @@ describe('VariablesPerSchemaValidator', () => {
       })
 
       describe('to be falsy', () => {
-        test.each(falsyCases)('variables: $variables', ({ variables }) => {
-          const validator = VariablesPerSchemaValidator.create({
-            variables,
+        test.each(falsyCases)('valueHash: $valueHash', ({ valueHash }) => {
+          const validator = ValueHashValidator.create({
+            valueHash,
             validators: args.validators,
           })
 
@@ -586,7 +586,7 @@ describe('VariablesPerSchemaValidator', () => {
   })
 })
 
-describe('VariablesPerSchemaValidator', () => {
+describe('ValueHashValidator', () => {
   describe('#isInvalid()', () => {
     /**
      * @type {Array<{
@@ -594,10 +594,10 @@ describe('VariablesPerSchemaValidator', () => {
      *     validators: Array<import('~/modules/client/FieldValidator').default>
      *   }
      *   truthyCases: Array<{
-     *     variables: Record<string, any>
+     *     valueHash: Record<string, any>
      *   }>
      *   falsyCases: Array<{
-     *     variables: Record<string, any>
+     *     valueHash: Record<string, any>
      *   }>
      * }>}
      */
@@ -627,19 +627,19 @@ describe('VariablesPerSchemaValidator', () => {
         },
         truthyCases: [
           {
-            variables: {
+            valueHash: {
               username: '',
               password: 'pass0004',
             },
           },
           {
-            variables: {
+            valueHash: {
               username: 'David',
               password: '',
             },
           },
           {
-            variables: {
+            valueHash: {
               username: '',
               password: '',
             },
@@ -647,19 +647,19 @@ describe('VariablesPerSchemaValidator', () => {
         ],
         falsyCases: [
           {
-            variables: {
+            valueHash: {
               username: 'Alice',
               password: 'pass01',
             },
           },
           {
-            variables: {
+            valueHash: {
               username: 'Bob',
               password: 'pass002',
             },
           },
           {
-            variables: {
+            valueHash: {
               username: 'Charlie',
               password: 'pass0003',
             },
@@ -683,19 +683,19 @@ describe('VariablesPerSchemaValidator', () => {
         },
         truthyCases: [
           {
-            variables: {
+            valueHash: {
               password: 'pass0008',
               'password-confirmation': 'miss0008',
             },
           },
           {
-            variables: {
+            valueHash: {
               password: 'pass0009',
               'password-confirmation': '',
             },
           },
           {
-            variables: {
+            valueHash: {
               password: '',
               'password-confirmation': 'miss0010',
             },
@@ -703,13 +703,13 @@ describe('VariablesPerSchemaValidator', () => {
         ],
         falsyCases: [
           {
-            variables: {
+            valueHash: {
               password: 'pass0006',
               'password-confirmation': 'pass0006',
             },
           },
           {
-            variables: {
+            valueHash: {
               password: 'pass0007',
               'password-confirmation': 'pass0007',
             },
@@ -720,9 +720,9 @@ describe('VariablesPerSchemaValidator', () => {
 
     describe.each(cases)('validators: $args.validators.length', ({ args, truthyCases, falsyCases }) => {
       describe('to be truthy', () => {
-        test.each(truthyCases)('variables: $variables', ({ variables }) => {
-          const validator = VariablesPerSchemaValidator.create({
-            variables,
+        test.each(truthyCases)('valueHash: $valueHash', ({ valueHash }) => {
+          const validator = ValueHashValidator.create({
+            valueHash,
             validators: args.validators,
           })
 
@@ -734,9 +734,9 @@ describe('VariablesPerSchemaValidator', () => {
       })
 
       describe('to be falsy', () => {
-        test.each(falsyCases)('variables: $variables', ({ variables }) => {
-          const validator = VariablesPerSchemaValidator.create({
-            variables,
+        test.each(falsyCases)('valueHash: $valueHash', ({ valueHash }) => {
+          const validator = ValueHashValidator.create({
+            valueHash,
             validators: args.validators,
           })
 
@@ -750,7 +750,7 @@ describe('VariablesPerSchemaValidator', () => {
   })
 })
 
-describe('VariablesPerSchemaValidator', () => {
+describe('ValueHashValidator', () => {
   describe('#getAllMessages()', () => {
     /**
      * @type {Array<{
@@ -759,7 +759,7 @@ describe('VariablesPerSchemaValidator', () => {
      *   }
      *   fieldCases: Array<{
      *     field: string
-     *     variables: Record<string, any>
+     *     valueHash: Record<string, any>
      *     expected: Array<string>
      *   }>
      * }>}
@@ -799,7 +799,7 @@ describe('VariablesPerSchemaValidator', () => {
         fieldCases: [
           {
             field: 'username',
-            variables: {
+            valueHash: {
               username: 'Alice',
               password: 'pass0004',
             },
@@ -807,7 +807,7 @@ describe('VariablesPerSchemaValidator', () => {
           },
           {
             field: 'username',
-            variables: {
+            valueHash: {
               username: '',
               password: 'pass0004',
             },
@@ -818,7 +818,7 @@ describe('VariablesPerSchemaValidator', () => {
           },
           {
             field: 'username',
-            variables: {
+            valueHash: {
               username: 'John Doe',
               password: 'pass0004',
             },
@@ -828,7 +828,7 @@ describe('VariablesPerSchemaValidator', () => {
           },
           {
             field: 'password',
-            variables: {
+            valueHash: {
               username: '',
               password: '',
             },
@@ -859,7 +859,7 @@ describe('VariablesPerSchemaValidator', () => {
         fieldCases: [
           {
             field: 'password',
-            variables: {
+            valueHash: {
               password: 'pass0008',
               'password-confirmation': 'miss0008',
             },
@@ -867,7 +867,7 @@ describe('VariablesPerSchemaValidator', () => {
           },
           {
             field: 'password',
-            variables: {
+            valueHash: {
               password: '',
               'password-confirmation': '',
             },
@@ -877,7 +877,7 @@ describe('VariablesPerSchemaValidator', () => {
           },
           {
             field: 'password-confirmation',
-            variables: {
+            valueHash: {
               password: 'pass0008',
               'password-confirmation': 'miss0008',
             },
@@ -887,7 +887,7 @@ describe('VariablesPerSchemaValidator', () => {
           },
           {
             field: 'password-confirmation',
-            variables: {
+            valueHash: {
               password: '',
               'password-confirmation': '',
             },
@@ -898,9 +898,9 @@ describe('VariablesPerSchemaValidator', () => {
     ]
 
     describe.each(cases)('validators: $args.validators.length', ({ args, fieldCases }) => {
-      test.each(fieldCases)('[$#] field: $field', ({ field, variables, expected }) => {
-        const validator = VariablesPerSchemaValidator.create({
-          variables,
+      test.each(fieldCases)('[$#] field: $field', ({ field, valueHash, expected }) => {
+        const validator = ValueHashValidator.create({
+          valueHash,
           validators: args.validators,
         })
 
@@ -915,7 +915,7 @@ describe('VariablesPerSchemaValidator', () => {
   })
 })
 
-describe('VariablesPerSchemaValidator', () => {
+describe('ValueHashValidator', () => {
   describe('#getOneMessage()', () => {
     /**
      * @type {Array<{
@@ -924,7 +924,7 @@ describe('VariablesPerSchemaValidator', () => {
      *   }
      *   fieldCases: Array<{
      *     field: string
-     *     variables: Record<string, any>
+     *     valueHash: Record<string, any>
      *     expected: string | null
      *   }>
      * }>}
@@ -964,7 +964,7 @@ describe('VariablesPerSchemaValidator', () => {
         fieldCases: [
           {
             field: 'username',
-            variables: {
+            valueHash: {
               username: 'Alice',
               password: 'pass0004',
             },
@@ -972,7 +972,7 @@ describe('VariablesPerSchemaValidator', () => {
           },
           {
             field: 'username',
-            variables: {
+            valueHash: {
               username: '',
               password: 'pass0004',
             },
@@ -980,7 +980,7 @@ describe('VariablesPerSchemaValidator', () => {
           },
           {
             field: 'username',
-            variables: {
+            valueHash: {
               username: 'John Doe',
               password: 'pass0004',
             },
@@ -988,7 +988,7 @@ describe('VariablesPerSchemaValidator', () => {
           },
           {
             field: 'password',
-            variables: {
+            valueHash: {
               username: '',
               password: '',
             },
@@ -1017,7 +1017,7 @@ describe('VariablesPerSchemaValidator', () => {
         fieldCases: [
           {
             field: 'password',
-            variables: {
+            valueHash: {
               password: 'pass0008',
               'password-confirmation': 'miss0008',
             },
@@ -1025,7 +1025,7 @@ describe('VariablesPerSchemaValidator', () => {
           },
           {
             field: 'password',
-            variables: {
+            valueHash: {
               password: '',
               'password-confirmation': '',
             },
@@ -1033,7 +1033,7 @@ describe('VariablesPerSchemaValidator', () => {
           },
           {
             field: 'password-confirmation',
-            variables: {
+            valueHash: {
               password: 'pass0008',
               'password-confirmation': 'miss0008',
             },
@@ -1041,7 +1041,7 @@ describe('VariablesPerSchemaValidator', () => {
           },
           {
             field: 'password-confirmation',
-            variables: {
+            valueHash: {
               password: '',
               'password-confirmation': '',
             },
@@ -1052,9 +1052,9 @@ describe('VariablesPerSchemaValidator', () => {
     ]
 
     describe.each(cases)('validators: $args.validators.length', ({ args, fieldCases }) => {
-      test.each(fieldCases)('[$#] field: $field', ({ field, variables, expected }) => {
-        const validator = VariablesPerSchemaValidator.create({
-          variables,
+      test.each(fieldCases)('[$#] field: $field', ({ field, valueHash, expected }) => {
+        const validator = ValueHashValidator.create({
+          valueHash,
           validators: args.validators,
         })
 
@@ -1069,7 +1069,7 @@ describe('VariablesPerSchemaValidator', () => {
   })
 })
 
-describe('VariablesPerSchemaValidator', () => {
+describe('ValueHashValidator', () => {
   describe('#isValidField()', () => {
     /**
      * @type {Array<{
@@ -1078,7 +1078,7 @@ describe('VariablesPerSchemaValidator', () => {
      *   }
      *   fieldCases: Array<{
      *     field: string
-     *     variables: Record<string, any>
+     *     valueHash: Record<string, any>
      *     expected: boolean
      *   }>
      * }>}
@@ -1118,7 +1118,7 @@ describe('VariablesPerSchemaValidator', () => {
         fieldCases: [
           {
             field: 'username',
-            variables: {
+            valueHash: {
               username: 'Alice',
               password: 'pass0004',
             },
@@ -1126,7 +1126,7 @@ describe('VariablesPerSchemaValidator', () => {
           },
           {
             field: 'username',
-            variables: {
+            valueHash: {
               username: '',
               password: 'pass0004',
             },
@@ -1134,7 +1134,7 @@ describe('VariablesPerSchemaValidator', () => {
           },
           {
             field: 'username',
-            variables: {
+            valueHash: {
               username: 'John Doe',
               password: 'pass0004',
             },
@@ -1142,7 +1142,7 @@ describe('VariablesPerSchemaValidator', () => {
           },
           {
             field: 'password',
-            variables: {
+            valueHash: {
               username: '',
               password: '',
             },
@@ -1171,7 +1171,7 @@ describe('VariablesPerSchemaValidator', () => {
         fieldCases: [
           {
             field: 'password',
-            variables: {
+            valueHash: {
               password: 'pass0008',
               'password-confirmation': 'miss0008',
             },
@@ -1179,7 +1179,7 @@ describe('VariablesPerSchemaValidator', () => {
           },
           {
             field: 'password',
-            variables: {
+            valueHash: {
               password: '',
               'password-confirmation': '',
             },
@@ -1187,7 +1187,7 @@ describe('VariablesPerSchemaValidator', () => {
           },
           {
             field: 'password-confirmation',
-            variables: {
+            valueHash: {
               password: 'pass0008',
               'password-confirmation': 'miss0008',
             },
@@ -1195,7 +1195,7 @@ describe('VariablesPerSchemaValidator', () => {
           },
           {
             field: 'password-confirmation',
-            variables: {
+            valueHash: {
               password: '',
               'password-confirmation': '',
             },
@@ -1206,9 +1206,9 @@ describe('VariablesPerSchemaValidator', () => {
     ]
 
     describe.each(cases)('validators: $args.validators.length', ({ args, fieldCases }) => {
-      test.each(fieldCases)('[$#] field: $field', ({ field, variables, expected }) => {
-        const validator = VariablesPerSchemaValidator.create({
-          variables,
+      test.each(fieldCases)('[$#] field: $field', ({ field, valueHash, expected }) => {
+        const validator = ValueHashValidator.create({
+          valueHash,
           validators: args.validators,
         })
 
@@ -1223,7 +1223,7 @@ describe('VariablesPerSchemaValidator', () => {
   })
 })
 
-describe('VariablesPerSchemaValidator', () => {
+describe('ValueHashValidator', () => {
   describe('#isInvalidField()', () => {
     /**
      * @type {Array<{
@@ -1232,7 +1232,7 @@ describe('VariablesPerSchemaValidator', () => {
      *   }
      *   fieldCases: Array<{
      *     field: string
-     *     variables: Record<string, any>
+     *     valueHash: Record<string, any>
      *     expected: boolean
      *   }>
      * }>}
@@ -1272,7 +1272,7 @@ describe('VariablesPerSchemaValidator', () => {
         fieldCases: [
           {
             field: 'username',
-            variables: {
+            valueHash: {
               username: 'Alice',
               password: 'pass0004',
             },
@@ -1280,7 +1280,7 @@ describe('VariablesPerSchemaValidator', () => {
           },
           {
             field: 'username',
-            variables: {
+            valueHash: {
               username: '',
               password: 'pass0004',
             },
@@ -1288,7 +1288,7 @@ describe('VariablesPerSchemaValidator', () => {
           },
           {
             field: 'username',
-            variables: {
+            valueHash: {
               username: 'John Doe',
               password: 'pass0004',
             },
@@ -1296,7 +1296,7 @@ describe('VariablesPerSchemaValidator', () => {
           },
           {
             field: 'password',
-            variables: {
+            valueHash: {
               username: '',
               password: '',
             },
@@ -1325,7 +1325,7 @@ describe('VariablesPerSchemaValidator', () => {
         fieldCases: [
           {
             field: 'password',
-            variables: {
+            valueHash: {
               password: 'pass0008',
               'password-confirmation': 'miss0008',
             },
@@ -1333,7 +1333,7 @@ describe('VariablesPerSchemaValidator', () => {
           },
           {
             field: 'password',
-            variables: {
+            valueHash: {
               password: '',
               'password-confirmation': '',
             },
@@ -1341,7 +1341,7 @@ describe('VariablesPerSchemaValidator', () => {
           },
           {
             field: 'password-confirmation',
-            variables: {
+            valueHash: {
               password: 'pass0008',
               'password-confirmation': 'miss0008',
             },
@@ -1349,7 +1349,7 @@ describe('VariablesPerSchemaValidator', () => {
           },
           {
             field: 'password-confirmation',
-            variables: {
+            valueHash: {
               password: '',
               'password-confirmation': '',
             },
@@ -1360,9 +1360,9 @@ describe('VariablesPerSchemaValidator', () => {
     ]
 
     describe.each(cases)('validators: $args.validators.length', ({ args, fieldCases }) => {
-      test.each(fieldCases)('[$#] field: $field', ({ field, variables, expected }) => {
-        const validator = VariablesPerSchemaValidator.create({
-          variables,
+      test.each(fieldCases)('[$#] field: $field', ({ field, valueHash, expected }) => {
+        const validator = ValueHashValidator.create({
+          valueHash,
           validators: args.validators,
         })
 
