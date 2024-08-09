@@ -181,7 +181,7 @@ export default class BaseGraphqlLauncher {
    * @template C, D
    * @returns {InstanceType<CapsuleClass<C, D>>} Instance of capsule.
    */
-  static createResultCapsuleAsJsonParseError ({
+  static createCapsuleAsJsonParseError ({
     rawResponse,
     payload,
   }) {
@@ -245,7 +245,7 @@ export default class BaseGraphqlLauncher {
       response,
     })
     if (result === null) {
-      return this.Ctor.createResultCapsuleAsJsonParseError({
+      return this.Ctor.createCapsuleAsJsonParseError({
         rawResponse: response,
         payload,
       })
