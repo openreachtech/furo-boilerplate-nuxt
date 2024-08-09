@@ -148,7 +148,7 @@ describe('BaseGraphqlLauncher', () => {
 })
 
 describe('BaseGraphqlLauncher', () => {
-  describe('.createResultCapsuleAsPending()', () => {
+  describe('.createCapsuleAsPending()', () => {
     describe('to be instance of BaseGraphqlCapsule', () => {
       const cases = [
         {
@@ -167,7 +167,7 @@ describe('BaseGraphqlLauncher', () => {
         const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
           .mockReturnValue(params.CapsuleClass)
 
-        const capsule = BaseGraphqlLauncher.createResultCapsuleAsPending()
+        const capsule = BaseGraphqlLauncher.createCapsuleAsPending()
 
         expect(capsule)
           .toBeInstanceOf(params.CapsuleClass)
@@ -201,7 +201,7 @@ describe('BaseGraphqlLauncher', () => {
           .mockReturnValue(params.CapsuleClass)
         const createSpy = jest.spyOn(params.CapsuleClass, 'create')
 
-        BaseGraphqlLauncher.createResultCapsuleAsPending(params)
+        BaseGraphqlLauncher.createCapsuleAsPending(params)
 
         expect(createSpy)
           .toHaveBeenCalledWith(expected)
