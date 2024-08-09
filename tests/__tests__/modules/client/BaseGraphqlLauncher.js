@@ -1679,6 +1679,15 @@ describe('BaseGraphqlLauncher', () => {
           `
         }
 
+        static get fieldHash () {
+          return {
+            input: [
+              'username',
+              'password',
+            ],
+          }
+        }
+
         /** @override */
         static get validators () {
           return [
@@ -1705,7 +1714,9 @@ describe('BaseGraphqlLauncher', () => {
         const invalidVariablesPayload = DerivedPayload.create({
           variables: {
             input: {
-              username: 'John Doe', // ❌
+              username: 'JohnDoe',
+              password: 'password$01',
+              extra: 'extra value', // ❌
             },
           },
         })

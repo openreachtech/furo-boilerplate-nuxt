@@ -1,5 +1,3 @@
-import VariablesValidationResult from '~/modules/client/VariablesValidationResult'
-
 /**
  * Base class for GraphQL capsule.
  *
@@ -229,21 +227,6 @@ export default class BaseGraphqlCapsule {
         ?.data
         ?? null
     )
-  }
-
-  /**
-   * Create variables validation result.
-   *
-   * @returns {VariablesValidationResult} Result.
-   */
-  createVariablesValidationResult () {
-    const validatorHash = this.payload
-      ? this.payload.generateSchemaValidatorHash()
-      : {}
-
-    return VariablesValidationResult.create({
-      validatorHash,
-    })
   }
 }
 
