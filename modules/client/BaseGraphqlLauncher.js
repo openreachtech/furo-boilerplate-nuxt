@@ -71,7 +71,7 @@ export default class BaseGraphqlLauncher {
    * Create payload.
    *
    * @param {{
-   *   variables: import('./BaseGraphqlPayload').VariablesType
+   *   variables: VariablesType
    *   options: RequestInit
    * }} params - Parameters.
    * @template P, D
@@ -283,7 +283,7 @@ export default class BaseGraphqlLauncher {
    * Launch query with direct variables.
    *
    * @param {{
-   *   variables?: import('./BaseGraphqlPayload').VariablesType
+   *   variables?: VariablesType
    *   options?: RequestInit
    *   hooks?: GraphqlLauncherHooks
    * }} Params - Parameters.
@@ -432,7 +432,7 @@ export default class BaseGraphqlLauncher {
 
 /**
  * @template {typeof import('./BaseGraphqlPayload')} P
- * @template {import('./BaseGraphqlPayload').VariablesType} D
+ * @template {VariablesType} D
  * @typedef {typeof import('./BaseGraphqlPayload').default<P, D>} PayloadClass
  */
 
