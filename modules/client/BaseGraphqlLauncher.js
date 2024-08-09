@@ -74,7 +74,7 @@ export default class BaseGraphqlLauncher {
    * @template C, D
    * @returns {InstanceType<CapsuleClass<C, D>>} Instance of capsule.
    */
-  static createResultCapsule ({
+  static createCapsule ({
     rawResponse,
     payload,
     result,
@@ -103,7 +103,7 @@ export default class BaseGraphqlLauncher {
       result: null,
     }
 
-    return this.createResultCapsule(args)
+    return this.createCapsule(args)
   }
 
   /**
@@ -125,7 +125,7 @@ export default class BaseGraphqlLauncher {
       abortedReason: LAUNCH_ABORTED_REASON.INVALID_VARIABLES,
     }
 
-    return this.createResultCapsule(args)
+    return this.createCapsule(args)
   }
 
   /**
@@ -147,7 +147,7 @@ export default class BaseGraphqlLauncher {
       abortedReason: LAUNCH_ABORTED_REASON.BEFORE_REQUEST_HOOK,
     }
 
-    return this.createResultCapsule(args)
+    return this.createCapsule(args)
   }
 
   /**
@@ -168,7 +168,7 @@ export default class BaseGraphqlLauncher {
       result: null,
     }
 
-    return this.createResultCapsule(args)
+    return this.createCapsule(args)
   }
 
   /**
@@ -191,7 +191,7 @@ export default class BaseGraphqlLauncher {
       result: null,
     }
 
-    return this.createResultCapsule(args)
+    return this.createCapsule(args)
   }
 
   /**
@@ -251,7 +251,7 @@ export default class BaseGraphqlLauncher {
       })
     }
 
-    return this.Ctor.createResultCapsule({
+    return this.Ctor.createCapsule({
       rawResponse: response,
       payload,
       result,
