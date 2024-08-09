@@ -433,8 +433,8 @@ export default class BaseGraphqlLauncher {
 
 /**
  * @template {typeof import('./BaseGraphqlPayload')} P
- * @template {VariablesType} D
- * @typedef {typeof import('./BaseGraphqlPayload').default<P, D>} PayloadClass
+ * @template {VariablesType} SV
+ * @typedef {typeof import('./BaseGraphqlPayload').default<P, SV>} PayloadClass
  */
 
 /**
