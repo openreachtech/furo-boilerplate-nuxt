@@ -2072,7 +2072,11 @@ describe('BaseGraphqlLauncher', () => {
         {
           params: {
             endpointUrl: 'http://example.com/graphql-admin',
-            variables: {},
+            variables: {
+              input: {
+                id: 20001,
+              },
+            },
             options: {
               headers: new Headers({
                 'x-access-token': 'access-token-02',
@@ -2178,7 +2182,9 @@ describe('BaseGraphqlLauncher', () => {
           params: {
             endpointUrl: 'http://example.com/graphql-admin',
             variables: {
-              input: null,
+              input: {
+                id: 20001,
+              },
             },
             options: {
               headers: new Headers({
@@ -2474,7 +2480,9 @@ describe('BaseGraphqlLauncher', () => {
           {
             params: {
               variables: {
-                id: 10001,
+                input: {
+                  id: 10001,
+                },
               },
               options: {
                 headers: new Headers({
@@ -2487,7 +2495,9 @@ describe('BaseGraphqlLauncher', () => {
           {
             params: {
               variables: {
-                id: 10002,
+                input: {
+                  id: 10002,
+                },
               },
               options: {
                 headers: new Headers({
