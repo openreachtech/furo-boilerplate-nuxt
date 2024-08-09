@@ -148,7 +148,7 @@ describe('BaseGraphqlLauncher', () => {
 })
 
 describe('BaseGraphqlLauncher', () => {
-  describe('.createResultCapsuleAsPending()', () => {
+  describe('.createCapsuleAsPending()', () => {
     describe('to be instance of BaseGraphqlCapsule', () => {
       const cases = [
         {
@@ -167,7 +167,7 @@ describe('BaseGraphqlLauncher', () => {
         const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
           .mockReturnValue(params.CapsuleClass)
 
-        const capsule = BaseGraphqlLauncher.createResultCapsuleAsPending()
+        const capsule = BaseGraphqlLauncher.createCapsuleAsPending()
 
         expect(capsule)
           .toBeInstanceOf(params.CapsuleClass)
@@ -201,7 +201,7 @@ describe('BaseGraphqlLauncher', () => {
           .mockReturnValue(params.CapsuleClass)
         const createSpy = jest.spyOn(params.CapsuleClass, 'create')
 
-        BaseGraphqlLauncher.createResultCapsuleAsPending(params)
+        BaseGraphqlLauncher.createCapsuleAsPending(params)
 
         expect(createSpy)
           .toHaveBeenCalledWith(expected)
@@ -214,7 +214,7 @@ describe('BaseGraphqlLauncher', () => {
 })
 
 describe('BaseGraphqlLauncher', () => {
-  describe('.createResultCapsuleAsInvalidVariablesError()', () => {
+  describe('.createCapsuleAsInvalidVariablesError()', () => {
     describe('to be instance of BaseGraphqlCapsule', () => {
       const capsuleCases = [
         {
@@ -269,7 +269,7 @@ describe('BaseGraphqlLauncher', () => {
             payload: args.payload,
           }
 
-          const capsule = BaseGraphqlLauncher.createResultCapsuleAsInvalidVariablesError(currentArgs)
+          const capsule = BaseGraphqlLauncher.createCapsuleAsInvalidVariablesError(currentArgs)
 
           expect(capsule)
             .toBeInstanceOf(params.CapsuleClass)
@@ -341,7 +341,7 @@ describe('BaseGraphqlLauncher', () => {
             payload: args.payload,
           }
 
-          BaseGraphqlLauncher.createResultCapsuleAsInvalidVariablesError(currentArgs)
+          BaseGraphqlLauncher.createCapsuleAsInvalidVariablesError(currentArgs)
 
           expect(createSpy)
             .toHaveBeenCalledWith(expected)
@@ -355,7 +355,7 @@ describe('BaseGraphqlLauncher', () => {
 })
 
 describe('BaseGraphqlLauncher', () => {
-  describe('.createResultCapsuleAsAbortedByHooks()', () => {
+  describe('.createCapsuleAsAbortedByHooks()', () => {
     describe('to be instance of BaseGraphqlCapsule', () => {
       const capsuleCases = [
         {
@@ -410,7 +410,7 @@ describe('BaseGraphqlLauncher', () => {
             payload: args.payload,
           }
 
-          const capsule = BaseGraphqlLauncher.createResultCapsuleAsAbortedByHooks(currentArgs)
+          const capsule = BaseGraphqlLauncher.createCapsuleAsAbortedByHooks(currentArgs)
 
           expect(capsule)
             .toBeInstanceOf(params.CapsuleClass)
@@ -496,7 +496,7 @@ describe('BaseGraphqlLauncher', () => {
             payload: args.payload,
           }
 
-          BaseGraphqlLauncher.createResultCapsuleAsAbortedByHooks(currentArgs)
+          BaseGraphqlLauncher.createCapsuleAsAbortedByHooks(currentArgs)
 
           expect(createSpy)
             .toHaveBeenCalledWith(expected)
@@ -510,7 +510,7 @@ describe('BaseGraphqlLauncher', () => {
 })
 
 describe('BaseGraphqlLauncher', () => {
-  describe('.createResultCapsuleAsNetworkError()', () => {
+  describe('.createCapsuleAsNetworkError()', () => {
     describe('to be instance of BaseGraphqlCapsule', () => {
       const capsuleCases = [
         {
@@ -565,7 +565,7 @@ describe('BaseGraphqlLauncher', () => {
             payload: args.payload,
           }
 
-          const capsule = BaseGraphqlLauncher.createResultCapsuleAsNetworkError(currentArgs)
+          const capsule = BaseGraphqlLauncher.createCapsuleAsNetworkError(currentArgs)
 
           expect(capsule)
             .toBeInstanceOf(params.CapsuleClass)
@@ -636,7 +636,7 @@ describe('BaseGraphqlLauncher', () => {
             payload: args.payload,
           }
 
-          BaseGraphqlLauncher.createResultCapsuleAsNetworkError(currentArgs)
+          BaseGraphqlLauncher.createCapsuleAsNetworkError(currentArgs)
 
           expect(createSpy)
             .toHaveBeenCalledWith(expected)
@@ -650,7 +650,7 @@ describe('BaseGraphqlLauncher', () => {
 })
 
 describe('BaseGraphqlLauncher', () => {
-  describe('.createResultCapsuleAsJsonParseError()', () => {
+  describe('.createCapsuleAsJsonParseError()', () => {
     describe('to be instance of BaseGraphqlCapsule', () => {
       const capsuleCases = [
         {
@@ -708,7 +708,7 @@ describe('BaseGraphqlLauncher', () => {
             payload: args.payload,
           }
 
-          const capsule = BaseGraphqlLauncher.createResultCapsuleAsJsonParseError(currentArgs)
+          const capsule = BaseGraphqlLauncher.createCapsuleAsJsonParseError(currentArgs)
 
           expect(capsule)
             .toBeInstanceOf(params.CapsuleClass)
@@ -782,7 +782,7 @@ describe('BaseGraphqlLauncher', () => {
             payload: args.payload,
           }
 
-          BaseGraphqlLauncher.createResultCapsuleAsJsonParseError(currentArgs)
+          BaseGraphqlLauncher.createCapsuleAsJsonParseError(currentArgs)
 
           expect(createSpy)
             .toHaveBeenCalledWith(expected)
@@ -921,7 +921,7 @@ describe('BaseGraphqlLauncher', () => {
 })
 
 describe('BaseGraphqlLauncher', () => {
-  describe('.createResultCapsule()', () => {
+  describe('.createCapsule()', () => {
     describe('to be instance of BaseGraphqlCapsule', () => {
       const MockGraphqlCapsule = class extends BaseGraphqlCapsule {}
 
@@ -1036,7 +1036,7 @@ describe('BaseGraphqlLauncher', () => {
         const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
           .mockReturnValue(MockGraphqlCapsule)
 
-        const capsule = BaseGraphqlLauncher.createResultCapsule(params)
+        const capsule = BaseGraphqlLauncher.createCapsule(params)
 
         expect(capsule)
           .toBeInstanceOf(BaseGraphqlCapsule)
@@ -1164,7 +1164,7 @@ describe('BaseGraphqlLauncher', () => {
           .mockReturnValue(MockGraphqlCapsule)
         const createSpy = jest.spyOn(MockGraphqlCapsule, 'create')
 
-        BaseGraphqlLauncher.createResultCapsule(params)
+        BaseGraphqlLauncher.createCapsule(params)
 
         expect(createSpy)
           .toHaveBeenCalledWith(params)
@@ -1728,7 +1728,7 @@ describe('BaseGraphqlLauncher', () => {
           abortedReason: LAUNCH_ABORTED_REASON.INVALID_VARIABLES,
         })
 
-        const createResultCapsuleAsInvalidVariablesErrorSpy = jest.spyOn(BaseGraphqlLauncher, 'createResultCapsuleAsInvalidVariablesError')
+        const createCapsuleAsInvalidVariablesErrorSpy = jest.spyOn(BaseGraphqlLauncher, 'createCapsuleAsInvalidVariablesError')
         const invokeFetchQuerySpy = jest.spyOn(launcher, 'invokeFetchQuery')
           .mockRejectedValue(null)
         const CapsuleSpy = jest.spyOn(BaseGraphqlLauncher, 'Capsule', 'get')
@@ -1743,13 +1743,13 @@ describe('BaseGraphqlLauncher', () => {
         expect(actual)
           .toEqual(expectedCapsule)
 
-        expect(createResultCapsuleAsInvalidVariablesErrorSpy)
+        expect(createCapsuleAsInvalidVariablesErrorSpy)
           .toHaveBeenCalledWith(args)
         expect(invokeFetchQuerySpy)
           .not
           .toHaveBeenCalledWith()
 
-        createResultCapsuleAsInvalidVariablesErrorSpy.mockRestore()
+        createCapsuleAsInvalidVariablesErrorSpy.mockRestore()
         invokeFetchQuerySpy.mockRestore()
         CapsuleSpy.mockRestore()
       })
