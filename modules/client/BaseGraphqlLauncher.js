@@ -49,7 +49,7 @@ export default class BaseGraphqlLauncher {
    * get: Payload class.
    *
    * @abstract
-   * @returns {PayloadClass} Payload class.
+   * @returns {PayloadClass<*, *>} Payload class.
    * @throws {Error} This function must be inherited.
    */
   static get Payload () {
@@ -65,6 +65,27 @@ export default class BaseGraphqlLauncher {
    */
   static get Capsule () {
     throw new Error('this function must be inherited')
+  }
+
+  /**
+   * Create payload.
+   *
+   * @param {{
+   *   variables: import('./BaseGraphqlPayload').VariablesType
+   *   options: RequestInit
+   * }} params - Parameters.
+   * @template P, D
+   * @returns {InstanceType<PayloadClass<P, D>>} Instance of Payload.
+   */
+  static createPayload ({
+    variables,
+    options,
+  }) {
+    return this.Payload
+      .create({
+        variables,
+        options,
+      })
   }
 
   /**
@@ -431,7 +452,9 @@ export default class BaseGraphqlLauncher {
  */
 
 /**
- * @typedef {typeof import('./BaseGraphqlPayload').default} PayloadClass
+ * @template {typeof import('./BaseGraphqlPayload')} P
+ * @template {import('./BaseGraphqlPayload').VariablesType} D
+ * @typedef {typeof import('./BaseGraphqlPayload').default<P, D>} PayloadClass
  */
 
 /**
@@ -442,7 +465,7 @@ export default class BaseGraphqlLauncher {
 /**
  * @typedef {{
  *   rawResponse: Response | null
- *   payload: InstanceType<PayloadClass> | null
+ *   payload: InstanceType<PayloadClass<*, *>> | null
  *   result: object | null
  *   abortedReason?: import('./BaseGraphqlCapsule').LAUNCH_ABORTED_REASON
  * }} CapsuleParams
@@ -450,7 +473,7 @@ export default class BaseGraphqlLauncher {
 
 /**
  * @typedef {{
- *   beforeRequest?: (payload: InstanceType<PayloadClass>) => Promise<boolean>
+ *   beforeRequest?: (payload: InstanceType<PayloadClass<*, *>>) => Promise<boolean>
  *   afterRequest?: (capsule: InstanceType<CapsuleClass<*, *>>) => Promise<void>
  * }} GraphqlLauncherHooks
  */

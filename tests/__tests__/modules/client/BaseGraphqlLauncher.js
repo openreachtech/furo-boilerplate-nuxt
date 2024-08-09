@@ -919,6 +919,82 @@ describe('BaseGraphqlLauncher', () => {
     })
   })
 })
+describe('BaseGraphqlLauncher', () => {
+  describe('.createPayload()', () => {
+    describe('to be instance of Payload', () => {
+      const cases = [
+        {
+          params: {
+            /** @extends {BaseGraphqlPayload<*, *>} */
+            Payload: class CustomerPayload extends BaseGraphqlPayload {
+              /** @inheritdoc */
+              static get document () {
+                return /* GraphQL */ `query {
+                  customer (input: $input) {
+                    id
+                  }
+                }`
+              }
+            },
+            variables: {
+              input: {
+                id: 10001,
+              },
+            },
+            options: {
+              mode: 'cors',
+            },
+          },
+        },
+        {
+          params: {
+            /** @extends {BaseGraphqlPayload<*, *>} */
+            Payload: class AdminPayload extends BaseGraphqlPayload {
+              /** @inheritdoc */
+              static get document () {
+                return /* GraphQL */ `query {
+                  admin (input: $input) {
+                    id
+                  }
+                }`
+              }
+            },
+            variables: {
+              input: {
+                id: 20001,
+              },
+            },
+          },
+        },
+      ]
+
+      test.each(cases)('Payload: $params.Payload.name', ({ params }) => {
+        const expected = {
+          variables: params.variables,
+        }
+
+        const PayloadSpy = jest.spyOn(BaseGraphqlLauncher, 'Payload', 'get')
+          .mockReturnValue(params.Payload)
+        const createSpy = jest.spyOn(params.Payload, 'create')
+
+        const args = {
+          variables: params.variables,
+        }
+
+        const payload = BaseGraphqlLauncher.createPayload(args)
+
+        expect(payload)
+          .toBeInstanceOf(params.Payload)
+
+        expect(createSpy)
+          .toHaveBeenCalledWith(expected)
+
+        PayloadSpy.mockRestore()
+        createSpy.mockRestore()
+      })
+    })
+  })
+})
 
 describe('BaseGraphqlLauncher', () => {
   describe('.createCapsule()', () => {
