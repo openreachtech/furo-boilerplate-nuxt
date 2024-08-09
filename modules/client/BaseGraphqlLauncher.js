@@ -115,7 +115,7 @@ export default class BaseGraphqlLauncher {
    * @template C, D
    * @returns {InstanceType<CapsuleClass<C, D>>} Instance of capsule.
    */
-  static createResultCapsuleAsInvalidVariablesError ({
+  static createCapsuleAsInvalidVariablesError ({
     payload,
   }) {
     const args = {
@@ -227,7 +227,7 @@ export default class BaseGraphqlLauncher {
     payload,
   }) {
     if (payload.isInvalidVariables()) {
-      return this.Ctor.createResultCapsuleAsInvalidVariablesError({
+      return this.Ctor.createCapsuleAsInvalidVariablesError({
         payload,
       })
     }
