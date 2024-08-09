@@ -398,27 +398,6 @@ export default class BaseGraphqlLauncher {
   }
 
   /**
-   * Create payload.
-   *
-   * @param {{
-   *   variables: object | null
-   *   options: RequestInit
-   * }} params - Parameters.
-   * @returns {InstanceType<PayloadClass>} Instance of Payload.
-   */
-  createPayload ({
-    variables,
-    options,
-  }) {
-    return this.Ctor
-      .Payload
-      .create({
-        variables,
-        options,
-      })
-  }
-
-  /**
    * Generate fetch result.
    *
    * @param {{
