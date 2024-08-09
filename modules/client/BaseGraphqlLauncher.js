@@ -137,7 +137,7 @@ export default class BaseGraphqlLauncher {
    * @template C, D
    * @returns {InstanceType<CapsuleClass<C, D>>} Instance of capsule.
    */
-  static createResultCapsuleAsAbortedByHooks ({
+  static createCapsuleAsAbortedByHooks ({
     payload,
   }) {
     const args = {
@@ -298,7 +298,7 @@ export default class BaseGraphqlLauncher {
      * Create capsule.
      */
     const capsule = aborted
-      ? this.Ctor.createResultCapsuleAsAbortedByHooks({
+      ? this.Ctor.createCapsuleAsAbortedByHooks({
         payload,
       })
       : await this.launchRequest({
