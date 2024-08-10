@@ -77,7 +77,7 @@ export default class BaseGraphqlPayload {
   static collectBasedHeadersOptions () {
     return [
       {
-        'Content-Type': 'application/json',
+        'content-type': 'application/json',
       },
     ]
   }
