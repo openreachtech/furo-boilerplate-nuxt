@@ -21,6 +21,7 @@ export default class BaseGraphqlPayload {
     this.queryTemplate = queryTemplate
     this.variables = variables
     this.headers = headers
+    this.restOptions = restOptions
     this.options = {
       headers,
       ...restOptions,
