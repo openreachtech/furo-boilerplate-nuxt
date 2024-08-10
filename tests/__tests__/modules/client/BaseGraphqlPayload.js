@@ -623,7 +623,7 @@ describe('BaseGraphqlPayload', () => {
       test('with no arguments', () => {
         const expected = [
           {
-            'Content-Type': 'application/json',
+            'content-type': 'application/json',
           },
         ]
 
