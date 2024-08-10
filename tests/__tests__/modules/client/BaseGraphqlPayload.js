@@ -775,12 +775,12 @@ describe('BaseGraphqlPayload', () => {
         {
           params: {
             headers: new Headers({
-              'X-APP-ACCESS-KEY': 'access-key-of-our-application',
+              'x-app-access-key': 'access-key-of-our-application',
             }),
           },
           expected: new Headers({
             'content-type': 'application/json',
-            'X-APP-ACCESS-KEY': 'access-key-of-our-application',
+            'x-app-access-key': 'access-key-of-our-application',
           }),
         },
       ]
@@ -838,7 +838,7 @@ describe('BaseGraphqlPayload', () => {
               params: {
                 options: {
                   headers: new Headers({
-                    'X-APP-ACCESS-KEY': 'access-key-of-our-application',
+                    'x-app-access-key': 'access-key-of-our-application',
                   }),
                 },
                 variables: {
@@ -885,7 +885,7 @@ describe('BaseGraphqlPayload', () => {
               params: {
                 options: {
                   headers: new Headers({
-                    'X-APP-ACCESS-KEY': 'access-key-of-our-application',
+                    'x-app-access-key': 'access-key-of-our-application',
                   }),
                 },
                 variables: {
@@ -896,7 +896,7 @@ describe('BaseGraphqlPayload', () => {
               },
               expected: new Headers({
                 'content-type': 'application/json',
-                'X-APP-ACCESS-KEY': 'access-key-of-our-application',
+                'x-app-access-key': 'access-key-of-our-application',
               }),
             },
           ]
@@ -1168,7 +1168,7 @@ describe('BaseGraphqlPayload', () => {
             url: 'https://api.example.com/graphql-admin',
             options: {
               headers: new Headers({
-                'X-APP-ACCESS-KEY': 'access-key-of-our-application',
+                'x-app-access-key': 'access-key-of-our-application',
               }),
             },
             variables: {
@@ -1235,7 +1235,7 @@ describe('BaseGraphqlPayload', () => {
             url: 'https://api.example.com/graphql-admin',
             options: {
               headers: new Headers({
-                'X-APP-ACCESS-KEY': 'access-key-of-our-application',
+                'x-app-access-key': 'access-key-of-our-application',
               }),
             },
             variables: {
@@ -1248,7 +1248,7 @@ describe('BaseGraphqlPayload', () => {
             method: 'POST',
             headers: new Headers({
               'content-type': 'application/json',
-              'X-APP-ACCESS-KEY': 'access-key-of-our-application',
+              'x-app-access-key': 'access-key-of-our-application',
             }),
             body: '{"query":"\\n        query {\\n          curriculums(input: {\\"curriculumId\\":20002}) {\\n            curriculums {\\n              id\\n              title\\n            }\\n          }\\n        }"}',
           }),
