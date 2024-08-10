@@ -807,6 +807,109 @@ describe('BaseGraphqlPayload', () => {
 })
 
 describe('BaseGraphqlPayload', () => {
+  describe('#generateMergedFetchOptionHash()', () => {
+    const queryTemplate = /* GraphQL */ `
+      query PickUpForumTopicsQuery {
+        pickUpForumTopics {
+          pickUpForumTopics {
+            id
+            forumCategory {
+              id
+              name
+            }
+            name
+            descriptionHtml
+            proposer {
+              customerId
+              username
+              avatarUrl
+              customerRoles {
+                id
+                name
+              }
+            }
+            proposedAt
+            editedAt
+            totalForumPost
+            latestForumPostPostedAt
+          }
+        }
+      }
+    `
+
+    describe('to return as is', () => {
+      const cases = [
+        {
+          params: {
+            options: {
+              mode: 'cors',
+            },
+          },
+          expected: {
+            headers: new Headers({
+              'Content-Type': 'application/json',
+            }),
+            mode: 'cors',
+          },
+        },
+        {
+          params: {
+            options: {
+              credentials: 'omit',
+            },
+          },
+          expected: {
+            headers: new Headers({
+              'Content-Type': 'application/json',
+            }),
+            credentials: 'omit',
+          },
+        },
+        {
+          params: {
+            options: {
+              cache: 'no-cache',
+            },
+          },
+          expected: {
+            headers: new Headers({
+              'Content-Type': 'application/json',
+            }),
+            cache: 'no-cache',
+          },
+        },
+        {
+          params: {
+            options: {
+              redirect: 'follow',
+            },
+          },
+          expected: {
+            headers: new Headers({
+              'Content-Type': 'application/json',
+            }),
+            redirect: 'follow',
+          },
+        },
+      ]
+
+      test.each(cases)('options: $params.options', ({ params, expected }) => {
+        const payload = new BaseGraphqlPayload({
+          queryTemplate,
+          variables: {},
+          options: params.options,
+        })
+
+        const actual = payload.generateMergedFetchOptionHash()
+
+        expect(actual)
+          .toEqual(expected)
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlPayload', () => {
   describe('#buildHeaders()', () => {
     const queryTemplate = /* GraphQL */ `
       query PickUpForumTopicsQuery {
