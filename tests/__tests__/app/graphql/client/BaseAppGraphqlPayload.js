@@ -76,3 +76,64 @@ describe('BaseAppGraphqlPayload', () => {
     })
   })
 })
+
+describe('BaseAppGraphqlPayload', () => {
+  describe('.collectBasedHeadersOptions()', () => {
+    describe('to add `x-renchan-app-access-token`', () => {
+      const cases = [
+        {
+          args: {
+            accessToken: 'fc3ff98e8c6a0d308700000000000001',
+          },
+          expected: [
+            {
+              'content-type': 'application/json',
+            },
+            {
+              'x-renchan-app-access-token': 'fc3ff98e8c6a0d308700000000000001',
+            },
+          ],
+        },
+        {
+          args: {
+            accessToken: 'fc3ff98e8c6a0d308700000000000002',
+          },
+          expected: [
+            {
+              'content-type': 'application/json',
+            },
+            {
+              'x-renchan-app-access-token': 'fc3ff98e8c6a0d308700000000000002',
+            },
+          ],
+        },
+      ]
+
+      test.each(cases)('accessToken: $args.accessToken', ({ args, expected }) => {
+        localStorage.setItem('access_token', args.accessToken)
+
+        const actual = BaseAppGraphqlPayload.collectBasedHeadersOptions()
+
+        expect(actual)
+          .toEqual(expected)
+      })
+    })
+
+    describe('to not add `x-renchan-app-access-token`', () => {
+      test('with no args', () => {
+        localStorage.removeItem('access_token')
+
+        const expected = [
+          {
+            'content-type': 'application/json',
+          },
+        ]
+
+        const actual = BaseAppGraphqlPayload.collectBasedHeadersOptions()
+
+        expect(actual)
+          .toEqual(expected)
+      })
+    })
+  })
+})
