@@ -618,6 +618,25 @@ describe('BaseGraphqlPayload', () => {
 })
 
 describe('BaseGraphqlPayload', () => {
+  describe('.collectBasedHeadersOptions()', () => {
+    describe('to be fixed array', () => {
+      test('with no arguments', () => {
+        const expected = [
+          {
+            'Content-Type': 'application/json',
+          },
+        ]
+
+        const actual = BaseGraphqlPayload.collectBasedHeadersOptions()
+
+        expect(actual)
+          .toEqual(expected)
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlPayload', () => {
   describe('#get:Ctor', () => {
     describe('to be own class', () => {
       const cases = [
