@@ -717,6 +717,81 @@ describe('BaseGraphqlPayload', () => {
 })
 
 describe('BaseGraphqlPayload', () => {
+  describe('#createMergedHeaders()', () => {
+    const queryTemplate = /* GraphQL */ `
+      query PickUpForumTopicsQuery {
+        pickUpForumTopics {
+          pickUpForumTopics {
+            id
+            forumCategory {
+              id
+              name
+            }
+            name
+            descriptionHtml
+            proposer {
+              customerId
+              username
+              avatarUrl
+              customerRoles {
+                id
+                name
+              }
+            }
+            proposedAt
+            editedAt
+            totalForumPost
+            latestForumPostPostedAt
+          }
+        }
+      }
+    `
+
+    describe('to be instance of Headers', () => {
+      const cases = [
+        {
+          params: {
+            headers: new Headers(),
+          },
+          expected: new Headers({
+            'Content-Type': 'application/json',
+          }),
+        },
+        {
+          params: {
+            headers: new Headers({
+              'X-APP-ACCESS-KEY': 'access-key-of-our-application',
+            }),
+          },
+          expected: new Headers({
+            'Content-Type': 'application/json',
+            'X-APP-ACCESS-KEY': 'access-key-of-our-application',
+          }),
+        },
+      ]
+
+      test.each(cases)('Content-Type: $params.headers', ({ params, expected }) => {
+        const payload = new BaseGraphqlPayload({
+          queryTemplate,
+          variables: {},
+          options: {
+            headers: params.headers,
+          },
+        })
+
+        const actual = payload.createMergedHeaders()
+
+        expect(actual)
+          .toBeInstanceOf(Headers)
+
+        expect([...actual.entries()])
+          .toEqual([...expected.entries()])
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlPayload', () => {
   describe('#buildHeaders()', () => {
     const queryTemplate = /* GraphQL */ `
       query PickUpForumTopicsQuery {
