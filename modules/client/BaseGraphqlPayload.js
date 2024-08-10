@@ -113,7 +113,7 @@ export default class BaseGraphqlPayload {
   createFetchRequest ({
     url,
   }) {
-    const builtOptions = this.generateFetchRequestOptions()
+    const builtOptions = this.generateMergedFetchOptionHash()
 
     return new Request(
       url,
