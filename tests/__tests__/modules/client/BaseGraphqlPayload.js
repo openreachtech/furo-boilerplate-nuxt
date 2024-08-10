@@ -196,7 +196,7 @@ describe('BaseGraphqlPayload', () => {
           },
         ]
 
-        test.each(cases)('Content-Type: $params.options.headers', ({ params }) => {
+        test.each(cases)('headers: $params.options.headers', ({ params }) => {
           const args = {
             queryTemplate,
             variables: {},
@@ -785,7 +785,7 @@ describe('BaseGraphqlPayload', () => {
         },
       ]
 
-      test.each(cases)('Content-Type: $params.headers', ({ params, expected }) => {
+      test.each(cases)('headers: $params.headers', ({ params, expected }) => {
         const payload = new BaseGraphqlPayload({
           queryTemplate,
           variables: {},
