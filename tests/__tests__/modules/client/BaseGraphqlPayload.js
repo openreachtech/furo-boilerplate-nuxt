@@ -322,6 +322,11 @@ describe('BaseGraphqlPayload', () => {
         ]
 
         test.each(cases)('options: $params.options', ({ params }) => {
+          const expected = {
+            headers: new Headers(),
+            ...params.options,
+          }
+
           const queryTemplate = /* GraphQL */ `
             query CurriculumsQuery ($input: CurriculumsSearchInput!) {
               curriculums (input: $input) {
@@ -352,7 +357,7 @@ describe('BaseGraphqlPayload', () => {
           const actual = new BaseGraphqlPayload(args)
 
           expect(actual)
-            .toHaveProperty('options', params.options)
+            .toHaveProperty('options', expected)
         })
       })
     })
