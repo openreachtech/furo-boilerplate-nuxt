@@ -864,7 +864,7 @@ describe('BaseGraphqlPayload', () => {
           })
         })
 
-        describe('to be set return value of #buildHeaders()', () => {
+        describe('to be set return value of created Headers', () => {
           const cases = [
             {
               params: {
