@@ -122,33 +122,6 @@ export default class BaseGraphqlPayload {
   }
 
   /**
-   * Generate fetch request options.
-   *
-   * @returns {RequestInit} Instance of RequestInit.
-   */
-  generateFetchRequestOptions () {
-    const headers = this.buildHeaders({
-      headers: new Headers(
-        this.options?.headers
-      ),
-    })
-
-    const extractedVariables = this.extractFilteredVariables()
-
-    const body = JSON.stringify({
-      query: this.queryTemplate,
-      variables: extractedVariables,
-    })
-
-    return {
-      method: 'POST',
-      ...this.options,
-      headers,
-      body,
-    }
-  }
-
-  /**
    * Create merged headers.
    *
    * @returns {Headers} Instance of Headers.
@@ -207,27 +180,6 @@ export default class BaseGraphqlPayload {
         body,
       ],
     ])
-  }
-
-  /**
-   * Build headers.
-   *
-   * @param {{
-   *   headers: Headers
-   * }} params - Parameters.
-   * @returns {Headers} Instance of Headers.
-   */
-  buildHeaders ({
-    headers,
-  }) {
-    const buildHeaders = new Headers(headers)
-
-    buildHeaders.set(
-      'Content-Type',
-      'application/json'
-    )
-
-    return buildHeaders
   }
 
   /**
