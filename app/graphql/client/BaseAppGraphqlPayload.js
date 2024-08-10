@@ -1,6 +1,10 @@
 import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
 import StorageClerk from '~/modules/storage/StorageClerk'
 
+import {
+  STORAGE_KEY,
+} from '~/app/constants'
+
 /**
  * Company sponsors query graphql launcher.
  *
@@ -9,6 +13,17 @@ import StorageClerk from '~/modules/storage/StorageClerk'
  * @extends {BaseGraphqlPayload<typeof BaseAppGraphqlPayload, SV>}
  */
 export default class BaseAppGraphqlPayload extends BaseGraphqlPayload {
+  /**
+   * Load access token from storage.
+   *
+   * @returns {string | null} Access token.
+   */
+  static loadAccessToken () {
+    const storageClerk = this.createStorageClerk()
+
+    return storageClerk.get(STORAGE_KEY.ACCESS_TOKEN)
+  }
+
   /**
    * Create an instance of StorageClerk.
    *
