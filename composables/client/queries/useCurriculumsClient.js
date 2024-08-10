@@ -4,7 +4,6 @@ import {
 } from 'vue'
 
 import CurriculumsQueryGraphqlLauncher from '~/app/graphql/client/queries/curriculums/CurriculumsQueryGraphqlLauncher'
-import CurriculumsQueryGraphqlCapsule from '~/app/graphql/client/queries/curriculums/CurriculumsQueryGraphqlCapsule'
 
 /**
  * Use curriculums GraphQL client
@@ -17,7 +16,7 @@ import CurriculumsQueryGraphqlCapsule from '~/app/graphql/client/queries/curricu
  */
 export function useCurriculumsClient () {
   const capsuleRef = ref(
-    CurriculumsQueryGraphqlCapsule.createAsPending()
+    CurriculumsQueryGraphqlLauncher.createCapsuleAsPending()
   )
 
   return {

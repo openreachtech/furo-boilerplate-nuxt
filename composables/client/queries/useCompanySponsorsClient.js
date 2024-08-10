@@ -4,7 +4,6 @@ import {
 } from 'vue'
 
 import CompanySponsorsQueryGraphqlLauncher from '~/app/graphql/client/queries/companySponsors/CompanySponsorsQueryGraphqlLauncher'
-import CompanySponsorsQueryGraphqlCapsule from '~/app/graphql/client/queries/companySponsors/CompanySponsorsQueryGraphqlCapsule'
 
 /**
  * Use companySponsors GraphQL client
@@ -17,7 +16,7 @@ import CompanySponsorsQueryGraphqlCapsule from '~/app/graphql/client/queries/com
  */
 export function useCompanySponsorsClient () {
   const capsuleRef = ref(
-    CompanySponsorsQueryGraphqlCapsule.createAsPending()
+    CompanySponsorsQueryGraphqlLauncher.createCapsuleAsPending()
   )
 
   return {
