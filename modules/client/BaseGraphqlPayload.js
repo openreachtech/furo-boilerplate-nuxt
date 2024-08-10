@@ -140,6 +140,28 @@ export default class BaseGraphqlPayload {
   }
 
   /**
+   * Create merged headers.
+   *
+   * @returns {Headers} Instance of Headers.
+   */
+  createMergedHeaders () {
+    const optionsEntries = this.Ctor.collectBasedHeadersOptions()
+      .flatMap(it =>
+        Object.entries(it)
+      )
+    const normalizedHeaders = new Headers(this.headers)
+
+    const entries = [
+      ...optionsEntries,
+      ...normalizedHeaders.entries(),
+    ]
+
+    return new Headers(
+      Object.fromEntries(entries)
+    )
+  }
+
+  /**
    * Build headers.
    *
    * @param {{
