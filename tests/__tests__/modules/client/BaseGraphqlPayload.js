@@ -637,6 +637,21 @@ describe('BaseGraphqlPayload', () => {
 })
 
 describe('BaseGraphqlPayload', () => {
+  describe('.collectBasedFetchOptions()', () => {
+    describe('to be fixed array', () => {
+      test('with no arguments', () => {
+        const actual = BaseGraphqlPayload.collectBasedFetchOptions()
+
+        expect(actual)
+          .toBeInstanceOf(Array)
+        expect(actual)
+          .toHaveLength(0)
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlPayload', () => {
   describe('#get:Ctor', () => {
     describe('to be own class', () => {
       const cases = [
