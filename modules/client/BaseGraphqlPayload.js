@@ -183,13 +183,28 @@ export default class BaseGraphqlPayload {
         Object.entries(it)
       )
 
+    const extractedVariables = this.extractFilteredVariables()
+
+    const body = JSON.stringify({
+      query: this.queryTemplate,
+      variables: extractedVariables,
+    })
+
     return Object.fromEntries([
       ...basedOptionsEntries,
       ...Object.entries(this.restOptions),
 
       [
+        'method',
+        'POST',
+      ],
+      [
         'headers',
         mergedHeaders,
+      ],
+      [
+        'body',
+        body,
       ],
     ])
   }
