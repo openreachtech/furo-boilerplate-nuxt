@@ -70,6 +70,19 @@ export default class BaseGraphqlPayload {
   }
 
   /**
+   * Collect based headers options.
+   *
+   * @returns {Array<Record<string, string>>} Headers options.
+   */
+  static collectBasedHeadersOptions () {
+    return [
+      {
+        'Content-Type': 'application/json',
+      },
+    ]
+  }
+
+  /**
    * get: Ctor.
    *
    * @template {typeof BaseGraphqlPayload} T
