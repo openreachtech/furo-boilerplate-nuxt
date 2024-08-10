@@ -144,6 +144,158 @@ describe('BaseGraphqlPayload', () => {
         })
       })
 
+      describe('#headers', () => {
+        const queryTemplate = /* GraphQL */ `
+          query CurriculumsQuery ($input: CurriculumsSearchInput!) {
+            curriculums (input: $input) {
+              curriculums {
+                id
+                title
+                description
+                thumbnailUrl
+                postedAt
+              }
+              pagination {
+                limit
+                offset
+                sort {
+                  targetColumn
+                  orderBy
+                }
+                totalRecords
+              }
+            }
+          }
+        `
+
+        const cases = [
+          {
+            params: {
+              options: {
+                headers: new Headers(),
+              },
+            },
+          },
+          {
+            params: {
+              options: {
+                headers: new Headers({
+                  'Content-Type': 'application/json',
+                }),
+              },
+            },
+          },
+          {
+            params: {
+              options: {
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              },
+            },
+          },
+        ]
+
+        test.each(cases)('Content-Type: $params.options.headers', ({ params }) => {
+          const args = {
+            queryTemplate,
+            variables: {},
+            options: params.options,
+          }
+          const actual = new BaseGraphqlPayload(args)
+
+          expect(actual.headers)
+            .toBe(params.options.headers) // same reference
+        })
+
+        test('without headers parameter', () => {
+          const args = {
+            queryTemplate,
+            variables: {},
+            options: {},
+          }
+          const actual = new BaseGraphqlPayload(args)
+
+          expect(actual)
+            .toHaveProperty(
+              'headers',
+              expect.any(Headers)
+            )
+        })
+      })
+
+      describe('#restOptions', () => {
+        const queryTemplate = /* GraphQL */ `
+          query CurriculumsQuery ($input: CurriculumsSearchInput!) {
+            curriculums (input: $input) {
+              curriculums {
+                id
+                title
+                description
+                thumbnailUrl
+                postedAt
+              }
+              pagination {
+                limit
+                offset
+                sort {
+                  targetColumn
+                  orderBy
+                }
+                totalRecords
+              }
+            }
+          }
+        `
+
+        const cases = [
+          {
+            params: {
+              options: {
+                headers: new Headers(),
+                mode: 'cors',
+              },
+            },
+            expected: {
+              mode: 'cors',
+            },
+          },
+          {
+            params: {
+              options: {
+                headers: new Headers(),
+                credentials: 'omit',
+              },
+            },
+            expected: {
+              credentials: 'omit',
+            },
+          },
+          {
+            params: {
+              options: {
+                priority: 'high',
+              },
+            },
+            expected: {
+              priority: 'high',
+            },
+          },
+        ]
+
+        test.each(cases)('options: $params.options', ({ params, expected }) => {
+          const args = {
+            queryTemplate,
+            variables: {},
+            options: params.options,
+          }
+          const actual = new BaseGraphqlPayload(args)
+
+          expect(actual)
+            .toHaveProperty('restOptions', expected)
+        })
+      })
+
       describe('#options', () => {
         const cases = [
           {
@@ -170,6 +322,11 @@ describe('BaseGraphqlPayload', () => {
         ]
 
         test.each(cases)('options: $params.options', ({ params }) => {
+          const expected = {
+            headers: new Headers(),
+            ...params.options,
+          }
+
           const queryTemplate = /* GraphQL */ `
             query CurriculumsQuery ($input: CurriculumsSearchInput!) {
               curriculums (input: $input) {
@@ -200,7 +357,7 @@ describe('BaseGraphqlPayload', () => {
           const actual = new BaseGraphqlPayload(args)
 
           expect(actual)
-            .toHaveProperty('options', params.options)
+            .toHaveProperty('options', expected)
         })
       })
     })

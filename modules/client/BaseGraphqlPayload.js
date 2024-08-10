@@ -13,11 +13,19 @@ export default class BaseGraphqlPayload {
   constructor ({
     queryTemplate,
     variables,
-    options,
+    options: {
+      headers = new Headers(),
+      ...restOptions
+    } = {},
   }) {
     this.queryTemplate = queryTemplate
     this.variables = variables
-    this.options = options
+    this.headers = headers
+    this.restOptions = restOptions
+    this.options = {
+      headers,
+      ...restOptions,
+    }
   }
 
   /**
