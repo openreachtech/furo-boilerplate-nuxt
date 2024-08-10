@@ -183,27 +183,6 @@ export default class BaseGraphqlPayload {
   }
 
   /**
-   * Build headers.
-   *
-   * @param {{
-   *   headers: Headers
-   * }} params - Parameters.
-   * @returns {Headers} Instance of Headers.
-   */
-  buildHeaders ({
-    headers,
-  }) {
-    const buildHeaders = new Headers(headers)
-
-    buildHeaders.set(
-      'Content-Type',
-      'application/json'
-    )
-
-    return buildHeaders
-  }
-
-  /**
    * Extract filtered variables.
    *
    * @abstract
