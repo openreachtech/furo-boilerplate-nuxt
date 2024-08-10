@@ -144,6 +144,86 @@ describe('BaseGraphqlPayload', () => {
         })
       })
 
+      describe('#headers', () => {
+        const queryTemplate = /* GraphQL */ `
+          query CurriculumsQuery ($input: CurriculumsSearchInput!) {
+            curriculums (input: $input) {
+              curriculums {
+                id
+                title
+                description
+                thumbnailUrl
+                postedAt
+              }
+              pagination {
+                limit
+                offset
+                sort {
+                  targetColumn
+                  orderBy
+                }
+                totalRecords
+              }
+            }
+          }
+        `
+
+        const cases = [
+          {
+            params: {
+              options: {
+                headers: new Headers(),
+              },
+            },
+          },
+          {
+            params: {
+              options: {
+                headers: new Headers({
+                  'Content-Type': 'application/json',
+                }),
+              },
+            },
+          },
+          {
+            params: {
+              options: {
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+              },
+            },
+          },
+        ]
+
+        test.each(cases)('Content-Type: $params.options.headers', ({ params }) => {
+          const args = {
+            queryTemplate,
+            variables: {},
+            options: params.options,
+          }
+          const actual = new BaseGraphqlPayload(args)
+
+          expect(actual.headers)
+            .toBe(params.options.headers) // same reference
+        })
+
+        test('without headers parameter', () => {
+          const args = {
+            queryTemplate,
+            variables: {},
+            options: {},
+          }
+          const actual = new BaseGraphqlPayload(args)
+
+          expect(actual)
+            .toHaveProperty(
+              'headers',
+              expect.any(Headers)
+            )
+        })
+      })
+
       describe('#options', () => {
         const cases = [
           {
