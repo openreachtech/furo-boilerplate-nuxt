@@ -171,6 +171,30 @@ export default class BaseGraphqlPayload {
   }
 
   /**
+   * Generate merged fetch option hash.
+   *
+   * @returns {RequestInit} Instance of RequestInit.
+   */
+  generateMergedFetchOptionHash () {
+    const mergedHeaders = this.createMergedHeaders()
+
+    const basedOptionsEntries = this.Ctor.collectBasedFetchOptions()
+      .flatMap(it =>
+        Object.entries(it)
+      )
+
+    return Object.fromEntries([
+      ...basedOptionsEntries,
+      ...Object.entries(this.restOptions),
+
+      [
+        'headers',
+        mergedHeaders,
+      ],
+    ])
+  }
+
+  /**
    * Build headers.
    *
    * @param {{
