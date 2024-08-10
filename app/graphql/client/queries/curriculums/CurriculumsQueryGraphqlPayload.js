@@ -1,11 +1,11 @@
-import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
+import BaseAppGraphqlPayload from '~/app/graphql/client/BaseAppGraphqlPayload'
 
 /**
  * Curriculums query payload.
  *
- * @extends {BaseGraphqlPayload<typeof CurriculumsQueryGraphqlPayload>}
+ * @extends {BaseAppGraphqlPayload<typeof CurriculumsQueryGraphqlPayload, CurriculumsQueryVariablesType>}
  */
-export default class CurriculumsQueryGraphqlPayload extends BaseGraphqlPayload {
+export default class CurriculumsQueryGraphqlPayload extends BaseAppGraphqlPayload {
   /** @override */
   static get document () {
     return /* GraphQL */ `
@@ -32,3 +32,16 @@ export default class CurriculumsQueryGraphqlPayload extends BaseGraphqlPayload {
     `
   }
 }
+
+/**
+ * @typedef {{
+ *   input: {
+ *     limit: number
+ *     offset: number
+ *     sort: {
+ *       targetColumn: string
+ *       orderBy: string
+ *     }
+ *   }
+ * }} CurriculumsQueryVariablesType
+ */
