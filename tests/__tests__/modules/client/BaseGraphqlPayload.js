@@ -180,7 +180,7 @@ describe('BaseGraphqlPayload', () => {
             params: {
               options: {
                 headers: new Headers({
-                  'Content-Type': 'application/json',
+                  'content-type': 'application/json',
                 }),
               },
             },
@@ -189,7 +189,7 @@ describe('BaseGraphqlPayload', () => {
             params: {
               options: {
                 headers: {
-                  'Content-Type': 'application/json',
+                  'content-type': 'application/json',
                 },
               },
             },
@@ -769,7 +769,7 @@ describe('BaseGraphqlPayload', () => {
             headers: new Headers(),
           },
           expected: new Headers({
-            'Content-Type': 'application/json',
+            'content-type': 'application/json',
           }),
         },
         {
@@ -779,7 +779,7 @@ describe('BaseGraphqlPayload', () => {
             }),
           },
           expected: new Headers({
-            'Content-Type': 'application/json',
+            'content-type': 'application/json',
             'X-APP-ACCESS-KEY': 'access-key-of-our-application',
           }),
         },
@@ -878,7 +878,7 @@ describe('BaseGraphqlPayload', () => {
                 },
               },
               expected: new Headers({
-                'Content-Type': 'application/json',
+                'content-type': 'application/json',
               }),
             },
             {
@@ -895,7 +895,7 @@ describe('BaseGraphqlPayload', () => {
                 },
               },
               expected: new Headers({
-                'Content-Type': 'application/json',
+                'content-type': 'application/json',
                 'X-APP-ACCESS-KEY': 'access-key-of-our-application',
               }),
             },
@@ -1225,7 +1225,7 @@ describe('BaseGraphqlPayload', () => {
           expected: new Request('https://api.example.com/graphql-customer', {
             method: 'POST',
             headers: new Headers({
-              'Content-Type': 'application/json',
+              'content-type': 'application/json',
             }),
             body: '{"query":"\\n        query {\\n          curriculums(input: {\\"curriculumId\\":20001}) {\\n            curriculums {\\n              id\\n              title\\n            }\\n          }\\n        }"}',
           }),
@@ -1247,7 +1247,7 @@ describe('BaseGraphqlPayload', () => {
           expected: new Request('https://api.example.com/graphql-admin', {
             method: 'POST',
             headers: new Headers({
-              'Content-Type': 'application/json',
+              'content-type': 'application/json',
               'X-APP-ACCESS-KEY': 'access-key-of-our-application',
             }),
             body: '{"query":"\\n        query {\\n          curriculums(input: {\\"curriculumId\\":20002}) {\\n            curriculums {\\n              id\\n              title\\n            }\\n          }\\n        }"}',
