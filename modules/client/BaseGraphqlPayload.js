@@ -83,6 +83,15 @@ export default class BaseGraphqlPayload {
   }
 
   /**
+   * Collect based fetch options.
+   *
+   * @returns {Array<RequestInit>} Fetch options.
+   */
+  static collectBasedFetchOptions () {
+    return []
+  }
+
+  /**
    * get: Ctor.
    *
    * @template {typeof BaseGraphqlPayload} T
