@@ -13,11 +13,19 @@ export default class BaseGraphqlPayload {
   constructor ({
     queryTemplate,
     variables,
-    options,
+    options: {
+      headers = new Headers(),
+      ...restOptions
+    } = {},
   }) {
     this.queryTemplate = queryTemplate
     this.variables = variables
-    this.options = options
+    this.headers = headers
+    this.restOptions = restOptions
+    this.options = {
+      headers,
+      ...restOptions,
+    }
   }
 
   /**
@@ -62,6 +70,28 @@ export default class BaseGraphqlPayload {
   }
 
   /**
+   * Collect based headers options.
+   *
+   * @returns {Array<Record<string, string>>} Headers options.
+   */
+  static collectBasedHeadersOptions () {
+    return [
+      {
+        'Content-Type': 'application/json',
+      },
+    ]
+  }
+
+  /**
+   * Collect based fetch options.
+   *
+   * @returns {Array<RequestInit>} Fetch options.
+   */
+  static collectBasedFetchOptions () {
+    return []
+  }
+
+  /**
    * get: Ctor.
    *
    * @template {typeof BaseGraphqlPayload} T
@@ -83,7 +113,7 @@ export default class BaseGraphqlPayload {
   createFetchRequest ({
     url,
   }) {
-    const builtOptions = this.generateFetchRequestOptions()
+    const builtOptions = this.generateMergedFetchOptionHash()
 
     return new Request(
       url,
@@ -92,16 +122,39 @@ export default class BaseGraphqlPayload {
   }
 
   /**
-   * Generate fetch request options.
+   * Create merged headers.
+   *
+   * @returns {Headers} Instance of Headers.
+   */
+  createMergedHeaders () {
+    const optionsEntries = this.Ctor.collectBasedHeadersOptions()
+      .flatMap(it =>
+        Object.entries(it)
+      )
+    const normalizedHeaders = new Headers(this.headers)
+
+    const entries = [
+      ...optionsEntries,
+      ...normalizedHeaders.entries(),
+    ]
+
+    return new Headers(
+      Object.fromEntries(entries)
+    )
+  }
+
+  /**
+   * Generate merged fetch option hash.
    *
    * @returns {RequestInit} Instance of RequestInit.
    */
-  generateFetchRequestOptions () {
-    const headers = this.buildHeaders({
-      headers: new Headers(
-        this.options?.headers
-      ),
-    })
+  generateMergedFetchOptionHash () {
+    const mergedHeaders = this.createMergedHeaders()
+
+    const basedOptionsEntries = this.Ctor.collectBasedFetchOptions()
+      .flatMap(it =>
+        Object.entries(it)
+      )
 
     const extractedVariables = this.extractFilteredVariables()
 
@@ -110,33 +163,23 @@ export default class BaseGraphqlPayload {
       variables: extractedVariables,
     })
 
-    return {
-      method: 'POST',
-      ...this.options,
-      headers,
-      body,
-    }
-  }
+    return Object.fromEntries([
+      ...basedOptionsEntries,
+      ...Object.entries(this.restOptions),
 
-  /**
-   * Build headers.
-   *
-   * @param {{
-   *   headers: Headers
-   * }} params - Parameters.
-   * @returns {Headers} Instance of Headers.
-   */
-  buildHeaders ({
-    headers,
-  }) {
-    const buildHeaders = new Headers(headers)
-
-    buildHeaders.set(
-      'Content-Type',
-      'application/json'
-    )
-
-    return buildHeaders
+      [
+        'method',
+        'POST',
+      ],
+      [
+        'headers',
+        mergedHeaders,
+      ],
+      [
+        'body',
+        body,
+      ],
+    ])
   }
 
   /**
