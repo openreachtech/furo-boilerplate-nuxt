@@ -2,6 +2,7 @@ import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
 import StorageClerk from '~/modules/storage/StorageClerk'
 
 import {
+  HEADER_KEY,
   STORAGE_KEY,
 } from '~/app/constants'
 
@@ -13,6 +14,29 @@ import {
  * @extends {BaseGraphqlPayload<typeof BaseAppGraphqlPayload, SV>}
  */
 export default class BaseAppGraphqlPayload extends BaseGraphqlPayload {
+  /**
+   * Collect based headers options.
+   *
+   * @override
+   * @returns {Array<Record<string, string>>} Headers options.
+   */
+  static collectBasedHeadersOptions () {
+    const basedOptions = super.collectBasedHeadersOptions()
+
+    const accessToken = this.loadAccessToken()
+    if (!accessToken) {
+      return basedOptions
+    }
+
+    return [
+      ...basedOptions,
+
+      {
+        [HEADER_KEY.ACCESS_TOKEN]: accessToken,
+      },
+    ]
+  }
+
   /**
    * Load access token from storage.
    *
