@@ -51,7 +51,12 @@ describe('SignUpFormElementClerk', () => {
           message: 'password must be set with at least 1 character and no more than 16 characters',
         }),
         expect.objectContaining({
-          field: 'confirm-password',
+          field: 'password-confirmation',
+          ok: expect.any(Function),
+          message: 'please re-enter password for confirmation',
+        }),
+        expect.objectContaining({
+          field: 'password-confirmation',
           ok: expect.any(Function),
           message: 'passwords do not match',
         }),
