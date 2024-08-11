@@ -120,7 +120,7 @@ export default class BaseFormElementClerk {
   isValid () {
     const validationHash = this.generateValidationHash()
 
-    return Object.values(validationHash)
+    return Object.values(validationHash.valid)
       .every(it => it)
   }
 
