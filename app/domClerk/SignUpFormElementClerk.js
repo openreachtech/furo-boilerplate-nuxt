@@ -3,7 +3,7 @@ import BaseFormElementClerk from '~/modules/domClerks/BaseFormElementClerk'
 /**
  * Clerk class of sign-up form element.
  *
- * @extends {BaseFormElementClerk<typeof SignUpFormElementClerk, FormValueHash, SchemaVariableHash>}
+ * @extends {BaseFormElementClerk<typeof SignUpFormElementClerk, SignUpFormValueHash, SchemaVariableHash>}
  */
 export default class SignUpFormElementClerk extends BaseFormElementClerk {
   /** @override */
@@ -125,7 +125,7 @@ export default class SignUpFormElementClerk extends BaseFormElementClerk {
  *   lastName: string
  *   password: string
  *   'password-confirmation': string
- * }} FormValueHash
+ * }} SignUpFormValueHash
  */
 
 /**
