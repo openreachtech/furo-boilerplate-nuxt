@@ -52,6 +52,25 @@ async function submitForm ({
     variables: {
       input: variableHash,
     },
+    hooks: {
+      /**
+       * @param {(capsule: import('~/app/graphql/client/mutations/signUp/SignUpMutationGraphqlPayload')) => Promise<boolean>} payload
+       */
+      beforeRequest: async (payload) => {
+        statusReactive.isLoading = true
+
+        return false
+      },
+
+      /**
+       * @param {(capsule: import('~/app/graphql/client/mutations/signUp/SignUpMutationGraphqlCapsule')) => Promise<void>} capsule
+       */
+      afterRequest: async (capsule) => {
+        statusReactive.isLoading = false
+
+        console.log('afterRequest', capsule)
+      },
+    },
   })
 }
 </script>
