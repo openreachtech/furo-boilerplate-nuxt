@@ -144,6 +144,158 @@ describe('BaseGraphqlPayload', () => {
         })
       })
 
+      describe('#headers', () => {
+        const queryTemplate = /* GraphQL */ `
+          query CurriculumsQuery ($input: CurriculumsSearchInput!) {
+            curriculums (input: $input) {
+              curriculums {
+                id
+                title
+                description
+                thumbnailUrl
+                postedAt
+              }
+              pagination {
+                limit
+                offset
+                sort {
+                  targetColumn
+                  orderBy
+                }
+                totalRecords
+              }
+            }
+          }
+        `
+
+        const cases = [
+          {
+            params: {
+              options: {
+                headers: new Headers(),
+              },
+            },
+          },
+          {
+            params: {
+              options: {
+                headers: new Headers({
+                  'content-type': 'application/json',
+                }),
+              },
+            },
+          },
+          {
+            params: {
+              options: {
+                headers: {
+                  'content-type': 'application/json',
+                },
+              },
+            },
+          },
+        ]
+
+        test.each(cases)('headers: $params.options.headers', ({ params }) => {
+          const args = {
+            queryTemplate,
+            variables: {},
+            options: params.options,
+          }
+          const actual = new BaseGraphqlPayload(args)
+
+          expect(actual.headers)
+            .toBe(params.options.headers) // same reference
+        })
+
+        test('without headers parameter', () => {
+          const args = {
+            queryTemplate,
+            variables: {},
+            options: {},
+          }
+          const actual = new BaseGraphqlPayload(args)
+
+          expect(actual)
+            .toHaveProperty(
+              'headers',
+              expect.any(Headers)
+            )
+        })
+      })
+
+      describe('#restOptions', () => {
+        const queryTemplate = /* GraphQL */ `
+          query CurriculumsQuery ($input: CurriculumsSearchInput!) {
+            curriculums (input: $input) {
+              curriculums {
+                id
+                title
+                description
+                thumbnailUrl
+                postedAt
+              }
+              pagination {
+                limit
+                offset
+                sort {
+                  targetColumn
+                  orderBy
+                }
+                totalRecords
+              }
+            }
+          }
+        `
+
+        const cases = [
+          {
+            params: {
+              options: {
+                headers: new Headers(),
+                mode: 'cors',
+              },
+            },
+            expected: {
+              mode: 'cors',
+            },
+          },
+          {
+            params: {
+              options: {
+                headers: new Headers(),
+                credentials: 'omit',
+              },
+            },
+            expected: {
+              credentials: 'omit',
+            },
+          },
+          {
+            params: {
+              options: {
+                priority: 'high',
+              },
+            },
+            expected: {
+              priority: 'high',
+            },
+          },
+        ]
+
+        test.each(cases)('options: $params.options', ({ params, expected }) => {
+          const args = {
+            queryTemplate,
+            variables: {},
+            options: params.options,
+          }
+          const actual = new BaseGraphqlPayload(args)
+
+          expect(actual)
+            .toHaveProperty('restOptions', expected)
+        })
+      })
+
       describe('#options', () => {
         const cases = [
           {
@@ -170,6 +322,11 @@ describe('BaseGraphqlPayload', () => {
         ]
 
         test.each(cases)('options: $params.options', ({ params }) => {
+          const expected = {
+            headers: new Headers(),
+            ...params.options,
+          }
+
           const queryTemplate = /* GraphQL */ `
             query CurriculumsQuery ($input: CurriculumsSearchInput!) {
               curriculums (input: $input) {
@@ -200,7 +357,7 @@ describe('BaseGraphqlPayload', () => {
           const actual = new BaseGraphqlPayload(args)
 
           expect(actual)
-            .toHaveProperty('options', params.options)
+            .toHaveProperty('options', expected)
         })
       })
     })
@@ -461,6 +618,40 @@ describe('BaseGraphqlPayload', () => {
 })
 
 describe('BaseGraphqlPayload', () => {
+  describe('.collectBasedHeadersOptions()', () => {
+    describe('to be fixed array', () => {
+      test('with no arguments', () => {
+        const expected = [
+          {
+            'content-type': 'application/json',
+          },
+        ]
+
+        const actual = BaseGraphqlPayload.collectBasedHeadersOptions()
+
+        expect(actual)
+          .toEqual(expected)
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlPayload', () => {
+  describe('.collectBasedFetchOptions()', () => {
+    describe('to be fixed array', () => {
+      test('with no arguments', () => {
+        const actual = BaseGraphqlPayload.collectBasedFetchOptions()
+
+        expect(actual)
+          .toBeInstanceOf(Array)
+        expect(actual)
+          .toHaveLength(0)
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlPayload', () => {
   describe('#get:Ctor', () => {
     describe('to be own class', () => {
       const cases = [
@@ -541,7 +732,7 @@ describe('BaseGraphqlPayload', () => {
 })
 
 describe('BaseGraphqlPayload', () => {
-  describe('#buildHeaders()', () => {
+  describe('#createMergedHeaders()', () => {
     const queryTemplate = /* GraphQL */ `
       query PickUpForumTopicsQuery {
         pickUpForumTopics {
@@ -571,112 +762,295 @@ describe('BaseGraphqlPayload', () => {
       }
     `
 
-    describe('to be instance of Headers for Fetch API', () => {
+    describe('to be instance of Headers', () => {
       const cases = [
         {
           params: {
             headers: new Headers(),
           },
+          expected: new Headers({
+            'content-type': 'application/json',
+          }),
         },
         {
           params: {
             headers: new Headers({
-              'Content-Type': 'application/json',
-              'X-APP-ACCESS-KEY': 'access-key-of-our-application',
+              'x-app-access-key': 'access-key-of-our-application',
             }),
           },
-        },
-        {
-          params: {
-            headers: new Headers({
-              'Content-Type': 'application/json',
-            }),
-          },
-        },
-        {
-          params: {
-            headers: new Headers({
-              'Content-Type': 'ext/html',
-            }),
-          },
+          expected: new Headers({
+            'content-type': 'application/json',
+            'x-app-access-key': 'access-key-of-our-application',
+          }),
         },
       ]
 
-      test.each(cases)('Content-Type: $params.headers', ({ params }) => {
+      test.each(cases)('headers: $params.headers', ({ params, expected }) => {
         const payload = new BaseGraphqlPayload({
           queryTemplate,
           variables: {},
+          options: {
+            headers: params.headers,
+          },
         })
 
-        const actual = payload.buildHeaders(params)
+        const actual = payload.createMergedHeaders()
 
         expect(actual)
           .toBeInstanceOf(Headers)
-        expect(actual)
-          .not
-          .toBe(params.headers) // not same reference
+
+        expect([...actual.entries()])
+          .toEqual([...expected.entries()])
       })
     })
+  })
+})
 
-    describe('to set "Content-Type" as "application/json"', () => {
-      const cases = [
-        {
-          params: {
-            headers: new Headers(),
-          },
-          expected: new Headers({
-            'Content-Type': 'application/json',
-          }),
-        },
-        {
-          params: {
-            headers: new Headers({
-              'Content-Type': 'application/json',
-              'X-APP-ACCESS-KEY': 'access-key-of-our-application',
-            }),
-          },
-          expected: new Headers({
-            'Content-Type': 'application/json',
-            'X-APP-ACCESS-KEY': 'access-key-of-our-application',
-          }),
-        },
-        {
-          params: {
-            headers: new Headers({
-              'Content-Type': 'application/json',
-            }),
-          },
-          expected: new Headers({
-            'Content-Type': 'application/json',
-          }),
-        },
-        {
-          params: {
-            headers: new Headers({
-              'Content-Type': 'text/html',
-              'X-APP-SECRET-KEY': 'secret-key-of-our-application',
-            }),
-          },
-          expected: new Headers({
-            'Content-Type': 'application/json',
-            'X-APP-SECRET-KEY': 'secret-key-of-our-application',
-          }),
-        },
-      ]
+describe('BaseGraphqlPayload', () => {
+  describe('#generateMergedFetchOptionHash()', () => {
+    const queryTemplate = /* GraphQL */ `
+                query CurriculumsQuery ($input: CurriculumsInput!) {
+                  curriculums (input: $input) {
+                    curriculums {
+                      id
+                      title
+                    }
+                  }
+                }`
 
-      test.each(cases)('Content-Type: $params.headers', ({ params, expected }) => {
-        const payload = new BaseGraphqlPayload({
-          queryTemplate,
-          variables: {},
+    describe('to be return object', () => {
+      describe('for headers property', () => {
+        describe('to be instanceof Headers', () => {
+          const cases = [
+            {
+              params: {
+                options: {
+                  mode: 'cors',
+                },
+                variables: {
+                  input: {
+                    curriculumId: 20001,
+                  },
+                },
+              },
+            },
+            {
+              params: {
+                options: {
+                  headers: new Headers({
+                    'x-app-access-key': 'access-key-of-our-application',
+                  }),
+                },
+                variables: {
+                  input: {
+                    curriculumId: 20002,
+                  },
+                },
+              },
+            },
+          ]
+
+          test.each(cases)('variables: $params.variables', ({ params }) => {
+            const payload = new BaseGraphqlPayload({
+              queryTemplate,
+              variables: params.variables,
+              options: params.options,
+            })
+
+            const actual = payload.generateMergedFetchOptionHash()
+
+            expect(actual.headers)
+              .toBeInstanceOf(Headers)
+          })
         })
 
-        const actual = payload.buildHeaders(params)
+        describe('to be set return value of created Headers', () => {
+          const cases = [
+            {
+              params: {
+                options: {
+                  mode: 'cors',
+                },
+                variables: {
+                  input: {
+                    curriculumId: 20001,
+                  },
+                },
+              },
+              expected: new Headers({
+                'content-type': 'application/json',
+              }),
+            },
+            {
+              params: {
+                options: {
+                  headers: new Headers({
+                    'x-app-access-key': 'access-key-of-our-application',
+                  }),
+                },
+                variables: {
+                  input: {
+                    curriculumId: 20002,
+                  },
+                },
+              },
+              expected: new Headers({
+                'content-type': 'application/json',
+                'x-app-access-key': 'access-key-of-our-application',
+              }),
+            },
+          ]
 
-        expect(actual)
-          .toEqual(expected)
-        expect(actual)
-          .not
-          .toBe(params.headers) // not same reference
+          test.each(cases)('variables: $params.variables', ({ params, expected }) => {
+            const payload = new BaseGraphqlPayload({
+              queryTemplate,
+              variables: params.variables,
+              options: params.options,
+            })
+
+            const actual = payload.generateMergedFetchOptionHash()
+
+            expect(actual)
+              .toHaveProperty('headers', expect.any(Headers))
+
+            expect([...actual.headers.entries()])
+              .toEqual(
+                expect.arrayContaining([...expected.entries()])
+              )
+          })
+        })
+      })
+
+      describe('for body property', () => {
+        describe('to be set JSON string generated from #generateQuery()', () => {
+          const cases = [
+            {
+              params: {
+                options: {
+                  mode: 'cors',
+                },
+                variables: {
+                  input: {
+                    curriculumId: 20001,
+                  },
+                },
+              },
+              expected: '{"query":"\\n                query CurriculumsQuery ($input: CurriculumsInput!) {\\n                  curriculums (input: $input) {\\n                    curriculums {\\n                      id\\n                      title\\n                    }\\n                  }\\n                }","variables":{"input":{"curriculumId":20001}}}',
+            },
+            {
+              params: {
+                options: {},
+                variables: {
+                  input: {
+                    curriculumId: 20002,
+                  },
+                },
+              },
+              expected: '{"query":"\\n                query CurriculumsQuery ($input: CurriculumsInput!) {\\n                  curriculums (input: $input) {\\n                    curriculums {\\n                      id\\n                      title\\n                    }\\n                  }\\n                }","variables":{"input":{"curriculumId":20002}}}',
+            },
+          ]
+
+          test.each(cases)('input: $params.input', ({ params, expected }) => {
+            const payload = new BaseGraphqlPayload({
+              queryTemplate,
+              variables: params.variables,
+              options: params.options,
+            })
+
+            const actual = payload.generateMergedFetchOptionHash()
+
+            expect(actual.body)
+              .toBe(expected)
+          })
+        })
+      })
+
+      describe('for extra property', () => {
+        describe('to be set by options parameter', () => {
+          const cases = [
+            {
+              params: {
+                variables: {
+                  input: {
+                    curriculumId: 20001,
+                  },
+                },
+                options: {
+                  mode: 'cors',
+                },
+              },
+              expected: {
+                mode: 'cors',
+                method: 'POST',
+                body: expect.any(String),
+              },
+            },
+            {
+              params: {
+                variables: {
+                  input: {
+                    curriculumId: 20002,
+                  },
+                },
+                options: {
+                  credentials: 'include',
+                },
+              },
+              expected: {
+                credentials: 'include',
+                method: 'POST',
+                body: expect.any(String),
+              },
+            },
+            {
+              params: {
+                variables: {
+                  input: {
+                    curriculumId: 20003,
+                  },
+                },
+                options: {
+                  cache: 'no-cache',
+                },
+              },
+              expected: {
+                cache: 'no-cache',
+                method: 'POST',
+                body: expect.any(String),
+              },
+            },
+            {
+              params: {
+                variables: {
+                  input: {
+                    curriculumId: 20004,
+                  },
+                },
+                options: {
+                  redirect: 'follow',
+                },
+              },
+              expected: {
+                redirect: 'follow',
+                method: 'POST',
+                body: expect.any(String),
+              },
+            },
+          ]
+
+          test.each(cases)('options: $params.options', ({ params, expected }) => {
+            const payload = new BaseGraphqlPayload({
+              queryTemplate,
+              variables: params.variables,
+              options: params.options,
+            })
+
+            const actual = payload.generateMergedFetchOptionHash()
+
+            expect(actual)
+              .toMatchObject(expected)
+          })
+        })
       })
     })
   })
@@ -762,248 +1136,6 @@ describe('BaseGraphqlPayload', () => {
 })
 
 describe('BaseGraphqlPayload', () => {
-  describe('#generateFetchRequestOptions()', () => {
-    const queryTemplate = /* GraphQL */ `
-                query CurriculumsQuery ($input: CurriculumsInput!) {
-                  curriculums (input: $input) {
-                    curriculums {
-                      id
-                      title
-                    }
-                  }
-                }`
-
-    describe('to be return object', () => {
-      describe('for headers property', () => {
-        describe('to be instanceof Headers', () => {
-          const cases = [
-            {
-              params: {
-                options: {
-                  mode: 'cors',
-                },
-                variables: {
-                  input: {
-                    curriculumId: 20001,
-                  },
-                },
-              },
-            },
-            {
-              params: {
-                options: {
-                  headers: new Headers({
-                    'X-APP-ACCESS-KEY': 'access-key-of-our-application',
-                  }),
-                },
-                variables: {
-                  input: {
-                    curriculumId: 20002,
-                  },
-                },
-              },
-            },
-          ]
-
-          test.each(cases)('variables: $params.variables', ({ params }) => {
-            const payload = new BaseGraphqlPayload({
-              queryTemplate,
-              variables: params.variables,
-              options: params.options,
-            })
-
-            const actual = payload.generateFetchRequestOptions()
-
-            expect(actual.headers)
-              .toBeInstanceOf(Headers)
-          })
-        })
-
-        describe('to be set return value of #buildHeaders()', () => {
-          const cases = [
-            {
-              params: {
-                options: {
-                  mode: 'cors',
-                },
-                variables: {
-                  input: {
-                    curriculumId: 20001,
-                  },
-                },
-              },
-              expected: new Headers({
-                'Content-Type': 'application/json',
-              }),
-            },
-            {
-              params: {
-                options: {
-                  headers: new Headers({
-                    'X-APP-ACCESS-KEY': 'access-key-of-our-application',
-                  }),
-                },
-                variables: {
-                  input: {
-                    curriculumId: 20002,
-                  },
-                },
-              },
-              expected: new Headers({
-                'Content-Type': 'application/json',
-                'X-APP-ACCESS-KEY': 'access-key-of-our-application',
-              }),
-            },
-          ]
-
-          test.each(cases)('variables: $params.variables', ({ params, expected }) => {
-            const payload = new BaseGraphqlPayload({
-              queryTemplate,
-              variables: params.variables,
-              options: params.options,
-            })
-
-            const actual = payload.generateFetchRequestOptions()
-
-            expect(actual)
-              .toHaveProperty('headers', expect.any(Headers))
-
-            expect([...actual.headers.entries()])
-              .toEqual(
-                expect.arrayContaining([...expected.entries()])
-              )
-          })
-        })
-      })
-
-      describe('for body property', () => {
-        describe('to be set JSON string generated from #generateQuery()', () => {
-          const cases = [
-            {
-              params: {
-                options: {
-                  mode: 'cors',
-                },
-                variables: {
-                  input: {
-                    curriculumId: 20001,
-                  },
-                },
-              },
-              expected: '{"query":"\\n                query CurriculumsQuery ($input: CurriculumsInput!) {\\n                  curriculums (input: $input) {\\n                    curriculums {\\n                      id\\n                      title\\n                    }\\n                  }\\n                }","variables":{"input":{"curriculumId":20001}}}',
-            },
-            {
-              params: {
-                options: {},
-                variables: {
-                  input: {
-                    curriculumId: 20002,
-                  },
-                },
-              },
-              expected: '{"query":"\\n                query CurriculumsQuery ($input: CurriculumsInput!) {\\n                  curriculums (input: $input) {\\n                    curriculums {\\n                      id\\n                      title\\n                    }\\n                  }\\n                }","variables":{"input":{"curriculumId":20002}}}',
-            },
-          ]
-
-          test.each(cases)('input: $params.input', ({ params, expected }) => {
-            const payload = new BaseGraphqlPayload({
-              queryTemplate,
-              variables: params.variables,
-              options: params.options,
-            })
-
-            const actual = payload.generateFetchRequestOptions()
-
-            expect(actual.body)
-              .toBe(expected)
-          })
-        })
-      })
-
-      describe('for extra property', () => {
-        describe('to be set by options parameter', () => {
-          const cases = [
-            {
-              params: {
-                variables: {
-                  input: {
-                    curriculumId: 20001,
-                  },
-                },
-                options: {
-                  mode: 'cors',
-                },
-              },
-              expected: {
-                mode: 'cors',
-              },
-            },
-            {
-              params: {
-                variables: {
-                  input: {
-                    curriculumId: 20002,
-                  },
-                },
-                options: {
-                  credentials: 'include',
-                },
-              },
-              expected: {
-                credentials: 'include',
-              },
-            },
-            {
-              params: {
-                variables: {
-                  input: {
-                    curriculumId: 20003,
-                  },
-                },
-                options: {
-                  cache: 'no-cache',
-                },
-              },
-              expected: {
-                cache: 'no-cache',
-              },
-            },
-            {
-              params: {
-                variables: {
-                  input: {
-                    curriculumId: 20004,
-                  },
-                },
-                options: {
-                  redirect: 'follow',
-                },
-              },
-              expected: {
-                redirect: 'follow',
-              },
-            },
-          ]
-
-          test.each(cases)('options: $params.options', ({ params, expected }) => {
-            const payload = new BaseGraphqlPayload({
-              queryTemplate,
-              variables: params.variables,
-              options: params.options,
-            })
-
-            const actual = payload.generateFetchRequestOptions()
-
-            expect(actual)
-              .toMatchObject(expected)
-          })
-        })
-      })
-    })
-  })
-})
-
-describe('BaseGraphqlPayload', () => {
   describe('#createFetchRequest()', () => {
     describe('to be instance of Request', () => {
       const queryTemplate = /* GraphQL */ `
@@ -1036,7 +1168,7 @@ describe('BaseGraphqlPayload', () => {
             url: 'https://api.example.com/graphql-admin',
             options: {
               headers: new Headers({
-                'X-APP-ACCESS-KEY': 'access-key-of-our-application',
+                'x-app-access-key': 'access-key-of-our-application',
               }),
             },
             variables: {
@@ -1093,7 +1225,7 @@ describe('BaseGraphqlPayload', () => {
           expected: new Request('https://api.example.com/graphql-customer', {
             method: 'POST',
             headers: new Headers({
-              'Content-Type': 'application/json',
+              'content-type': 'application/json',
             }),
             body: '{"query":"\\n        query {\\n          curriculums(input: {\\"curriculumId\\":20001}) {\\n            curriculums {\\n              id\\n              title\\n            }\\n          }\\n        }"}',
           }),
@@ -1103,7 +1235,7 @@ describe('BaseGraphqlPayload', () => {
             url: 'https://api.example.com/graphql-admin',
             options: {
               headers: new Headers({
-                'X-APP-ACCESS-KEY': 'access-key-of-our-application',
+                'x-app-access-key': 'access-key-of-our-application',
               }),
             },
             variables: {
@@ -1115,8 +1247,8 @@ describe('BaseGraphqlPayload', () => {
           expected: new Request('https://api.example.com/graphql-admin', {
             method: 'POST',
             headers: new Headers({
-              'Content-Type': 'application/json',
-              'X-APP-ACCESS-KEY': 'access-key-of-our-application',
+              'content-type': 'application/json',
+              'x-app-access-key': 'access-key-of-our-application',
             }),
             body: '{"query":"\\n        query {\\n          curriculums(input: {\\"curriculumId\\":20002}) {\\n            curriculums {\\n              id\\n              title\\n            }\\n          }\\n        }"}',
           }),
