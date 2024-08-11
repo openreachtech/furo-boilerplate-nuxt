@@ -73,17 +73,13 @@ export default function useSignUpClient () {
 /**
  * Fetch GraphQL client capsule.
  *
- * @param {GraphqlRequestParams} params - Parameters.
+ * @param {GraphqlRequestParams} args - Arguments.
  * @returns {Promise<GraphqlResponseCapsule>}
  */
-export async function fetchCapsule ({
-  variables,
-}) {
+export async function fetchCapsule (args) {
   const launcher = SignUpMutationGraphqlLauncher.create()
 
-  const capsule = await launcher.launchRequestWithVariables({
-    variables,
-  })
+  const capsule = await launcher.launchRequestWithVariables(args)
 
   return /** @type {*} */ (capsule)
 }
