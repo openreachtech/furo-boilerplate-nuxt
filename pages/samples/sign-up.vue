@@ -122,7 +122,7 @@ async function submitForm ({
     <label class="row">
       <span>パスワード (確認用)</span>
       <input
-        name="confirm-password"
+        name="password-confirmation"
         type="password"
         placeholder="パスワードを入力してください。"
       >
