@@ -64,3 +64,63 @@ describe('SignUpFormElementClerk', () => {
     })
   })
 })
+
+describe('SignUpFormElementClerk', () => {
+  describe('#generateSchemaVariableHash', () => {
+    const mockFormElement = document.createElement('form')
+
+    const cases = [
+      {
+        params: {
+          valueHash: {
+            email: 'alice@example.com',
+            username: 'AliceDoe',
+            firstName: 'Alice',
+            lastName: 'Doe',
+            password: 'passAlice',
+            'password-confirmation': 'passAlice',
+          },
+        },
+        expected: {
+          email: 'alice@example.com',
+          username: 'AliceDoe',
+          firstName: 'Alice',
+          lastName: 'Doe',
+          password: 'passAlice',
+        },
+      },
+      {
+        params: {
+          valueHash: {
+            email: 'betty@example.com',
+            username: 'BettyDoe',
+            firstName: 'Betty',
+            lastName: 'Doe',
+            password: 'passBetty',
+            'password-confirmation': 'passBetty',
+          },
+        },
+        expected: {
+          email: 'betty@example.com',
+          username: 'BettyDoe',
+          firstName: 'Betty',
+          lastName: 'Doe',
+          password: 'passBetty',
+        },
+      },
+    ]
+
+    test.each(cases)('username: $params.valueHash.username', ({ params, expected }) => {
+      const clerk = new SignUpFormElementClerk({
+        formElement: mockFormElement,
+      })
+
+      const actual = clerk.generateSchemaVariableHash({
+        formValueHash: params.valueHash,
+      })
+
+      expect(actual)
+        .toEqual(expected)
+    })
+  })
+})
