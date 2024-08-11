@@ -1,11 +1,11 @@
-import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
+import BaseAppGraphqlPayload from '~/app/graphql/client/BaseAppGraphqlPayload'
 
 /**
  * SignUp mutation payload.
  *
- * @extends {BaseGraphqlPayload<typeof SignUpMutationGraphqlPayload>}
+ * @extends {BaseAppGraphqlPayload<typeof SignUpMutationGraphqlPayload, SignUpVariablesType>}
  */
-export default class SignUpMutationGraphqlPayload extends BaseGraphqlPayload {
+export default class SignUpMutationGraphqlPayload extends BaseAppGraphqlPayload {
   /** @inheritdoc */
   static get document () {
     return /* GraphQL */ `
