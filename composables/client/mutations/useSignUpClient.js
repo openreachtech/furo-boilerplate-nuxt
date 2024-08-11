@@ -67,8 +67,6 @@ export default function useSignUpClient () {
     const capsule = await fetchCapsule(args)
 
     capsuleRef.value = capsule
-
-    validationRef.value = capsule.createVariablesValidationResult()
   }
 }
 
