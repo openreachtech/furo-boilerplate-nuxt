@@ -1,11 +1,11 @@
-import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
+import BaseAppGraphqlPayload from '~/app/graphql/client/BaseAppGraphqlPayload'
 
 /**
  * CompanySponsors query payload.
  *
- * @extends {BaseGraphqlPayload<typeof CompanySponsorsQueryGraphqlPayload>}
+ * @extends {BaseAppGraphqlPayload<typeof CompanySponsorsQueryGraphqlPayload, CompanySponsorsVariablesType>}
  */
-export default class CompanySponsorsQueryGraphqlPayload extends BaseGraphqlPayload {
+export default class CompanySponsorsQueryGraphqlPayload extends BaseAppGraphqlPayload {
   /** @override */
   static get document () {
     return /* GraphQL */ `
@@ -24,3 +24,7 @@ export default class CompanySponsorsQueryGraphqlPayload extends BaseGraphqlPaylo
     `
   }
 }
+
+/**
+ * @typedef {{}} CompanySponsorsVariablesType
+ */
