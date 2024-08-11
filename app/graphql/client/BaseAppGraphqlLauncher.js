@@ -1,5 +1,4 @@
 import BaseGraphqlLauncher from '~/modules/client/BaseGraphqlLauncher'
-import StorageClerk from '~/modules/storage/StorageClerk'
 
 import graphqlConfig from '~/app/graphql/graphql.config'
 
@@ -29,15 +28,6 @@ export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
         config,
       })
     )
-  }
-
-  /**
-   * Create an instance of StorageClerk.
-   *
-   * @returns {StorageClerk} Instance of StorageClerk.
-   */
-  createStorageClerk () {
-    return StorageClerk.createAsLocal()
   }
 }
 
