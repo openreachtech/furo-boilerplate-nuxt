@@ -2,7 +2,6 @@ import BaseGraphqlLauncher from '~/modules/client/BaseGraphqlLauncher'
 import StorageClerk from '~/modules/storage/StorageClerk'
 
 import {
-  HEADER_KEY,
   STORAGE_KEY,
 } from '~/app/constants'
 
@@ -34,30 +33,6 @@ export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
         config,
       })
     )
-  }
-
-  /**
-   * Update headers.
-   *
-   * @override
-   * @param {{
-   *   headers: Headers
-   * }} params - Parameters.
-   * @returns {Headers} Updated headers.
-   */
-  updateHeaders ({
-    headers,
-  }) {
-    const accessToken = this.loadAccessToken()
-
-    if (accessToken) {
-      headers.append(
-        HEADER_KEY.ACCESS_TOKEN,
-        accessToken
-      )
-    }
-
-    return headers
   }
 
   /**
