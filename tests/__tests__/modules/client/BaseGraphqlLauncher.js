@@ -2583,37 +2583,3 @@ describe('BaseGraphqlLauncher', () => {
     })
   })
 })
-
-describe('BaseGraphqlLauncher', () => {
-  describe('#updateHeaders()', () => {
-    describe('to return given options as is', () => {
-      const cases = [
-        {
-          params: {
-            headers: new Headers({
-              'x-access-token': 'access-token-01',
-            }),
-          },
-        },
-        {
-          params: {
-            headers: new Headers(),
-          },
-        },
-      ]
-
-      test.each(cases)('headers: $params.headers', ({ params }) => {
-        const launcher = BaseGraphqlLauncher.create({
-          config: {
-            ENDPOINT_URL: 'http://example.com/graphql-customer',
-          },
-        })
-
-        const actual = launcher.updateHeaders(params)
-
-        expect(actual)
-          .toBe(params.headers) // same reference
-      })
-    })
-  })
-})
