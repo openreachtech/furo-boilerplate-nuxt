@@ -299,13 +299,9 @@ export default class BaseGraphqlLauncher {
     options = {},
     hooks = {},
   } = {}) {
-    const updatedOptions = this.updateOptions({
-      options,
-    })
-
     const payload = this.Ctor.createPayload({
       variables,
-      options: updatedOptions,
+      options,
     })
 
     const {
