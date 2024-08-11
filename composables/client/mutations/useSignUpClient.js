@@ -10,7 +10,7 @@ import SignUpMutationGraphqlLauncher from '~/app/graphql/client/mutations/signUp
  *
  * @returns {{
  *   capsuleRef: import('vue').Ref<GraphqlResponseCapsule>
- *   validationRef: import('vue').Ref<import('~/modules/client/VariablesValidationResult').default>
+ *   validationRef: import('vue').Ref<import('~/modules/validators/ValueHashValidator').ValidatorHashType>
  *   invokeRequestOnEvent: (args: GraphqlRequestParams) => Promise<void>
  *   invokeRequestOnMounted: (args: GraphqlRequestParams) => void
  * }}
@@ -19,9 +19,16 @@ export default function useSignUpClient () {
   const capsuleRef = ref(
     SignUpMutationGraphqlLauncher.createCapsuleAsPending()
   )
-  const validationRef = ref(
-    capsuleRef.value.createVariablesValidationResult()
-  )
+
+  // TODO: VariablesValidator から生成させる様に変更
+  //   理由は、VariablesValidator が型情報を持っている為 → ValidatorHashType
+  // VariablesValidator.generateStubValidationHash()
+  const validationRef = ref({
+    valid: {},
+    invalid: {},
+    messages: {},
+    message: {},
+  })
 
   return {
     capsuleRef,
