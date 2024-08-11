@@ -37,6 +37,14 @@ async function submitForm ({
     formElement,
   })
 
+  validationRef.value = formElementClerk.generateValidationHash()
+
+  if (formElementClerk.isInvalid()) {
+    // Skip #launchRequest(), if invalid value hash of <form>.
+
+    return
+  }
+
   const formValueHash = formElementClerk.extractValueHash()
 
   await invokeRequestOnEvent({
