@@ -65,9 +65,21 @@ export default class SignUpFormElementClerk extends BaseFormElementClerk {
         message: 'password must be set with at least 1 character and no more than 16 characters',
       },
 
-      // confirm-password
+      // password-confirmation
       {
-        field: 'confirm-password',
+        field: 'password-confirmation',
+        /** @type {ValidationCallback} */
+        ok: (it, valueHash) => {
+          if (!it) {
+            return true
+          }
+
+          return it === valueHash.password
+        },
+        message: 'please re-enter password for confirmation',
+      },
+      {
+        field: 'password-confirmation',
         /** @type {ValidationCallback} */
         ok: (it, valueHash) => {
           if (!it) {
