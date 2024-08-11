@@ -4,7 +4,6 @@ import {
 } from 'vue'
 
 import SignUpMutationGraphqlLauncher from '~/app/graphql/client/mutations/signUp/SignUpMutationGraphqlLauncher'
-import SignUpMutationGraphqlCapsule from '~/app/graphql/client/mutations/signUp/SignUpMutationGraphqlCapsule'
 
 /**
  * Use signUp GraphQL client
