@@ -3,10 +3,9 @@ import {
   reactive,
   ref,
 } from 'vue'
+import SignUpFormElementClerk from '~/app/domClerk/SignUpFormElementClerk'
 
 import useSignUpClient from '~/composables/client/mutations/useSignUpClient'
-
-import FormElementClerk from '~/modules/domClerks/FormElementClerk'
 
 const formRef = ref(null)
 const statusReactive = reactive({
@@ -34,7 +33,7 @@ async function submitForm ({
     return
   }
 
-  const formElementClerk = FormElementClerk.create({
+  const formElementClerk = SignUpFormElementClerk.create({
     formElement,
   })
 
