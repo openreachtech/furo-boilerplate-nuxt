@@ -1,6 +1,5 @@
 import BaseAppGraphqlLauncher from '~/app/graphql/client/BaseAppGraphqlLauncher'
 import BaseGraphqlLauncher from '~/modules/client/BaseGraphqlLauncher'
-import StorageClerk from '~/modules/storage/StorageClerk'
 
 beforeEach(() => {
   localStorage.clear()
@@ -113,46 +112,6 @@ describe('BaseAppGraphqlLauncher', () => {
         expect(actual)
           .not
           .toBe(BaseGraphqlLauncher) // not same reference
-      })
-    })
-  })
-})
-
-describe('BaseAppGraphqlLauncher', () => {
-  describe('#createStorageClerk()', () => {
-    describe('to return instance of StorageClerk', () => {
-      test('with no params', () => {
-        const launcher = BaseAppGraphqlLauncher.create({
-          config: {},
-        })
-
-        const storageClerk = launcher.createStorageClerk()
-
-        expect(storageClerk)
-          .toBeInstanceOf(StorageClerk)
-      })
-    })
-
-    describe('to call StorageClerk.createAsLocal()', () => {
-      test('with no params', () => {
-        const launcher = BaseAppGraphqlLauncher.create({
-          config: {},
-        })
-
-        const storageClerkTally = /** @type {StorageClerk} */ ({})
-
-        const createAsLocalSpy = jest.spyOn(StorageClerk, 'createAsLocal')
-          .mockReturnValue(storageClerkTally)
-
-        const actual = launcher.createStorageClerk()
-
-        expect(actual)
-          .toBe(storageClerkTally) // same reference
-
-        expect(createAsLocalSpy)
-          .toHaveBeenCalledWith()
-
-        createAsLocalSpy.mockRestore()
       })
     })
   })
