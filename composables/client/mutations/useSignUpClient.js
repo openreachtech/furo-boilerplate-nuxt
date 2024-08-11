@@ -94,15 +94,11 @@ export async function fetchCapsule ({
 
 /**
  * @typedef {{
- *   variables?: {
- *     input: {
- *       email?: string
- *       username?: string
- *       firstName?: string
- *       lastName?: string
- *       password?: string
- *       'password-confirmation'?: string
- *     }
- *   }
+ *   variables: SignUpVariablesType
+ *   hooks?: Record<string, Function>
  * }} GraphqlRequestParams
+ */
+
+/**
+ * @typedef {import('~/app/graphql/client/mutations/signUp/SignUpMutationGraphqlPayload').SignUpVariablesType} SignUpVariablesType
  */
