@@ -299,13 +299,9 @@ export default class BaseGraphqlLauncher {
     options = {},
     hooks = {},
   } = {}) {
-    const updatedOptions = this.updateOptions({
-      options,
-    })
-
     const payload = this.Ctor.createPayload({
       variables,
-      options: updatedOptions,
+      options,
     })
 
     const {
@@ -335,44 +331,6 @@ export default class BaseGraphqlLauncher {
     await afterRequest(capsule)
 
     return capsule
-  }
-
-  /**
-   * Update options.
-   *
-   * @param {{
-   *   options: RequestInit
-   * }} params - Parameters.
-   * @returns {RequestInit} Updated options.
-   */
-  updateOptions ({
-    options: {
-      headers = new Headers(),
-      ...extraOptions
-    },
-  }) {
-    const updatedHeaders = this.updateHeaders({
-      headers,
-    })
-
-    return {
-      headers: updatedHeaders,
-      ...extraOptions,
-    }
-  }
-
-  /**
-   * Update headers.
-   *
-   * @param {{
-   *   headers: HeadersInit
-   * }} params - Parameters.
-   * @returns {HeadersInit} Updated headers.
-   */
-  updateHeaders ({
-    headers,
-  }) {
-    return headers
   }
 
   /**
