@@ -1,11 +1,11 @@
-import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
+import BaseAppGraphqlPayload from '~/app/graphql/client/BaseAppGraphqlPayload'
 
 /**
  * SignUp mutation payload.
  *
- * @extends {BaseGraphqlPayload<typeof SignUpMutationGraphqlPayload>}
+ * @extends {BaseAppGraphqlPayload<typeof SignUpMutationGraphqlPayload, SignUpVariablesType>}
  */
-export default class SignUpMutationGraphqlPayload extends BaseGraphqlPayload {
+export default class SignUpMutationGraphqlPayload extends BaseAppGraphqlPayload {
   /** @inheritdoc */
   static get document () {
     return /* GraphQL */ `
@@ -15,61 +15,6 @@ export default class SignUpMutationGraphqlPayload extends BaseGraphqlPayload {
         }
       }
     `
-  }
-
-  /** @override */
-  static get validators () {
-    return [
-      {
-        field: 'email',
-        body: (it, variables) => {
-          return !it
-            || /^[^@]+@[^@]+\.[^@]+$/.test(it)
-        },
-        message: 'email must be valid',
-      },
-
-      {
-        field: 'username',
-        body: (it, variables) => it,
-        message: 'username must be set',
-      },
-      {
-        field: 'username',
-        body: (it, variables) => /^\w+$/.test(it),
-        message: 'username must be alphanumeric',
-      },
-
-      {
-        field: 'firstName',
-        body: (it, variables) => it,
-        message: 'firstName must be set',
-      },
-      {
-        field: 'lastName',
-        body: (it, variables) => it,
-        message: 'lastName must be set',
-      },
-
-      {
-        field: 'password',
-        body: (it, variables) => {
-          return it
-            && it.length >= 1
-            && it.length <= 16
-        },
-        message: 'password must be set with at least 1 character and no more than 16 characters',
-      },
-
-      {
-        field: 'password-confirmation',
-        body: (it, variables) => {
-          return it
-            && it === variables.password
-        },
-        message: 'passwords do not match.',
-      },
-    ]
   }
 }
 
@@ -81,4 +26,16 @@ export default class SignUpMutationGraphqlPayload extends BaseGraphqlPayload {
  *   lastName String
  *   password String!
  * }
+ */
+
+/**
+ * @typedef {{
+ *   input: {
+ *     email: string
+ *     username: string
+ *     firstName: string
+ *     lastName: string
+ *     password: string
+ *   }
+ * }} SignUpVariablesType
  */
