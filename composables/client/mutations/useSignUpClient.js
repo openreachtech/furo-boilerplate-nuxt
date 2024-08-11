@@ -4,7 +4,6 @@ import {
 } from 'vue'
 
 import SignUpMutationGraphqlLauncher from '~/app/graphql/client/mutations/signUp/SignUpMutationGraphqlLauncher'
-import SignUpMutationGraphqlCapsule from '~/app/graphql/client/mutations/signUp/SignUpMutationGraphqlCapsule'
 
 /**
  * Use signUp GraphQL client
@@ -18,7 +17,7 @@ import SignUpMutationGraphqlCapsule from '~/app/graphql/client/mutations/signUp/
  */
 export default function useSignUpClient () {
   const capsuleRef = ref(
-    SignUpMutationGraphqlCapsule.createAsPending()
+    SignUpMutationGraphqlLauncher.createCapsuleAsPending()
   )
   const validationRef = ref(
     capsuleRef.value.createVariablesValidationResult()
