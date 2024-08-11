@@ -46,11 +46,11 @@ async function submitForm ({
     return
   }
 
-  const formValueHash = formElementClerk.extractValueHash()
+  const variableHash = formElementClerk.generateSchemaVariableHash()
 
   await invokeRequestOnEvent({
     variables: {
-      input: formValueHash,
+      input: variableHash,
     },
   })
 }
