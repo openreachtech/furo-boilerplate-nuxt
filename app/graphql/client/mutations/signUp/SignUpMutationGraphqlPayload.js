@@ -18,16 +18,6 @@ export default class SignUpMutationGraphqlPayload extends BaseAppGraphqlPayload 
   }
 }
 
-/*
- * SignUpInput {
- *   email String!
- *   username String
- *   firstName String
- *   lastName String
- *   password String!
- * }
- */
-
 /**
  * @typedef {{
  *   input: {
