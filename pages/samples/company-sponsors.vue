@@ -1,5 +1,9 @@
 <script setup>
 import {
+  reactive,
+} from 'vue'
+
+import {
   useCompanySponsorsClient,
 } from '~/composables/client/queries/useCompanySponsorsClient'
 
@@ -7,6 +11,10 @@ const {
   capsuleRef,
   invokeRequestOnMounted,
 } = useCompanySponsorsClient()
+
+const statusReactive = reactive({
+  isLoading: true,
+})
 
 invokeRequestOnMounted()
 </script>
@@ -32,6 +40,7 @@ invokeRequestOnMounted()
   </div>
 
   <div
+    v-if="statusReactive.isLoading"
     class="unit-loading"
   >
     Loading ...
