@@ -14,18 +14,6 @@ export default {
 </script>
 
 <style>
-/* Reset CSS */
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-}
-
 /* Custom Properties */
 
 /* Layout */
