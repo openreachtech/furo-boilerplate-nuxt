@@ -1,7 +1,15 @@
 <script setup>
 import {
+  reactive,
+} from 'vue'
+
+import {
   useCurriculumsClient,
 } from '~/composables/client/queries/useCurriculumsClient'
+
+const statusReactive = reactive({
+  isLoading: true,
+})
 
 const {
   capsuleRef,
@@ -46,6 +54,7 @@ invokeRequestOnMounted()
   </pre>
 
   <div
+    v-if="statusReactive.isLoading"
     class="unit-loading"
   >
     Loading ...
