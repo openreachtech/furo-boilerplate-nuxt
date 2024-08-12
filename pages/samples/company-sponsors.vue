@@ -16,7 +16,18 @@ const statusReactive = reactive({
   isLoading: true,
 })
 
-invokeRequestOnMounted()
+invokeRequestOnMounted({
+  hooks: {
+    async beforeRequest (payload) {
+      statusReactive.isLoading = true
+
+      return false
+    },
+    async afterRequest (capsule) {
+      statusReactive.isLoading = false
+    },
+  },
+})
 </script>
 
 <template>
