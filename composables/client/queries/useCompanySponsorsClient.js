@@ -10,8 +10,8 @@ import CompanySponsorsQueryGraphqlLauncher from '~/app/graphql/client/queries/co
  *
  * @returns {{
  *   capsuleRef: import('vue').Ref<GraphqlResponseCapsule>
- *   invokeRequestOnEvent: () => Promise<void>
- *   invokeRequestOnMounted: () => void
+ *   invokeRequestOnEvent: (args?: GraphqlRequestArgs) => Promise<void>
+ *   invokeRequestOnMounted: (args?: GraphqlRequestArgs) => void
  * }}
  */
 export function useCompanySponsorsClient () {
@@ -25,20 +25,22 @@ export function useCompanySponsorsClient () {
     /**
      * Invoke request.
      *
+     * @param {GraphqlRequestArgs} [args] - Arguments.
      * @returns {Promise<void>}
      */
-    async invokeRequestOnEvent () {
-      await invokeRequest()
+    async invokeRequestOnEvent (args) {
+      await invokeRequest(args)
     },
 
     /**
      * Invoke request.
      *
+     * @param {GraphqlRequestArgs} [args] - Arguments.
      * @returns {void}
      */
-    invokeRequestOnMounted () {
+    invokeRequestOnMounted (args) {
       onMounted(async () => {
-        await invokeRequest()
+        await invokeRequest(args)
       })
     },
   }
@@ -46,27 +48,33 @@ export function useCompanySponsorsClient () {
   /**
    * Invoke request.
    *
+   * @param {GraphqlRequestArgs} [args] - Arguments.
    * @returns {Promise<void>}
    */
-  async function invokeRequest () {
-    const capsule = await fetchCapsule()
+  async function invokeRequest (args) {
+    const capsule = await retrieveCapsule(args)
 
     capsuleRef.value = capsule
   }
 }
 
 /**
- * Fetch GraphQL client capsule.
+ * Retrieve capsule.
  *
+ * @param {GraphqlRequestArgs} [args] - Arguments.
  * @returns {Promise<GraphqlResponseCapsule>}
  */
-export async function fetchCapsule () {
+export async function retrieveCapsule (args) {
   const launcher = CompanySponsorsQueryGraphqlLauncher.create()
 
-  const capsule = await launcher.launchRequestWithVariables()
+  const capsule = await launcher.launchRequestWithVariables(args)
 
   return /** @type {*} */ (capsule)
 }
+
+/**
+ * @typedef {import('~/modules/client/BaseGraphqlLauncher').GraphqlRequestArgs} GraphqlRequestArgs
+ */
 
 /**
  * @typedef {import('~/app/graphql/client/queries/companySponsors/CompanySponsorsQueryGraphqlCapsule').default} GraphqlResponseCapsule
