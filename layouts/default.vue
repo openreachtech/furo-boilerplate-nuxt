@@ -28,11 +28,6 @@ body {
 
 /* Custom Properties */
 
-:root {
-  --size-header-height: 5rem;
-  --size-footer-height: 10rem;
-}
-
 /* Layout */
 
 .unit-body {
