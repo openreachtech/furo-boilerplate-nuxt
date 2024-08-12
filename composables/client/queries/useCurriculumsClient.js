@@ -10,8 +10,8 @@ import CurriculumsQueryGraphqlLauncher from '~/app/graphql/client/queries/curric
  *
  * @returns {{
  *   capsuleRef: import('vue').Ref<GraphqlResponseCapsule>
- *   invokeRequestOnEvent: (args?: GraphqlRequestParams) => Promise<void>
- *   invokeRequestOnMounted: (args?: GraphqlRequestParams) => void
+ *   invokeRequestOnEvent: (args?: GraphqlRequestArgs) => Promise<void>
+ *   invokeRequestOnMounted: (args?: GraphqlRequestArgs) => void
  * }}
  */
 export function useCurriculumsClient () {
@@ -25,7 +25,7 @@ export function useCurriculumsClient () {
     /**
      * Invoke request.
      *
-     * @param {GraphqlRequestParams} [args] - Arguments.
+     * @param {GraphqlRequestArgs} [args] - Arguments.
      * @returns {Promise<void>}
      */
     async invokeRequestOnEvent (args) {
@@ -35,7 +35,7 @@ export function useCurriculumsClient () {
     /**
      * Invoke request.
      *
-     * @param {GraphqlRequestParams} [args] - Arguments.
+     * @param {GraphqlRequestArgs} [args] - Arguments.
      * @returns {void}
      */
     invokeRequestOnMounted (args) {
@@ -48,7 +48,7 @@ export function useCurriculumsClient () {
   /**
    * Invoke request.
    *
-   * @param {GraphqlRequestParams} [args] - Arguments.
+   * @param {GraphqlRequestArgs} [args] - Arguments.
    * @returns {Promise<void>}
    */
   async function invokeRequest (args) {
@@ -61,13 +61,11 @@ export function useCurriculumsClient () {
 /**
  * Fetch GraphQL client capsule.
  *
- * @param {GraphqlRequestParams} params - Parameters.
+ * @param {GraphqlRequestArgs} params - Parameters.
  * @returns {Promise<GraphqlResponseCapsule>}
  */
 async function fetchCapsule ({
-  variables,
-} = {
-  variables: {
+  variables = {
     input: {
       pagination: {
         limit: 5,
@@ -79,11 +77,15 @@ async function fetchCapsule ({
       },
     },
   },
-}) {
+  options,
+  hooks,
+} = {}) {
   const launcher = CurriculumsQueryGraphqlLauncher.create()
 
   const capsule = await launcher.launchRequestWithVariables({
     variables,
+    options,
+    hooks,
   })
 
   return /** @type {*} */ (capsule)
@@ -93,9 +95,9 @@ async function fetchCapsule ({
  * @typedef {import('~/app/graphql/client/queries/curriculums/CurriculumsQueryGraphqlCapsule').default} GraphqlResponseCapsule
  */
 
-/**
- * @typedef {{
- *   variables?: {
+/*
+ * {
+ *   variables: {
  *     input: {
  *       pagination: {
  *         limit: number
@@ -107,5 +109,9 @@ async function fetchCapsule ({
  *       }
  *     }
  *   }
- * }} GraphqlRequestParams
+ * }
+ */
+
+/**
+ * @typedef {import('~/modules/client/BaseGraphqlLauncher').GraphqlRequestArgs} GraphqlRequestArgs
  */
