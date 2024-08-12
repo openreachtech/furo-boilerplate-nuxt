@@ -1,6 +1,7 @@
 <!-- pages/index.vue -->
 <template>
   <h1>Hello I&#39;m pages/index.vue!</h1>
+  <a href="samples/sign-up">Sign up</a>
   <div>1</div>
   <div>2</div>
   <div>3</div>
