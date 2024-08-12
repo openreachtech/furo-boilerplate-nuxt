@@ -285,11 +285,7 @@ export default class BaseGraphqlLauncher {
   /**
    * Launch query with direct variables.
    *
-   * @param {{
-   *   variables?: VariablesType
-   *   options?: RequestInit
-   *   hooks?: GraphqlLauncherHooks
-   * }} Params - Parameters.
+   * @param {GraphqlRequestArgs} Params - Parameters.
    * @template C, D
    * @returns {Promise<InstanceType<CapsuleClass<C, D>>>} Promise of instance of capsule.
    * @public
@@ -414,6 +410,14 @@ export default class BaseGraphqlLauncher {
  *   abortedReason?: import('./BaseGraphqlCapsule').LAUNCH_ABORTED_REASON
  * }} CapsuleParams
  */
+
+/**
+ * @typedef {{
+*   variables?: VariablesType
+*   options?: RequestInit
+*   hooks?: GraphqlLauncherHooks
+* }} GraphqlRequestArgs
+*/
 
 /**
  * @typedef {{
