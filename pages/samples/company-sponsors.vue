@@ -30,6 +30,12 @@ invokeRequestOnMounted()
       </div>
     </div>
   </div>
+
+  <div
+    class="unit-loading"
+  >
+    Loading ...
+  </div>
 </template>
 
 <style scoped>
@@ -55,5 +61,24 @@ invokeRequestOnMounted()
   margin-block-start: 0.5rem;
   color: green;
   font-size: 1rem;
+}
+
+/******************************************************************************/
+
+.unit-loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  border: 1rem red solid;
+
+  display: grid;
+  place-items: center;
+
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  font-size: 3rem;
 }
 </style>
