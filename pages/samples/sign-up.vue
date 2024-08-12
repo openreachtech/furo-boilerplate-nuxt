@@ -1,81 +1,150 @@
+<script setup>
+import {
+  reactive,
+  ref,
+} from 'vue'
+import SignUpFormElementClerk from '~/app/domClerk/SignUpFormElementClerk'
+
+import useSignUpClient from '~/composables/client/mutations/useSignUpClient'
+
+const formRef = ref(null)
+const statusReactive = reactive({
+  allowsToSubmit: false,
+})
+
+const {
+  // capsuleRef,
+  validationRef,
+  invokeRequestOnEvent,
+  // invokeRequestOnMounted,
+} = useSignUpClient()
+
+/**
+ * Submit form event handler.
+ *
+ * @param {{
+ *   formElement: HTMLFormElement | null
+ * }} params - Parameters.
+ */
+async function submitForm ({
+  formElement,
+}) {
+  if (!formElement) {
+    return
+  }
+
+  const formElementClerk = SignUpFormElementClerk.create({
+    formElement,
+  })
+
+  validationRef.value = formElementClerk.generateValidationHash()
+
+  if (formElementClerk.isInvalid()) {
+    // Skip #launchRequest(), if invalid value hash of <form>.
+
+    return
+  }
+
+  const variableHash = formElementClerk.generateSchemaVariableHash()
+
+  await invokeRequestOnEvent({
+    variables: {
+      input: variableHash,
+    },
+  })
+}
+</script>
+
 <template>
   <h1>Hello I&#39;m pages/signUp.vue!</h1>
 
-  <form>
-    <label
-      class="row"
-      for="email"
-    >
+  <form
+    ref="formRef"
+    @submit.prevent="submitForm({
+      formElement: formRef,
+    })"
+  >
+    <label class="row">
       <span>メールアドレス</span>
       <input
-        id="email"
         name="email"
         type="text"
         placeholder="メールアドレスを入力してください。"
+        value="stew.eucen@openreach.tech"
       >
+      <div>{{ validationRef.message.email }}&nbsp;</div>
     </label>
 
-    <label
-      class="row"
-      for="username"
-    >
+    <label class="row">
       <span>ユーザ名</span>
       <input
-        id="username"
         name="username"
         type="text"
         placeholder="ユーザ名を入力してください。"
+        value="John Doe"
       >
+      <div>{{ validationRef.message.username }}&nbsp;</div>
     </label>
 
-    <label
-      class="row"
-      for="password"
-    >
+    <label class="row">
+      <span>First Name</span>
+      <input
+        name="firstName"
+        type="text"
+        placeholder="Please enter your first name."
+        value="Eucen"
+      >
+      <div>{{ validationRef.message.firstName }}&nbsp;</div>
+    </label>
+
+    <label class="row">
+      <span>First Name</span>
+      <input
+        name="lastName"
+        type="text"
+        placeholder="Please enter your last name."
+        value="Stew"
+      >
+      <div>{{ validationRef.message.lastName }}&nbsp;</div>
+    </label>
+
+    <label class="row">
       <span>パスワード</span>
       <input
-        id="password"
         name="password"
         type="password"
         placeholder="パスワードを入力してください。"
       >
+      <div>{{ validationRef.message.password }}&nbsp;</div>
     </label>
 
-    <label
-      class="row"
-      for="confirm-password"
-    >
+    <label class="row">
       <span>パスワード (確認用)</span>
       <input
-        id="confirm-password"
-        name="confirm-password"
+        name="password-confirmation"
         type="password"
         placeholder="パスワードを入力してください。"
       >
+      <div>{{ validationRef.message['password-confirmation'] }}&nbsp;</div>
     </label>
 
-    <label
-      class="column"
-      for="agree-policy"
-    >
+    <label class="column">
       <input
-        id="agree-policy"
+        v-model="statusReactive.allowsToSubmit"
         type="checkbox"
       >
       <span>利用規約に同意する</span>
     </label>
 
-    <button class="standard">
+    <button
+      class="standard"
+      type="submit"
+      :disabled="!statusReactive.allowsToSubmit"
+    >
       新規登録
     </button>
   </form>
 </template>
-
-<script>
-export default {
-  name: 'SignUpPage',
-}
-</script>
 
 <style>
 form {
@@ -108,6 +177,14 @@ form button.standard {
   padding: .5rem 1rem;
   background-color: #007bff;
   color: #fff;
+}
+
+form button.standard:active {
+  background-color: #03c;
+}
+
+form button[disabled] {
+  background-color: #ccc;
 }
 
 /* CSS styles here */
