@@ -17,7 +17,24 @@ const {
   invokeRequestOnMounted,
 } = useCurriculumsClient()
 
-invokeRequestOnMounted()
+function generateHooks () {
+  return {
+    /** @type {*} */
+    async beforeRequest (payload) {
+      statusReactive.isLoading = true
+
+      return false
+    },
+    /** @type {*} */
+    async afterRequest (capsule) {
+      statusReactive.isLoading = false
+    },
+  }
+}
+
+invokeRequestOnMounted({
+  hooks: generateHooks(),
+})
 </script>
 
 <template>
@@ -39,6 +56,7 @@ invokeRequestOnMounted()
           },
         },
       },
+      hooks: generateHooks(),
     })"
   >
     Fetch curriculums with offset 2
