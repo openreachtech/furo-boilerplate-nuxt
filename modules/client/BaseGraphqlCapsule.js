@@ -259,7 +259,7 @@ export const LAUNCH_ABORTED_REASON = {
 
 /**
  * @template P
- * @typedef {import('~/modules/client/BaseGraphqlPayload').default<P>} PayloadClass
+ * @typedef {import('~/modules/client/BaseGraphqlPayload').default<P, *>} PayloadClass
  */
 
 /**
