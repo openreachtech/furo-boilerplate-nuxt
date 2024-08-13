@@ -1,14 +1,40 @@
 import {
+  ref,
+} from 'vue'
+
+import {
   useFormClerk,
 } from '~/modules/composables/useFormClerk'
 
+import BaseFormElementClerk from '~/modules/domClerks/BaseFormElementClerk'
+
 describe('useFormClerk()', () => {
   test('to be an object', () => {
-    const expected = {}
+    /**
+     * @extends {BaseFormElementClerk<typeof DerivedFormElementClerk, *, *>}
+     */
+    class DerivedFormElementClerk extends BaseFormElementClerk {
+      static get validators () {
+        return []
+      }
+    }
 
-    const actual = useFormClerk()
+    const expected = {
+      validationRef: ref({
+        valid: {},
+        invalid: {},
+        messages: {},
+        message: {},
+      }),
+      submitForm: expect.any(Function),
+    }
+
+    const actual = useFormClerk({
+      FormElementClerk: DerivedFormElementClerk,
+      invokeRequest: async () => {},
+    })
 
     expect(actual)
-      .toMatchObject(expected)
+      .toEqual(expected)
   })
 })
