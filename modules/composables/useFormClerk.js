@@ -18,6 +18,43 @@ export /** @template V */ function useFormClerk () {
   return {
     validationRef,
   }
+
+  /**
+   * Submit form.
+   *
+   * @param {{
+   *   formElement: HTMLFormElement
+   *   hooks?: HookHashType
+   *   options?: RequestInit
+   * }} params - Parameters.
+   * @returns {Promise<boolean>} true: Invoke request.
+   */
+  async function submitForm ({
+    formElement,
+    hooks,
+    options,
+  }) {
+    const formElementClerk = FormElementClerk.create({
+      formElement,
+    })
+
+    validationRef.value = formElementClerk.generateValidationHash()
+
+    // Skip #launchRequest(), if invalid value hash of <form>.
+    if (formElementClerk.isInvalid()) {
+      return false
+    }
+
+    const variableHash = formElementClerk.generateSchemaVariableHash()
+
+    await invokeRequest({
+      variables: variableHash,
+      hooks,
+      options,
+    })
+
+    return true
+  }
 }
 
 /**
