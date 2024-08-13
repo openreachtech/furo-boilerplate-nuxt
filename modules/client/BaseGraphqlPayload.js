@@ -1,8 +1,8 @@
 /**
  * Base class of GraphQL payload.
  *
- * @template T
- * @template {VariablesType} SV
+ * @template T - Type of this class.
+ * @template {VariablesType} SV - Type of variables for schema.
  */
 export default class BaseGraphqlPayload {
   /**
