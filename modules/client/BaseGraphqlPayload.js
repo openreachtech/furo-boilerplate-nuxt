@@ -293,7 +293,3 @@ export default class BaseGraphqlPayload {
  *   [schema: string]: Array<ValidatorOptionsType>
  * }} ValidatorHashType
  */
-
-/**
- * @typedef {import('~/modules/client/FieldValidator').FieldValidatorFactoryParams} ValidatorOptionsType
- */
