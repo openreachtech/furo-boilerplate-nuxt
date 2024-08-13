@@ -15,7 +15,7 @@ const statusReactive = reactive({
 })
 
 const {
-  // capsuleRef,
+  capsuleRef,
   invokeRequestOnEvent,
   // invokeRequestOnMounted,
 } = useSignUpClient()
@@ -149,6 +149,22 @@ async function submitFormWithHooks ({
       新規登録
     </button>
   </form>
+
+  <pre
+    style="
+      margin-block: 3rem;
+      border: 1px #000 solid;
+
+      padding-block: .5rem;
+      padding-inline: 1rem;
+    "
+  >{{
+      JSON.stringify(
+        capsuleRef.extractContent(),
+        null,
+        4
+      )
+  }}</pre>
 
   <div
     v-if="statusReactive.isLoading"
