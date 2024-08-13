@@ -27,7 +27,7 @@ const {
  *   formElement: HTMLFormElement | null
  * }} params - Parameters.
  */
-async function submitForm ({
+async function submitFormWithHooks ({
   formElement,
 }) {
   if (!formElement) {
@@ -80,7 +80,7 @@ async function submitForm ({
 
   <form
     ref="formRef"
-    @submit.prevent="submitForm({
+    @submit.prevent="submitFormWithHooks({
       formElement: formRef,
     })"
   >
