@@ -3,7 +3,12 @@ import {
   ref,
 } from 'vue'
 
-import FormElementClerk from '~/modules/domClerks/FormElementClerk'
+import BaseFormElementClerk from '~/modules/domClerks/BaseFormElementClerk'
+
+/** @extends {BaseFormElementClerk<typeof SampleFormElementClerk, *, *>} */
+class SampleFormElementClerk extends BaseFormElementClerk {
+
+}
 
 const formRef = ref(null)
 
@@ -19,7 +24,7 @@ const Timber = console
 async function submitForm ({
   formElement,
 }) {
-  const formElementClerk = FormElementClerk.create({
+  const formElementClerk = SampleFormElementClerk.create({
     formElement,
   })
 
