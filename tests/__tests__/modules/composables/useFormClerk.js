@@ -2,9 +2,7 @@ import {
   ref,
 } from 'vue'
 
-import {
-  useFormClerk,
-} from '~/modules/composables/useFormClerk'
+import useFormClerk from '~/modules/composables/useFormClerk'
 
 import BaseFormElementClerk from '~/modules/domClerks/BaseFormElementClerk'
 
