@@ -21,7 +21,7 @@ import {
  *   }) => Promise<boolean>
  * }}
  */
-export function useFormClerk ({
+export default function useFormClerk ({
   FormElementClerk,
   invokeRequest,
 }) {
