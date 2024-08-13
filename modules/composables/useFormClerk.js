@@ -2,7 +2,29 @@ import {
   ref,
 } from 'vue'
 
-export /** @template V */ function useFormClerk () {
+/**
+ * Use form clerk.
+ * Receive <form> clerk class and invoke request function.
+ *
+ * @param {{
+ *   FormElementClerk: typeof import('~/modules/domClerks/BaseFormElementClerk').default
+ *   invokeRequest: (args: GraphqlRequestParams) => Promise<void>
+ * }} params - Parameters.
+ * @returns {{
+ *   validationRef: import('vue').Ref<
+ *     import('~/modules/validators/ValueHashValidator').ValidatorHashType
+ *   >
+ *   submitForm: (params: {
+ *     formElement: HTMLFormElement
+ *     hooks?: HookHashType
+ *     options?: RequestInit
+ *   }) => Promise<boolean>
+ * }}
+ */
+export function useFormClerk ({
+  FormElementClerk,
+  invokeRequest,
+}) {
   /**
    * @type {import('vue').Ref<
    *   import('~/modules/validators/ValueHashValidator').ValidatorHashType
@@ -17,6 +39,7 @@ export /** @template V */ function useFormClerk () {
 
   return {
     validationRef,
+    submitForm,
   }
 
   /**
