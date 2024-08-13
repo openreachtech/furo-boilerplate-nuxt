@@ -17,19 +17,18 @@ const {
   invokeRequestOnMounted,
 } = useGraphqlClient(CurriculumsQueryGraphqlLauncher)
 
-function generateHooks () {
-  return {
-    /** @type {*} */
-    async beforeRequest (payload) {
-      statusReactive.isLoading = true
+/**
+ * @type {import('~/modules/client/BaseGraphqlLauncher').GraphqlLauncherHooks}
+ */
+const launcherHooks = {
+  async beforeRequest (payload) {
+    statusReactive.isLoading = true
 
-      return false
-    },
-    /** @type {*} */
-    async afterRequest (capsule) {
-      statusReactive.isLoading = false
-    },
-  }
+    return false
+  },
+  async afterRequest (capsule) {
+    statusReactive.isLoading = false
+  },
 }
 
 invokeRequestOnMounted({
@@ -45,7 +44,7 @@ invokeRequestOnMounted({
       },
     },
   },
-  hooks: generateHooks(),
+  hooks: launcherHooks,
 })
 </script>
 
@@ -68,7 +67,7 @@ invokeRequestOnMounted({
           },
         },
       },
-      hooks: generateHooks(),
+      hooks: launcherHooks,
     })"
   >
     Fetch curriculums with offset 2
