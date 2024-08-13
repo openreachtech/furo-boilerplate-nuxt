@@ -57,8 +57,6 @@ async function submitFormWithHooks ({
       },
       afterRequest: async (capsule) => {
         statusReactive.isLoading = false
-
-        console.log('afterRequest', capsule)
       },
     },
   })
