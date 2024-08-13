@@ -19,3 +19,22 @@ export /** @template V */ function useFormClerk () {
     validationRef,
   }
 }
+
+/**
+ * @typedef {{
+ *   variables: VariablesType
+ *   hooks?: HookHashType
+ *   options?: RequestInit
+ * }} GraphqlRequestParams
+ */
+
+/**
+ * @typedef {import('~/modules/client/BaseGraphqlPayload').VariablesType} VariablesType
+ */
+
+/**
+ * @typedef {{
+ *   beforeRequest?: (payload: import('~/modules/client/BaseGraphqlPayload')) => Promise<boolean>
+ *   afterRequest?: (capsule: import('~/modules/client/BaseGraphqlCapsule')) => Promise<void>
+ * }} HookHashType
+ */
