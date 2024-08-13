@@ -7,8 +7,8 @@ import {
  * Receive <form> clerk class and invoke request function.
  *
  * @param {{
- *   FormElementClerk: typeof import('~/modules/domClerks/BaseFormElementClerk').default
- *   invokeRequest: (args: GraphqlRequestParams) => Promise<void>
+ *   FormElementClerk: typeof import('~/modules/domClerks/BaseFormElementClerk').default<*, *, *>
+ *   invokeRequest: (args?: GraphqlRequestArgs) => Promise<void>
  * }} params - Parameters.
  * @returns {{
  *   validationRef: import('vue').Ref<
@@ -85,11 +85,7 @@ export default function useFormClerk ({
 }
 
 /**
- * @typedef {{
- *   variables: VariablesType
- *   hooks?: HookHashType
- *   options?: RequestInit
- * }} GraphqlRequestParams
+ * @typedef {import('~/modules/client/BaseGraphqlLauncher').GraphqlRequestArgs} GraphqlRequestArgs
  */
 
 /**
@@ -97,8 +93,5 @@ export default function useFormClerk ({
  */
 
 /**
- * @typedef {{
- *   beforeRequest?: (payload: import('~/modules/client/BaseGraphqlPayload')) => Promise<boolean>
- *   afterRequest?: (capsule: import('~/modules/client/BaseGraphqlCapsule')) => Promise<void>
- * }} HookHashType
+ * @typedef {import('~/modules/client/BaseGraphqlLauncher').GraphqlLauncherHooks} HookHashType
  */
