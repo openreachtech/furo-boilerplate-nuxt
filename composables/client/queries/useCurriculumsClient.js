@@ -52,19 +52,19 @@ export function useCurriculumsClient () {
    * @returns {Promise<void>}
    */
   async function invokeRequest (args) {
-    const capsule = await fetchCapsule(args)
+    const capsule = await retrieveCapsule(args)
 
     capsuleRef.value = capsule
   }
 }
 
 /**
- * Fetch GraphQL client capsule.
+ * Retrieve capsule.
  *
  * @param {GraphqlRequestArgs} params - Parameters.
  * @returns {Promise<GraphqlResponseCapsule>}
  */
-async function fetchCapsule ({
+async function retrieveCapsule ({
   variables = {
     input: {
       pagination: {
