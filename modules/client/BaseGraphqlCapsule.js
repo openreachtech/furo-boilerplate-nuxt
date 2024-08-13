@@ -1,7 +1,7 @@
 /**
  * Base class for GraphQL capsule.
  *
- * @template T, D
+ * @template D
  */
 export default class BaseGraphqlCapsule {
   /**
@@ -26,7 +26,7 @@ export default class BaseGraphqlCapsule {
    *
    * @template {PayloadClass<P>} P
    * @param {BaseGraphqlCapsuleFactoryParams<P>} params - Parameters of factory method.
-   * @template {typeof BaseGraphqlCapsule<C, D>} C, D
+   * @template {typeof BaseGraphqlCapsule<D>} C, D
    * @this {C}
    * @returns {InstanceType<C>} Instance of this class.
    */
@@ -39,7 +39,7 @@ export default class BaseGraphqlCapsule {
   /**
    * Factory method to create as pending behavior.
    *
-   * @template {typeof BaseGraphqlCapsule<C, D>} C, D
+   * @template {typeof BaseGraphqlCapsule<D>} C, D
    * @this {C}
    * @returns {InstanceType<C>} Instance of this class.
    */
@@ -58,7 +58,7 @@ export default class BaseGraphqlCapsule {
    * @param {{
    *   payload: PayloadClass<P>
    * }} params - Parameters.
-   * @template {typeof BaseGraphqlCapsule<C, D>} C, D
+   * @template {typeof BaseGraphqlCapsule<D>} C, D
    * @this {C}
    * @returns {InstanceType<C>} Instance of this class.
    */
@@ -80,7 +80,7 @@ export default class BaseGraphqlCapsule {
    *   rawResponse: Response
    *   payload: PayloadClass<P>
    * }} params - Parameters.
-   * @template {typeof BaseGraphqlCapsule<C, D>} C, D
+   * @template {typeof BaseGraphqlCapsule<D>} C, D
    * @this {C}
    * @returns {InstanceType<C>} Instance of this class.
    */
