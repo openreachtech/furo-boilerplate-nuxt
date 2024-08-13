@@ -10,7 +10,10 @@ class SampleFormElementClerk extends BaseFormElementClerk {
 
 }
 
-const formRef = ref(null)
+/** @type {import('vue').Ref<HTMLFormElement>} */
+const formRef = /** @type {*} */ (
+  ref(null)
+)
 
 const Timber = console
 
