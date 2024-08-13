@@ -49,6 +49,7 @@ export default function useFormClerk ({
    *   formElement: HTMLFormElement
    *   hooks?: HookHashType
    *   options?: RequestInit
+   *   generateVariables?: (valueHash: Record<string, string | Array<string> | null>) => VariablesType
    * }} params - Parameters.
    * @returns {Promise<boolean>} true: Invoke request.
    */
@@ -56,6 +57,9 @@ export default function useFormClerk ({
     formElement,
     hooks,
     options,
+    generateVariables = valueHash => ({
+      input: valueHash,
+    }),
   }) {
     const formElementClerk = FormElementClerk.create({
       formElement,
@@ -71,7 +75,7 @@ export default function useFormClerk ({
     const variableHash = formElementClerk.generateSchemaVariableHash()
 
     await invokeRequest({
-      variables: variableHash,
+      variables: generateVariables(variableHash),
       hooks,
       options,
     })
