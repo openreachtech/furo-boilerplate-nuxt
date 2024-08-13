@@ -81,5 +81,5 @@ export default function useGraphqlClient ({
  */
 
 /**
- * @typedef {import('~/app/graphql/client/queries/companySponsors/CompanySponsorsQueryGraphqlCapsule').default} Capsule
+ * @typedef {import('~/modules/client/BaseGraphqlCapsule').default<*, *>} Capsule
  */
