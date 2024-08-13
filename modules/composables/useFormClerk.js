@@ -7,8 +7,8 @@ import {
  * Receive <form> clerk class and invoke request function.
  *
  * @param {{
- *   FormElementClerk: typeof import('~/modules/domClerks/BaseFormElementClerk').default
- *   invokeRequest: (args: GraphqlRequestParams) => Promise<void>
+ *   FormElementClerk: typeof import('~/modules/domClerks/BaseFormElementClerk').default<*, *, *>
+ *   invokeRequest: (args?: GraphqlRequestArgs) => Promise<void>
  * }} params - Parameters.
  * @returns {{
  *   validationRef: import('vue').Ref<
@@ -21,7 +21,7 @@ import {
  *   }) => Promise<boolean>
  * }}
  */
-export function useFormClerk ({
+export default function useFormClerk ({
   FormElementClerk,
   invokeRequest,
 }) {
@@ -49,6 +49,7 @@ export function useFormClerk ({
    *   formElement: HTMLFormElement
    *   hooks?: HookHashType
    *   options?: RequestInit
+   *   generateVariables?: (valueHash: Record<string, string | Array<string> | null>) => VariablesType
    * }} params - Parameters.
    * @returns {Promise<boolean>} true: Invoke request.
    */
@@ -56,6 +57,9 @@ export function useFormClerk ({
     formElement,
     hooks,
     options,
+    generateVariables = valueHash => ({
+      input: valueHash,
+    }),
   }) {
     const formElementClerk = FormElementClerk.create({
       formElement,
@@ -71,7 +75,7 @@ export function useFormClerk ({
     const variableHash = formElementClerk.generateSchemaVariableHash()
 
     await invokeRequest({
-      variables: variableHash,
+      variables: generateVariables(variableHash),
       hooks,
       options,
     })
@@ -81,11 +85,7 @@ export function useFormClerk ({
 }
 
 /**
- * @typedef {{
- *   variables: VariablesType
- *   hooks?: HookHashType
- *   options?: RequestInit
- * }} GraphqlRequestParams
+ * @typedef {import('~/modules/client/BaseGraphqlLauncher').GraphqlRequestArgs} GraphqlRequestArgs
  */
 
 /**
@@ -93,8 +93,5 @@ export function useFormClerk ({
  */
 
 /**
- * @typedef {{
- *   beforeRequest?: (payload: import('~/modules/client/BaseGraphqlPayload')) => Promise<boolean>
- *   afterRequest?: (capsule: import('~/modules/client/BaseGraphqlCapsule')) => Promise<void>
- * }} HookHashType
+ * @typedef {import('~/modules/client/BaseGraphqlLauncher').GraphqlLauncherHooks} HookHashType
  */
