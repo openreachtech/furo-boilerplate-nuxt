@@ -287,9 +287,3 @@ export default class BaseGraphqlPayload {
  *   }
  * }} VariablesType
  */
-
-/**
- * @typedef {Array<ValidatorOptionsType> | {
- *   [schema: string]: Array<ValidatorOptionsType>
- * }} ValidatorHashType
- */
