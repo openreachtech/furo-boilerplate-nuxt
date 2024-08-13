@@ -130,6 +130,17 @@ describe('BaseGraphqlLauncher', () => {
 })
 
 describe('BaseGraphqlLauncher', () => {
+  describe('.get:Launcher', () => {
+    test('to be own', () => {
+      const actual = BaseGraphqlLauncher.Launcher
+
+      expect(actual)
+        .toBe(BaseGraphqlLauncher) // same reference
+    })
+  })
+})
+
+describe('BaseGraphqlLauncher', () => {
   describe('.get:Payload', () => {
     test('to throw', () => {
       expect(() => BaseGraphqlLauncher.Payload)
