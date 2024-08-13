@@ -43,6 +43,7 @@ export default class FormElementClerk {
    * @returns {{
    *   [key: string]: string | Array<string> | null
    * }}
+   * @public
    */
   extractValueHash () {
     const controlHash = this.extractControlElements()
