@@ -6,11 +6,14 @@ import {
 /**
  * Composable to use GraphQL client.
  *
+ * @template {typeof import('~/modules/client/BaseGraphqlLauncher').default} L
+ * @template C
  * @param {{
- *   Launcher: typeof import('~/modules/client/BaseGraphqlLauncher').default
+ *   Launcher: L
+ *   Capsule: C
  * }} params - Parameters.
  * @returns {{
- *   capsuleRef: import('vue').Ref<Capsule>
+ *   capsuleRef: import('vue').Ref<InstanceType<C>>
  *   invokeRequestOnEvent: (args?: GraphqlRequestArgs) => Promise<void>
  *   invokeRequestOnMounted: (args?: GraphqlRequestArgs) => void
  * }}
