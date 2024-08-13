@@ -3,9 +3,9 @@ import {
   reactive,
 } from 'vue'
 
-import {
-  useCurriculumsClient,
-} from '~/composables/client/queries/useCurriculumsClient'
+import useGraphqlClient from '~/modules/composables/useGraphqlClient'
+
+import CurriculumsQueryGraphqlLauncher from '~/app/graphql/client/queries/curriculums/CurriculumsQueryGraphqlLauncher'
 
 const statusReactive = reactive({
   isLoading: true,
@@ -15,7 +15,9 @@ const {
   capsuleRef,
   invokeRequestOnEvent,
   invokeRequestOnMounted,
-} = useCurriculumsClient()
+} = useGraphqlClient({
+  Launcher: CurriculumsQueryGraphqlLauncher,
+})
 
 function generateHooks () {
   return {
@@ -33,6 +35,18 @@ function generateHooks () {
 }
 
 invokeRequestOnMounted({
+  variables: { // TODO: Remove this variables with default values in Payload
+    input: {
+      pagination: {
+        limit: 5,
+        offset: 0,
+        sort: {
+          targetColumn: 'title',
+          orderBy: 'ASC',
+        },
+      },
+    },
+  },
   hooks: generateHooks(),
 })
 </script>

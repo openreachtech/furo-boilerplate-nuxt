@@ -3,20 +3,23 @@ import {
   ref,
 } from 'vue'
 
-import CompanySponsorsQueryGraphqlLauncher from '~/app/graphql/client/queries/companySponsors/CompanySponsorsQueryGraphqlLauncher'
-
 /**
- * Use companySponsors GraphQL client
+ * Composable to use GraphQL client.
  *
+ * @param {{
+ *   Launcher: typeof import('~/modules/client/BaseGraphqlLauncher').default
+ * }} params - Parameters.
  * @returns {{
- *   capsuleRef: import('vue').Ref<GraphqlResponseCapsule>
+ *   capsuleRef: import('vue').Ref<Capsule>
  *   invokeRequestOnEvent: (args?: GraphqlRequestArgs) => Promise<void>
  *   invokeRequestOnMounted: (args?: GraphqlRequestArgs) => void
  * }}
  */
-export function useCompanySponsorsClient () {
+export default function useGraphqlClient ({
+  Launcher,
+}) {
   const capsuleRef = ref(
-    CompanySponsorsQueryGraphqlLauncher.createCapsuleAsPending()
+    Launcher.createCapsuleAsPending()
   )
 
   return {
@@ -56,20 +59,21 @@ export function useCompanySponsorsClient () {
 
     capsuleRef.value = capsule
   }
-}
 
-/**
- * Retrieve capsule.
- *
- * @param {GraphqlRequestArgs} [args] - Arguments.
- * @returns {Promise<GraphqlResponseCapsule>}
- */
-export async function retrieveCapsule (args) {
-  const launcher = CompanySponsorsQueryGraphqlLauncher.create()
+  /**
+   * Retrieve capsule.
+   *
+   * @param {GraphqlRequestArgs} [args] - Arguments.
+   * @returns {Promise<Capsule>}
+   */
+  async function retrieveCapsule (args) {
+    // TODO: Resolve type error of `.create()` → #1035
+    const launcher = Launcher.create()
 
-  const capsule = await launcher.launchRequestWithVariables(args)
+    const capsule = await launcher.launchRequestWithVariables(args)
 
-  return /** @type {*} */ (capsule)
+    return /** @type {*} */ (capsule)
+  }
 }
 
 /**
@@ -77,5 +81,5 @@ export async function retrieveCapsule (args) {
  */
 
 /**
- * @typedef {import('~/app/graphql/client/queries/companySponsors/CompanySponsorsQueryGraphqlCapsule').default} GraphqlResponseCapsule
+ * @typedef {import('~/app/graphql/client/queries/companySponsors/CompanySponsorsQueryGraphqlCapsule').default} Capsule
  */
