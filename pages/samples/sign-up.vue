@@ -3,9 +3,12 @@ import {
   reactive,
   ref,
 } from 'vue'
+
+import useGraphqlClient from '~/modules/composables/useGraphqlClient'
+import SignUpMutationGraphqlLauncher from '~/app/graphql/client/mutations/signUp/SignUpMutationGraphqlLauncher'
+
 import SignUpFormElementClerk from '~/app/domClerk/SignUpFormElementClerk'
 
-import useSignUpClient from '~/composables/client/mutations/useSignUpClient'
 import useFormClerk from '~/modules/composables/useFormClerk'
 
 const formRef = ref(null)
@@ -18,7 +21,9 @@ const {
   capsuleRef,
   invokeRequestOnEvent,
   // invokeRequestOnMounted,
-} = useSignUpClient()
+} = useGraphqlClient({
+  Launcher: SignUpMutationGraphqlLauncher,
+})
 
 const {
   validationRef,
