@@ -6,6 +6,7 @@ import {
 import SignUpFormElementClerk from '~/app/domClerk/SignUpFormElementClerk'
 
 import useSignUpClient from '~/composables/client/mutations/useSignUpClient'
+import useFormClerk from '~/modules/composables/useFormClerk'
 
 const formRef = ref(null)
 const statusReactive = reactive({
@@ -14,11 +15,18 @@ const statusReactive = reactive({
 })
 
 const {
-  // capsuleRef,
-  validationRef,
+  capsuleRef,
   invokeRequestOnEvent,
   // invokeRequestOnMounted,
 } = useSignUpClient()
+
+const {
+  validationRef,
+  submitForm,
+} = useFormClerk({
+  FormElementClerk: SignUpFormElementClerk,
+  invokeRequest: invokeRequestOnEvent,
+})
 
 /**
  * Submit form event handler.
@@ -27,44 +35,21 @@ const {
  *   formElement: HTMLFormElement | null
  * }} params - Parameters.
  */
-async function submitForm ({
+async function submitFormWithHooks ({
   formElement,
 }) {
   if (!formElement) {
     return
   }
 
-  const formElementClerk = SignUpFormElementClerk.create({
+  await submitForm({
     formElement,
-  })
-
-  validationRef.value = formElementClerk.generateValidationHash()
-
-  if (formElementClerk.isInvalid()) {
-    // Skip #launchRequest(), if invalid value hash of <form>.
-
-    return
-  }
-
-  const variableHash = formElementClerk.generateSchemaVariableHash()
-
-  await invokeRequestOnEvent({
-    variables: {
-      input: variableHash,
-    },
     hooks: {
-      /**
-       * @param {(capsule: import('~/app/graphql/client/mutations/signUp/SignUpMutationGraphqlPayload')) => Promise<boolean>} payload
-       */
       beforeRequest: async (payload) => {
         statusReactive.isLoading = true
 
         return false
       },
-
-      /**
-       * @param {(capsule: import('~/app/graphql/client/mutations/signUp/SignUpMutationGraphqlCapsule')) => Promise<void>} capsule
-       */
       afterRequest: async (capsule) => {
         statusReactive.isLoading = false
 
@@ -80,7 +65,7 @@ async function submitForm ({
 
   <form
     ref="formRef"
-    @submit.prevent="submitForm({
+    @submit.prevent="submitFormWithHooks({
       formElement: formRef,
     })"
   >
@@ -164,6 +149,22 @@ async function submitForm ({
       新規登録
     </button>
   </form>
+
+  <pre
+    style="
+      margin-block: 3rem;
+      border: 1px #000 solid;
+
+      padding-block: .5rem;
+      padding-inline: 1rem;
+    "
+  >{{
+      JSON.stringify(
+        capsuleRef.extractContent(),
+        null,
+        4
+      )
+  }}</pre>
 
   <div
     v-if="statusReactive.isLoading"
