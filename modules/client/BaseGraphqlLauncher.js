@@ -46,6 +46,16 @@ export default class BaseGraphqlLauncher {
   }
 
   /**
+   * get: Launcher class.
+   *
+   * @abstract
+   * @returns {typeof BaseGraphqlLauncher<*>} Launcher class.
+   */
+  static get Launcher () {
+    return this
+  }
+
+  /**
    * get: Payload class.
    *
    * @abstract
