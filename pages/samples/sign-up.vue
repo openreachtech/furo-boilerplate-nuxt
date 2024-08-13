@@ -6,6 +6,7 @@ import {
 import SignUpFormElementClerk from '~/app/domClerk/SignUpFormElementClerk'
 
 import useSignUpClient from '~/composables/client/mutations/useSignUpClient'
+import useFormClerk from '~/modules/composables/useFormClerk'
 
 const formRef = ref(null)
 const statusReactive = reactive({
@@ -15,10 +16,17 @@ const statusReactive = reactive({
 
 const {
   // capsuleRef,
-  validationRef,
   invokeRequestOnEvent,
   // invokeRequestOnMounted,
 } = useSignUpClient()
+
+const {
+  validationRef,
+  submitForm,
+} = useFormClerk({
+  FormElementClerk: SignUpFormElementClerk,
+  invokeRequest: invokeRequestOnEvent,
+})
 
 /**
  * Submit form event handler.
@@ -34,37 +42,14 @@ async function submitFormWithHooks ({
     return
   }
 
-  const formElementClerk = SignUpFormElementClerk.create({
+  await submitForm({
     formElement,
-  })
-
-  validationRef.value = formElementClerk.generateValidationHash()
-
-  if (formElementClerk.isInvalid()) {
-    // Skip #launchRequest(), if invalid value hash of <form>.
-
-    return
-  }
-
-  const variableHash = formElementClerk.generateSchemaVariableHash()
-
-  await invokeRequestOnEvent({
-    variables: {
-      input: variableHash,
-    },
     hooks: {
-      /**
-       * @param {(capsule: import('~/app/graphql/client/mutations/signUp/SignUpMutationGraphqlPayload')) => Promise<boolean>} payload
-       */
       beforeRequest: async (payload) => {
         statusReactive.isLoading = true
 
         return false
       },
-
-      /**
-       * @param {(capsule: import('~/app/graphql/client/mutations/signUp/SignUpMutationGraphqlCapsule')) => Promise<void>} capsule
-       */
       afterRequest: async (capsule) => {
         statusReactive.isLoading = false
 
