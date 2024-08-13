@@ -3,7 +3,7 @@ import BaseGraphqlCapsule from '~/modules/client/BaseGraphqlCapsule'
 /**
  * Sign up mutation GraphQL capsule.
  *
- * @extends {BaseGraphqlCapsule<typeof SignUpMutationGraphqlCapsule, SignUpContent>}
+ * @extends {BaseGraphqlCapsule<SignUpContent>}
  */
 export default class SignUpMutationGraphqlCapsule extends BaseGraphqlCapsule {
 
