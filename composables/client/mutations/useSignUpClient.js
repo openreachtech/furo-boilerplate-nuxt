@@ -11,8 +11,8 @@ import SignUpMutationGraphqlLauncher from '~/app/graphql/client/mutations/signUp
  * @returns {{
  *   capsuleRef: import('vue').Ref<GraphqlResponseCapsule>
  *   validationRef: import('vue').Ref<import('~/modules/validators/ValueHashValidator').ValidatorHashType>
- *   invokeRequestOnEvent: (args: GraphqlRequestParams) => Promise<void>
- *   invokeRequestOnMounted: (args: GraphqlRequestParams) => void
+ *   invokeRequestOnEvent: (args?: GraphqlRequestArgs) => Promise<void>
+ *   invokeRequestOnMounted: (args?: GraphqlRequestArgs) => void
  * }}
  */
 export default function useSignUpClient () {
@@ -37,7 +37,7 @@ export default function useSignUpClient () {
     /**
      * Invoke request.
      *
-     * @param {GraphqlRequestParams} args - Arguments.
+     * @param {GraphqlRequestArgs} [args] - Arguments.
      * @returns {Promise<void>}
      */
     async invokeRequestOnEvent (args) {
@@ -47,7 +47,7 @@ export default function useSignUpClient () {
     /**
      * Invoke request.
      *
-     * @param {GraphqlRequestParams} args - Arguments.
+     * @param {GraphqlRequestArgs} [args] - Arguments.
      * @returns {void}
      */
     invokeRequestOnMounted (args) {
@@ -60,7 +60,7 @@ export default function useSignUpClient () {
   /**
    * Invoke request.
    *
-   * @param {GraphqlRequestParams} args - Arguments.
+   * @param {GraphqlRequestArgs} [args] - Arguments.
    * @returns {Promise<void>}
    */
   async function invokeRequest (args) {
@@ -73,7 +73,7 @@ export default function useSignUpClient () {
 /**
  * Fetch GraphQL client capsule.
  *
- * @param {GraphqlRequestParams} args - Arguments.
+ * @param {GraphqlRequestArgs} [args] - Arguments.
  * @returns {Promise<GraphqlResponseCapsule>}
  */
 export async function fetchCapsule (args) {
@@ -89,10 +89,7 @@ export async function fetchCapsule (args) {
  */
 
 /**
- * @typedef {{
- *   variables: SignUpVariablesType
- *   hooks?: Record<string, Function>
- * }} GraphqlRequestParams
+ * @typedef {import('~/modules/client/BaseGraphqlLauncher').GraphqlRequestArgs} GraphqlRequestArgs
  */
 
 /**
