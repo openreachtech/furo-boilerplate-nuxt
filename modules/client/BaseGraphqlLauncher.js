@@ -340,6 +340,74 @@ export default class BaseGraphqlLauncher {
   }
 
   /**
+   * Obtain capsule.
+   *
+   * @param {{
+   *   payload: InstanceType<PayloadClass<*, *>>
+   *   beforeRequest: (payload: InstanceType<PayloadClass<*, *>>) => Promise<boolean>
+   * }} params - Parameters.
+   * @returns {Promise<InstanceType<CapsuleClass<*, *>>>} An instance of capsule.
+   */
+  async obtainCapsule ({
+    payload,
+    beforeRequest,
+  }) {
+    if (payload.isInvalidVariables()) {
+      return this.Ctor.createCapsuleAsInvalidVariablesError({
+        payload,
+      })
+    }
+
+    const aborted = await beforeRequest(payload)
+    if (aborted) {
+      return this.Ctor.createCapsuleAsAbortedByHooks({
+        payload,
+      })
+    }
+
+    return this.retrieveLaunchedCapsule({
+      payload,
+    })
+  }
+
+  /**
+   * Resolve launched capsule.
+   *
+   * @param {{
+   *   payload: InstanceType<PayloadClass<*, *>>
+   * }} params - Parameters.
+   * @returns {Promise<InstanceType<CapsuleClass<*, *>>>} Promise of instance of capsule.
+   */
+  async retrieveLaunchedCapsule ({
+    payload,
+  }) {
+    const response = await this.invokeFetchQuery({
+      payload,
+    })
+    if (response === null) {
+      return this.Ctor.createCapsuleAsNetworkError({
+        payload,
+      })
+    }
+
+    const result = await this.generateFetchResult({
+      response,
+    })
+    if (result === null) {
+      return this.Ctor.createCapsuleAsJsonParseError({
+        rawResponse: response,
+        payload,
+      })
+    }
+
+    return this.Ctor.createCapsule({
+      rawResponse: response,
+      payload,
+      result,
+    })
+  }
+
+  /**
    * Fetch query.
    *
    * @param {{
