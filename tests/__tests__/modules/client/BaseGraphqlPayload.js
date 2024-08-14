@@ -1335,8 +1335,8 @@ describe('BaseGraphqlPayload', () => {
     /**
      * @type {Array<{
      *   Payload: typeof BaseGraphqlPayload,
-     *   truthyCases: Array<import('~/modules/client/BaseGraphqlPayload').VariablesType>,
-     *   falsyCases: Array<import('~/modules/client/BaseGraphqlPayload').VariablesType>,
+     *   truthyCases: Array<import('~/modules/client/BaseGraphqlPayload').GraphqlRequestVariables>,
+     *   falsyCases: Array<import('~/modules/client/BaseGraphqlPayload').GraphqlRequestVariables>,
      * }>}
      */
     const cases = [
@@ -1799,8 +1799,8 @@ describe('BaseGraphqlPayload', () => {
     /**
      * @type {Array<{
      *   Payload: typeof BaseGraphqlPayload<*, *>,
-     *   truthyCases: Array<import('~/modules/client/BaseGraphqlPayload').VariablesType>,
-     *   falsyCases: Array<import('~/modules/client/BaseGraphqlPayload').VariablesType>,
+     *   truthyCases: Array<import('~/modules/client/BaseGraphqlPayload').GraphqlRequestVariables>,
+     *   falsyCases: Array<import('~/modules/client/BaseGraphqlPayload').GraphqlRequestVariables>,
      * }>}
      */
     const cases = [
