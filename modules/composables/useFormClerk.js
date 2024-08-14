@@ -49,7 +49,7 @@ export default function useFormClerk ({
    *   formElement: HTMLFormElement
    *   hooks?: HookHashType
    *   options?: RequestInit
-   *   generateVariables?: (valueHash: Record<string, string | Array<string> | null>) => VariablesType
+   *   generateVariables?: (valueHash: Record<string, string | Array<string> | null>) => RequestVariables
    * }} params - Parameters.
    * @returns {Promise<boolean>} true: Invoke request.
    */
@@ -89,7 +89,7 @@ export default function useFormClerk ({
  */
 
 /**
- * @typedef {import('~/modules/client/BaseGraphqlPayload').VariablesType} VariablesType
+ * @typedef {import('~/modules/client/BaseGraphqlPayload').GraphqlRequestVariables} RequestVariables
  */
 
 /**
