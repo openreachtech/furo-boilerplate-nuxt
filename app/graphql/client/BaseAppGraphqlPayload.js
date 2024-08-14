@@ -10,7 +10,7 @@ import {
  * Company sponsors query graphql launcher.
  *
  * @template T
- * @template {import('~/modules/client/BaseGraphqlPayload').VariablesType} SV
+ * @template {import('~/modules/client/BaseGraphqlPayload').GraphqlRequestVariables} SV
  * @extends {BaseGraphqlPayload<typeof BaseAppGraphqlPayload, SV>}
  */
 export default class BaseAppGraphqlPayload extends BaseGraphqlPayload {
