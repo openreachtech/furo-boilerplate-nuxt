@@ -5,7 +5,7 @@ import {
 /**
  * Base class of GraphQL launcher.
  *
- * @template T
+ * @template T - Type of this class.
  */
 export default class BaseGraphqlLauncher {
   /**
@@ -81,7 +81,7 @@ export default class BaseGraphqlLauncher {
    * Create payload.
    *
    * @param {{
-   *   variables: VariablesType
+   *   variables: RequestVariables
    *   options: RequestInit
    * }} params - Parameters.
    * @template P
@@ -253,7 +253,7 @@ export default class BaseGraphqlLauncher {
    *
    * @param {{
    *   payload: InstanceType<PayloadClass<*, *>>
-   * }} Params - Parameters.
+   * }} params - Parameters.
    * @returns {Promise<InstanceType<CapsuleClass<*, *>>>} Promise of instance of capsule.
    * @public
    */
@@ -295,7 +295,7 @@ export default class BaseGraphqlLauncher {
   /**
    * Launch query with direct variables.
    *
-   * @param {GraphqlRequestArgs} Params - Parameters.
+   * @param {GraphqlRequestArgs} params - Parameters.
    * @template C, D
    * @returns {Promise<InstanceType<CapsuleClass<C, D>>>} Promise of instance of capsule.
    * @public
@@ -399,7 +399,7 @@ export default class BaseGraphqlLauncher {
 
 /**
  * @template {typeof import('./BaseGraphqlPayload')} P
- * @template {VariablesType} SV
+ * @template {RequestVariables} SV
  * @typedef {typeof import('./BaseGraphqlPayload').default<P, SV>} PayloadClass
  */
 
@@ -409,7 +409,7 @@ export default class BaseGraphqlLauncher {
  */
 
 /**
- * @typedef {import('./BaseGraphqlPayload').VariablesType} VariablesType
+ * @typedef {import('./BaseGraphqlPayload').GraphqlRequestVariables} RequestVariables
  */
 
 /**
@@ -423,7 +423,7 @@ export default class BaseGraphqlLauncher {
 
 /**
  * @typedef {{
-*   variables?: VariablesType
+*   variables?: RequestVariables
 *   options?: RequestInit
 *   hooks?: GraphqlLauncherHooks
 * }} GraphqlRequestArgs

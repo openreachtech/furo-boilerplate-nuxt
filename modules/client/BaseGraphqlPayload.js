@@ -1,8 +1,8 @@
 /**
  * Base class of GraphQL payload.
  *
- * @template T
- * @template {VariablesType} SV
+ * @template T - Type of this class.
+ * @template {GraphqlRequestVariables} SV - Type of variables for schema.
  */
 export default class BaseGraphqlPayload {
   /**
@@ -239,22 +239,22 @@ export default class BaseGraphqlPayload {
 /**
  * @typedef {{
  *   queryTemplate: string
- *   variables: VariablesType
+ *   variables: GraphqlRequestVariables
  *   options?: RequestInit
  * }} BaseGraphqlPayloadParams
  */
 
 /**
  * @typedef {{
- *   variables?: VariablesType
+ *   variables?: GraphqlRequestVariables
  *   options?: RequestInit
  * }} BaseGraphqlPayloadFactoryParams
  */
 
 /**
  * @typedef {{
- *   [schema: string]: {
+ *   [variablesName: string]: {
  *     [field: string]: any
  *   }
- * }} VariablesType
+ * }} GraphqlRequestVariables
  */

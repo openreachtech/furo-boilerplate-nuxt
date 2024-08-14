@@ -3,7 +3,7 @@ import BaseAppGraphqlPayload from '~/app/graphql/client/BaseAppGraphqlPayload'
 /**
  * Curriculums query payload.
  *
- * @extends {BaseAppGraphqlPayload<typeof CurriculumsQueryGraphqlPayload, CurriculumsQueryVariablesType>}
+ * @extends {BaseAppGraphqlPayload<typeof CurriculumsQueryGraphqlPayload, CurriculumsQueryRequestVariables>}
  */
 export default class CurriculumsQueryGraphqlPayload extends BaseAppGraphqlPayload {
   /** @override */
@@ -43,5 +43,5 @@ export default class CurriculumsQueryGraphqlPayload extends BaseAppGraphqlPayloa
  *       orderBy: string
  *     }
  *   }
- * }} CurriculumsQueryVariablesType
+ * }} CurriculumsQueryRequestVariables
  */

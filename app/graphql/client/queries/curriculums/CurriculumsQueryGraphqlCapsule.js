@@ -3,7 +3,7 @@ import BaseGraphqlCapsule from '~/modules/client/BaseGraphqlCapsule'
 /**
  * Curriculums query graphql capsule.
  *
- * @extends {BaseGraphqlCapsule<CurriculumsQueryGraphqlCapsule, CurriculumsContent>}
+ * @extends {BaseGraphqlCapsule<typeof CurriculumsQueryGraphqlCapsule, CurriculumsQueryResponseContent>}
  */
 export default class CurriculumsQueryGraphqlCapsule extends BaseGraphqlCapsule {
   /**
@@ -26,7 +26,7 @@ export default class CurriculumsQueryGraphqlCapsule extends BaseGraphqlCapsule {
  *   curriculums: {
  *     curriculums: Array<CurriculumEntity>
  *   }
- * }} CurriculumsContent
+ * }} CurriculumsQueryResponseContent
  */
 
 /**

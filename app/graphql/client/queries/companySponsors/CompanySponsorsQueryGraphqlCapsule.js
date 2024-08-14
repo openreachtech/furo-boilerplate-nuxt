@@ -3,7 +3,7 @@ import BaseGraphqlCapsule from '~/modules/client/BaseGraphqlCapsule'
 /**
  * CompanySponsorsQueryGraphqlCapsule
  *
- * @extends {BaseGraphqlCapsule<CompanySponsorsQueryGraphqlCapsule, CompanySponsorsContent>}
+ * @extends {BaseGraphqlCapsule<typeof CompanySponsorsQueryGraphqlCapsule, CompanySponsorsQueryResponseContent>}
  */
 export default class CompanySponsorsQueryGraphqlCapsule extends BaseGraphqlCapsule {
   /**
@@ -26,7 +26,7 @@ export default class CompanySponsorsQueryGraphqlCapsule extends BaseGraphqlCapsu
  *   companySponsors: {
  *     companySponsors: Array<CompanySponsorEntity>
  *   }
- * }} CompanySponsorsContent
+ * }} CompanySponsorsQueryResponseContent
  */
 
 /**

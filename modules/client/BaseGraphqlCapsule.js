@@ -1,7 +1,8 @@
 /**
  * Base class for GraphQL capsule.
  *
- * @template T, D
+ * @template T - Type of this class.
+ * @template D - Type of content (data).
  */
 export default class BaseGraphqlCapsule {
   /**
@@ -247,7 +248,7 @@ export const LAUNCH_ABORTED_REASON = {
  * @typedef {{
  *   rawResponse: Response | null
  *   payload: P | null
- *   result: GraphqlCapsuleResult | null
+ *   result: GraphqlResponse | null
  *   abortedReason?: LAUNCH_ABORTED_REASON
  * }} BaseGraphqlCapsuleParams
  */
@@ -259,14 +260,18 @@ export const LAUNCH_ABORTED_REASON = {
 
 /**
  * @template P
- * @typedef {import('~/modules/client/BaseGraphqlPayload').default<P>} PayloadClass
+ * @typedef {import('~/modules/client/BaseGraphqlPayload').default<P, *>} PayloadClass
  */
 
 /**
  * @typedef {{
- *   data?: object
+ *   data?: GraphqlResponseContent
  *   errors?: Array<GraphqlResponseError>
- * }} GraphqlCapsuleResult
+ * }} GraphqlResponse
+ */
+
+/**
+ * @typedef {Record<string, any>} GraphqlResponseContent
  */
 
 /**

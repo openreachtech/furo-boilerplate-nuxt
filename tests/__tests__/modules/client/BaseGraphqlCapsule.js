@@ -95,7 +95,7 @@ describe('BaseGraphqlCapsule', () => {
         /**
          * @type {Array<{
          *   params: {
-         *     result: import('~/modules/client/BaseGraphqlCapsule').GraphqlCapsuleResult
+         *     result: import('~/modules/client/BaseGraphqlCapsule').GraphqlResponse
          *   }
          * }>}
          */
