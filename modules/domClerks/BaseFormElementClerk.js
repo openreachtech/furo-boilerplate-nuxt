@@ -45,7 +45,7 @@ export default class BaseFormElementClerk {
    * get: Validators.
    *
    * @abstract
-   * @returns {Array<ValidatorOptionsType>} Array of arguments to create an instance of FieldValidator.
+   * @returns {Array<FieldValidatorFactoryParams>} Array of arguments to create an instance of FieldValidator.
    */
   static get validators () {
     return []
@@ -211,5 +211,5 @@ export default class BaseFormElementClerk {
  */
 
 /**
- * @typedef {import('~/modules/client/FieldValidator').FieldValidatorFactoryParams} ValidatorOptionsType
+ * @typedef {import('~/modules/client/FieldValidator').FieldValidatorFactoryParams} FieldValidatorFactoryParams
  */
