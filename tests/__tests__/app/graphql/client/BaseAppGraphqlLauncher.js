@@ -82,6 +82,21 @@ describe('BaseAppGraphqlLauncher', () => {
 })
 
 describe('BaseAppGraphqlLauncher', () => {
+  describe('.get:graphqlConfig', () => {
+    test('to be fixed value', () => {
+      const expected = {
+        ENDPOINT_URL: 'http://localhost:3900/graphql-customer',
+      }
+
+      const actual = BaseAppGraphqlLauncher.graphqlConfig
+
+      expect(actual)
+        .toEqual(expected)
+    })
+  })
+})
+
+describe('BaseAppGraphqlLauncher', () => {
   describe('#get:Ctor', () => {
     describe('to be BaseAppGraphqlLauncher', () => {
       const cases = [

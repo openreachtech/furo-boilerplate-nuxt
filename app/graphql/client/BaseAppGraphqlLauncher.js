@@ -29,6 +29,11 @@ export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
       })
     )
   }
+
+  /** @override */
+  static get graphqlConfig () {
+    return graphqlConfig
+  }
 }
 
 /**
