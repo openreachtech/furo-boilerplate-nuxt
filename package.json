@@ -17,7 +17,7 @@
     "furo",
     "boilerplate"
   ],
-  "author": "ORT inc.",
+  "author": "Open Reach Tech inc.",
   "license": "UNLICENSED",
   "dependencies": {
     "core-js": "^3.36.0",
