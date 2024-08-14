@@ -277,53 +277,6 @@ export default class BaseGraphqlLauncher {
   }
 
   /**
-   * Launch query with direct variables.
-   *
-   * @param {GraphqlRequestArgs} params - Parameters.
-   * @template C, D
-   * @returns {Promise<InstanceType<CapsuleClass<C, D>>>} Promise of instance of capsule.
-   * @public
-   */
-  async launchRequestWithVariables ({
-    variables = {},
-    options = {},
-    hooks = {},
-  } = {}) {
-    const payload = this.Ctor.createPayload({
-      variables,
-      options,
-    })
-
-    const {
-      beforeRequest = async () => false,
-      afterRequest = async () => {},
-    } = hooks
-
-    /*
-     * Before request.
-     */
-    const aborted = await beforeRequest(payload)
-
-    /*
-     * Create capsule.
-     */
-    const capsule = aborted
-      ? this.Ctor.createCapsuleAsAbortedByHooks({
-        payload,
-      })
-      : await this.launchRequest({
-        payload,
-      })
-
-    /*
-     * After request.
-     */
-    await afterRequest(capsule)
-
-    return capsule
-  }
-
-  /**
    * Obtain capsule.
    *
    * @param {{
