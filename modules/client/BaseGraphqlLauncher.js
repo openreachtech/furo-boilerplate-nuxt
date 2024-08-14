@@ -412,7 +412,11 @@ export default class BaseGraphqlLauncher {
  */
 
 /**
- * @typedef {BaseGraphqlLauncherParams} BaseGraphqlLauncherFactoryParams
+ * @typedef {{
+ *   config?: {
+ *     [x: string]: string
+ *   }
+ * }} BaseGraphqlLauncherFactoryParams
  */
 
 /**
