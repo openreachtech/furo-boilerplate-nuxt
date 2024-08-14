@@ -234,35 +234,6 @@ export default class BaseGraphqlPayload {
   isInvalidVariables () {
     return !this.isValidVariables()
   }
-
-  /**
-   * Resolve validators as object hash.
-   *
-   * @param {{
-   *   validators: ValidatorHashType
-   * }} args - Arguments for FieldValidator.
-   * @returns {{
-   *   [group: string]: Array<ValidatorOptionsType>
-   * }}
-   */
-  resolveValidatorHash ({
-    validators,
-  }) {
-    if (!Array.isArray(validators)) {
-      return validators
-    }
-
-    const groupNames = Object.keys(this.variables ?? {})
-
-    return Object.fromEntries(
-      groupNames.map(
-        group => [
-          group,
-          validators,
-        ]
-      )
-    )
-  }
 }
 
 /**
@@ -286,14 +257,4 @@ export default class BaseGraphqlPayload {
  *     [field: string]: any
  *   }
  * }} VariablesType
- */
-
-/**
- * @typedef {Array<ValidatorOptionsType> | {
- *   [schema: string]: Array<ValidatorOptionsType>
- * }} ValidatorHashType
- */
-
-/**
- * @typedef {import('~/modules/client/FieldValidator').FieldValidatorFactoryParams} ValidatorOptionsType
  */
