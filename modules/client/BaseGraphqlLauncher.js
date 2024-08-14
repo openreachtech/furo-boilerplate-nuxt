@@ -340,6 +340,37 @@ export default class BaseGraphqlLauncher {
   }
 
   /**
+   * Obtain capsule.
+   *
+   * @param {{
+   *   payload: InstanceType<PayloadClass<*, *>>
+   *   beforeRequest: (payload: InstanceType<PayloadClass<*, *>>) => Promise<boolean>
+   * }} params - Parameters.
+   * @returns {Promise<InstanceType<CapsuleClass<*, *>>>} An instance of capsule.
+   */
+  async obtainCapsule ({
+    payload,
+    beforeRequest,
+  }) {
+    if (payload.isInvalidVariables()) {
+      return this.Ctor.createCapsuleAsInvalidVariablesError({
+        payload,
+      })
+    }
+
+    const aborted = await beforeRequest(payload)
+    if (aborted) {
+      return this.Ctor.createCapsuleAsAbortedByHooks({
+        payload,
+      })
+    }
+
+    return this.retrieveLaunchedCapsule({
+      payload,
+    })
+  }
+
+  /**
    * Resolve launched capsule.
    *
    * @param {{
