@@ -79,7 +79,6 @@ export default function useGraphqlClient ({
       options,
     })
 
-    // TODO: Resolve type error of `.create()` → #1035
     const launcher = Launcher.create()
 
     const capsule = await launcher.launchRequest({

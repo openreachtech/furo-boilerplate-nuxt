@@ -9,25 +9,9 @@ import graphqlConfig from '~/app/graphql/graphql.config'
  * @extends {BaseGraphqlLauncher<typeof BaseAppGraphqlLauncher>}
  */
 export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
-  /**
-   * Factory method.
-   *
-   * @override
-   * @param {BaseAppGraphqlLauncherFactoryParams} params - Parameters of factory method.
-   * @template T
-   * @this {T}
-   * @returns {InstanceType<T>} Instance of BaseAppGraphqlLauncher.
-   */
-  static create ({
-    config,
-  } = {
-    config: graphqlConfig,
-  }) {
-    return /** @type {*} */ (
-      super.create({
-        config,
-      })
-    )
+  /** @override */
+  static get graphqlConfig () {
+    return graphqlConfig
   }
 }
 

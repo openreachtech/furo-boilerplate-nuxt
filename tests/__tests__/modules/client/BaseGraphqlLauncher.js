@@ -96,6 +96,22 @@ describe('BaseGraphqlLauncher', () => {
           .toHaveBeenCalledWith(params)
       })
     })
+
+    describe('to throw', () => {
+      test('without params', () => {
+        expect(() => BaseGraphqlLauncher.create())
+          .toThrow('this function must be inherited')
+      })
+    })
+  })
+})
+
+describe('BaseGraphqlLauncher', () => {
+  describe('.get:graphqlConfig', () => {
+    test('to throw', () => {
+      expect(() => BaseGraphqlLauncher.graphqlConfig)
+        .toThrow('this function must be inherited')
+    })
   })
 })
 
