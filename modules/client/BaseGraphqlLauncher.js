@@ -253,7 +253,7 @@ export default class BaseGraphqlLauncher {
    *
    * @param {{
    *   payload: InstanceType<PayloadClass<*, *>>
-   * }} Params - Parameters.
+   * }} params - Parameters.
    * @returns {Promise<InstanceType<CapsuleClass<*, *>>>} Promise of instance of capsule.
    * @public
    */
