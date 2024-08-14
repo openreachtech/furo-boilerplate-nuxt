@@ -34,6 +34,19 @@ export default class BaseGraphqlLauncher {
   }
 
   /**
+   * get: GraphQL configuration.
+   *
+   * @abstract
+   * @returns {{
+   *   [key: string]: string
+   * }} GraphQL configuration.
+   * @throws {Error} This function must be inherited.
+   */
+  static get graphqlConfig () {
+    throw new Error('this function must be inherited')
+  }
+
+  /**
    * Fetch function.
    *
    * @returns {(
