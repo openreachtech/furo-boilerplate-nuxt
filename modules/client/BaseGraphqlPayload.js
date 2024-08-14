@@ -253,7 +253,7 @@ export default class BaseGraphqlPayload {
 
 /**
  * @typedef {{
- *   [schema: string]: {
+ *   [variablesName: string]: {
  *     [field: string]: any
  *   }
  * }} GraphqlRequestVariables
