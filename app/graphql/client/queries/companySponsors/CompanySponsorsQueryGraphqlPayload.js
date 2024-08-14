@@ -3,7 +3,7 @@ import BaseAppGraphqlPayload from '~/app/graphql/client/BaseAppGraphqlPayload'
 /**
  * CompanySponsors query payload.
  *
- * @extends {BaseAppGraphqlPayload<typeof CompanySponsorsQueryGraphqlPayload, CompanySponsorsVariablesType>}
+ * @extends {BaseAppGraphqlPayload<typeof CompanySponsorsQueryGraphqlPayload, CompanySponsorsQueryRequestVariables>}
  */
 export default class CompanySponsorsQueryGraphqlPayload extends BaseAppGraphqlPayload {
   /** @override */
@@ -26,5 +26,5 @@ export default class CompanySponsorsQueryGraphqlPayload extends BaseAppGraphqlPa
 }
 
 /**
- * @typedef {{}} CompanySponsorsVariablesType
+ * @typedef {{}} CompanySponsorsQueryRequestVariables
  */
