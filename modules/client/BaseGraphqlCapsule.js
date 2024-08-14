@@ -1,7 +1,8 @@
 /**
  * Base class for GraphQL capsule.
  *
- * @template T, D
+ * @template T - Type of this class.
+ * @template D - Type of content (data).
  */
 export default class BaseGraphqlCapsule {
   /**

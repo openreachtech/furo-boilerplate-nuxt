@@ -5,7 +5,7 @@ import {
 /**
  * Base class of GraphQL launcher.
  *
- * @template T
+ * @template T - Type of this class.
  */
 export default class BaseGraphqlLauncher {
   /**
