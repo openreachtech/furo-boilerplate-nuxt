@@ -21,9 +21,7 @@ const {
   capsuleRef,
   invokeRequestOnEvent,
   // invokeRequestOnMounted,
-} = useGraphqlClient({
-  Launcher: SignUpMutationGraphqlLauncher,
-})
+} = useGraphqlClient(SignUpMutationGraphqlLauncher)
 
 const {
   validationRef,
