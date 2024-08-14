@@ -69,11 +69,23 @@ export default function useGraphqlClient ({
    * @param {GraphqlRequestArgs} [args] - Arguments.
    * @returns {Promise<Capsule>}
    */
-  async function retrieveCapsule (args) {
+  async function retrieveCapsule ({
+    variables = {},
+    options = {},
+    hooks = {},
+  } = {}) {
+    const payload = Launcher.createPayload({
+      variables,
+      options,
+    })
+
     // TODO: Resolve type error of `.create()` → #1035
     const launcher = Launcher.create()
 
-    const capsule = await launcher.launchRequestWithVariables(args)
+    const capsule = await launcher.launchRequest({
+      payload,
+      hooks,
+    })
 
     return /** @type {*} */ (capsule)
   }
