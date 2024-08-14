@@ -96,6 +96,13 @@ describe('BaseGraphqlLauncher', () => {
           .toHaveBeenCalledWith(params)
       })
     })
+
+    describe('to throw', () => {
+      test('without params', () => {
+        expect(() => BaseGraphqlLauncher.create())
+          .toThrow('this function must be inherited')
+      })
+    })
   })
 })
 

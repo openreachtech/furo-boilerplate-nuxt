@@ -22,14 +22,18 @@ export default class BaseGraphqlLauncher {
   /**
    * Factory method.
    *
-   * @param {BaseGraphqlLauncherFactoryParams} params - Parameters of factory method.
+   * @param {BaseGraphqlLauncherFactoryParams} [params] - Parameters of factory method.
    * @template {typeof BaseGraphqlLauncher} T
    * @this {T}
    * @returns {InstanceType<T>} Instance of this class.
    */
-  static create (params) {
+  static create ({
+    config = this.graphqlConfig,
+  } = {}) {
     return /** @type {*} */ (
-      new this(params)
+      new this({
+        config,
+      })
     )
   }
 
@@ -412,7 +416,11 @@ export default class BaseGraphqlLauncher {
  */
 
 /**
- * @typedef {BaseGraphqlLauncherParams} BaseGraphqlLauncherFactoryParams
+ * @typedef {{
+ *   config?: {
+ *     [x: string]: string
+ *   }
+ * }} BaseGraphqlLauncherFactoryParams
  */
 
 /**
