@@ -15,9 +15,7 @@ const {
   capsuleRef,
   invokeRequestOnEvent,
   invokeRequestOnMounted,
-} = useGraphqlClient({
-  Launcher: CurriculumsQueryGraphqlLauncher,
-})
+} = useGraphqlClient(CurriculumsQueryGraphqlLauncher)
 
 function generateHooks () {
   return {

@@ -9,10 +9,9 @@ import CompanySponsorsQueryGraphqlLauncher from '~/app/graphql/client/queries/co
 
 const {
   capsuleRef,
+  // invokeRequestOnEvent,
   invokeRequestOnMounted,
-} = useGraphqlClient({
-  Launcher: CompanySponsorsQueryGraphqlLauncher,
-})
+} = useGraphqlClient(CompanySponsorsQueryGraphqlLauncher)
 
 const statusReactive = reactive({
   isLoading: true,
