@@ -340,6 +340,43 @@ export default class BaseGraphqlLauncher {
   }
 
   /**
+   * Resolve launched capsule.
+   *
+   * @param {{
+   *   payload: InstanceType<PayloadClass<*, *>>
+   * }} params - Parameters.
+   * @returns {Promise<InstanceType<CapsuleClass<*, *>>>} Promise of instance of capsule.
+   */
+  async retrieveLaunchedCapsule ({
+    payload,
+  }) {
+    const response = await this.invokeFetchQuery({
+      payload,
+    })
+    if (response === null) {
+      return this.Ctor.createCapsuleAsNetworkError({
+        payload,
+      })
+    }
+
+    const result = await this.generateFetchResult({
+      response,
+    })
+    if (result === null) {
+      return this.Ctor.createCapsuleAsJsonParseError({
+        rawResponse: response,
+        payload,
+      })
+    }
+
+    return this.Ctor.createCapsule({
+      rawResponse: response,
+      payload,
+      result,
+    })
+  }
+
+  /**
    * Fetch query.
    *
    * @param {{
