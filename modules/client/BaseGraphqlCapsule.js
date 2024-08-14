@@ -248,7 +248,7 @@ export const LAUNCH_ABORTED_REASON = {
  * @typedef {{
  *   rawResponse: Response | null
  *   payload: P | null
- *   result: GraphqlCapsuleResult | null
+ *   result: GraphqlResponse | null
  *   abortedReason?: LAUNCH_ABORTED_REASON
  * }} BaseGraphqlCapsuleParams
  */
@@ -267,7 +267,7 @@ export const LAUNCH_ABORTED_REASON = {
  * @typedef {{
  *   data?: object
  *   errors?: Array<GraphqlResponseError>
- * }} GraphqlCapsuleResult
+ * }} GraphqlResponse
  */
 
 /**
