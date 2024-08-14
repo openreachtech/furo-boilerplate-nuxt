@@ -423,11 +423,11 @@ export default class BaseGraphqlLauncher {
 
 /**
  * @typedef {{
-*   variables?: RequestVariables
-*   options?: RequestInit
-*   hooks?: GraphqlLauncherHooks
-* }} GraphqlRequestArgs
-*/
+ *   variables?: RequestVariables
+ *   options?: RequestInit
+ *   hooks?: GraphqlLauncherHooks
+ * }} GraphqlRequestArgs
+ */
 
 /**
  * @typedef {{
