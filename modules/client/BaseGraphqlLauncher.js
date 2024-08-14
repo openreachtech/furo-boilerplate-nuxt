@@ -253,7 +253,7 @@ export default class BaseGraphqlLauncher {
    *
    * @param {{
    *   payload: InstanceType<PayloadClass<*, *>>
-   * }} Params - Parameters.
+   * }} params - Parameters.
    * @returns {Promise<InstanceType<CapsuleClass<*, *>>>} Promise of instance of capsule.
    * @public
    */
@@ -295,7 +295,7 @@ export default class BaseGraphqlLauncher {
   /**
    * Launch query with direct variables.
    *
-   * @param {GraphqlRequestArgs} Params - Parameters.
+   * @param {GraphqlRequestArgs} params - Parameters.
    * @template C, D
    * @returns {Promise<InstanceType<CapsuleClass<C, D>>>} Promise of instance of capsule.
    * @public
