@@ -249,47 +249,31 @@ export default class BaseGraphqlLauncher {
   }
 
   /**
-   * Launch query with direct variables.
+   * Launch request.
    *
    * @param {{
    *   payload: InstanceType<PayloadClass<*, *>>
+   *   hooks?: GraphqlLauncherHooks
    * }} params - Parameters.
-   * @returns {Promise<InstanceType<CapsuleClass<*, *>>>} Promise of instance of capsule.
+   * @template C, D
+   * @returns {Promise<InstanceType<CapsuleClass<C, D>>>} Promise of instance of capsule.
    * @public
    */
   async launchRequest ({
     payload,
+    hooks: {
+      beforeRequest = async () => false,
+      afterRequest = async () => {},
+    } = {},
   }) {
-    if (payload.isInvalidVariables()) {
-      return this.Ctor.createCapsuleAsInvalidVariablesError({
-        payload,
-      })
-    }
-
-    const response = await this.invokeFetchQuery({
+    const capsule = await this.obtainCapsule({
       payload,
+      beforeRequest,
     })
-    if (response === null) {
-      return this.Ctor.createCapsuleAsNetworkError({
-        payload,
-      })
-    }
 
-    const result = await this.generateFetchResult({
-      response,
-    })
-    if (result === null) {
-      return this.Ctor.createCapsuleAsJsonParseError({
-        rawResponse: response,
-        payload,
-      })
-    }
+    await afterRequest(capsule)
 
-    return this.Ctor.createCapsule({
-      rawResponse: response,
-      payload,
-      result,
-    })
+    return capsule
   }
 
   /**
