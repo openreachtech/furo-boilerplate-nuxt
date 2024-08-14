@@ -100,6 +100,15 @@ describe('BaseGraphqlLauncher', () => {
 })
 
 describe('BaseGraphqlLauncher', () => {
+  describe('.get:graphqlConfig', () => {
+    test('to throw', () => {
+      expect(() => BaseGraphqlLauncher.graphqlConfig)
+        .toThrow('this function must be inherited')
+    })
+  })
+})
+
+describe('BaseGraphqlLauncher', () => {
   describe('#get:Ctor', () => {
     describe('to be own class', () => {
       const cases = [
