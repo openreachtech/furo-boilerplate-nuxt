@@ -271,6 +271,10 @@ export const LAUNCH_ABORTED_REASON = {
  */
 
 /**
+ * @typedef {Record<string, any>} GraphqlResponseContent
+ */
+
+/**
  * @typedef {{
  *   message: string
  *   locations: Array<{
