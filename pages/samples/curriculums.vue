@@ -20,7 +20,7 @@ const {
 } = useGraphqlClient(CurriculumsQueryGraphqlLauncher)
 
 /**
- * @type {import('~/modules/client/BaseGraphqlLauncher').GraphqlLauncherHooks}
+ * @type {furo.GraphqlLauncherHooks}
  */
 const launcherHooks = {
   async beforeRequest (payload) {

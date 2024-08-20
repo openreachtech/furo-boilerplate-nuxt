@@ -1,5 +1,7 @@
+import {
+  BaseGraphqlLauncher,
+} from '@openreachtech/furo'
 import BaseAppGraphqlLauncher from '~/app/graphql/client/BaseAppGraphqlLauncher'
-import BaseGraphqlLauncher from '~/modules/client/BaseGraphqlLauncher'
 
 beforeEach(() => {
   localStorage.clear()
