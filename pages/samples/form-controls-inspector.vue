@@ -5,7 +5,9 @@ import {
 
 import BaseFormElementClerk from '~/modules/domClerks/BaseFormElementClerk'
 
-/** @extends {BaseFormElementClerk<typeof SampleFormElementClerk, *, *>} */
+/**
+ * @extends {BaseFormElementClerk<typeof SampleFormElementClerk, *, *>}
+ */
 class SampleFormElementClerk extends BaseFormElementClerk {
 
 }
