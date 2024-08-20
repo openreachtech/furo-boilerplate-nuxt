@@ -6,9 +6,9 @@ import {
 
 import {
   useFormClerk,
+  useGraphqlClient,
 } from '@openreachtech/furo-nuxt'
 
-import useGraphqlClient from '~/modules/composables/useGraphqlClient'
 import SignUpMutationGraphqlLauncher from '~/app/graphql/client/mutations/signUp/SignUpMutationGraphqlLauncher'
 
 import SignUpFormElementClerk from '~/app/domClerk/SignUpFormElementClerk'

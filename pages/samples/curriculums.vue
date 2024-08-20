@@ -3,7 +3,9 @@ import {
   reactive,
 } from 'vue'
 
-import useGraphqlClient from '~/modules/composables/useGraphqlClient'
+import {
+  useGraphqlClient,
+} from '@openreachtech/furo-nuxt'
 
 import CurriculumsQueryGraphqlLauncher from '~/app/graphql/client/queries/curriculums/CurriculumsQueryGraphqlLauncher'
 
