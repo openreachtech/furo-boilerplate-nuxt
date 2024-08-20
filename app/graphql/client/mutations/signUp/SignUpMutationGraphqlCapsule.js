@@ -1,4 +1,6 @@
-import BaseGraphqlCapsule from '~/modules/client/BaseGraphqlCapsule'
+import {
+  BaseGraphqlCapsule,
+} from '@openreachtech/furo'
 
 /**
  * Sign up mutation GraphQL capsule.

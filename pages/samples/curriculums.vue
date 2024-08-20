@@ -3,7 +3,9 @@ import {
   reactive,
 } from 'vue'
 
-import useGraphqlClient from '~/modules/composables/useGraphqlClient'
+import {
+  useGraphqlClient,
+} from '@openreachtech/furo-nuxt'
 
 import CurriculumsQueryGraphqlLauncher from '~/app/graphql/client/queries/curriculums/CurriculumsQueryGraphqlLauncher'
 
@@ -18,7 +20,7 @@ const {
 } = useGraphqlClient(CurriculumsQueryGraphqlLauncher)
 
 /**
- * @type {import('~/modules/client/BaseGraphqlLauncher').GraphqlLauncherHooks}
+ * @type {furo.GraphqlLauncherHooks}
  */
 const launcherHooks = {
   async beforeRequest (payload) {

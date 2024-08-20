@@ -1,5 +1,7 @@
-import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
-import StorageClerk from '~/modules/storage/StorageClerk'
+import {
+  BaseGraphqlPayload,
+  StorageClerk,
+} from '@openreachtech/furo'
 
 import {
   HEADER_KEY,
@@ -10,7 +12,7 @@ import {
  * Company sponsors query graphql launcher.
  *
  * @template T
- * @template {import('~/modules/client/BaseGraphqlPayload').GraphqlRequestVariables} SV
+ * @template {furo.GraphqlRequestVariables} SV
  * @extends {BaseGraphqlPayload<typeof BaseAppGraphqlPayload, SV>}
  */
 export default class BaseAppGraphqlPayload extends BaseGraphqlPayload {

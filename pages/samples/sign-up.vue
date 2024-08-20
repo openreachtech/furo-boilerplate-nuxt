@@ -4,12 +4,14 @@ import {
   ref,
 } from 'vue'
 
-import useGraphqlClient from '~/modules/composables/useGraphqlClient'
+import {
+  useFormClerk,
+  useGraphqlClient,
+} from '@openreachtech/furo-nuxt'
+
 import SignUpMutationGraphqlLauncher from '~/app/graphql/client/mutations/signUp/SignUpMutationGraphqlLauncher'
 
 import SignUpFormElementClerk from '~/app/domClerk/SignUpFormElementClerk'
-
-import useFormClerk from '~/modules/composables/useFormClerk'
 
 const formRef = ref(null)
 const statusReactive = reactive({

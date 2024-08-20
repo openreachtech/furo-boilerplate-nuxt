@@ -1,6 +1,9 @@
+import {
+  BaseGraphqlPayload,
+  StorageClerk,
+} from '@openreachtech/furo'
+
 import BaseAppGraphqlPayload from '~/app/graphql/client/BaseAppGraphqlPayload'
-import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
-import StorageClerk from '~/modules/storage/StorageClerk'
 
 beforeEach(() => {
   localStorage.clear()
