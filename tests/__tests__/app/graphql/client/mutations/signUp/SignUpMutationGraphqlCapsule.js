@@ -1,5 +1,8 @@
+import {
+  BaseGraphqlCapsule,
+} from '@openreachtech/furo'
+
 import SignUpMutationGraphqlCapsule from '~/app/graphql/client/mutations/signUp/SignUpMutationGraphqlCapsule'
-import BaseGraphqlCapsule from '~/modules/client/BaseGraphqlCapsule'
 
 describe('SignUpMutationGraphqlCapsule', () => {
   describe('super class', () => {

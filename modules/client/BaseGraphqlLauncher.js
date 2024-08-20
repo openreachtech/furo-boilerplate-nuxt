@@ -1,6 +1,6 @@
 import {
   LAUNCH_ABORTED_REASON,
-} from './BaseGraphqlCapsule.js'
+} from '@openreachtech/furo/lib/client/BaseGraphqlCapsule'
 
 /**
  * Base class of GraphQL launcher.
