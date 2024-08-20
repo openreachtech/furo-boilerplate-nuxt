@@ -1,5 +1,8 @@
+import {
+  StorageClerk,
+} from '@openreachtech/furo'
+
 import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
-import StorageClerk from '~/modules/storage/StorageClerk'
 
 import {
   HEADER_KEY,
