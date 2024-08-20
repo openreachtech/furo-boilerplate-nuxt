@@ -2,10 +2,13 @@ import {
   ConstructorSpyGenerator,
 } from '@openreachtech/renchan-test-tools'
 
+import {
+  BaseGraphqlPayload,
+} from '@openreachtech/furo'
+
 import BaseGraphqlCapsule, {
   LAUNCH_ABORTED_REASON,
 } from '~/modules/client/BaseGraphqlCapsule'
-import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
 
 describe('BaseGraphqlCapsule', () => {
   describe('constructor', () => {

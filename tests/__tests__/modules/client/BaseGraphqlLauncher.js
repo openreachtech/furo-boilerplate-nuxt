@@ -2,8 +2,11 @@ import {
   ConstructorSpyGenerator,
 } from '@openreachtech/renchan-test-tools'
 
+import {
+  BaseGraphqlPayload,
+} from '@openreachtech/furo'
+
 import BaseGraphqlLauncher from '~/modules/client/BaseGraphqlLauncher'
-import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
 import BaseGraphqlCapsule, {
   LAUNCH_ABORTED_REASON,
 } from '~/modules/client/BaseGraphqlCapsule'

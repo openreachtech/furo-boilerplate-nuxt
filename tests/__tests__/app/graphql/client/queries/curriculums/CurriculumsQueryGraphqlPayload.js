@@ -1,5 +1,8 @@
+import {
+  BaseGraphqlPayload,
+} from '@openreachtech/furo'
+
 import CurriculumsQueryGraphqlPayload from '~/app/graphql/client/queries/curriculums/CurriculumsQueryGraphqlPayload'
-import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
 
 describe('CurriculumsQueryGraphqlPayload', () => {
   describe('super class', () => {
