@@ -10,7 +10,7 @@
     "start": "nuxt start",
     "l": "npm run lint",
     "lint": "eslint .",
-    "test": "jest --forceExit --maxWorkers=5"
+    "test": "export NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\"; jest --forceExit --maxWorkers=5"
   },
   "type": "module",
   "keywords": [
