@@ -2,8 +2,11 @@ import {
   ConstructorSpyGenerator,
 } from '@openreachtech/renchan-test-tools'
 
+import {
+  BaseGraphqlPayload,
+} from '@openreachtech/furo'
+
 import GenericGraphqlPayload from '~/modules/client/payloads/GenericGraphqlPayload'
-import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
 
 describe('GenericGraphqlPayload', () => {
   describe('super class', () => {
