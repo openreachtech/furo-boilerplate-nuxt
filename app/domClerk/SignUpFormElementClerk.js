@@ -15,10 +15,8 @@ export default class SignUpFormElementClerk extends BaseFormElementClerk {
       {
         field: 'email',
         /** @type {ValidationCallback} */
-        ok: (it, valueHash) => {
-          return !it
-            || /^[^@]+@[^@]+\.[^@]+$/.test(it)
-        },
+        ok: (it, valueHash) =>
+          !it || /^[^@]+@[^@]+\.[^@]+$/u.test(it),
         message: 'email must be valid',
       },
 
@@ -32,7 +30,7 @@ export default class SignUpFormElementClerk extends BaseFormElementClerk {
       {
         field: 'username',
         /** @type {ValidationCallback} */
-        ok: (it, valueHash) => /^\w+$/.test(it),
+        ok: (it, valueHash) => /^\w+$/u.test(it),
         message: 'username must be alphanumeric',
       },
 
