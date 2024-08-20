@@ -1,4 +1,6 @@
-import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
+import {
+  BaseGraphqlPayload,
+} from '@openreachtech/furo'
 
 export default class GenericGraphqlPayload extends BaseGraphqlPayload {
   /**

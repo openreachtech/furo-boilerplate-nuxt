@@ -1,5 +1,8 @@
+import {
+  BaseGraphqlPayload,
+} from '@openreachtech/furo'
+
 import SignUpMutationGraphqlPayload from '~/app/graphql/client/mutations/signUp/SignUpMutationGraphqlPayload'
-import BaseGraphqlPayload from '~/modules/client/BaseGraphqlPayload'
 
 describe('SignUpMutationGraphqlPayload', () => {
   describe('super class', () => {
