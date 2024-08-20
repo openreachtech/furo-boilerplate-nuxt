@@ -9,7 +9,7 @@ import {
  */
 export default class SignUpFormElementClerk extends BaseFormElementClerk {
   /** @override */
-  static get validators () {
+  static get rules () {
     return [
       // email
       {
