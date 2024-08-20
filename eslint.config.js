@@ -135,4 +135,18 @@ export default [
       'require-await': 'off',
     },
   },
+
+  // Turn off some rules temporarily
+  {
+    rules: {
+      'import/no-named-as-default': 'off',
+      'import/no-named-as-default-member': 'off',
+      'import/no-mutable-exports': 'off',
+      'n/no-deprecated-api': 'off',
+      'n/no-exports-assign': 'off',
+      'n/no-path-concat': 'off',
+      'n/handle-callback-err': 'off',
+      'unicorn/error-message': 'off',
+    },
+  },
 ]
