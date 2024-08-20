@@ -1,4 +1,6 @@
-import BaseFormElementClerk from '~/modules/domClerks/BaseFormElementClerk'
+import {
+  BaseFormElementClerk,
+} from '@openreachtech/furo'
 
 /**
  * Clerk class of sign-up form element.
@@ -7,7 +9,7 @@ import BaseFormElementClerk from '~/modules/domClerks/BaseFormElementClerk'
  */
 export default class SignUpFormElementClerk extends BaseFormElementClerk {
   /** @override */
-  static get validators () {
+  static get rules () {
     return [
       // email
       {

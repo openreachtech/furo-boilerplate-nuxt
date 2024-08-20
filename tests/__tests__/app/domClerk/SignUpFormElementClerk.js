@@ -1,5 +1,8 @@
+import {
+  BaseFormElementClerk,
+} from '@openreachtech/furo'
+
 import SignUpFormElementClerk from '~/app/domClerk/SignUpFormElementClerk'
-import BaseFormElementClerk from '~/modules/domClerks/BaseFormElementClerk'
 
 beforeEach(() => {
   localStorage.clear()
@@ -17,7 +20,7 @@ describe('SignUpFormElementClerk', () => {
 })
 
 describe('SignUpFormElementClerk', () => {
-  describe('.get:validators', () => {
+  describe('.get:rules', () => {
     test('to be array', () => {
       const expected = [
         expect.objectContaining({
@@ -62,7 +65,7 @@ describe('SignUpFormElementClerk', () => {
         }),
       ]
 
-      const actual = SignUpFormElementClerk.validators
+      const actual = SignUpFormElementClerk.rules
 
       expect(actual)
         .toMatchObject(expected)
