@@ -1,13 +1,11 @@
-import {
-  BaseGraphqlCapsule,
-} from '@openreachtech/furo'
+import BaseAppGraphqlCapsule from '~/app/graphql/client/BaseAppGraphqlCapsule'
 
 /**
  * Sign up mutation GraphQL capsule.
  *
- * @extends {BaseGraphqlCapsule<typeof SignUpMutationGraphqlCapsule, SignUpMutationResponseContent>}
+ * @extends {BaseAppGraphqlCapsule<typeof SignUpMutationGraphqlCapsule, SignUpMutationResponseContent>}
  */
-export default class SignUpMutationGraphqlCapsule extends BaseGraphqlCapsule {
+export default class SignUpMutationGraphqlCapsule extends BaseAppGraphqlCapsule {
 
 }
 

@@ -1,13 +1,11 @@
-import {
-  BaseGraphqlCapsule,
-} from '@openreachtech/furo'
+import BaseAppGraphqlCapsule from '~/app/graphql/client/BaseAppGraphqlCapsule'
 
 /**
  * Curriculums query graphql capsule.
  *
- * @extends {BaseGraphqlCapsule<typeof CurriculumsQueryGraphqlCapsule, CurriculumsQueryResponseContent>}
+ * @extends {BaseAppGraphqlCapsule<typeof CurriculumsQueryGraphqlCapsule, CurriculumsQueryResponseContent>}
  */
-export default class CurriculumsQueryGraphqlCapsule extends BaseGraphqlCapsule {
+export default class CurriculumsQueryGraphqlCapsule extends BaseAppGraphqlCapsule {
   /**
    * get: curriculums
    *
