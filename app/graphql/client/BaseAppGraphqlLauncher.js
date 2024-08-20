@@ -1,4 +1,6 @@
-import BaseGraphqlLauncher from '~/modules/client/BaseGraphqlLauncher'
+import {
+  BaseGraphqlLauncher,
+} from '@openreachtech/furo'
 
 import graphqlConfig from '~/app/graphql/graphql.config'
 
@@ -16,5 +18,5 @@ export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
 }
 
 /**
- * @typedef {import('~/modules/client/BaseGraphqlLauncher').BaseGraphqlLauncherFactoryParams} BaseAppGraphqlLauncherFactoryParams
+ * @typedef {furo.BaseGraphqlLauncherFactoryParams} BaseAppGraphqlLauncherFactoryParams
  */
