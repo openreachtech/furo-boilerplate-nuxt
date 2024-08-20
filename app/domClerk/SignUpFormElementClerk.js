@@ -1,4 +1,6 @@
-import BaseFormElementClerk from '~/modules/domClerks/BaseFormElementClerk'
+import {
+  BaseFormElementClerk,
+} from '@openreachtech/furo'
 
 /**
  * Clerk class of sign-up form element.
