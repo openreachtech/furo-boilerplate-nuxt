@@ -1,5 +1,8 @@
+import {
+  BaseGraphqlCapsule,
+} from '@openreachtech/furo'
+
 import CurriculumsQueryGraphqlCapsule from '~/app/graphql/client/queries/curriculums/CurriculumsQueryGraphqlCapsule'
-import BaseGraphqlCapsule from '~/modules/client/BaseGraphqlCapsule'
 
 describe('CurriculumsQueryGraphqlCapsule', () => {
   describe('super class', () => {
