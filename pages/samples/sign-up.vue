@@ -153,7 +153,9 @@ async function submitFormWithHooks ({
     </button>
   </form>
 
-  <div style="margin-block-start: 3rem;">data</div>
+  <div style="margin-block-start: 3rem;">
+    data
+  </div>
   <pre
     style="
       border: 1px #000 solid;
@@ -169,7 +171,9 @@ async function submitFormWithHooks ({
       )
   }}</pre>
 
-  <div>errors</div>
+  <div>
+    errors
+  </div>
   <pre
     style="
       border: 1px #000 solid;
