@@ -151,9 +151,9 @@ async function submitFormWithHooks ({
     </button>
   </form>
 
+  <div style="margin-block-start: 3rem;">data</div>
   <pre
     style="
-      margin-block: 3rem;
       border: 1px #000 solid;
 
       padding-block: .5rem;
@@ -162,6 +162,22 @@ async function submitFormWithHooks ({
   >{{
       JSON.stringify(
         capsuleRef.extractContent(),
+        null,
+        4
+      )
+  }}</pre>
+
+  <div>errors</div>
+  <pre
+    style="
+      border: 1px #000 solid;
+
+      padding-block: .5rem;
+      padding-inline: 1rem;
+    "
+  >{{
+      JSON.stringify(
+        capsuleRef.extractErrors(),
         null,
         4
       )
