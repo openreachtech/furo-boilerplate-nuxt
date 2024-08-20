@@ -4,12 +4,14 @@ import {
 
 import {
   BaseGraphqlPayload,
+  BaseGraphqlCapsule,
 } from '@openreachtech/furo'
 
-import BaseGraphqlLauncher from '~/modules/client/BaseGraphqlLauncher'
-import BaseGraphqlCapsule, {
+import {
   LAUNCH_ABORTED_REASON,
-} from '~/modules/client/BaseGraphqlCapsule'
+} from '@openreachtech/furo/lib/client/BaseGraphqlCapsule'
+
+import BaseGraphqlLauncher from '~/modules/client/BaseGraphqlLauncher'
 
 describe('BaseGraphqlLauncher', () => {
   describe('constructor', () => {
