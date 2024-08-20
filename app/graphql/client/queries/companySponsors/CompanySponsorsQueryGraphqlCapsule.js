@@ -1,13 +1,11 @@
-import {
-  BaseGraphqlCapsule,
-} from '@openreachtech/furo'
+import BaseAppGraphqlCapsule from '~/app/graphql/client/BaseAppGraphqlCapsule'
 
 /**
  * CompanySponsorsQueryGraphqlCapsule
  *
- * @extends {BaseGraphqlCapsule<typeof CompanySponsorsQueryGraphqlCapsule, CompanySponsorsQueryResponseContent>}
+ * @extends {BaseAppGraphqlCapsule<typeof CompanySponsorsQueryGraphqlCapsule, CompanySponsorsQueryResponseContent>}
  */
-export default class CompanySponsorsQueryGraphqlCapsule extends BaseGraphqlCapsule {
+export default class CompanySponsorsQueryGraphqlCapsule extends BaseAppGraphqlCapsule {
   /**
    * get: companySponsors
    *
