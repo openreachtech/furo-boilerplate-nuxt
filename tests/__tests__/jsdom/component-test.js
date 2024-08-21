@@ -2,7 +2,7 @@ import {
   mount,
 } from '@vue/test-utils'
 
-import TheHeader from '../../components/The/TheHeader.vue'
+import TheHeader from '~/components/The/TheHeader.vue'
 
 describe('<TheHeader>', () => {
   test('to include <header>', () => {
