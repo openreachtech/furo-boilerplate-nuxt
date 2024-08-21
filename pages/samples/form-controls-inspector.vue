@@ -3,7 +3,9 @@ import {
   ref,
 } from 'vue'
 
-import BaseFormElementClerk from '~/modules/domClerks/BaseFormElementClerk'
+import {
+  BaseFormElementClerk,
+} from '@openreachtech/furo'
 
 /**
  * @extends {BaseFormElementClerk<typeof SampleFormElementClerk, *, *>}

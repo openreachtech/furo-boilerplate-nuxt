@@ -4,6 +4,8 @@
   <div><a href="samples/curriculums">Curriculums</a></div>
   <div><a href="samples/company-sponsors">Company Sponsors</a></div>
   <div><a href="samples/sign-up">Sign Up</a></div>
+  <br>
+  <div><a href="samples/form-controls-inspector">Form Controls Inspector</a></div>
   <div>1</div>
   <div>2</div>
   <div>3</div>
