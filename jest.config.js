@@ -24,6 +24,7 @@ const sharedConfig = {
 
 export default {
   projects: [
+    // jsdom environment configurations.
     {
       ...sharedConfig,
 
@@ -40,6 +41,8 @@ export default {
         '**/jsdom/?(*.)+(spec|test).[jt]s?(x)',
       ],
     },
+
+    // node environment configurations.
     {
       ...sharedConfig,
 
