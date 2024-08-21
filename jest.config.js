@@ -1,9 +1,4 @@
 const sharedConfig = {
-  collectCoverage: false,
-  collectCoverageFrom: [
-    '<rootDir>/components/**/*.vue',
-    '<rootDir>/pages/**/*.vue',
-  ],
   moduleFileExtensions: [
     'js',
     'vue',
