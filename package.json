@@ -28,7 +28,6 @@
     "vue-template-compiler": "^2.7.16"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.23.10",
     "@babel/preset-env": "^7.24.0",
     "@openreachtech/eslint-config": "^3.0.2",
     "@openreachtech/renchan-test-tools": "^1.0.0",
