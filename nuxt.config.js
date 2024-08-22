@@ -30,12 +30,14 @@ export default defineNuxtConfig({
   plugins: [
   ],
 
-  components: [
-    {
-      path: '~/components',
-      pathPrefix: false,
-    },
-  ],
+  components: {
+    dirs: [
+      {
+        path: '~/components',
+        pathPrefix: false,
+      },
+    ],
+  },
 
   modules: [
   ],
