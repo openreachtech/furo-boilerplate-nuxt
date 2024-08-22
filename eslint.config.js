@@ -1,16 +1,4 @@
-import {
-  FlatCompat,
-} from '@eslint/eslintrc'
-
 import openreachtechConfig from '@openreachtech/eslint-config'
-
-const compat = new FlatCompat()
-const nuxtExtendsConfig = /** @type {*} */ (
-  compat.extends(
-    '@nuxtjs',
-    'plugin:nuxt/recommended'
-  )
-)
 
 /**
  * ESLint Config
@@ -18,8 +6,6 @@ const nuxtExtendsConfig = /** @type {*} */ (
  * @type {Array<import('eslint').Linter.FlatConfig>}
  */
 export default [
-  ...nuxtExtendsConfig,
-
   ...openreachtechConfig,
 
   // Override rules after extending the Openreach Tech config
