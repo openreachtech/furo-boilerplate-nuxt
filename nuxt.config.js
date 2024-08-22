@@ -2,6 +2,7 @@ import {
   defineNuxtConfig,
 } from 'nuxt/config'
 
+// Reference: https://nuxt.com/docs/api/nuxt-config.
 export default defineNuxtConfig({
   head: {
     title: 'furo-boilerplate',
