@@ -37,9 +37,6 @@ export default defineNuxtConfig({
     },
   ],
 
-  buildModules: [
-  ],
-
   modules: [
   ],
 
