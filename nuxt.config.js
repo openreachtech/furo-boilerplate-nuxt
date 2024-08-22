@@ -1,50 +1,57 @@
-export default {
-  // Global page headers: https://go.nuxtjs.dev/config-head
-  head: {
-    title: 'furo-boilerplate',
-    htmlAttrs: {
-      lang: 'en',
+import {
+  defineNuxtConfig,
+} from 'nuxt/config'
+
+// Reference: https://nuxt.com/docs/api/nuxt-config.
+export default defineNuxtConfig({
+  // Nuxt App configuration: https://nuxt.com/docs/api/nuxt-config#app.
+  app: {
+    head: {
+      title: 'furo-boilerplate',
+      htmlAttrs: {
+        lang: 'en',
+      },
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { hid: 'description', name: 'description', content: '' },
+        { name: 'format-detection', content: 'telephone=no' },
+      ],
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      ],
     },
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' },
-    ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-    ],
   },
 
-  // Global CSS: https://go.nuxtjs.dev/config-css
+  // Global CSS: https://nuxt.com/docs/api/nuxt-config#css.
   css: [
     '~/assets/css/variables.css',
     '~/assets/css/reset.css',
   ],
 
-  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
+  // Plugins to run before rendering page: https://nuxt.com/docs/api/nuxt-config#plugins-1.
+  // NOTE: Plugins at the top level of `~/plugins/` directory are auto-registered. You will only need
+  // to use this if you have nested files. E.g. `~/plugins/bar/foo.ts` <- This won't be auto-registered.
   plugins: [
   ],
 
-  // Auto import components: https://go.nuxtjs.dev/config-components
-  components: [
-    {
-      path: '~/components',
-      pathPrefix: false,
-    },
-  ],
+  // Configure Nuxt component auto-registration: https://nuxt.com/docs/api/nuxt-config#components.
+  components: {
+    dirs: [
+      {
+        path: '~/components',
+        pathPrefix: false,
+      },
+    ],
+  },
 
-  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: [
-  ],
-
-  // Modules: https://go.nuxtjs.dev/config-modules
+  // Modules: https://nuxt.com/docs/api/nuxt-config#modules-1.
   modules: [
   ],
 
-  // Build Configuration: https://go.nuxtjs.dev/config-build
+  // Shared build configuration: https://nuxt.com/docs/api/nuxt-config#build.
   build: {
     transpile: [
     ],
   },
-}
+})
