@@ -1,4 +1,8 @@
-export default {
+import {
+  defineNuxtConfig,
+} from 'nuxt/config'
+
+export default defineNuxtConfig({
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'furo-boilerplate',
@@ -47,4 +51,4 @@ export default {
     transpile: [
     ],
   },
-}
+})
