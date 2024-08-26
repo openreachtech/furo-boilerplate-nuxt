@@ -1,13 +1,17 @@
 <!-- layouts/default.vue -->
 <template>
   <div class="unit-body">
-    <header class="header">I am Header</header>
+    <header class="header">
+      I am Header
+    </header>
 
     <main class="main">
       <NuxtPage />
     </main>
 
-    <footer class="footer">I am Footer</footer>
+    <footer class="footer">
+      I am Footer
+    </footer>
   </div>
 </template>
 
