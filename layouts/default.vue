@@ -1,13 +1,13 @@
 <!-- layouts/default.vue -->
 <template>
   <div class="unit-body">
-    <header>I am Header</header>
+    <header class="header">I am Header</header>
 
-    <main>
+    <main class="main">
       <NuxtPage />
     </main>
 
-    <footer>I am Footer</footer>
+    <footer class="footer">I am Footer</footer>
   </div>
 </template>
 
@@ -32,7 +32,7 @@ export default {
 </style>
 
 <style scoped>
-header {
+.header {
   position: sticky;
   top: 0;
 
@@ -46,7 +46,7 @@ header {
   color: #fff;
 }
 
-main {
+.main {
   min-height: 100dvh;
 
   padding-block: .5rem;
@@ -54,7 +54,7 @@ main {
   background: #eee;
 }
 
-footer {
+.footer {
   width: 100dvw;
   height: var(--size-footer-height);
 
