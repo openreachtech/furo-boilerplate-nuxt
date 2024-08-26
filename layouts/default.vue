@@ -3,7 +3,9 @@
   <div class="unit-body">
     <header>I am Header</header>
 
-    <TheMain />
+    <main>
+      <NuxtPage />
+    </main>
 
     <footer>I am Footer</footer>
   </div>
@@ -42,6 +44,14 @@ header {
 
   background-color: rgba(0, 255, 0, .5);
   color: #fff;
+}
+
+main {
+  min-height: 100dvh;
+
+  padding-block: .5rem;
+  padding-inline: 1rem;
+  background: #eee;
 }
 
 footer {
