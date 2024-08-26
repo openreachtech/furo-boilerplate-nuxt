@@ -1,7 +1,8 @@
 <!-- layouts/default.vue -->
 <template>
   <div class="unit-body">
-    <TheHeader />
+    <header>I am Header</header>
+
     <TheMain />
     <TheFooter />
   </div>
@@ -25,4 +26,20 @@ export default {
   flex-direction: column;
 }
 
+</style>
+
+<style scoped>
+header {
+  position: sticky;
+  top: 0;
+
+  width: 100dvw;
+  height: var(--size-header-height);
+
+  display: grid;
+  place-items: center;
+
+  background-color: rgba(0, 255, 0, .5);
+  color: #fff;
+}
 </style>
