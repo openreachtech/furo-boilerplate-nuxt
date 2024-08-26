@@ -4,7 +4,8 @@
     <header>I am Header</header>
 
     <TheMain />
-    <TheFooter />
+
+    <footer>I am Footer</footer>
   </div>
 </template>
 
@@ -40,6 +41,17 @@ header {
   place-items: center;
 
   background-color: rgba(0, 255, 0, .5);
+  color: #fff;
+}
+
+footer {
+  width: 100dvw;
+  height: var(--size-footer-height);
+
+  display: grid;
+  place-items: center;
+
+  background-color: rgba(0, 0, 255, .5);
   color: #fff;
 }
 </style>
