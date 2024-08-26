@@ -40,6 +40,11 @@ export default defineNuxtConfig({
     dirs: [],
   },
 
+  // Disable auto-import: https://nuxt.com/docs/guide/concepts/auto-imports#disabling-auto-imports.
+  imports: {
+    autoImport: false,
+  },
+
   // Modules: https://nuxt.com/docs/api/nuxt-config#modules-1.
   modules: [
   ],
