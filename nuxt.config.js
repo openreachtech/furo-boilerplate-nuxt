@@ -37,12 +37,7 @@ export default defineNuxtConfig({
 
   // Configure Nuxt component auto-registration: https://nuxt.com/docs/api/nuxt-config#components.
   components: {
-    dirs: [
-      {
-        path: '~/components',
-        pathPrefix: false,
-      },
-    ],
+    dirs: [],
   },
 
   // Modules: https://nuxt.com/docs/api/nuxt-config#modules-1.
