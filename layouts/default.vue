@@ -51,7 +51,7 @@ export default {
 }
 
 .main {
-  min-height: 100dvh;
+  flex: 1;
 
   padding-block: .5rem;
   padding-inline: 1rem;
