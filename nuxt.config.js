@@ -37,12 +37,17 @@ export default defineNuxtConfig({
 
   // Configure Nuxt component auto-registration: https://nuxt.com/docs/api/nuxt-config#components.
   components: {
-    dirs: [
-      {
-        path: '~/components',
-        pathPrefix: false,
-      },
-    ],
+    dirs: [],
+  },
+
+  // Disable auto-import: https://nuxt.com/docs/guide/concepts/auto-imports#disabling-auto-imports.
+  imports: {
+    autoImport: false,
+  },
+
+  // Nitro configurations: https://nitro.unjs.io/config.
+  nitro: {
+    imports: false,
   },
 
   // Modules: https://nuxt.com/docs/api/nuxt-config#modules-1.
