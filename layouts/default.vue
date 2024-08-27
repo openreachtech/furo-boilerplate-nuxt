@@ -6,7 +6,7 @@
     </header>
 
     <main class="main">
-      <NuxtPage />
+      <slot />
     </main>
 
     <footer class="footer">
