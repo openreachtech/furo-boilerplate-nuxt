@@ -1,4 +1,10 @@
 <!-- pages/index.vue -->
+<script>
+export default {
+  name: 'IndexPage',
+}
+</script>
+
 <template>
   <h1>Hello I&#39;m pages/index.vue!</h1>
   <div><a href="samples/curriculums">Curriculums</a></div>
@@ -37,12 +43,6 @@
   <div>9</div>
   <div>10</div> -->
 </template>
-
-<script>
-export default {
-  name: 'IndexPage',
-}
-</script>
 
 <style>
 /* CSS styles here */
