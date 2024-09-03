@@ -6,7 +6,7 @@ import BaseAppGraphqlPayload from '~/app/graphql/client/BaseAppGraphqlPayload'
  * @extends {BaseAppGraphqlPayload<typeof SignUpMutationGraphqlPayload, SignUpMutationRequestVariables>}
  */
 export default class SignUpMutationGraphqlPayload extends BaseAppGraphqlPayload {
-  /** @inheritdoc */
+  /** @override */
   static get document () {
     return /* GraphQL */ `
       mutation SignUpMutation ($input: SignUpInput!) {

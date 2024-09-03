@@ -13,7 +13,9 @@ import graphqlConfig from '~/app/graphql/graphql.config'
 export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
   /** @override */
   static get graphqlConfig () {
-    return graphqlConfig
+    return /** @type {*} */ (
+      graphqlConfig
+    )
   }
 }
 
