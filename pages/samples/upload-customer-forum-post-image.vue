@@ -11,9 +11,9 @@ import {
 
 import defineAppComponent from '~/app/vue/defineAppComponent'
 
-import SignUpMutationGraphqlLauncher from '~/app/graphql/client/mutations/signUp/SignUpMutationGraphqlLauncher'
+import UploadCustomerForumPostImageMutationGraphqlLauncher from '~/app/graphql/client/mutations/uploadCustomerForumPostImage/UploadCustomerForumPostImageMutationGraphqlLauncher'
 
-import SignUpFormElementClerk from '~/app/domClerk/SignUpFormElementClerk'
+import UploadCustomerForumPostImageFormElementClerk from '~/app/domClerk/UploadCustomerForumPostImageFormElementClerk'
 
 const formRef = ref(null)
 const statusReactive = reactive({
@@ -26,13 +26,13 @@ const {
   // invokeRequestOnEvent,
   // invokeRequestOnMounted,
   invokeRequestWithFormValueHash,
-} = useGraphqlClient(SignUpMutationGraphqlLauncher)
+} = useGraphqlClient(UploadCustomerForumPostImageMutationGraphqlLauncher)
 
 const {
   validationRef,
   submitForm,
 } = useFormClerk({
-  FormElementClerk: SignUpFormElementClerk,
+  FormElementClerk: UploadCustomerForumPostImageFormElementClerk,
   invokeRequestWithFormValueHash,
 })
 
@@ -53,12 +53,12 @@ async function submitFormWithHooks ({
   await submitForm({
     formElement,
     hooks: {
-      async beforeRequest (payload) {
+      beforeRequest: async (payload) => {
         statusReactive.isLoading = true
 
         return false
       },
-      async afterRequest (capsule) {
+      afterRequest: async (capsule) => {
         statusReactive.isLoading = false
       },
     },
@@ -66,7 +66,7 @@ async function submitFormWithHooks ({
 }
 
 export default defineAppComponent({
-  name: 'SignUpPage',
+  name: 'UploadCustomerForumPostImagePage',
 
   setup () {
     return {
@@ -82,7 +82,7 @@ export default defineAppComponent({
 </script>
 
 <template>
-  <h1>Hello I&#39;m pages/signUp.vue!</h1>
+  <h1>Upload Customer Forum Post Image - GraphQL client</h1>
 
   <form
     ref="formRef"
@@ -91,89 +91,23 @@ export default defineAppComponent({
     })"
   >
     <label class="row">
-      <span>メールアドレス</span>
+      <span>File</span>
       <input
-        name="email"
-        type="text"
-        placeholder="メールアドレスを入力してください。"
-        value="stew.eucen@openreach.tech"
+        name="image"
+        type="file"
       >
-      <div>{{ validationRef.message.email }}&nbsp;</div>
-    </label>
-
-    <label class="row">
-      <span>ユーザ名</span>
-      <input
-        name="username"
-        type="text"
-        placeholder="ユーザ名を入力してください。"
-        value="John Doe"
-      >
-      <div>{{ validationRef.message.username }}&nbsp;</div>
-    </label>
-
-    <label class="row">
-      <span>First Name</span>
-      <input
-        name="firstName"
-        type="text"
-        placeholder="Please enter your first name."
-        value="Eucen"
-      >
-      <div>{{ validationRef.message.firstName }}&nbsp;</div>
-    </label>
-
-    <label class="row">
-      <span>First Name</span>
-      <input
-        name="lastName"
-        type="text"
-        placeholder="Please enter your last name."
-        value="Stew"
-      >
-      <div>{{ validationRef.message.lastName }}&nbsp;</div>
-    </label>
-
-    <label class="row">
-      <span>パスワード</span>
-      <input
-        name="password"
-        type="password"
-        placeholder="パスワードを入力してください。"
-      >
-      <div>{{ validationRef.message.password }}&nbsp;</div>
-    </label>
-
-    <label class="row">
-      <span>パスワード (確認用)</span>
-      <input
-        name="password-confirmation"
-        type="password"
-        placeholder="パスワードを入力してください。"
-      >
-      <div>{{ validationRef.message['password-confirmation'] }}&nbsp;</div>
-    </label>
-
-    <label class="column">
-      <input
-        v-model="statusReactive.allowsToSubmit"
-        type="checkbox"
-      >
-      <span>利用規約に同意する</span>
+      <div data-validation-message="image">{{ validationRef.message.image }}</div>
     </label>
 
     <button
       class="standard"
       type="submit"
-      :disabled="!statusReactive.allowsToSubmit"
     >
-      新規登録
+      Submit
     </button>
   </form>
 
-  <div style="margin-block-start: 3rem;">
-    data
-  </div>
+  <div style="margin-block-start: 3rem;">data</div>
   <pre
     style="
       border: 1px #000 solid;
@@ -189,9 +123,7 @@ export default defineAppComponent({
       )
   }}</pre>
 
-  <div>
-    errors
-  </div>
+  <div>errors</div>
   <pre
     style="
       border: 1px #000 solid;
