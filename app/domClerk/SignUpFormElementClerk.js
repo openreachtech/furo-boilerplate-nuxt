@@ -10,11 +10,14 @@ import {
 export default class SignUpFormElementClerk extends BaseFormElementClerk {
   /** @override */
   static get rules () {
+    /**
+     * @type {Array<furo.FieldValidatorFactoryParams>}
+     */
     return [
       // email
       {
         field: 'email',
-        /** @type {ValidationCallback} */
+        /** @type {furo.ValidationRule} */
         ok: (it, valueHash) =>
           !it || /^[^@]+@[^@]+\.[^@]+$/u.test(it),
         message: 'email must be valid',
@@ -23,13 +26,13 @@ export default class SignUpFormElementClerk extends BaseFormElementClerk {
       // username
       {
         field: 'username',
-        /** @type {ValidationCallback} */
+        /** @type {furo.ValidationRule} */
         ok: (it, valueHash) => it,
         message: 'username must be set',
       },
       {
         field: 'username',
-        /** @type {ValidationCallback} */
+        /** @type {furo.ValidationRule} */
         ok: (it, valueHash) => /^\w+$/u.test(it),
         message: 'username must be alphanumeric',
       },
@@ -37,7 +40,7 @@ export default class SignUpFormElementClerk extends BaseFormElementClerk {
       // firstName
       {
         field: 'firstName',
-        /** @type {ValidationCallback} */
+        /** @type {furo.ValidationRule} */
         ok: (it, valueHash) => it,
         message: 'firstName must be set',
       },
@@ -45,7 +48,7 @@ export default class SignUpFormElementClerk extends BaseFormElementClerk {
       // lastName
       {
         field: 'lastName',
-        /** @type {ValidationCallback} */
+        /** @type {furo.ValidationRule} */
         ok: (it, valueHash) => it,
         message: 'lastName must be set',
       },
@@ -53,7 +56,7 @@ export default class SignUpFormElementClerk extends BaseFormElementClerk {
       // password
       {
         field: 'password',
-        /** @type {ValidationCallback} */
+        /** @type {furo.ValidationRule} */
         ok: (it, valueHash) => {
           if (!it) {
             return true
@@ -68,7 +71,7 @@ export default class SignUpFormElementClerk extends BaseFormElementClerk {
       // password-confirmation
       {
         field: 'password-confirmation',
-        /** @type {ValidationCallback} */
+        /** @type {furo.ValidationRule} */
         ok: (it, valueHash) => {
           if (!it) {
             return true
@@ -80,7 +83,7 @@ export default class SignUpFormElementClerk extends BaseFormElementClerk {
       },
       {
         field: 'password-confirmation',
-        /** @type {ValidationCallback} */
+        /** @type {furo.ValidationRule} */
         ok: (it, valueHash) => {
           if (!it) {
             return true
@@ -112,10 +115,6 @@ export default class SignUpFormElementClerk extends BaseFormElementClerk {
     }
   }
 }
-
-/**
- * @typedef {import('~/modules/client/FieldValidator').ValidationCallback} ValidationCallback
- */
 
 /**
  * @typedef {{

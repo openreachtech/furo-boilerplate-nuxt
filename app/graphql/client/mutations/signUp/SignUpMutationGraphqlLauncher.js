@@ -8,12 +8,12 @@ import SignUpMutationGraphqlCapsule from '~/app/graphql/client/mutations/signUp/
  * @extends {BaseAppGraphqlLauncher<typeof SignUpMutationGraphqlLauncher>}
  */
 export default class SignUpMutationGraphqlLauncher extends BaseAppGraphqlLauncher {
-  /** @inheritdoc */
+  /** @override */
   static get Payload () {
     return SignUpMutationGraphqlPayload
   }
 
-  /** @inheritdoc */
+  /** @override */
   static get Capsule () {
     return SignUpMutationGraphqlCapsule
   }
