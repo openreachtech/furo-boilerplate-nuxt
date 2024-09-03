@@ -12,6 +12,7 @@ export default defineAppComponent({
   <div><a href="samples/curriculums">Curriculums</a></div>
   <div><a href="samples/company-sponsors">Company Sponsors</a></div>
   <div><a href="samples/sign-up">Sign Up</a></div>
+  <div><a href="samples/upload-customer-forum-post-image">Upload Customer Forum Post Image</a></div>
   <br>
   <div><a href="samples/form-controls-inspector">Form Controls Inspector</a></div>
   <div>1</div>
