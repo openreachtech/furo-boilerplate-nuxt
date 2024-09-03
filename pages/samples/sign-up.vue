@@ -21,8 +21,9 @@ const statusReactive = reactive({
 
 const {
   capsuleRef,
-  invokeRequestOnEvent,
+  // invokeRequestOnEvent,
   // invokeRequestOnMounted,
+  invokeRequestWithFormValueHash,
 } = useGraphqlClient(SignUpMutationGraphqlLauncher)
 
 const {
@@ -30,7 +31,7 @@ const {
   submitForm,
 } = useFormClerk({
   FormElementClerk: SignUpFormElementClerk,
-  invokeRequest: invokeRequestOnEvent,
+  invokeRequestWithFormValueHash,
 })
 
 /**
