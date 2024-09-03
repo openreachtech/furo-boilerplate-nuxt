@@ -1,4 +1,4 @@
-<script setup>
+<script>
 import {
   reactive,
 } from 'vue'
@@ -6,6 +6,8 @@ import {
 import {
   useGraphqlClient,
 } from '@openreachtech/furo-nuxt'
+
+import defineAppComponent from '~/app/vue/defineAppComponent'
 
 import CompanySponsorsQueryGraphqlLauncher from '~/app/graphql/client/queries/companySponsors/CompanySponsorsQueryGraphqlLauncher'
 
@@ -19,16 +21,28 @@ const statusReactive = reactive({
   isLoading: true,
 })
 
-invokeRequestOnMounted({
-  hooks: {
-    async beforeRequest (payload) {
-      statusReactive.isLoading = true
+export default defineAppComponent({
+  name: 'IndexPage',
 
-      return false
-    },
-    async afterRequest (capsule) {
-      statusReactive.isLoading = false
-    },
+  setup () {
+    invokeRequestOnMounted({
+      hooks: {
+        async beforeRequest (payload) {
+          statusReactive.isLoading = true
+
+          return false
+        },
+        async afterRequest (capsule) {
+          statusReactive.isLoading = false
+        },
+      },
+    })
+
+    return {
+      capsuleRef,
+      statusReactive,
+      invokeRequestOnMounted,
+    }
   },
 })
 </script>
