@@ -1,8 +1,10 @@
 <!-- pages/index.vue -->
 <script>
-export default {
+import defineAppComponent from '~/app/vue/defineAppComponent.js'
+
+export default defineAppComponent({
   name: 'IndexPage',
-}
+})
 </script>
 
 <template>
