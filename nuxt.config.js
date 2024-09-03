@@ -2,6 +2,13 @@ import {
   defineNuxtConfig,
 } from 'nuxt/config'
 
+import {
+  NuxtFuroEnvLoader,
+} from '@openreachtech/furo-nuxt'
+
+const furoEnv = NuxtFuroEnvLoader.create()
+  .loadEnv()
+
 // Reference: https://nuxt.com/docs/api/nuxt-config.
 export default defineNuxtConfig({
   // Nuxt App configuration: https://nuxt.com/docs/api/nuxt-config#app.
@@ -58,5 +65,16 @@ export default defineNuxtConfig({
   build: {
     transpile: [
     ],
+  },
+
+  // Runtime configuration: https://nuxt.com/docs/api/nuxt-config#runtimeconfig
+  runtimeConfig: {
+    // on server
+    ...furoEnv,
+
+    // on client
+    public: {
+      ...furoEnv,
+    },
   },
 })
