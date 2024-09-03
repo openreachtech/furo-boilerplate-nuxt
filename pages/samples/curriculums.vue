@@ -1,4 +1,4 @@
-<script setup>
+<script>
 import {
   reactive,
 } from 'vue'
@@ -6,6 +6,8 @@ import {
 import {
   useGraphqlClient,
 } from '@openreachtech/furo-nuxt'
+
+import defineAppComponent from '~/app/vue/defineAppComponent'
 
 import CurriculumsQueryGraphqlLauncher from '~/app/graphql/client/queries/curriculums/CurriculumsQueryGraphqlLauncher'
 
@@ -33,20 +35,33 @@ const launcherHooks = {
   },
 }
 
-invokeRequestOnMounted({
-  variables: { // TODO: Remove this variables with default values in Payload
-    input: {
-      pagination: {
-        limit: 5,
-        offset: 0,
-        sort: {
-          targetColumn: 'title',
-          orderBy: 'ASC',
+export default defineAppComponent({
+  name: 'IndexPage',
+
+  setup () {
+    invokeRequestOnMounted({
+      variables: { // TODO: Remove this variables with default values in Payload
+        input: {
+          pagination: {
+            limit: 5,
+            offset: 0,
+            sort: {
+              targetColumn: 'title',
+              orderBy: 'ASC',
+            },
+          },
         },
       },
-    },
+      hooks: launcherHooks,
+    })
+
+    return {
+      capsuleRef,
+      statusReactive,
+      invokeRequestOnEvent,
+      launcherHooks,
+    }
   },
-  hooks: launcherHooks,
 })
 </script>
 
