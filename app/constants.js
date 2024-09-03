@@ -3,5 +3,7 @@ export const HEADER_KEY = {
 }
 
 export const STORAGE_KEY = {
+  FURO_ENV: 'furoEnv',
+
   ACCESS_TOKEN: 'access_token',
 }
