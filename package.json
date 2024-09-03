@@ -20,7 +20,7 @@
   "author": "Open Reach Tech inc.",
   "license": "UNLICENSED",
   "dependencies": {
-    "@openreachtech/furo-nuxt": "^1.1.1",
+    "@openreachtech/furo-nuxt": "^1.1.2",
     "core-js": "^3.36.0",
     "nuxt": "^3.10.3",
     "vue": "^3.4.21",
