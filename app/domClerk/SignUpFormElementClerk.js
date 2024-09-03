@@ -95,25 +95,6 @@ export default class SignUpFormElementClerk extends BaseFormElementClerk {
       },
     ]
   }
-
-  /** @override */
-  generateSchemaVariableHash ({
-    formValueHash: {
-      email,
-      username,
-      firstName,
-      lastName,
-      password,
-    } = this.extractValueHash(),
-  } = {}) {
-    return {
-      email,
-      username,
-      firstName,
-      lastName,
-      password,
-    }
-  }
 }
 
 /**
