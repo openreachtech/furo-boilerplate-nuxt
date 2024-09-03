@@ -1,1 +1,1 @@
-import '@openreachtech/furo-nuxt/types/nuxt'
+import '@openreachtech/furo-nuxt/types/furo-nuxt'
