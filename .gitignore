@@ -70,7 +70,7 @@ typings/
 .output
 
 # Nuxt generate
-dist
+dist/
 
 # vuepress build output
 .vuepress/dist
@@ -84,8 +84,27 @@ dist
 # Service worker
 sw.*
 
-# macOS
+#### For Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+
+#### For macOS
 .DS_Store
 
 # Vim swap files
 *.swp
+
+#### IDE
+.vscode/*
+!.vscode/cspell.json
+!.vscode/settings.json
+
+#### Misc
+.idea
+
+#### Lock files
+yarn.lock
+pnpm-lock.yaml
+bun.lockb
