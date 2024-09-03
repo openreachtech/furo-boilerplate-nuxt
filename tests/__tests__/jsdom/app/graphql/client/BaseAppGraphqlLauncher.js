@@ -3,6 +3,8 @@ import {
 } from '@openreachtech/furo'
 import BaseAppGraphqlLauncher from '~/app/graphql/client/BaseAppGraphqlLauncher'
 
+import graphqlConfig from '~/app/graphql/graphql.config'
+
 beforeEach(() => {
   localStorage.clear()
 })
@@ -86,14 +88,30 @@ describe('BaseAppGraphqlLauncher', () => {
 describe('BaseAppGraphqlLauncher', () => {
   describe('.get:graphqlConfig', () => {
     test('to be fixed value', () => {
+      const emptyActual = BaseAppGraphqlLauncher.graphqlConfig
+
+      expect(emptyActual)
+        .toEqual({
+          ENDPOINT_URL: null,
+        })
+
+      // -----------------------------------------------------------------------
+
+      const tally = 'http://localhost:3900/graphql-customer'
+
       const expected = {
-        ENDPOINT_URL: 'http://localhost:3900/graphql-customer',
+        ENDPOINT_URL: tally,
       }
 
-      const actual = BaseAppGraphqlLauncher.graphqlConfig
+      const ENDPOINT_URL_SPY = jest.spyOn(graphqlConfig, 'ENDPOINT_URL', 'get')
+        .mockReturnValue(tally)
 
-      expect(actual)
+      const fulfilledActual = BaseAppGraphqlLauncher.graphqlConfig
+
+      expect(fulfilledActual)
         .toEqual(expected)
+
+      ENDPOINT_URL_SPY.mockRestore()
     })
   })
 })
