@@ -1,4 +1,4 @@
-<script setup>
+<script>
 import {
   reactive,
   ref,
@@ -8,6 +8,8 @@ import {
   useFormClerk,
   useGraphqlClient,
 } from '@openreachtech/furo-nuxt'
+
+import defineAppComponent from '~/app/vue/defineAppComponent'
 
 import SignUpMutationGraphqlLauncher from '~/app/graphql/client/mutations/signUp/SignUpMutationGraphqlLauncher'
 
@@ -61,6 +63,21 @@ async function submitFormWithHooks ({
     },
   })
 }
+
+export default defineAppComponent({
+  name: 'SignUpPage',
+
+  setup () {
+    return {
+      formRef,
+      statusReactive,
+      capsuleRef,
+      validationRef,
+
+      submitFormWithHooks,
+    }
+  },
+})
 </script>
 
 <template>
