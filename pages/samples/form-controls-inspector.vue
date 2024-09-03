@@ -1,7 +1,9 @@
-<script setup>
+<script>
 import {
   ref,
 } from 'vue'
+
+import defineAppComponent from '~/app/vue/defineAppComponent'
 
 import {
   BaseFormElementClerk,
@@ -40,6 +42,17 @@ async function submitForm ({
     formElementClerk.extractValueHash()
   )
 }
+
+export default defineAppComponent({
+  name: 'FormControlsInspectorPage',
+
+  setup () {
+    return {
+      formRef,
+      submitForm,
+    }
+  },
+})
 </script>
 
 <template>
