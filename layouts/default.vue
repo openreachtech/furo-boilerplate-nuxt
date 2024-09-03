@@ -40,7 +40,6 @@ export default {
   position: sticky;
   top: 0;
 
-  width: 100dvw;
   height: var(--size-header-height);
 
   display: grid;
@@ -59,7 +58,6 @@ export default {
 }
 
 .footer {
-  width: 100dvw;
   height: var(--size-footer-height);
 
   display: grid;
