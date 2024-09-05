@@ -145,6 +145,12 @@ export default [
           ],
         },
       ],
+      'vue/component-api-style': [
+        'error',
+        [ // ['script-setup', 'composition']
+          'composition',
+        ],
+      ],
       'vue/component-name-in-template-casing': [
         'error',
         'PascalCase',
