@@ -70,22 +70,21 @@ export default defineAppComponent({
 
   <h2>Curriculums</h2>
 
-  <button
-    @click="invokeRequestOnEvent({
-      variables: {
-        input: {
-          pagination: {
-            limit: 5,
-            offset: 2,
-            sort: {
-              targetColumn: 'title',
-              orderBy: 'ASC',
-            },
+  <button @click="invokeRequestOnEvent({
+    variables: {
+      input: {
+        pagination: {
+          limit: 5,
+          offset: 2,
+          sort: {
+            targetColumn: 'title',
+            orderBy: 'ASC',
           },
         },
       },
-      hooks: launcherHooks,
-    })"
+    },
+    hooks: launcherHooks,
+  })"
   >
     Fetch curriculums with offset 2
   </button>
@@ -99,8 +98,7 @@ export default defineAppComponent({
     }}
   </pre>
 
-  <div
-    v-if="statusReactive.isLoading"
+  <div v-if="statusReactive.isLoading"
     class="unit-loading"
   >
     Loading ...
