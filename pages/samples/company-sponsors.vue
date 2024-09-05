@@ -52,8 +52,7 @@ export default defineAppComponent({
 
   <h2>companySponsors</h2>
 
-  <div
-    v-for="it in capsuleRef.companySponsors"
+  <div v-for="it in capsuleRef.companySponsors"
     :key="it.id"
     class="company-sponsor-layout"
   >
@@ -67,8 +66,7 @@ export default defineAppComponent({
     </div>
   </div>
 
-  <div
-    v-if="statusReactive.isLoading"
+  <div v-if="statusReactive.isLoading"
     class="unit-loading"
   >
     Loading ...

@@ -58,14 +58,12 @@ export default defineAppComponent({
 <template>
   <h1>Hello I&#39;m pages/form-controls-inspector.vue!</h1>
 
-  <form
-    ref="formRef"
+  <form ref="formRef"
     @submit.prevent="submitForm({
       formElement: formRef,
     })"
   >
-    <button
-      class="standard"
+    <button class="standard"
       type="submit"
     >
       Submit (above)
@@ -73,8 +71,7 @@ export default defineAppComponent({
 
     <label class="row">
       <span>Test</span>
-      <input
-        name="text"
+      <input name="text"
         type="text"
         value="default text"
       >
@@ -82,13 +79,11 @@ export default defineAppComponent({
 
     <label class="row">
       <span>Double Text</span>
-      <input
-        name="double-text"
+      <input name="double-text"
         type="text"
         value="double 001"
       >
-      <input
-        name="double-text"
+      <input name="double-text"
         type="text"
         value="double 002"
       >
@@ -96,8 +91,7 @@ export default defineAppComponent({
 
     <label class="row">
       <span>Password</span>
-      <input
-        name="password"
+      <input name="password"
         type="password"
         value="password123"
       >
@@ -105,8 +99,7 @@ export default defineAppComponent({
 
     <label class="row">
       <span>Email</span>
-      <input
-        name="email"
+      <input name="email"
         type="email"
         value="example@example.com"
       >
@@ -114,8 +107,7 @@ export default defineAppComponent({
 
     <label class="row">
       <span>Website</span>
-      <input
-        name="url"
+      <input name="url"
         type="url"
         value="https://www.example.com"
       >
@@ -123,8 +115,7 @@ export default defineAppComponent({
 
     <label class="row">
       <span>Telephone Number</span>
-      <input
-        name="tel"
+      <input name="tel"
         type="tel"
         value="090-1234-5678"
       >
@@ -132,8 +123,7 @@ export default defineAppComponent({
 
     <label class="row">
       <span>Color</span>
-      <input
-        name="color"
+      <input name="color"
         type="color"
         value="#ff00ff"
       >
@@ -141,8 +131,7 @@ export default defineAppComponent({
 
     <label class="row">
       <span>Number</span>
-      <input
-        name="number"
+      <input name="number"
         type="number"
         min="1"
         max="10"
@@ -152,8 +141,7 @@ export default defineAppComponent({
 
     <label class="row">
       <span>Range</span>
-      <input
-        name="range"
+      <input name="range"
         type="range"
         min="0"
         max="100"
@@ -163,8 +151,7 @@ export default defineAppComponent({
 
     <label class="row">
       <span>Date</span>
-      <input
-        name="date"
+      <input name="date"
         type="date"
         value="2024-01-01"
       >
@@ -172,8 +159,7 @@ export default defineAppComponent({
 
     <label class="row">
       <span>Time</span>
-      <input
-        name="time"
+      <input name="time"
         type="time"
         value="11:22:33"
         step="1"
@@ -182,8 +168,7 @@ export default defineAppComponent({
 
     <label class="row">
       <span>DateTime</span>
-      <input
-        name="datetime-local"
+      <input name="datetime-local"
         type="datetime-local"
         value="2024-01-31T11:22:33"
         step="1"
@@ -192,8 +177,7 @@ export default defineAppComponent({
 
     <label class="row">
       <span>Year Month</span>
-      <input
-        name="month"
+      <input name="month"
         type="month"
         value="2024-01"
       >
@@ -201,8 +185,7 @@ export default defineAppComponent({
 
     <label class="row">
       <span>File</span>
-      <input
-        name="file"
+      <input name="file"
         type="file"
       >
     </label>
@@ -211,8 +194,7 @@ export default defineAppComponent({
 
     <h2>Emotion</h2>
     <label>
-      <input
-        name="emotion"
+      <input name="emotion"
         type="radio"
         value="happy"
       >
@@ -220,8 +202,7 @@ export default defineAppComponent({
     </label>
     <br>
     <label>
-      <input
-        name="emotion"
+      <input name="emotion"
         type="radio"
         value="sad"
       >
@@ -229,8 +210,7 @@ export default defineAppComponent({
     </label>
     <br>
     <label>
-      <input
-        name="emotion"
+      <input name="emotion"
         type="radio"
         value="angry"
       >
@@ -241,8 +221,7 @@ export default defineAppComponent({
 
     <h2>Interest</h2>
     <label>
-      <input
-        name="interest"
+      <input name="interest"
         type="checkbox"
         value="coding"
         checked
@@ -251,8 +230,7 @@ export default defineAppComponent({
     </label>
     <br>
     <label>
-      <input
-        name="interest"
+      <input name="interest"
         type="checkbox"
         value="music"
       >
@@ -260,8 +238,7 @@ export default defineAppComponent({
     </label>
     <br>
     <label>
-      <input
-        name="interest"
+      <input name="interest"
         type="checkbox"
         value="sports"
         checked
@@ -273,8 +250,7 @@ export default defineAppComponent({
 
     <label class="row">
       <span>Message</span>
-      <textarea
-        name="message"
+      <textarea name="message"
         rows="4"
         cols="50"
       >default message</textarea>
@@ -282,8 +258,7 @@ export default defineAppComponent({
 
     <label class="column">
       <span>City</span>
-      <select
-        name="city"
+      <select name="city"
         style="
           min-width: 10rem;
         "
@@ -296,13 +271,15 @@ export default defineAppComponent({
 
     <label class="column">
       <span>Amount (Optional)</span>
-      <select
-        name="amount"
+      <select name="amount"
         style="
           min-width: 10rem;
         "
       >
-        <option value="" disabled selected>Please select</option>
+        <option value=""
+          disabled
+          selected
+        >Please select</option>
         <option value="small">small</option>
         <option value="large">large</option>
       </select>
@@ -310,17 +287,20 @@ export default defineAppComponent({
 
     <label class="column">
       <span>Greek</span>
-      <select
-        name="greek"
+      <select name="greek"
         multiple
         style="
           height: 5rem;
           min-width: 10rem;
         "
       >
-        <option value="alpha" selected>alpha</option>
+        <option value="alpha"
+          selected
+        >alpha</option>
         <option value="beta">beta</option>
-        <option value="gamma" selected>gamma</option>
+        <option value="gamma"
+          selected
+        >gamma</option>
         <option value="delta">delta</option>
         <option value="epsilon">epsilon</option>
         <option value="zeta">zeta</option>
@@ -329,8 +309,7 @@ export default defineAppComponent({
       </select>
     </label>
 
-    <button
-      class="standard"
+    <button class="standard"
       type="submit"
     >
       Submit (below)

@@ -1,4 +1,5 @@
 import openreachtechConfig from '@openreachtech/eslint-config'
+import pluginVue from 'eslint-plugin-vue'
 
 /**
  * ESLint Config
@@ -126,6 +127,170 @@ export default [
         {
           selector: 'WhileStatement',
           message: 'Never use while',
+        },
+      ],
+    },
+  },
+
+  ...pluginVue.configs['flat/base'],
+  {
+    rules: {
+      'vue/block-order': [
+        'error',
+        {
+          order: [ // [['script', 'template'], 'style']
+            'script',
+            'template',
+            'style',
+          ],
+        },
+      ],
+      'vue/component-name-in-template-casing': [
+        'error',
+        'PascalCase',
+      ],
+      'vue/first-attribute-linebreak': [
+        'error',
+        {
+          singleline: 'beside', // ignore
+          multiline: 'beside', // below
+        },
+      ],
+      'vue/html-closing-bracket-newline': [
+        'error',
+        {
+          singleline: 'never',
+          multiline: 'always',
+          selfClosingTag: {
+            singleline: 'never',
+            multiline: 'always',
+          },
+        },
+      ],
+      'vue/html-indent': [
+        'error',
+        2,
+        {
+          attribute: 1,
+          baseIndent: 1,
+          closeBracket: 0,
+          alignAttributesVertically: false, // true
+          ignores: [],
+        },
+      ],
+      'vue/html-quotes': [
+        'error',
+        'double',
+        {
+          avoidEscape: true, // false
+        },
+      ],
+      'vue/max-attributes-per-line': [
+        'error',
+        {
+          singleline: 1,
+          multiline: 1,
+        },
+      ],
+      'vue/multiline-html-element-content-newline': [
+        'error',
+        {
+          ignoreWhenEmpty: true,
+          ignores: [
+            'a',
+            'abbr',
+            'audio',
+            'b',
+            'bdi',
+            'bdo',
+            'canvas',
+            'cite',
+            'code',
+            'data',
+            'del',
+            'dfn',
+            'em',
+            'i',
+            'iframe',
+            'ins',
+            'kbd',
+            'label',
+            'map',
+            'mark',
+            'noscript',
+            'object',
+            'output',
+            'picture',
+            'pre',
+            'q',
+            'ruby',
+            's',
+            'samp',
+            'small',
+            'span',
+            'strong',
+            'sub',
+            'sup',
+            'svg',
+            'time',
+            'textarea',
+            'u',
+            'var',
+            'video',
+          ],
+        },
+      ],
+      'vue/padding-line-between-blocks': [
+        'error',
+        'always',
+      ],
+      'vue/singleline-html-element-content-newline': [
+        'error',
+        {
+          ignoreWhenNoAttributes: true,
+          ignoreWhenEmpty: true,
+          ignores: [
+            'a',
+            'abbr',
+            'audio',
+            'b',
+            'bdi',
+            'bdo',
+            'canvas',
+            'cite',
+            'code',
+            'data',
+            'del',
+            'dfn',
+            'em',
+            'i',
+            'iframe',
+            'ins',
+            'kbd',
+            'label',
+            'map',
+            'mark',
+            'noscript',
+            'object',
+            'output',
+            'picture',
+            'pre',
+            'q',
+            'ruby',
+            's',
+            'samp',
+            'small',
+            'span',
+            'strong',
+            'sub',
+            'sup',
+            'svg',
+            'textarea',
+            'time',
+            'u',
+            'var',
+            'video',
+          ],
         },
       ],
     },

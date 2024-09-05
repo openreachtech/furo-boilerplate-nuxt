@@ -53,12 +53,12 @@ async function submitFormWithHooks ({
   await submitForm({
     formElement,
     hooks: {
-      beforeRequest: async (payload) => {
+      beforeRequest: async payload => {
         statusReactive.isLoading = true
 
         return false
       },
-      afterRequest: async (capsule) => {
+      afterRequest: async capsule => {
         statusReactive.isLoading = false
       },
     },
@@ -84,32 +84,30 @@ export default defineAppComponent({
 <template>
   <h1>Upload Customer Forum Post Image - GraphQL client</h1>
 
-  <form
-    ref="formRef"
+  <form ref="formRef"
     @submit.prevent="submitFormWithHooks({
       formElement: formRef,
     })"
   >
     <label class="row">
       <span>File</span>
-      <input
-        name="image"
+      <input name="image"
         type="file"
       >
       <div data-validation-message="image">{{ validationRef.message.image }}</div>
     </label>
 
-    <button
-      class="standard"
+    <button class="standard"
       type="submit"
     >
       Submit
     </button>
   </form>
 
-  <div style="margin-block-start: 3rem;">data</div>
-  <pre
-    style="
+  <div style="margin-block-start: 3rem;">
+    data
+  </div>
+  <pre style="
       border: 1px #000 solid;
 
       padding-block: .5rem;
@@ -124,8 +122,7 @@ export default defineAppComponent({
   }}</pre>
 
   <div>errors</div>
-  <pre
-    style="
+  <pre style="
       border: 1px #000 solid;
 
       padding-block: .5rem;
@@ -139,8 +136,7 @@ export default defineAppComponent({
       )
   }}</pre>
 
-  <div
-    v-if="statusReactive.isLoading"
+  <div v-if="statusReactive.isLoading"
     class="unit-loading"
   >
     Loading ...

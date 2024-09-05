@@ -84,16 +84,14 @@ export default defineAppComponent({
 <template>
   <h1>Hello I&#39;m pages/signUp.vue!</h1>
 
-  <form
-    ref="formRef"
+  <form ref="formRef"
     @submit.prevent="submitFormWithHooks({
       formElement: formRef,
     })"
   >
     <label class="row">
       <span>メールアドレス</span>
-      <input
-        name="email"
+      <input name="email"
         type="text"
         placeholder="メールアドレスを入力してください。"
         value="stew.eucen@openreach.tech"
@@ -103,8 +101,7 @@ export default defineAppComponent({
 
     <label class="row">
       <span>ユーザ名</span>
-      <input
-        name="username"
+      <input name="username"
         type="text"
         placeholder="ユーザ名を入力してください。"
         value="John Doe"
@@ -114,8 +111,7 @@ export default defineAppComponent({
 
     <label class="row">
       <span>First Name</span>
-      <input
-        name="firstName"
+      <input name="firstName"
         type="text"
         placeholder="Please enter your first name."
         value="Eucen"
@@ -125,8 +121,7 @@ export default defineAppComponent({
 
     <label class="row">
       <span>First Name</span>
-      <input
-        name="lastName"
+      <input name="lastName"
         type="text"
         placeholder="Please enter your last name."
         value="Stew"
@@ -136,8 +131,7 @@ export default defineAppComponent({
 
     <label class="row">
       <span>パスワード</span>
-      <input
-        name="password"
+      <input name="password"
         type="password"
         placeholder="パスワードを入力してください。"
       >
@@ -146,8 +140,7 @@ export default defineAppComponent({
 
     <label class="row">
       <span>パスワード (確認用)</span>
-      <input
-        name="password-confirmation"
+      <input name="password-confirmation"
         type="password"
         placeholder="パスワードを入力してください。"
       >
@@ -155,15 +148,13 @@ export default defineAppComponent({
     </label>
 
     <label class="column">
-      <input
-        v-model="statusReactive.allowsToSubmit"
+      <input v-model="statusReactive.allowsToSubmit"
         type="checkbox"
       >
       <span>利用規約に同意する</span>
     </label>
 
-    <button
-      class="standard"
+    <button class="standard"
       type="submit"
       :disabled="!statusReactive.allowsToSubmit"
     >
@@ -174,8 +165,7 @@ export default defineAppComponent({
   <div style="margin-block-start: 3rem;">
     data
   </div>
-  <pre
-    style="
+  <pre style="
       border: 1px #000 solid;
 
       padding-block: .5rem;
@@ -192,8 +182,7 @@ export default defineAppComponent({
   <div>
     errors
   </div>
-  <pre
-    style="
+  <pre style="
       border: 1px #000 solid;
 
       padding-block: .5rem;
@@ -207,8 +196,7 @@ export default defineAppComponent({
       )
   }}</pre>
 
-  <div
-    v-if="statusReactive.isLoading"
+  <div v-if="statusReactive.isLoading"
     class="unit-loading"
   >
     Loading ...

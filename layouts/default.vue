@@ -1,4 +1,10 @@
 <!-- layouts/default.vue -->
+<script>
+export default {
+  name: 'DefaultLayout',
+}
+</script>
+
 <template>
   <div class="unit-body">
     <header class="header">
@@ -14,12 +20,6 @@
     </footer>
   </div>
 </template>
-
-<script>
-export default {
-  name: 'DefaultLayout',
-}
-</script>
 
 <style>
 /* Custom Properties */
