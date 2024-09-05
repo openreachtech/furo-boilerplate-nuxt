@@ -107,7 +107,9 @@ export default defineAppComponent({
     </button>
   </form>
 
-  <div style="margin-block-start: 3rem;">data</div>
+  <div style="margin-block-start: 3rem;">
+    data
+  </div>
   <pre
     style="
       border: 1px #000 solid;
