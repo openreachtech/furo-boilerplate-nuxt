@@ -53,12 +53,12 @@ async function submitFormWithHooks ({
   await submitForm({
     formElement,
     hooks: {
-      beforeRequest: async (payload) => {
+      beforeRequest: async payload => {
         statusReactive.isLoading = true
 
         return false
       },
-      afterRequest: async (capsule) => {
+      afterRequest: async capsule => {
         statusReactive.isLoading = false
       },
     },
