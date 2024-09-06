@@ -171,7 +171,8 @@ form button.standard {
   border: none;
   border-radius: .25rem;
 
-  padding: .5rem 1rem;
+  padding-block: .5rem;
+  padding-inline: 1rem;
   background-color: #007bff;
   color: #fff;
 }
