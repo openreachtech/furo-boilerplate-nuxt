@@ -170,6 +170,13 @@ export default [
         'error',
         'PascalCase',
       ],
+      'vue/custom-event-name-casing': [
+        'error',
+        'camelCase',
+        {
+          ignores: [],
+        },
+      ],
       'vue/first-attribute-linebreak': [
         'error',
         {
