@@ -135,6 +135,17 @@ export default [
   ...pluginVue.configs['flat/base'],
   {
     rules: {
+      'vue/block-lang': [
+        'error',
+        {
+          script: {
+            allowNoLang: true,
+          },
+          style: {
+            allowNoLang: true,
+          },
+        },
+      ],
       'vue/block-order': [
         'error',
         {
