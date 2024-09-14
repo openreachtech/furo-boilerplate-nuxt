@@ -284,6 +284,12 @@ export default [
       'vue/no-multiple-objects-in-class': [
         'error',
       ],
+      'vue/no-required-prop-with-default': [
+        'error',
+        {
+          autofix: false,
+        },
+      ],
       'vue/padding-line-between-blocks': [
         'error',
         'always',
