@@ -275,6 +275,9 @@ export default [
           ],
         },
       ],
+      'vue/no-duplicate-attr-inheritance': [
+        'error',
+      ],
       'vue/padding-line-between-blocks': [
         'error',
         'always',
