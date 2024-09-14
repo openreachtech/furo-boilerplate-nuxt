@@ -222,6 +222,9 @@ export default [
           avoidEscape: true, // false
         },
       ],
+      'vue/match-component-import-name': [
+        'error',
+      ],
       'vue/max-attributes-per-line': [
         'error',
         {
