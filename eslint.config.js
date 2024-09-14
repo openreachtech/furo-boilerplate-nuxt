@@ -197,6 +197,13 @@ export default [
           },
         },
       ],
+      'vue/html-comment-content-spacing': [
+        'error',
+        'always',
+        {
+          exceptions: [],
+        },
+      ],
       'vue/html-indent': [
         'error',
         2,
