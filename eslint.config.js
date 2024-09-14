@@ -290,6 +290,17 @@ export default [
           autofix: false,
         },
       ],
+      'vue/no-potential-component-option-typo': [
+        'error',
+        {
+          presets: [ // ['vue']
+            'vue',
+            'nuxt',
+          ],
+          custom: [],
+          threshold: 1,
+        },
+      ],
       'vue/padding-line-between-blocks': [
         'error',
         'always',
