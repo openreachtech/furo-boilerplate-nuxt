@@ -157,6 +157,10 @@ export default [
         'error',
         'PascalCase',
       ],
+      'vue/component-options-name-casing': [
+        'error',
+        'PascalCase',
+      ],
       'vue/first-attribute-linebreak': [
         'error',
         {
