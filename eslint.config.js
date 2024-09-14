@@ -303,6 +303,9 @@ export default [
           threshold: 1,
         },
       ],
+      'vue/no-setup-props-reactivity-loss': [
+        'error',
+      ],
       'vue/padding-line-between-blocks': [
         'error',
         'always',
