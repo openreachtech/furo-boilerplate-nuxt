@@ -313,6 +313,12 @@ export default [
           enforceDynamicLinks: 'always',
         },
       ],
+      'vue/no-undef-components': [
+        'error',
+        {
+          ignorePatterns: [],
+        },
+      ],
       'vue/padding-line-between-blocks': [
         'error',
         'always',
