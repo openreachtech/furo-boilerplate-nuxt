@@ -304,6 +304,13 @@ export default [
       'vue/no-setup-props-reactivity-loss': [
         'error',
       ],
+      'vue/no-template-target-blank': [
+        'error',
+        {
+          allowReferrer: false,
+          enforceDynamicLinks: 'always',
+        },
+      ],
       'vue/padding-line-between-blocks': [
         'error',
         'always',
