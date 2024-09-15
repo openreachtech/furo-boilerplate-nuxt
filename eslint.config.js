@@ -319,6 +319,15 @@ export default [
           ignorePatterns: [],
         },
       ],
+      'vue/no-undef-properties': [
+        'error',
+        {
+          ignores: [
+            // Some Vue APIs prefixed with `$` are always available in <template>.
+            '/^\\$/',
+          ],
+        },
+      ],
       'vue/padding-line-between-blocks': [
         'error',
         'always',
