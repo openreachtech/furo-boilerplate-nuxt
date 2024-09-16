@@ -332,6 +332,17 @@ export default [
         'error',
         'always',
       ],
+      'vue/padding-lines-in-component-definition': [
+        'error',
+        {
+          betweenOptions: 'always',
+          withinOption: {
+            props: 'never', // 'always'
+            emits: 'never', // 'always'
+          },
+          groupSingleLineProperties: true,
+        },
+      ],
       'vue/singleline-html-element-content-newline': [
         'error',
         {
