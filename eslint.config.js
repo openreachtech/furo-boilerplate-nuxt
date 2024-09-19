@@ -328,6 +328,9 @@ export default [
           ],
         },
       ],
+      'vue/no-use-v-else-with-v-for': [
+        'error',
+      ],
       'vue/padding-line-between-blocks': [
         'error',
         'always',
