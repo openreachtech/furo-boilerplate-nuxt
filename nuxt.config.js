@@ -52,11 +52,6 @@ export default defineNuxtConfig({
     autoImport: false,
   },
 
-  // Nitro configurations: https://nitro.unjs.io/config.
-  nitro: {
-    imports: false,
-  },
-
   // Modules: https://nuxt.com/docs/api/nuxt-config#modules-1.
   modules: [
   ],
