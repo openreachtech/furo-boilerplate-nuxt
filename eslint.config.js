@@ -83,10 +83,11 @@ export default [
         'error',
         // There are 0 or more rest parameters in the array
         // string | { selector: string, message: string }
-        {
-          selector: 'CallExpression[callee.property.name=forEach]',
-          message: 'Never use forEach method',
-        },
+        // NOTE: It's ok to use Array#forEach if there's only one statement in the callback function.
+        // {
+        //   selector: 'CallExpression[callee.property.name=forEach]',
+        //   message: 'Never use forEach method',
+        // },
         {
           selector: 'CallExpression[callee.type=MemberExpression][callee.property.name=/^(every|filter|find|findIndex|findLast|findLastIndex|flatMap|forEach|group|groupToMap|map|reduce|reduceRight|some)$/] IfStatement',
           message: 'Never use if in higher-order function',
