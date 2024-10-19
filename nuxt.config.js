@@ -72,4 +72,9 @@ export default defineNuxtConfig({
       ...furoEnv,
     },
   },
+
+  // Restart dev server when changed: https://nuxt.com/docs/api/nuxt-config#watch
+  watch: [
+    '.furo-env.development',
+  ],
 })
