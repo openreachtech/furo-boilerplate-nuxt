@@ -137,6 +137,13 @@ export default [
   ...pluginVue.configs['flat/base'],
   {
     rules: {
+      'vue/attribute-hyphenation': [
+        'error',
+        'always',
+        {
+          ignore: [],
+        },
+      ],
       'vue/block-lang': [
         'error',
         {
