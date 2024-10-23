@@ -287,6 +287,9 @@ export default [
           ],
         },
       ],
+      'vue/no-async-in-computed-properties': [
+        'error',
+      ],
       'vue/no-duplicate-attr-inheritance': [
         'error',
       ],
