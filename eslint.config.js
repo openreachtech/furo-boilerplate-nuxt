@@ -290,6 +290,17 @@ export default [
       'vue/no-async-in-computed-properties': [
         'error',
       ],
+      'vue/no-child-content': [
+        'error',
+        {
+          // additionalDirectives is an empty array by default. However, if it's explicitly
+          // specified, linter won't run. I used an empty string to circumvent this, please
+          // remove it if you add additional directives.
+          additionalDirectives: [ // []
+            '',
+          ],
+        },
+      ],
       'vue/no-duplicate-attr-inheritance': [
         'error',
       ],
