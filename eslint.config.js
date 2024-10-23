@@ -290,6 +290,12 @@ export default [
       'vue/no-async-in-computed-properties': [
         'error',
       ],
+      'vue/no-child-content': [
+        'error',
+        {
+          additionalDirectives: [],
+        },
+      ],
       'vue/no-duplicate-attr-inheritance': [
         'error',
       ],
