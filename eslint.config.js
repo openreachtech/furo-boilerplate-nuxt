@@ -485,6 +485,10 @@ export default [
           ignore: [],
         },
       ],
+      'vue/v-on-style': [
+        'error',
+        'shorthand',
+      ],
     },
   },
 ]
