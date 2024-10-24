@@ -488,6 +488,9 @@ export default [
         'error',
         'camelCase',
       ],
+      'vue/require-default-prop': [
+        'error',
+      ],
       'vue/require-explicit-emits': [
         'error',
         {
