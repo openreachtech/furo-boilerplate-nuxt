@@ -346,6 +346,9 @@ export default [
       'vue/no-setup-props-reactivity-loss': [
         'error',
       ],
+      'vue/no-spaces-around-equal-signs-in-attribute': [
+        'error',
+      ],
       'vue/no-template-target-blank': [
         'error',
         {
