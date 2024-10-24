@@ -301,6 +301,9 @@ export default [
           ],
         },
       ],
+      'vue/no-deprecated-html-element-is': [
+        'error',
+      ],
       'vue/no-duplicate-attr-inheritance': [
         'error',
       ],
