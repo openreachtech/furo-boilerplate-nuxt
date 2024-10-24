@@ -370,6 +370,12 @@ export default [
           groupSingleLineProperties: true,
         },
       ],
+      'vue/return-in-computed-property': [
+        'error',
+        {
+          treatUndefinedAsUnspecified: true,
+        },
+      ],
       'vue/singleline-html-element-content-newline': [
         'error',
         {
