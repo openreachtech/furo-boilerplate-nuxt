@@ -450,6 +450,14 @@ export default [
           ],
         },
       ],
+      'vue/v-on-event-hyphenation': [
+        'error',
+        'always',
+        {
+          autofix: true, // false - NOTE: If using Vue 2, autofix will have problem.
+          ignore: [],
+        },
+      ],
     },
   },
 ]
