@@ -370,6 +370,9 @@ export default [
       'vue/no-spaces-around-equal-signs-in-attribute': [
         'error',
       ],
+      'vue/no-template-key': [
+        'error',
+      ],
       'vue/no-template-target-blank': [
         'error',
         {
