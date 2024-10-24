@@ -237,6 +237,18 @@ export default [
           avoidEscape: true, // false
         },
       ],
+      'vue/html-self-closing': [
+        'error',
+        {
+          html: {
+            void: 'never',
+            normal: 'always',
+            component: 'always',
+          },
+          svg: 'always',
+          math: 'always',
+        },
+      ],
       'vue/match-component-import-name': [
         'error',
       ],
