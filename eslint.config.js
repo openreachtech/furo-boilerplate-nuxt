@@ -456,6 +456,13 @@ export default [
           ],
         },
       ],
+      'vue/v-bind-style': [
+        'error',
+        'shorthand',
+        {
+          sameNameShorthand: 'ignore',
+        },
+      ],
       'vue/v-on-event-hyphenation': [
         'error',
         'always',
