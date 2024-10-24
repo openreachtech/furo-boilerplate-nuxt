@@ -204,6 +204,14 @@ export default [
           },
         },
       ],
+      'vue/html-closing-bracket-spacing': [
+        'error',
+        {
+          startTag: 'never',
+          endTag: 'never',
+          selfClosingTag: 'always',
+        },
+      ],
       'vue/html-comment-content-spacing': [
         'error',
         'always',
