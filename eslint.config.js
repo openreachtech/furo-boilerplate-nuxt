@@ -586,6 +586,9 @@ export default [
         'error',
         'shorthand',
       ],
+      'vue/valid-attribute-name': [
+        'error',
+      ],
     },
   },
 ]
