@@ -504,7 +504,7 @@ export default [
         },
       ],
       'vue/require-prop-type-constructor': [
-        'error'
+        'error',
       ],
       'vue/require-prop-types': [
         'error',
