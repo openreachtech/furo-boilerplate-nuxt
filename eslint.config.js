@@ -307,6 +307,12 @@ export default [
       'vue/no-duplicate-attr-inheritance': [
         'error',
       ],
+      'vue/no-multi-spaces': [
+        'error',
+        {
+          ignoreProperties: false,
+        },
+      ],
       'vue/no-multiple-objects-in-class': [
         'error',
       ],
