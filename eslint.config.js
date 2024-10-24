@@ -361,6 +361,9 @@ export default [
       'vue/no-use-v-else-with-v-for': [
         'error',
       ],
+      'vue/no-watch-after-await': [
+        'error',
+      ],
       'vue/padding-line-between-blocks': [
         'error',
         'always',
