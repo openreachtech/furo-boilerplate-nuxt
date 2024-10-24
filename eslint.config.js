@@ -312,6 +312,9 @@ export default [
       'vue/no-deprecated-html-element-is': [
         'error',
       ],
+      'vue/no-dupe-v-else-if': [
+        'error',
+      ],
       'vue/no-duplicate-attr-inheritance': [
         'error',
       ],
