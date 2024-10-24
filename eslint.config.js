@@ -385,6 +385,13 @@ export default [
           ignoreWhenBindingPresent: true,
         },
       ],
+      'vue/no-useless-v-bind': [
+        'error',
+        {
+          ignoreIncludesComment: false,
+          ignoreStringEscape: false,
+        },
+      ],
       'vue/no-use-v-else-with-v-for': [
         'error',
       ],
