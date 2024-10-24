@@ -376,6 +376,9 @@ export default [
           groupSingleLineProperties: true,
         },
       ],
+      'vue/require-valid-default-prop': [
+        'error',
+      ],
       'vue/return-in-computed-property': [
         'error',
         {
