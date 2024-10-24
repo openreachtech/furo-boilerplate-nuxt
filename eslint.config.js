@@ -596,6 +596,9 @@ export default [
       'vue/valid-attribute-name': [
         'error',
       ],
+      'vue/valid-next-tick': [
+        'error',
+      ],
     },
   },
 ]
