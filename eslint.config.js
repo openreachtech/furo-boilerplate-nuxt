@@ -406,6 +406,10 @@ export default [
           groupSingleLineProperties: true,
         },
       ],
+      'vue/prop-name-casing': [
+        'error',
+        'camelCase',
+      ],
       'vue/require-explicit-emits': [
         'error',
         {
