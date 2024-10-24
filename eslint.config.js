@@ -401,6 +401,15 @@ export default [
           allowUsingIterationVar: false,
         },
       ],
+      'vue/no-v-text-v-html-on-component': [
+        'error',
+        {
+          allow: [
+            'router-link',
+            'nuxt-link',
+          ],
+        },
+      ],
       'vue/no-watch-after-await': [
         'error',
       ],
