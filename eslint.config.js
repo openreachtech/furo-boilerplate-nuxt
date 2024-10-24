@@ -318,6 +318,13 @@ export default [
       'vue/no-duplicate-attr-inheritance': [
         'error',
       ],
+      'vue/no-duplicate-attributes': [
+        'error',
+        {
+          allowCoexistClass: true,
+          allowCoexistStyle: true,
+        },
+      ],
       'vue/no-multi-spaces': [
         'error',
         {
