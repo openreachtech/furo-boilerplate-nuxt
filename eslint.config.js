@@ -325,6 +325,9 @@ export default [
           allowCoexistStyle: true,
         },
       ],
+      'vue/no-expose-after-await': [
+        'error',
+      ],
       'vue/no-lifecycle-after-await': [
         'error',
       ],
