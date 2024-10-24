@@ -382,6 +382,12 @@ export default [
       'vue/no-template-key': [
         'error',
       ],
+      'vue/no-template-shadow': [
+        'error',
+        {
+          allow: [],
+        },
+      ],
       'vue/no-template-target-blank': [
         'error',
         {
