@@ -367,6 +367,9 @@ export default [
           threshold: 1,
         },
       ],
+      'vue/no-ref-as-operand': [
+        'error',
+      ],
       'vue/no-setup-props-reactivity-loss': [
         'error',
       ],
