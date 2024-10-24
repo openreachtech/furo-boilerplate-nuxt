@@ -395,6 +395,12 @@ export default [
       'vue/no-use-v-else-with-v-for': [
         'error',
       ],
+      'vue/no-use-v-if-with-v-for': [
+        'error',
+        {
+          allowUsingIterationVar: false,
+        },
+      ],
       'vue/no-watch-after-await': [
         'error',
       ],
