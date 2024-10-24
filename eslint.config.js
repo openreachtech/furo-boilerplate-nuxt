@@ -316,6 +316,10 @@ export default [
       'vue/no-multiple-objects-in-class': [
         'error',
       ],
+      'vue/mustache-interpolation-spacing': [
+        'error',
+        'always',
+      ],
       'vue/no-mutating-props': [
         'error',
         {
