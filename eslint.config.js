@@ -503,6 +503,9 @@ export default [
           allowProps: false,
         },
       ],
+      'vue/require-prop-type-constructor': [
+        'error',
+      ],
       'vue/require-prop-types': [
         'error',
       ],
