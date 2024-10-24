@@ -392,6 +392,12 @@ export default [
           groupSingleLineProperties: true,
         },
       ],
+      'vue/require-explicit-emits': [
+        'error',
+        {
+          allowProps: false,
+        },
+      ],
       'vue/require-valid-default-prop': [
         'error',
       ],
