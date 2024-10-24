@@ -364,6 +364,9 @@ export default [
           enforceDynamicLinks: 'always',
         },
       ],
+      'vue/no-textarea-mustache': [
+        'error',
+      ],
       'vue/no-undef-components': [
         'error',
         {
