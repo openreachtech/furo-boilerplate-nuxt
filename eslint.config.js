@@ -412,6 +412,9 @@ export default [
           allowProps: false,
         },
       ],
+      'vue/require-prop-types': [
+        'error',
+      ],
       'vue/require-valid-default-prop': [
         'error',
       ],
