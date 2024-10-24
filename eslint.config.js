@@ -310,6 +310,12 @@ export default [
       'vue/no-multiple-objects-in-class': [
         'error',
       ],
+      'vue/no-mutating-props': [
+        'error',
+        {
+          shallowOnly: false,
+        },
+      ],
       'vue/no-required-prop-with-default': [
         'error',
         {
