@@ -373,6 +373,9 @@ export default [
       'vue/no-setup-props-reactivity-loss': [
         'error',
       ],
+      'vue/no-side-effects-in-computed-properties': [
+        'error',
+      ],
       'vue/no-spaces-around-equal-signs-in-attribute': [
         'error',
       ],
