@@ -371,6 +371,12 @@ export default [
           ],
         },
       ],
+      'vue/no-unused-components': [
+        'error',
+        {
+          ignoreWhenBindingPresent: true,
+        },
+      ],
       'vue/no-use-v-else-with-v-for': [
         'error',
       ],
