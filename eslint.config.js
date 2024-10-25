@@ -167,7 +167,7 @@ export default [
             'EVENTS',
             'CONTENT',
           ],
-          alphabetical: true, // false
+          alphabetical: false,
         },
       ],
       'vue/block-lang': [
