@@ -219,6 +219,9 @@ export default [
           exceptions: [],
         },
       ],
+      'vue/html-end-tags': [
+        'error',
+      ],
       'vue/html-indent': [
         'error',
         2,
