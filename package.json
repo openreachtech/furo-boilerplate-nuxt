@@ -7,6 +7,7 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
+    "postinstall": "nuxt prepare",
     "start": "nuxt start",
     "l": "npm run lint",
     "lint": "eslint .",
