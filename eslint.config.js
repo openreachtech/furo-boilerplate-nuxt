@@ -137,6 +137,50 @@ export default [
   ...pluginVue.configs['flat/base'],
   {
     rules: {
+      'vue/attribute-hyphenation': [
+        'error',
+        'always',
+        {
+          ignore: [],
+        },
+      ],
+      'vue/attributes-order': [
+        'error',
+        {
+          order: [
+            'DEFINITION',
+            'LIST_RENDERING',
+            'CONDITIONALS',
+            'RENDER_MODIFIERS',
+            'GLOBAL',
+            [
+              'UNIQUE',
+              'SLOT',
+            ],
+            'TWO_WAY_BINDING',
+            'OTHER_DIRECTIVES',
+            [ // 'OTHER_ATTR'
+              'ATTR_DYNAMIC',
+              'ATTR_STATIC',
+              'ATTR_SHORTHAND_BOOL',
+            ],
+            'EVENTS',
+            'CONTENT',
+          ],
+          alphabetical: false,
+        },
+      ],
+      'vue/block-lang': [
+        'error',
+        {
+          script: {
+            allowNoLang: true,
+          },
+          style: {
+            allowNoLang: true,
+          },
+        },
+      ],
       'vue/block-order': [
         'error',
         {
@@ -157,6 +201,17 @@ export default [
         'error',
         'PascalCase',
       ],
+      'vue/component-options-name-casing': [
+        'error',
+        'PascalCase',
+      ],
+      'vue/custom-event-name-casing': [
+        'error',
+        'camelCase',
+        {
+          ignores: [],
+        },
+      ],
       'vue/first-attribute-linebreak': [
         'error',
         {
@@ -175,6 +230,24 @@ export default [
           },
         },
       ],
+      'vue/html-closing-bracket-spacing': [
+        'error',
+        {
+          startTag: 'never',
+          endTag: 'never',
+          selfClosingTag: 'always',
+        },
+      ],
+      'vue/html-comment-content-spacing': [
+        'error',
+        'always',
+        {
+          exceptions: [],
+        },
+      ],
+      'vue/html-end-tags': [
+        'error',
+      ],
       'vue/html-indent': [
         'error',
         2,
@@ -192,6 +265,21 @@ export default [
         {
           avoidEscape: true, // false
         },
+      ],
+      'vue/html-self-closing': [
+        'error',
+        {
+          html: {
+            void: 'never',
+            normal: 'always',
+            component: 'always',
+          },
+          svg: 'always',
+          math: 'always',
+        },
+      ],
+      'vue/match-component-import-name': [
+        'error',
       ],
       'vue/max-attributes-per-line': [
         'error',
@@ -248,9 +336,256 @@ export default [
           ],
         },
       ],
+      'vue/no-async-in-computed-properties': [
+        'error',
+      ],
+      'vue/no-child-content': [
+        'error',
+        {
+          // additionalDirectives is an empty array by default. However, if it's explicitly
+          // specified, linter won't run. I used an empty string to circumvent this, please
+          // remove it if you add additional directives.
+          additionalDirectives: [ // []
+            '',
+          ],
+        },
+      ],
+      'vue/no-deprecated-html-element-is': [
+        'error',
+      ],
+      'vue/no-dupe-v-else-if': [
+        'error',
+      ],
+      'vue/no-duplicate-attr-inheritance': [
+        'error',
+      ],
+      'vue/no-duplicate-attributes': [
+        'error',
+        {
+          allowCoexistClass: true,
+          allowCoexistStyle: true,
+        },
+      ],
+      'vue/no-expose-after-await': [
+        'error',
+      ],
+      'vue/no-lifecycle-after-await': [
+        'error',
+      ],
+      'vue/no-multi-spaces': [
+        'error',
+        {
+          ignoreProperties: false,
+        },
+      ],
+      'vue/no-multiple-objects-in-class': [
+        'error',
+      ],
+      'vue/mustache-interpolation-spacing': [
+        'error',
+        'always',
+      ],
+      'vue/no-mutating-props': [
+        'error',
+        {
+          shallowOnly: false,
+        },
+      ],
+      'vue/no-required-prop-with-default': [
+        'error',
+        {
+          autofix: false,
+        },
+      ],
+      'vue/no-potential-component-option-typo': [
+        'error',
+        {
+          presets: [ // ['vue']
+            'vue',
+            'nuxt',
+          ],
+          custom: [],
+          threshold: 1,
+        },
+      ],
+      'vue/no-ref-as-operand': [
+        'error',
+      ],
+      'vue/no-setup-props-reactivity-loss': [
+        'error',
+      ],
+      'vue/no-side-effects-in-computed-properties': [
+        'error',
+      ],
+      'vue/no-spaces-around-equal-signs-in-attribute': [
+        'error',
+      ],
+      'vue/no-template-key': [
+        'error',
+      ],
+      'vue/no-template-shadow': [
+        'error',
+        {
+          allow: [],
+        },
+      ],
+      'vue/no-template-target-blank': [
+        'error',
+        {
+          allowReferrer: false,
+          enforceDynamicLinks: 'always',
+        },
+      ],
+      'vue/no-textarea-mustache': [
+        'error',
+      ],
+      'vue/no-undef-components': [
+        'error',
+        {
+          ignorePatterns: [],
+        },
+      ],
+      'vue/no-undef-properties': [
+        'error',
+        {
+          ignores: [
+            // Some Vue APIs prefixed with `$` are always available in <template>.
+            '/^\\$/',
+          ],
+        },
+      ],
+      'vue/no-unused-components': [
+        'error',
+        {
+          ignoreWhenBindingPresent: true,
+        },
+      ],
+      'vue/no-useless-v-bind': [
+        'error',
+        {
+          ignoreIncludesComment: false,
+          ignoreStringEscape: false,
+        },
+      ],
+      'vue/no-use-v-else-with-v-for': [
+        'error',
+      ],
+      'vue/no-use-v-if-with-v-for': [
+        'error',
+        {
+          allowUsingIterationVar: false,
+        },
+      ],
+      'vue/no-v-text-v-html-on-component': [
+        'error',
+        {
+          allow: [
+            'router-link',
+            'nuxt-link',
+          ],
+        },
+      ],
+      'vue/no-watch-after-await': [
+        'error',
+      ],
+      'vue/order-in-components': [
+        'error',
+        {
+          order: [
+            'el',
+            'name',
+            'key',
+            'parent',
+            'functional',
+            [
+              'delimiters',
+              'comments',
+            ],
+            [
+              'components',
+              'directives',
+              'filters',
+            ],
+            'extends',
+            'mixins',
+            [
+              'provide',
+              'inject',
+            ],
+            'ROUTER_GUARDS',
+            'layout',
+            'middleware',
+            'validate',
+            'scrollToTop',
+            'transition',
+            'loading',
+            'inheritAttrs',
+            'model',
+            [
+              'props',
+              'propsData',
+            ],
+            'emits',
+            'setup',
+            'asyncData',
+            'data',
+            'fetch',
+            'head',
+            'computed',
+            'watch',
+            'watchQuery',
+            'LIFECYCLE_HOOKS',
+            'methods',
+            [
+              'template',
+              'render',
+            ],
+            'renderError',
+          ],
+        },
+      ],
       'vue/padding-line-between-blocks': [
         'error',
         'always',
+      ],
+      'vue/padding-lines-in-component-definition': [
+        'error',
+        {
+          betweenOptions: 'always',
+          withinOption: {
+            props: 'never', // 'always'
+            emits: 'never', // 'always'
+          },
+          groupSingleLineProperties: true,
+        },
+      ],
+      'vue/prop-name-casing': [
+        'error',
+        'camelCase',
+      ],
+      'vue/require-default-prop': [
+        'error',
+      ],
+      'vue/require-explicit-emits': [
+        'error',
+        {
+          allowProps: false,
+        },
+      ],
+      'vue/require-prop-type-constructor': [
+        'error',
+      ],
+      'vue/require-prop-types': [
+        'error',
+      ],
+      'vue/require-valid-default-prop': [
+        'error',
+      ],
+      'vue/return-in-computed-property': [
+        'error',
+        {
+          treatUndefinedAsUnspecified: true,
+        },
       ],
       'vue/singleline-html-element-content-newline': [
         'error',
@@ -300,6 +635,31 @@ export default [
             'video',
           ],
         },
+      ],
+      'vue/v-bind-style': [
+        'error',
+        'shorthand',
+        {
+          sameNameShorthand: 'ignore',
+        },
+      ],
+      'vue/v-on-event-hyphenation': [
+        'error',
+        'always',
+        {
+          autofix: true, // false - NOTE: If using Vue 2, autofix will have problem.
+          ignore: [],
+        },
+      ],
+      'vue/v-on-style': [
+        'error',
+        'shorthand',
+      ],
+      'vue/valid-attribute-name': [
+        'error',
+      ],
+      'vue/valid-next-tick': [
+        'error',
       ],
     },
   },
