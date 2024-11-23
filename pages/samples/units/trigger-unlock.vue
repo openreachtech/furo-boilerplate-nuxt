@@ -93,21 +93,21 @@
 
       <label class="-trigger-unlock-radio">
         <input type="radio"
-          name="radio-group"
+          name="radio-group-first"
         >
         <span>Alpha</span>
       </label>
       <br>
       <label class="-trigger-unlock-radio">
         <input type="radio"
-          name="radio-group"
+          name="radio-group-first"
         >
         <span>Beta</span>
       </label>
       <br>
       <label class="-trigger-unlock-radio">
         <input type="radio"
-          name="radio-group"
+          name="radio-group-first"
         >
         <span>Gamma</span>
       </label>
@@ -127,21 +127,21 @@
       <div class="-trigger-unlock-radio unify-frame">
         <label>
           <input type="radio"
-            name="radio-group"
+            name="radio-group-second"
           >
           <span>Alpha</span>
         </label>
         <br>
         <label>
           <input type="radio"
-            name="radio-group"
+            name="radio-group-second"
           >
           <span>Beta</span>
         </label>
         <br>
         <label>
           <input type="radio"
-            name="radio-group"
+            name="radio-group-second"
           >
           <span>Gamma</span>
         </label>
