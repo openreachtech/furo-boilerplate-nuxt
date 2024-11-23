@@ -17,6 +17,7 @@
 
       <button class="-aim-unlock"
         type="submit"
+        onclick="alert('Submit!')"
       >
         Submit
       </button>
@@ -34,6 +35,7 @@
 
       <button class="-aim-unlock"
         type="submit"
+        onclick="alert('Submit!')"
       >
         Submit
       </button>
@@ -55,6 +57,7 @@
 
       <button class="-aim-unlock"
         type="submit"
+        onclick="alert('Submit!')"
       >
         Submit
       </button>
@@ -77,6 +80,7 @@
 
       <button class="-aim-unlock"
         type="submit"
+        onclick="alert('Submit!')"
       >
         Submit
       </button>
@@ -111,6 +115,7 @@
 
       <button class="-aim-unlock"
         type="submit"
+        onclick="alert('Submit!')"
       >
         Submit
       </button>
@@ -144,6 +149,7 @@
 
       <button class="-aim-unlock"
         type="submit"
+        onclick="alert('Submit!')"
       >
         Submit
       </button>
