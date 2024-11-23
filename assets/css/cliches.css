@@ -1,0 +1,31 @@
+/*
+ * cliches.css
+ */
+
+/*
+ * Unlock <button> when checkbox is checked
+ *
+ * @example
+ * ```html
+ * <label class="-trigger-unlock-checkbox">
+ *   <input type="checkbox">
+ *   <span>Agree the rules</span>
+ * </label>
+ * <br>
+ * <button class="-aim-unlock"
+ *   type="submit"
+ * >
+ *   Submit
+ * </button>
+ * ```
+ */
+.-trigger-unlock-checkbox:where(
+  input[type=checkbox]:not(:checked),
+  :has(input[type=checkbox]:not(:checked))
+) ~ :where(
+  .-aim-unlock,
+  * .-aim-unlock
+) {
+  pointer-events: none;
+  opacity: 0.5;
+}
