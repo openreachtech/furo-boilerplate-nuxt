@@ -147,16 +147,13 @@ export default defineAppComponent({
       <div>{{ validationRef.message['password-confirmation'] }}&nbsp;</div>
     </label>
 
-    <label class="column">
-      <input v-model="statusReactive.allowsToSubmit"
-        type="checkbox"
-      >
+    <label class="-trigger-unlock-checkbox column">
+      <input type="checkbox">
       <span>利用規約に同意する</span>
     </label>
 
-    <button class="standard"
+    <button class="-aim-unlock standard"
       type="submit"
-      :disabled="!statusReactive.allowsToSubmit"
     >
       新規登録
     </button>
