@@ -199,7 +199,7 @@
   border-radius: 0.25rem;
 
   background-color: #55f;
-  color: white;
+  color: #fff;
 
   padding-block: 0.25rem;
   padding-inline: 0.75rem;
