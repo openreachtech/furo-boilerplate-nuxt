@@ -2,12 +2,18 @@
 
 <template>
   <div>
-    <h1>Trigger Unlock</h1>
+    <h1 class="design-header primary">
+      Trigger Unlock
+    </h1>
 
-    <h2>Checkbox Types</h2>
+    <h2 class="design-header secondary">
+      Checkbox Types
+    </h2>
 
     <section class="unit-section">
-      <h3>one trigger - one aim &lt;label&gt;&lt;input&gt;&lt;/label&gt;</h3>
+      <h3 class="design-header tertiary">
+        one trigger - one aim &lt;label&gt;&lt;input&gt;&lt;/label&gt;
+      </h3>
 
       <label class="-trigger-unlock-checkbox">
         <input type="checkbox">
@@ -24,7 +30,9 @@
     </section>
 
     <section class="unit-section">
-      <h3>one trigger - one aim &lt;label for&gt;&lt;input id&gt;</h3>
+      <h3 class="design-header tertiary">
+        one trigger - one aim &lt;label for&gt;&lt;input id&gt;
+      </h3>
 
       <input id="labeled-input"
         class="-trigger-unlock-checkbox"
@@ -42,7 +50,9 @@
     </section>
 
     <section class="unit-section">
-      <h3>plural triggers - one aim (Open Type)</h3>
+      <h3 class="design-header tertiary">
+        plural triggers - one aim (Open Type)
+      </h3>
 
       <label class="-trigger-unlock-checkbox">
         <input type="checkbox">
@@ -64,7 +74,9 @@
     </section>
 
     <section class="unit-section">
-      <h3>plural triggers - one aim (Unified Type)</h3>
+      <h3 class="design-header tertiary">
+        plural triggers - one aim (Unified Type)
+      </h3>
 
       <div class="-trigger-unlock-checkbox unify-frame">
         <label>
@@ -86,10 +98,14 @@
       </button>
     </section>
 
-    <h2>Radio Types</h2>
+    <h2 class="design-header secondary">
+      Radio Types
+    </h2>
 
     <section class="unit-section">
-      <h3>one radio set - one aim (Open Type)</h3>
+      <h3 class="design-header tertiary">
+        one radio set - one aim (Open Type)
+      </h3>
 
       <label class="-trigger-unlock-radio">
         <input type="radio"
@@ -122,7 +138,9 @@
     </section>
 
     <section class="unit-section">
-      <h3>one radio set - one aim (Unified Type)</h3>
+      <h3 class="design-header tertiary">
+        one radio set - one aim (Unified Type)
+      </h3>
 
       <div class="-trigger-unlock-radio unify-frame">
         <label>
@@ -158,18 +176,20 @@
 </template>
 
 <style scoped>
-h1 {
+.design-header.primary {
+  margin-block-end: 1rem;
+
   font-size: 2rem;
 }
-h2 {
+
+.design-header.secondary {
   margin-block-start: 2rem;
+  margin-block-end: 1rem;
 
   font-size: 1.618rem;
 }
 
-h1,
-h2,
-h3 {
+.design-header.tertiary {
   margin-block-end: 1rem;
 }
 
