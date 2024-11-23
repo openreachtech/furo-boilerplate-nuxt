@@ -120,7 +120,7 @@ export default defineAppComponent({
     </label>
 
     <label class="row">
-      <span>First Name</span>
+      <span>Last Name</span>
       <input name="lastName"
         type="text"
         placeholder="Please enter your last name."
