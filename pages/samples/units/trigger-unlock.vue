@@ -208,14 +208,14 @@
 .unit-section {
   margin-block-start: 1rem;
 
-  border: 3px #000 double;
+  border: calc(var(--size-thinnest) * 3) #000 double;
 
   padding-block: 0.5rem;
   padding-inline: 1rem;
 }
 
 .unify-frame {
-  border: 1px #000 solid;
+  border: var(--size-thinnest) #000 solid;
 
   padding-block: 0.5rem;
   padding-inline: 1rem;
