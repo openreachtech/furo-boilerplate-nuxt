@@ -21,7 +21,7 @@
       </label>
       <br>
 
-      <button class="-aim-unlock"
+      <button class="-aim-unlock design-button"
         type="submit"
         onclick="alert('Submit!')"
       >
@@ -41,7 +41,7 @@
       <label for="labeled-input">I agree it</label>
       <br>
 
-      <button class="-aim-unlock"
+      <button class="-aim-unlock design-button"
         type="submit"
         onclick="alert('Submit!')"
       >
@@ -65,7 +65,7 @@
       </label>
       <br>
 
-      <button class="-aim-unlock"
+      <button class="-aim-unlock design-button"
         type="submit"
         onclick="alert('Submit!')"
       >
@@ -90,7 +90,7 @@
         </label>
       </div>
 
-      <button class="-aim-unlock"
+      <button class="-aim-unlock design-button"
         type="submit"
         onclick="alert('Submit!')"
       >
@@ -129,7 +129,7 @@
       </label>
       <br>
 
-      <button class="-aim-unlock"
+      <button class="-aim-unlock design-button"
         type="submit"
         onclick="alert('Submit!')"
       >
@@ -165,7 +165,7 @@
         </label>
       </div>
 
-      <button class="-aim-unlock"
+      <button class="-aim-unlock design-button"
         type="submit"
         onclick="alert('Submit!')"
       >
@@ -193,7 +193,7 @@
   margin-block-end: 1rem;
 }
 
-button {
+.design-button {
   margin-block-start: 0.5rem;
   border: none;
   border-radius: .25rem;
