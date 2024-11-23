@@ -81,6 +81,73 @@
         Submit
       </button>
     </section>
+
+    <h2>Radio Types</h2>
+
+    <section class="unit-section">
+      <h3>one radio set - one aim (Open Type)</h3>
+
+      <label class="-trigger-unlock-radio">
+        <input type="radio"
+          name="radio-group"
+        >
+        <span>Alpha</span>
+      </label>
+      <br>
+      <label class="-trigger-unlock-radio">
+        <input type="radio"
+          name="radio-group"
+        >
+        <span>Beta</span>
+      </label>
+      <br>
+      <label class="-trigger-unlock-radio">
+        <input type="radio"
+          name="radio-group"
+        >
+        <span>Gamma</span>
+      </label>
+      <br>
+
+      <button class="-aim-unlock"
+        type="submit"
+      >
+        Submit
+      </button>
+    </section>
+
+    <section class="unit-section">
+      <h3>one radio set - one aim (Unified Type)</h3>
+
+      <div class="-trigger-unlock-radio unify-frame">
+        <label>
+          <input type="radio"
+            name="radio-group"
+          >
+          <span>Alpha</span>
+        </label>
+        <br>
+        <label>
+          <input type="radio"
+            name="radio-group"
+          >
+          <span>Beta</span>
+        </label>
+        <br>
+        <label>
+          <input type="radio"
+            name="radio-group"
+          >
+          <span>Gamma</span>
+        </label>
+      </div>
+
+      <button class="-aim-unlock"
+        type="submit"
+      >
+        Submit
+      </button>
+    </section>
   </div>
 </template>
 
