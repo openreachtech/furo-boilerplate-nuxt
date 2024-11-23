@@ -196,7 +196,7 @@
 .design-button {
   margin-block-start: 0.5rem;
   border: none;
-  border-radius: .25rem;
+  border-radius: 0.25rem;
 
   background-color: #55f;
   color: white;
@@ -217,7 +217,7 @@
 .unify-frame {
   border: 1px #000 solid;
 
-  padding-block: .5rem;
+  padding-block: 0.5rem;
   padding-inline: 1rem;
 }
 </style>
