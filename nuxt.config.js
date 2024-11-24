@@ -34,7 +34,7 @@ export default defineNuxtConfig({
   css: [
     '~/assets/css/variables.css',
     '~/assets/css/reset.css',
-    '~/assets/css/cliches.css',
+    '~/assets/css/gimmick.css',
   ],
 
   // Plugins to run before rendering page: https://nuxt.com/docs/api/nuxt-config#plugins-1.
