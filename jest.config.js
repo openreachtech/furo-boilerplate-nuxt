@@ -1,4 +1,7 @@
 const sharedConfig = {
+  setupFilesAfterEnv: [
+    '<rootDir>/tests/setupAfterEnv.js',
+  ],
   moduleFileExtensions: [
     'js',
     'vue',
