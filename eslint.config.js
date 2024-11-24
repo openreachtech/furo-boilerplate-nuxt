@@ -63,6 +63,7 @@ export default [
 
       'jsdoc/check-tag-names': 'off',
       'jsdoc/no-undefined-types': 'off',
+      'jsdoc/valid-types': 'off',
 
       'n/no-deprecated-api': 'off',
       'n/no-exports-assign': 'off',
