@@ -91,7 +91,8 @@ export default defineAppComponent({
   >
     <label class="row">
       <span>メールアドレス</span>
-      <input name="email"
+      <input class="usual"
+        name="email"
         type="text"
         placeholder="メールアドレスを入力してください。"
         value="stew.eucen@openreach.tech"
@@ -101,7 +102,8 @@ export default defineAppComponent({
 
     <label class="row">
       <span>ユーザ名</span>
-      <input name="username"
+      <input class="usual"
+        name="username"
         type="text"
         placeholder="ユーザ名を入力してください。"
         value="John Doe"
@@ -111,7 +113,8 @@ export default defineAppComponent({
 
     <label class="row">
       <span>First Name</span>
-      <input name="firstName"
+      <input class="usual"
+        name="firstName"
         type="text"
         placeholder="Please enter your first name."
         value="Eucen"
@@ -121,7 +124,8 @@ export default defineAppComponent({
 
     <label class="row">
       <span>Last Name</span>
-      <input name="lastName"
+      <input class="usual"
+        name="lastName"
         type="text"
         placeholder="Please enter your last name."
         value="Stew"
@@ -131,7 +135,8 @@ export default defineAppComponent({
 
     <label class="row">
       <span>パスワード</span>
-      <input name="password"
+      <input class="usual"
+        name="password"
         type="password"
         placeholder="パスワードを入力してください。"
       >
@@ -140,7 +145,8 @@ export default defineAppComponent({
 
     <label class="row">
       <span>パスワード (確認用)</span>
-      <input name="password-confirmation"
+      <input class="usual"
+        name="password-confirmation"
         type="password"
         placeholder="パスワードを入力してください。"
       >
@@ -152,7 +158,7 @@ export default defineAppComponent({
       <span>利用規約に同意する</span>
     </label>
 
-    <button class="-aim-unlock standard"
+    <button class="-aim-unlock usual"
       type="submit"
     >
       新規登録
