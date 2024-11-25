@@ -1,5 +1,6 @@
 :root {
   /* Palette */
+  --palette-black: #000;
   --palette-blue: #37f;
   --palette-blue-light: #69f;
   --palette-gray: #bcbcbc;
@@ -13,6 +14,7 @@
   --color-background: var(--palette-gray-light);
 
   /* Text */
+  --color-text: var(--palette-black);
   --color-text-primary: var(--palette-white);
 
   /* Sizes */
