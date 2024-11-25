@@ -11,6 +11,8 @@ import {
   useGraphqlClient,
 } from '@openreachtech/furo-nuxt'
 
+import useRedirect from '~/composables/useRedirect.js'
+
 import defineAppComponent from '~/app/vue/defineAppComponent'
 
 import SignInMutationGraphqlLauncher from '~/app/graphql/client/mutations/signIn/SignInMutationGraphqlLauncher'
@@ -40,6 +42,10 @@ export default defineAppComponent({
       FormElementClerk: SignInFormElementClerk,
       invokeRequestWithFormValueHash,
     })
+
+    const {
+      redirectTo,
+    } = useRedirect()
 
     return {
       formRef,
@@ -82,7 +88,12 @@ export default defineAppComponent({
 
             if (!hasSaved) {
               onFailToGetAccessToken()
+
+              return
             }
+
+            // // Redirect to the path after success to sign in.
+            await redirectTo()
           },
         },
       })
