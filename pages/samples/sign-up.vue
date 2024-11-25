@@ -206,7 +206,7 @@ export default defineAppComponent({
   </div>
 </template>
 
-<style>
+<style scoped>
 .unit-loading {
   position: fixed;
   top: 0;
