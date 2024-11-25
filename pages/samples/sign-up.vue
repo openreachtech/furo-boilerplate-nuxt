@@ -91,68 +91,74 @@ export default defineAppComponent({
   >
     <label class="row">
       <span>メールアドレス</span>
-      <input name="email"
+      <input class="usual"
+        name="email"
         type="text"
         placeholder="メールアドレスを入力してください。"
         value="stew.eucen@openreach.tech"
       >
-      <div>{{ validationRef.message.email }}&nbsp;</div>
     </label>
+    <div>{{ validationRef.message.email }}&nbsp;</div>
 
     <label class="row">
       <span>ユーザ名</span>
-      <input name="username"
+      <input class="usual"
+        name="username"
         type="text"
         placeholder="ユーザ名を入力してください。"
         value="John Doe"
       >
-      <div>{{ validationRef.message.username }}&nbsp;</div>
     </label>
+    <div>{{ validationRef.message.username }}&nbsp;</div>
 
     <label class="row">
       <span>First Name</span>
-      <input name="firstName"
+      <input class="usual"
+        name="firstName"
         type="text"
         placeholder="Please enter your first name."
         value="Eucen"
       >
-      <div>{{ validationRef.message.firstName }}&nbsp;</div>
     </label>
+    <div>{{ validationRef.message.firstName }}&nbsp;</div>
 
     <label class="row">
       <span>Last Name</span>
-      <input name="lastName"
+      <input class="usual"
+        name="lastName"
         type="text"
         placeholder="Please enter your last name."
         value="Stew"
       >
-      <div>{{ validationRef.message.lastName }}&nbsp;</div>
     </label>
+    <div>{{ validationRef.message.lastName }}&nbsp;</div>
 
     <label class="row">
       <span>パスワード</span>
-      <input name="password"
+      <input class="usual"
+        name="password"
         type="password"
         placeholder="パスワードを入力してください。"
       >
-      <div>{{ validationRef.message.password }}&nbsp;</div>
     </label>
+    <div>{{ validationRef.message.password }}&nbsp;</div>
 
     <label class="row">
       <span>パスワード (確認用)</span>
-      <input name="password-confirmation"
+      <input class="usual"
+        name="password-confirmation"
         type="password"
         placeholder="パスワードを入力してください。"
       >
-      <div>{{ validationRef.message['password-confirmation'] }}&nbsp;</div>
     </label>
+    <div>{{ validationRef.message['password-confirmation'] }}&nbsp;</div>
 
     <label class="-trigger-unlock-checkbox column">
       <input type="checkbox">
       <span>利用規約に同意する</span>
     </label>
 
-    <button class="-aim-unlock standard"
+    <button class="-aim-unlock usual"
       type="submit"
     >
       新規登録
@@ -200,48 +206,7 @@ export default defineAppComponent({
   </div>
 </template>
 
-<style>
-form {
-  margin-inline: 1rem;
-}
-
-label.row,
-label.column {
-  margin-block-start: 1rem;
-}
-
-label.row {
-  display: flex;
-  flex-direction: column;
-}
-
-label.column {
-  display: flex;
-  flex-direction: row;
-}
-
-form button {
-  margin-block-start: 1rem;
-}
-
-form button.standard {
-  border: none;
-  border-radius: .25rem;
-
-  padding-block: .5rem;
-  padding-inline: 1rem;
-  background-color: #007bff;
-  color: #fff;
-}
-
-form button.standard:active {
-  background-color: #03c;
-}
-
-form button[disabled] {
-  background-color: #ccc;
-}
-
+<style scoped>
 .unit-loading {
   position: fixed;
   top: 0;
