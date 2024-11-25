@@ -207,47 +207,6 @@ export default defineAppComponent({
 </template>
 
 <style>
-form {
-  margin-inline: 1rem;
-}
-
-label.row,
-label.column {
-  margin-block-start: 1rem;
-}
-
-label.row {
-  display: flex;
-  flex-direction: column;
-}
-
-label.column {
-  display: flex;
-  flex-direction: row;
-}
-
-form button {
-  margin-block-start: 1rem;
-}
-
-form button.standard {
-  border: none;
-  border-radius: .25rem;
-
-  padding-block: .5rem;
-  padding-inline: 1rem;
-  background-color: #007bff;
-  color: #fff;
-}
-
-form button.standard:active {
-  background-color: #03c;
-}
-
-form button[disabled] {
-  background-color: #ccc;
-}
-
 .unit-loading {
   position: fixed;
   top: 0;
