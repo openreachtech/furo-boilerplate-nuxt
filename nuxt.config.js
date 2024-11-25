@@ -36,6 +36,9 @@ export default defineNuxtConfig({
     '~/assets/css/reset.css',
     '~/assets/css/gimmick.css',
     '~/assets/css/usuals.css',
+
+    // TODO: Remove this sample CSS file in actual application.
+    '~/assets/css/sample.css',
   ],
 
   // Plugins to run before rendering page: https://nuxt.com/docs/api/nuxt-config#plugins-1.
