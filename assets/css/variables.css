@@ -1,12 +1,26 @@
 :root {
+  /* Palette */
+  --palette-blue: #37f;
+  --palette-blue-light: #69f;
+  --palette-gray: #bcbcbc;
+  --palette-gray-light: #f7f7f7;
   --palette-white: #fff;
 
-  --color-background: var(--palette-white);
+  /* Colors */
+  --color-primary: var(--palette-blue);
 
-  --value-golden-ratio: 1.618;
+  /* Backgrounds */
+  --color-background: var(--palette-gray-light);
+
+  /* Text */
+  --color-text-primary: var(--palette-white);
+
+  /* Sizes */
+  --size-thinnest: 1px;
 
   --size-header-height: 5rem;
   --size-footer-height: 6rem;
 
-  --size-thinnest: 1px;
+  /* Values */
+  --value-golden-ratio: 1.618;
 }
