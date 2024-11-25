@@ -60,7 +60,7 @@
   * .-aim-unlock
 ) {
   pointer-events: none;
-  opacity: 0.5;
+  filter: saturate(0);
 }
 
 .-trigger-unlock-radio:is(
