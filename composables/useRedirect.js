@@ -1,7 +1,10 @@
 import {
   useRoute,
-  useRouter,
 } from 'vue-router'
+
+import {
+  navigateTo,
+} from 'nuxt/app'
 
 /**
  * Redirect the user to a specific path.
@@ -17,7 +20,6 @@ export default function useRedirect ({
   defaultPath = '/',
 } = {}) {
   const route = useRoute()
-  const router = useRouter()
 
   return {
     redirectTo,
@@ -63,6 +65,6 @@ export default function useRedirect ({
   async function redirectTo ({
     path = resolvePath(),
   } = {}) {
-    await router.push(path)
+    await navigateTo(path)
   }
 }
