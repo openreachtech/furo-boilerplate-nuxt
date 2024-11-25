@@ -29,10 +29,28 @@ export default function useRedirect ({
    * @returns {string} - The resolved path
    */
   function resolvePath () {
-    return /** @type {*} */ (
-      route.query.redirect
+    return extractRedirectPath()
       ?? defaultPath
-    )
+  }
+
+  /**
+   * Extract the redirect path from the query.
+   *
+   * @returns {string | null} - The redirect path
+   */
+  function extractRedirectPath () {
+    const path = route.query.redirect
+
+    if (!path) {
+      return null
+    }
+
+    if (Array.isArray(path)) {
+      return path.at(0)
+        ?? null
+    }
+
+    return path
   }
 
   /**
