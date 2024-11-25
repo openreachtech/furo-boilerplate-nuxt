@@ -18,6 +18,12 @@ export default class SignInFormElementClerk extends BaseFormElementClerk {
       {
         field: 'email',
         /** @type {furo.ValidationRule} */
+        ok: (it, valueHash) => it,
+        message: 'email must be set',
+      },
+      {
+        field: 'email',
+        /** @type {furo.ValidationRule} */
         ok: (it, valueHash) =>
           !it || /^[^@]+@[^@]+\.[^@]+$/u.test(it),
         message: 'email must be valid',
