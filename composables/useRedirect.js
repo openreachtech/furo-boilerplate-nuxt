@@ -13,7 +13,7 @@ import {
  *   defaultPath?: string
  * }} [params] - The parameters
  * @returns {{
- *   redirectTo: (params?: { path?: string }) => void
+ *   redirectTo: (params?: { path?: string }) => Promise<void>
  * }}
  */
 export default function useRedirect ({
