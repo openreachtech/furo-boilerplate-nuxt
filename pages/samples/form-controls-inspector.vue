@@ -3,7 +3,7 @@ import {
   ref,
 } from 'vue'
 
-import defineAppComponent from '~/app/vue/defineAppComponent'
+import defineAppComponent from '~/app/vue/defineAppPageComponent'
 
 import {
   BaseFormElementClerk,

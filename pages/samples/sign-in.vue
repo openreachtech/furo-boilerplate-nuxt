@@ -13,7 +13,7 @@ import {
 
 import useRedirect from '~/composables/useRedirect.js'
 
-import defineAppComponent from '~/app/vue/defineAppComponent'
+import defineAppComponent from '~/app/vue/defineAppPageComponent'
 
 import SignInMutationGraphqlLauncher from '~/app/graphql/client/mutations/signIn/SignInMutationGraphqlLauncher'
 import SignInFormElementClerk from '~/app/domClerk/SignInFormElementClerk'
