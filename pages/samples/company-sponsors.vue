@@ -7,7 +7,7 @@ import {
   useGraphqlClient,
 } from '@openreachtech/furo-nuxt'
 
-import defineAppComponent from '~/app/vue/defineAppComponent'
+import defineAppComponent from '~/app/vue/defineAppPageComponent'
 
 import CompanySponsorsQueryGraphqlLauncher from '~/app/graphql/client/queries/companySponsors/CompanySponsorsQueryGraphqlLauncher'
 

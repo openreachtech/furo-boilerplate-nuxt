@@ -9,7 +9,7 @@ import {
   useGraphqlClient,
 } from '@openreachtech/furo-nuxt'
 
-import defineAppComponent from '~/app/vue/defineAppComponent'
+import defineAppComponent from '~/app/vue/defineAppPageComponent'
 
 import SignUpMutationGraphqlLauncher from '~/app/graphql/client/mutations/signUp/SignUpMutationGraphqlLauncher'
 
