@@ -137,7 +137,7 @@ describe('BaseAppGraphqlLauncher', () => {
       ]
 
       test.each(cases)('config: $params.config', ({ params }) => {
-        /** @type {BaseAppGraphqlLauncher} */
+        /** @type {BaseAppGraphqlLauncher<*>} */
         const launcher = BaseAppGraphqlLauncher.create(params)
 
         const actual = launcher.Ctor
