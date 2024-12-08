@@ -7,7 +7,7 @@ import {
   useGraphqlClient,
 } from '@openreachtech/furo-nuxt'
 
-import defineAppComponent from '~/app/vue/defineAppComponent'
+import defineAppPageComponent from '~/app/vue/defineAppPageComponent'
 
 import CurriculumsQueryGraphqlLauncher from '~/app/graphql/client/queries/curriculums/CurriculumsQueryGraphqlLauncher'
 
@@ -35,7 +35,7 @@ const launcherHooks = {
   },
 }
 
-export default defineAppComponent({
+export default defineAppPageComponent({
   name: 'IndexPage',
 
   setup () {
