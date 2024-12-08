@@ -2,12 +2,7 @@ import {
   defineNuxtConfig,
 } from 'nuxt/config'
 
-import {
-  NuxtFuroEnvLoader,
-} from '@openreachtech/furo-nuxt'
-
-const furoEnv = NuxtFuroEnvLoader.create()
-  .loadEnv()
+import furoEnv from './app/globals/furo-env'
 
 // Reference: https://nuxt.com/docs/api/nuxt-config.
 export default defineNuxtConfig({
