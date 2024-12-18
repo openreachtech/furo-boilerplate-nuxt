@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   // Nuxt App configuration: https://nuxt.com/docs/api/nuxt-config#app.
   app: {
     head: {
-      title: 'furo-boilerplate',
+      title: '⋯', // Loading title, can not be empty.
       htmlAttrs: {
         lang: 'en',
       },
