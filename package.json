@@ -30,6 +30,7 @@
   "devDependencies": {
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.24.0",
+    "@nuxt/types": "^2.18.1",
     "@openreachtech/eslint-config": "^3.0.2",
     "@openreachtech/renchan-test-tools": "^1.0.0",
     "@types/jest": "^29.5.12",
