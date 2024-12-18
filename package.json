@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "npm run cache; nuxt dev",
     "generate": "nuxt generate",
     "postinstall": "nuxt prepare",
     "start": "nuxt start",
