@@ -5,11 +5,13 @@ import {
 } from 'vue'
 
 import {
+  defineComponent,
+} from '#imports'
+
+import {
   useFormClerk,
   useGraphqlClient,
 } from '@openreachtech/furo-nuxt'
-
-import defineAppPageComponent from '~/app/vue/defineAppPageComponent'
 
 import UploadCustomerForumPostImageMutationGraphqlLauncher from '~/app/graphql/client/mutations/uploadCustomerForumPostImage/UploadCustomerForumPostImageMutationGraphqlLauncher'
 
@@ -65,7 +67,7 @@ async function submitFormWithHooks ({
   })
 }
 
-export default defineAppPageComponent({
+export default defineComponent({
   name: 'UploadCustomerForumPostImagePage',
 
   setup () {
