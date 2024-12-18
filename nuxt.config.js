@@ -69,6 +69,9 @@ export default defineNuxtConfig({
     },
   },
 
+  // To enable Server-Side Rendering or not: https://nuxt.com/docs/api/nuxt-config#ssr
+  ssr: false,
+
   // Restart dev server when changed: https://nuxt.com/docs/api/nuxt-config#watch
   watch: [
     '.furo-env.development',
