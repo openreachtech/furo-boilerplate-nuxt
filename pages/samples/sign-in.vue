@@ -6,6 +6,10 @@ import {
 } from 'vue'
 
 import {
+  definePageMeta,
+} from '#imports'
+
+import {
   useFormClerk,
   useGraphqlClient,
 } from '@openreachtech/furo-nuxt'
@@ -21,6 +25,13 @@ export default defineComponent({
   name: 'SignInPage',
 
   setup () {
+    definePageMeta({
+      $furo: {
+        pageTitle: 'Sign In',
+        skipFilter: true,
+      },
+    })
+
     const statusReactive = reactive({
       isLoading: false,
     })
