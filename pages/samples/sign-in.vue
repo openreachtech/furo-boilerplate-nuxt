@@ -4,7 +4,9 @@ import {
   ref,
 } from 'vue'
 
-import AccessTokenClerk from '~/app/tools/AccessTokenClerk'
+import {
+  defineComponent,
+} from '#imports'
 
 import {
   useFormClerk,
@@ -13,12 +15,12 @@ import {
 
 import useRedirect from '~/composables/useRedirect.js'
 
-import defineAppPageComponent from '~/app/vue/defineAppPageComponent'
-
 import SignInMutationGraphqlLauncher from '~/app/graphql/client/mutations/signIn/SignInMutationGraphqlLauncher'
 import SignInFormElementClerk from '~/app/domClerk/SignInFormElementClerk'
 
-export default defineAppPageComponent({
+import AccessTokenClerk from '~/app/tools/AccessTokenClerk.js'
+
+export default defineComponent({
   name: 'SignInPage',
 
   setup () {
