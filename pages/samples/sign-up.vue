@@ -5,11 +5,13 @@ import {
 } from 'vue'
 
 import {
+  defineComponent,
+} from '#imports'
+
+import {
   useFormClerk,
   useGraphqlClient,
 } from '@openreachtech/furo-nuxt'
-
-import defineAppPageComponent from '~/app/vue/defineAppPageComponent'
 
 import SignUpMutationGraphqlLauncher from '~/app/graphql/client/mutations/signUp/SignUpMutationGraphqlLauncher'
 
@@ -65,7 +67,7 @@ async function submitFormWithHooks ({
   })
 }
 
-export default defineAppPageComponent({
+export default defineComponent({
   name: 'SignUpPage',
 
   setup () {
