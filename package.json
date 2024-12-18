@@ -5,10 +5,11 @@
   "main": "index.js",
   "scripts": {
     "build": "nuxt build",
-    "dev": "nuxt dev",
+    "dev": "npm run cache; nuxt dev",
     "generate": "nuxt generate",
     "postinstall": "nuxt prepare",
     "start": "nuxt start",
+    "cache": "node -e \"require('fs').rm('./node_modules/.cache', { recursive: true, force: true }, err => { if (err) console.error(err); console.log('Cache cleared'); })\"",
     "l": "npm run lint",
     "lint": "eslint .",
     "test": "export NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\"; jest --forceExit --maxWorkers=5"
