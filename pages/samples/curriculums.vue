@@ -1,11 +1,8 @@
 <script>
 import {
+  defineComponent,
   reactive,
 } from 'vue'
-
-import {
-  defineComponent,
-} from '#imports'
 
 import {
   useGraphqlClient,

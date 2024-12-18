@@ -2,7 +2,7 @@
 <script>
 import {
   defineComponent,
-} from '#imports'
+} from 'vue'
 
 export default defineComponent({
   name: 'IndexPage',

@@ -1,12 +1,9 @@
 <script>
 import {
+  defineComponent,
   reactive,
   ref,
 } from 'vue'
-
-import {
-  defineComponent,
-} from '#imports'
 
 import {
   useFormClerk,
