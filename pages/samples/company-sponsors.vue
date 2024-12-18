@@ -5,6 +5,10 @@ import {
 } from 'vue'
 
 import {
+  definePageMeta,
+} from '#imports'
+
+import {
   useGraphqlClient,
 } from '@openreachtech/furo-nuxt'
 
@@ -24,6 +28,13 @@ export default defineComponent({
   name: 'IndexPage',
 
   setup () {
+    definePageMeta({
+      $furo: {
+        pageTitle: 'Company Sponsors',
+        // skipFilter: true,
+      },
+    })
+
     invokeRequestOnMounted({
       hooks: {
         async beforeRequest (payload) {
