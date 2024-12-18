@@ -4,10 +4,12 @@ import {
 } from 'vue'
 
 import {
+  defineComponent,
+} from '#imports'
+
+import {
   useGraphqlClient,
 } from '@openreachtech/furo-nuxt'
-
-import defineAppPageComponent from '~/app/vue/defineAppPageComponent'
 
 import CompanySponsorsQueryGraphqlLauncher from '~/app/graphql/client/queries/companySponsors/CompanySponsorsQueryGraphqlLauncher'
 
@@ -21,7 +23,7 @@ const statusReactive = reactive({
   isLoading: true,
 })
 
-export default defineAppPageComponent({
+export default defineComponent({
   name: 'IndexPage',
 
   setup () {
