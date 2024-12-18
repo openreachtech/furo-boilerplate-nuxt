@@ -1,9 +1,8 @@
 <script>
 import {
+  defineComponent,
   ref,
 } from 'vue'
-
-import defineAppPageComponent from '~/app/vue/defineAppPageComponent'
 
 import {
   BaseFormElementClerk,
@@ -43,7 +42,7 @@ async function submitForm ({
   )
 }
 
-export default defineAppPageComponent({
+export default defineComponent({
   name: 'FormControlsInspectorPage',
 
   setup () {

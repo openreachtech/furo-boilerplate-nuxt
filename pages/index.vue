@@ -1,8 +1,10 @@
 <!-- pages/index.vue -->
 <script>
-import defineAppPageComponent from '~/app/vue/defineAppPageComponent.js'
+import {
+  defineComponent,
+} from 'vue'
 
-export default defineAppPageComponent({
+export default defineComponent({
   name: 'IndexPage',
 })
 </script>
