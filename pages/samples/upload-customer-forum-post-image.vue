@@ -6,6 +6,10 @@ import {
 } from 'vue'
 
 import {
+  definePageMeta,
+} from '#imports'
+
+import {
   useFormClerk,
   useGraphqlClient,
 } from '@openreachtech/furo-nuxt'
@@ -68,6 +72,13 @@ export default defineComponent({
   name: 'UploadCustomerForumPostImagePage',
 
   setup () {
+    definePageMeta({
+      $furo: {
+        pageTitle: 'Upload Customer Forum Post Image Page',
+        // skipFilter: false,
+      },
+    })
+
     return {
       formRef,
       statusReactive,

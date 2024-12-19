@@ -6,6 +6,10 @@ import {
 } from 'vue'
 
 import {
+  definePageMeta,
+} from '#imports'
+
+import {
   useFormClerk,
   useGraphqlClient,
 } from '@openreachtech/furo-nuxt'
@@ -68,6 +72,13 @@ export default defineComponent({
   name: 'SignUpPage',
 
   setup () {
+    definePageMeta({
+      $furo: {
+        pageTitle: 'Sign Up',
+        skipFilter: true,
+      },
+    })
+
     return {
       formRef,
       statusReactive,

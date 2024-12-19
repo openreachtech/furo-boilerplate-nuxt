@@ -5,6 +5,10 @@ import {
 } from 'vue'
 
 import {
+  definePageMeta,
+} from '#imports'
+
+import {
   useGraphqlClient,
 } from '@openreachtech/furo-nuxt'
 
@@ -38,6 +42,13 @@ export default defineComponent({
   name: 'IndexPage',
 
   setup () {
+    definePageMeta({
+      $furo: {
+        pageTitle: 'Curriculums',
+        // skipFilter: true,
+      },
+    })
+
     invokeRequestOnMounted({
       variables: { // TODO: Remove this variables with default values in Payload
         input: {

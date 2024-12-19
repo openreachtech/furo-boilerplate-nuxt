@@ -5,6 +5,10 @@ import {
 } from 'vue'
 
 import {
+  definePageMeta,
+} from '#imports'
+
+import {
   BaseFormElementClerk,
 } from '@openreachtech/furo'
 
@@ -46,6 +50,13 @@ export default defineComponent({
   name: 'FormControlsInspectorPage',
 
   setup () {
+    definePageMeta({
+      $furo: {
+        pageTitle: 'Form Controls Inspector',
+        skipFilter: true,
+      },
+    })
+
     return {
       formRef,
       submitForm,
