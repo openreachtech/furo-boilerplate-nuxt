@@ -8,7 +8,7 @@ import FuroMeta from '~/app/tools/FuroMeta.js'
 /**
  * Page Title middleware (global)
  *
- * @param {import('@nuxt/types').Context} context - The context
+ * @param {import('#app').RouteMiddleware} context - The context
  * @returns {Promise<void>}
  */
 export default defineNuxtRouteMiddleware((to, from) => {

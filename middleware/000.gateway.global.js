@@ -26,7 +26,7 @@ const SIGN_IN_PATH = '/samples/sign-in'
 /**
  * Alpha middleware (global)
  *
- * @param {import('@nuxt/types').Context} context - The context
+ * @param {import('#app').RouteMiddleware} context - The context
  * @returns {Promise<void>}
  */
 export default defineNuxtRouteMiddleware(async (to, from) => {
