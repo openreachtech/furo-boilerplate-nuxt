@@ -33,7 +33,7 @@ export default defineComponent({
       Checkbox Types
     </h2>
 
-    <section class="unit-section">
+    <section class="unit-section sample-placeholder double">
       <h3 class="design-header tertiary">
         one trigger - one aim &lt;label&gt;&lt;input&gt;&lt;/label&gt;
       </h3>
@@ -52,7 +52,7 @@ export default defineComponent({
       </button>
     </section>
 
-    <section class="unit-section">
+    <section class="unit-section sample-placeholder double">
       <h3 class="design-header tertiary">
         one trigger - one aim &lt;label for&gt;&lt;input id&gt;
       </h3>
@@ -72,7 +72,7 @@ export default defineComponent({
       </button>
     </section>
 
-    <section class="unit-section">
+    <section class="unit-section sample-placeholder double">
       <h3 class="design-header tertiary">
         plural triggers - one aim (Open Type)
       </h3>
@@ -96,12 +96,12 @@ export default defineComponent({
       </button>
     </section>
 
-    <section class="unit-section">
+    <section class="unit-section sample-placeholder double">
       <h3 class="design-header tertiary">
         plural triggers - one aim (Unified Type)
       </h3>
 
-      <div class="-trigger-unlock-checkbox unify-frame">
+      <div class="-trigger-unlock-checkbox sample-placeholder">
         <label>
           <input type="checkbox">
           <span>I agree it (1)</span>
@@ -125,7 +125,7 @@ export default defineComponent({
       Radio Types
     </h2>
 
-    <section class="unit-section">
+    <section class="unit-section sample-placeholder double">
       <h3 class="design-header tertiary">
         one radio set - one aim (Open Type)
       </h3>
@@ -160,12 +160,12 @@ export default defineComponent({
       </button>
     </section>
 
-    <section class="unit-section">
+    <section class="unit-section sample-placeholder double">
       <h3 class="design-header tertiary">
         one radio set - one aim (Unified Type)
       </h3>
 
-      <div class="-trigger-unlock-radio unify-frame">
+      <div class="-trigger-unlock-radio sample-placeholder">
         <label>
           <input type="radio"
             name="radio-group-second"
@@ -230,15 +230,6 @@ export default defineComponent({
 
 .unit-section {
   margin-block-start: 1rem;
-
-  border: calc(var(--size-thinnest) * 3) #000 double;
-
-  padding-block: 0.5rem;
-  padding-inline: 1rem;
-}
-
-.unify-frame {
-  border: var(--size-thinnest) #000 solid;
 
   padding-block: 0.5rem;
   padding-inline: 1rem;
