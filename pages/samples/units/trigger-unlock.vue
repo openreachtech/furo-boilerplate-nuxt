@@ -1,4 +1,27 @@
-<script></script>
+<script>
+import {
+  defineComponent,
+} from 'vue'
+
+import {
+  definePageMeta,
+} from '#imports'
+
+export default defineComponent({
+  name: 'Trigger Unlock',
+
+  setup () {
+    definePageMeta({
+      $furo: {
+        pageTitle: 'Trigger Unlock Samples',
+        skipFilter: true,
+      },
+    })
+
+    return {}
+  },
+})
+</script>
 
 <template>
   <div>
