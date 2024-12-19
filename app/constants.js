@@ -1,5 +1,5 @@
 export const HEADER_KEY = {
-  ACCESS_TOKEN: 'x-renchan-app-access-token',
+  ACCESS_TOKEN: 'x-renchan-access-token',
 }
 
 export const STORAGE_KEY = {

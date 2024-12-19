@@ -1,0 +1,23 @@
+@charset 'UTF-8';
+
+/**
+ * Sample design for HTML tags
+ */
+
+/*
+ * Sample placeholder to show inner data
+ */
+
+.sample-placeholder {
+  border-color: var(--color-text);
+  border-style: solid;
+  border-width: var(--size-thinnest);
+
+  padding-block: 0.5rem;
+  padding-inline: 1rem;
+}
+
+.sample-placeholder.double {
+  border-style: double;
+  border-width: calc(var(--size-thinnest) * 3);
+}

@@ -1,9 +1,12 @@
 <script>
 import {
+  defineComponent,
   ref,
 } from 'vue'
 
-import defineAppComponent from '~/app/vue/defineAppComponent'
+import {
+  definePageMeta,
+} from '#imports'
 
 import {
   BaseFormElementClerk,
@@ -43,10 +46,17 @@ async function submitForm ({
   )
 }
 
-export default defineAppComponent({
+export default defineComponent({
   name: 'FormControlsInspectorPage',
 
   setup () {
+    definePageMeta({
+      $furo: {
+        pageTitle: 'Form Controls Inspector',
+        skipFilter: true,
+      },
+    })
+
     return {
       formRef,
       submitForm,

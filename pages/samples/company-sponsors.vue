@@ -1,13 +1,16 @@
 <script>
 import {
+  defineComponent,
   reactive,
 } from 'vue'
 
 import {
+  definePageMeta,
+} from '#imports'
+
+import {
   useGraphqlClient,
 } from '@openreachtech/furo-nuxt'
-
-import defineAppComponent from '~/app/vue/defineAppComponent'
 
 import CompanySponsorsQueryGraphqlLauncher from '~/app/graphql/client/queries/companySponsors/CompanySponsorsQueryGraphqlLauncher'
 
@@ -21,10 +24,17 @@ const statusReactive = reactive({
   isLoading: true,
 })
 
-export default defineAppComponent({
+export default defineComponent({
   name: 'IndexPage',
 
   setup () {
+    definePageMeta({
+      $furo: {
+        pageTitle: 'Company Sponsors',
+        // skipFilter: true,
+      },
+    })
+
     invokeRequestOnMounted({
       hooks: {
         async beforeRequest (payload) {
