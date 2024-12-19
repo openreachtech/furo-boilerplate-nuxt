@@ -2,19 +2,14 @@ import {
   defineNuxtConfig,
 } from 'nuxt/config'
 
-import {
-  NuxtFuroEnvLoader,
-} from '@openreachtech/furo-nuxt'
-
-const furoEnv = NuxtFuroEnvLoader.create()
-  .loadEnv()
+import furoEnv from './app/globals/furo-env'
 
 // Reference: https://nuxt.com/docs/api/nuxt-config.
 export default defineNuxtConfig({
   // Nuxt App configuration: https://nuxt.com/docs/api/nuxt-config#app.
   app: {
     head: {
-      title: 'furo-boilerplate',
+      title: '⋯', // Loading title, can not be empty.
       htmlAttrs: {
         lang: 'en',
       },
@@ -32,8 +27,14 @@ export default defineNuxtConfig({
 
   // Global CSS: https://nuxt.com/docs/api/nuxt-config#css.
   css: [
+    '~/assets/css/variables-palette-color-scale.css',
     '~/assets/css/variables.css',
     '~/assets/css/reset.css',
+    '~/assets/css/gimmick.css',
+    '~/assets/css/usuals.css',
+
+    // TODO: Remove this sample CSS file in actual application.
+    '~/assets/css/sample.css',
   ],
 
   // Plugins to run before rendering page: https://nuxt.com/docs/api/nuxt-config#plugins-1.

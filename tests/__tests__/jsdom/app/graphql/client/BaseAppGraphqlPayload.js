@@ -82,7 +82,7 @@ describe('BaseAppGraphqlPayload', () => {
 
 describe('BaseAppGraphqlPayload', () => {
   describe('.collectBasedHeadersOptions()', () => {
-    describe('to add `x-renchan-app-access-token`', () => {
+    describe('to add `x-renchan-access-token`', () => {
       const cases = [
         {
           args: {
@@ -93,7 +93,7 @@ describe('BaseAppGraphqlPayload', () => {
               'content-type': 'application/json',
             },
             {
-              'x-renchan-app-access-token': 'fc3ff98e8c6a0d308700000000000001',
+              'x-renchan-access-token': 'fc3ff98e8c6a0d308700000000000001',
             },
           ],
         },
@@ -106,7 +106,7 @@ describe('BaseAppGraphqlPayload', () => {
               'content-type': 'application/json',
             },
             {
-              'x-renchan-app-access-token': 'fc3ff98e8c6a0d308700000000000002',
+              'x-renchan-access-token': 'fc3ff98e8c6a0d308700000000000002',
             },
           ],
         },
@@ -122,7 +122,7 @@ describe('BaseAppGraphqlPayload', () => {
       })
     })
 
-    describe('to not add `x-renchan-app-access-token`', () => {
+    describe('to not add `x-renchan-access-token`', () => {
       test('with no args', () => {
         localStorage.removeItem('access_token')
 

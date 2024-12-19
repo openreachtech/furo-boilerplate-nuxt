@@ -1,15 +1,18 @@
 <script>
 import {
+  defineComponent,
   reactive,
   ref,
 } from 'vue'
 
 import {
+  definePageMeta,
+} from '#imports'
+
+import {
   useFormClerk,
   useGraphqlClient,
 } from '@openreachtech/furo-nuxt'
-
-import defineAppComponent from '~/app/vue/defineAppComponent'
 
 import UploadCustomerForumPostImageMutationGraphqlLauncher from '~/app/graphql/client/mutations/uploadCustomerForumPostImage/UploadCustomerForumPostImageMutationGraphqlLauncher'
 
@@ -65,10 +68,17 @@ async function submitFormWithHooks ({
   })
 }
 
-export default defineAppComponent({
+export default defineComponent({
   name: 'UploadCustomerForumPostImagePage',
 
   setup () {
+    definePageMeta({
+      $furo: {
+        pageTitle: 'Upload Customer Forum Post Image Page',
+        // skipFilter: false,
+      },
+    })
+
     return {
       formRef,
       statusReactive,
