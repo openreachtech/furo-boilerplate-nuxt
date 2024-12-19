@@ -19,5 +19,10 @@
 
 .sample-placeholder.double {
   border-style: double;
+  /*
+   * NOTE:
+   * Although we can specify any px using this method,
+   * it is prohibited to use it in application implementation.
+   */
   border-width: calc(var(--size-thinnest) * 3);
 }
