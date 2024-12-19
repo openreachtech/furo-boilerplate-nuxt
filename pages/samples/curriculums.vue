@@ -1,13 +1,16 @@
 <script>
 import {
+  defineComponent,
   reactive,
 } from 'vue'
 
 import {
+  definePageMeta,
+} from '#imports'
+
+import {
   useGraphqlClient,
 } from '@openreachtech/furo-nuxt'
-
-import defineAppComponent from '~/app/vue/defineAppComponent'
 
 import CurriculumsQueryGraphqlLauncher from '~/app/graphql/client/queries/curriculums/CurriculumsQueryGraphqlLauncher'
 
@@ -35,10 +38,17 @@ const launcherHooks = {
   },
 }
 
-export default defineAppComponent({
+export default defineComponent({
   name: 'IndexPage',
 
   setup () {
+    definePageMeta({
+      $furo: {
+        pageTitle: 'Curriculums',
+        // skipFilter: true,
+      },
+    })
+
     invokeRequestOnMounted({
       variables: { // TODO: Remove this variables with default values in Payload
         input: {
