@@ -107,16 +107,18 @@ export default defineComponent({
 }
 
 .unit-pagination > .page:hover {
-  background-color: #ccf;
+  background-color: var(--color-background-hover);
+  color: var(--color-text-hover);
 }
 
 .unit-pagination > .page.current {
-  background-color: #000;
-  color: #fff;
+  background-color: var(--color-background-highlight);
+  color: var(--color-text-highlight);
 }
 
 .unit-pagination > .page.current:hover {
-  background-color: #333;
+  background-color: var(--color-background-hover);
+  color: var(--color-text-hover);
 }
 
 .unit-pagination > :where(.previous, .next) {
@@ -134,14 +136,15 @@ export default defineComponent({
 }
 
 .unit-pagination > :where(.previous, .next):hover {
-  background-color: #ccf;
+  background-color: var(--color-background-hover);
+  color: var(--color-text-hover);
 }
 
 .unit-pagination.disabled-previous > .previous,
 .unit-pagination.disabled-next > .next {
   pointer-events: none;
 
-  color: #ccc;
+  color: var(--color-disabled);
 }
 
 .unit-pagination.hidden-first > .first,
