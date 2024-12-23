@@ -1,0 +1,102 @@
+/**
+ * Props context class for FuroPagination component.
+ *
+ * @property {number} current - Current page.
+ * @property {number} perPage - Number of items per page.
+ * @property {number} total - Total number of items.
+ */
+export default class FuroPageContext {
+  /**
+   * Constructor.
+   *
+   * @param {FuroPageContextParams} params - Parameters of this constructor.
+   */
+  constructor ({
+    pageNumber,
+    searchParams,
+    isCurrent,
+  }) {
+    this.pageNumber = pageNumber
+    this.searchParams = searchParams
+    this.isCurrent = isCurrent
+  }
+
+  /**
+   * Factory method to create a new instance of this class.
+   *
+   * @param {FuroPageContextFactoryParams} params - Parameters of this factory method.
+   * @returns {FuroPageContext} - New instance of this class.
+   */
+  static create ({
+    pageNumber,
+    searchParams,
+    isCurrent = false,
+  }) {
+    return new this({
+      pageNumber,
+      searchParams,
+      isCurrent,
+    })
+  }
+
+  /**
+   * Generate href.
+   *
+   * @returns {string | null} - Pages.
+   */
+  generateHref () {
+    if (!this.pageNumber) {
+      return null
+    }
+
+    const pageSearchParams = new URLSearchParams(this.searchParams)
+    pageSearchParams.set(
+      'page',
+      this.pageNumber.toString()
+    )
+
+    return `?${pageSearchParams.toString()}`
+  }
+
+  /**
+   * Generate text.
+   *
+   * @returns {string | null} - Link text.
+   */
+  generateText () {
+    if (!this.pageNumber) {
+      return null
+    }
+
+    return this.pageNumber.toString()
+  }
+
+  /**
+   * Generate control classes.
+   *
+   * @returns {{
+   *   current: boolean
+   * }} - Previous page.
+   */
+  generateControlClasses () {
+    return {
+      current: this.isCurrent,
+    }
+  }
+}
+
+/**
+ * @typedef {{
+ *   pageNumber: number | null
+ *   isCurrent: boolean
+ *   searchParams: URLSearchParams
+ * }} FuroPageContextParams
+ */
+
+/**
+ * @typedef {{
+ *   pageNumber: number | null
+ *   isCurrent?: boolean
+ *   searchParams: URLSearchParams
+ * }} FuroPageContextFactoryParams
+ */
