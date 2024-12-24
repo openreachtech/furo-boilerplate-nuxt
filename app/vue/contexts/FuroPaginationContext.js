@@ -118,6 +118,7 @@ export default class FuroPaginationContext {
       FuroPageContext.create({
         pageNumber: page,
         searchParams: this.searchParams,
+        pageKey: this.pageKey,
         isCurrent: page === this.currentPage,
       })
     )
@@ -176,6 +177,7 @@ export default class FuroPaginationContext {
     return FuroPageContext.create({
       pageNumber: previousPage,
       searchParams: this.searchParams,
+      pageKey: this.pageKey,
     })
   }
 
@@ -189,6 +191,7 @@ export default class FuroPaginationContext {
       return FuroPageContext.create({
         pageNumber: null,
         searchParams: this.searchParams,
+        pageKey: this.pageKey,
       })
     }
 
@@ -197,6 +200,7 @@ export default class FuroPaginationContext {
     return FuroPageContext.create({
       pageNumber: nextPage,
       searchParams: this.searchParams,
+      pageKey: this.pageKey,
     })
   }
 
@@ -209,6 +213,7 @@ export default class FuroPaginationContext {
     return FuroPageContext.create({
       pageNumber: 1,
       searchParams: this.searchParams,
+      pageKey: this.pageKey,
     })
   }
 
@@ -221,6 +226,7 @@ export default class FuroPaginationContext {
     return FuroPageContext.create({
       pageNumber: this.lastPage,
       searchParams: this.searchParams,
+      pageKey: this.pageKey,
     })
   }
 
