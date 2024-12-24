@@ -163,13 +163,13 @@ export default defineComponent({
  * Can customize the pagination component.
  */
 
-/** beta design */
+/** alpha design */
 .unit-pagination.alpha-design > .page {
   border: none;
   border-radius: 50%;
 }
 
-/** delta design */
+/** beta design */
 .unit-pagination.beta-design > .page {
   border-color: var(--color-secondary);
   border-style: outset;
