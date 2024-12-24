@@ -19,11 +19,13 @@ export default class FuroPaginationContext {
     currentPage,
     maxPageRange,
     lastPage,
+    pageKey,
   }) {
     this.searchParams = searchParams
     this.currentPage = currentPage
     this.maxPageRange = maxPageRange
     this.lastPage = lastPage
+    this.pageKey = pageKey
   }
 
   /**
@@ -34,16 +36,18 @@ export default class FuroPaginationContext {
    */
   static create ({
     searchParams = new URLSearchParams(location.search),
-    currentPage = this.extractCurrentPage({
-      searchParams,
-    }),
     maxPageRange = 5,
     props: {
       pagination: {
         limit = 20,
         totalRecords,
       },
+      pageKey = 'page',
     },
+    currentPage = this.extractCurrentPage({
+      searchParams,
+      pageKey,
+    }),
   }) {
     const lastPage = this.calculateLastPage({
       limit,
@@ -55,6 +59,7 @@ export default class FuroPaginationContext {
       currentPage,
       lastPage,
       maxPageRange,
+      pageKey,
     })
   }
 
@@ -63,13 +68,17 @@ export default class FuroPaginationContext {
    *
    * @param {{
    *   searchParams: URLSearchParams
+   *   pageKey: string
    * }} params - Parameters.
    * @returns {number} - Current page.
    */
   static extractCurrentPage ({
     searchParams,
+    pageKey,
   }) {
-    const rawPage = Number(searchParams.get('page'))
+    const rawPage = Number(
+      searchParams.get(pageKey)
+    )
 
     if (!rawPage) {
       return 1
@@ -109,6 +118,7 @@ export default class FuroPaginationContext {
       FuroPageContext.create({
         pageNumber: page,
         searchParams: this.searchParams,
+        pageKey: this.pageKey,
         isCurrent: page === this.currentPage,
       })
     )
@@ -167,6 +177,7 @@ export default class FuroPaginationContext {
     return FuroPageContext.create({
       pageNumber: previousPage,
       searchParams: this.searchParams,
+      pageKey: this.pageKey,
     })
   }
 
@@ -180,6 +191,7 @@ export default class FuroPaginationContext {
       return FuroPageContext.create({
         pageNumber: null,
         searchParams: this.searchParams,
+        pageKey: this.pageKey,
       })
     }
 
@@ -188,6 +200,7 @@ export default class FuroPaginationContext {
     return FuroPageContext.create({
       pageNumber: nextPage,
       searchParams: this.searchParams,
+      pageKey: this.pageKey,
     })
   }
 
@@ -200,6 +213,7 @@ export default class FuroPaginationContext {
     return FuroPageContext.create({
       pageNumber: 1,
       searchParams: this.searchParams,
+      pageKey: this.pageKey,
     })
   }
 
@@ -212,6 +226,7 @@ export default class FuroPaginationContext {
     return FuroPageContext.create({
       pageNumber: this.lastPage,
       searchParams: this.searchParams,
+      pageKey: this.pageKey,
     })
   }
 
@@ -302,6 +317,7 @@ export default class FuroPaginationContext {
  *   currentPage: number
  *   maxPageRange: number
  *   lastPage: number
+ *   pageKey: string
  * }} FuroPaginationContextParams
  */
 
@@ -312,6 +328,7 @@ export default class FuroPaginationContext {
  *   maxPageRange?: number
  *   props: {
  *     pagination: Record<string, number>
+ *     pageKey?: string
  *   }
  * }} FuroPaginationContextFactoryParams
  */
