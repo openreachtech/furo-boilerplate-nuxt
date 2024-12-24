@@ -178,9 +178,17 @@ export default defineComponent({
   background: var(--color-secondary);
 }
 
-.unit-pagination.beta-design > .page.current {
-  filter: saturate(0);
+.unit-pagination.beta-design > .page:hover {
+  border-color: var(--color-primary);
 
-  color: var(--color-text);
+  background: var(--color-primary);
+  color: var(--color-secondary);
+}
+
+.unit-pagination.beta-design > .page.current {
+  border-color: var(--color-primary);
+
+  background: var(--color-primary);
+  color: var(--color-secondary);
 }
 </style>
