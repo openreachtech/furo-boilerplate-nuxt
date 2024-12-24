@@ -19,7 +19,8 @@ export default defineComponent({
   <br>
   <div><a href="samples/form-controls-inspector">Form Controls Inspector</a></div>
   <div><a href="samples/units/trigger-unlock">Trigger Unlock Sample</a></div>
-
+  <br>
+  <div><a href="samples/units/furo-pagination">Furo Pagination Sample</a></div>
   <div>1</div>
   <div>2</div>
   <div>3</div>
