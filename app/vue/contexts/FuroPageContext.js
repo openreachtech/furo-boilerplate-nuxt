@@ -30,6 +30,7 @@ export default class FuroPageContext {
   static create ({
     pageNumber,
     searchParams,
+    pageKey,
     isCurrent = false,
   }) {
     return new this({
@@ -98,5 +99,6 @@ export default class FuroPageContext {
  *   pageNumber: number | null
  *   isCurrent?: boolean
  *   searchParams: URLSearchParams
+ *   pageKey: string
  * }} FuroPageContextFactoryParams
  */
