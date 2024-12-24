@@ -26,6 +26,7 @@ describe('FuroPageContext', () => {
           const args = {
             pageNumber: params.pageNumber,
             searchParams: new URLSearchParams(),
+            pageKey: 'page',
             isCurrent: false,
           }
 
@@ -65,6 +66,7 @@ describe('FuroPageContext', () => {
           const args = {
             pageNumber: 1,
             searchParams: params.searchParams,
+            pageKey: 'page',
             isCurrent: false,
           }
 
@@ -72,6 +74,40 @@ describe('FuroPageContext', () => {
 
           expect(context)
             .toHaveProperty('searchParams', params.searchParams)
+        })
+      })
+
+      describe('#pageKey', () => {
+        const cases = [
+          {
+            params: {
+              pageKey: 'page',
+            },
+          },
+          {
+            params: {
+              pageKey: 'pg',
+            },
+          },
+          {
+            params: {
+              pageKey: 'p',
+            },
+          },
+        ]
+
+        test.each(cases)('pageKey: $params.pageKey', ({ params }) => {
+          const args = {
+            pageNumber: 1,
+            searchParams: new URLSearchParams(),
+            pageKey: params.pageKey,
+            isCurrent: false,
+          }
+
+          const context = new FuroPageContext(args)
+
+          expect(context)
+            .toHaveProperty('pageKey', params.pageKey)
         })
       })
 
@@ -93,6 +129,7 @@ describe('FuroPageContext', () => {
           const args = {
             pageNumber: 1,
             searchParams: new URLSearchParams(),
+            pageKey: 'page',
             isCurrent: params.isCurrent,
           }
 
@@ -114,6 +151,7 @@ describe('FuroPageContext', () => {
           params: {
             pageNumber: 1,
             searchParams: new URLSearchParams(),
+            pageKey: 'page',
             isCurrent: true,
           },
         },
@@ -124,6 +162,7 @@ describe('FuroPageContext', () => {
               alpha: '1',
               beta: '2',
             }),
+            pageKey: 'pg',
             isCurrent: false,
           },
         },
@@ -134,6 +173,7 @@ describe('FuroPageContext', () => {
               gamma: '3',
               delta: '4',
             }),
+            pageKey: 'p',
             // isCurrent: false,
           },
         },
@@ -153,11 +193,13 @@ describe('FuroPageContext', () => {
           params: {
             pageNumber: 1,
             searchParams: new URLSearchParams(),
+            pageKey: 'page',
             isCurrent: true,
           },
           expected: {
             pageNumber: 1,
             searchParams: new URLSearchParams(),
+            pageKey: 'page',
             isCurrent: true,
           },
         },
@@ -168,6 +210,7 @@ describe('FuroPageContext', () => {
               alpha: '1',
               beta: '2',
             }),
+            pageKey: 'pg',
             isCurrent: false,
           },
           expected: {
@@ -176,6 +219,7 @@ describe('FuroPageContext', () => {
               alpha: '1',
               beta: '2',
             }),
+            pageKey: 'pg',
             isCurrent: false,
           },
         },
@@ -186,6 +230,7 @@ describe('FuroPageContext', () => {
               gamma: '3',
               delta: '4',
             }),
+            pageKey: 'p',
             // isCurrent: false,
           },
           expected: {
@@ -194,6 +239,7 @@ describe('FuroPageContext', () => {
               gamma: '3',
               delta: '4',
             }),
+            pageKey: 'p',
             isCurrent: false,
           },
         },
@@ -219,6 +265,7 @@ describe('FuroPageContext', () => {
           params: {
             pageNumber: 1,
             searchParams: new URLSearchParams(),
+            pageKey: 'page',
           },
           expected: '?page=1',
         },
@@ -229,6 +276,7 @@ describe('FuroPageContext', () => {
               alpha: '1',
               beta: '2',
             }),
+            pageKey: 'page',
           },
           expected: '?alpha=1&beta=2&page=3',
         },
@@ -236,11 +284,25 @@ describe('FuroPageContext', () => {
           params: {
             pageNumber: 5,
             searchParams: new URLSearchParams({
+              page: '10',
               gamma: '3',
               delta: '4',
             }),
+            pageKey: 'p',
           },
-          expected: '?gamma=3&delta=4&page=5',
+          expected: '?page=10&gamma=3&delta=4&p=5',
+        },
+        {
+          params: {
+            pageNumber: 7,
+            searchParams: new URLSearchParams({
+              pg: '40',
+              gamma: '3',
+              delta: '4',
+            }),
+            pageKey: 'pg',
+          },
+          expected: '?pg=7&gamma=3&delta=4',
         },
       ]
 
@@ -260,6 +322,7 @@ describe('FuroPageContext', () => {
           params: {
             pageNumber: null,
             searchParams: new URLSearchParams(),
+            pageKey: 'page',
           },
         },
         {
@@ -269,6 +332,7 @@ describe('FuroPageContext', () => {
               alpha: '1',
               beta: '2',
             }),
+            pageKey: 'pg',
           },
         },
         {
@@ -278,6 +342,7 @@ describe('FuroPageContext', () => {
               gamma: '3',
               delta: '4',
             }),
+            pageKey: 'p',
           },
         },
       ]
@@ -302,6 +367,7 @@ describe('FuroPageContext', () => {
           params: {
             pageNumber: 1,
             searchParams: new URLSearchParams(),
+            pageKey: 'page',
           },
           expected: '1',
         },
@@ -312,6 +378,7 @@ describe('FuroPageContext', () => {
               alpha: '1',
               beta: '2',
             }),
+            pageKey: 'pg',
           },
           expected: '3',
         },
@@ -322,6 +389,7 @@ describe('FuroPageContext', () => {
               gamma: '3',
               delta: '4',
             }),
+            pageKey: 'p',
           },
           expected: '5',
         },
@@ -343,6 +411,7 @@ describe('FuroPageContext', () => {
           params: {
             pageNumber: null,
             searchParams: new URLSearchParams(),
+            pageKey: 'page',
           },
         },
         {
@@ -352,6 +421,7 @@ describe('FuroPageContext', () => {
               alpha: '1',
               beta: '2',
             }),
+            pageKey: 'pg',
           },
         },
         {
@@ -361,6 +431,7 @@ describe('FuroPageContext', () => {
               gamma: '3',
               delta: '4',
             }),
+            pageKey: 'p',
           },
         },
       ]
@@ -385,6 +456,7 @@ describe('FuroPageContext', () => {
           params: {
             pageNumber: 1,
             searchParams: new URLSearchParams(),
+            pageKey: 'page',
             isCurrent: true,
           },
           expected: {
@@ -398,6 +470,7 @@ describe('FuroPageContext', () => {
               alpha: '1',
               beta: '2',
             }),
+            pageKey: 'pg',
             isCurrent: false,
           },
           expected: {
@@ -411,6 +484,7 @@ describe('FuroPageContext', () => {
               gamma: '3',
               delta: '4',
             }),
+            pageKey: 'p',
             // isCurrent: false,
           },
           expected: {

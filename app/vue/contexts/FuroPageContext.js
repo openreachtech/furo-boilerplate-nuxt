@@ -14,10 +14,12 @@ export default class FuroPageContext {
   constructor ({
     pageNumber,
     searchParams,
+    pageKey,
     isCurrent,
   }) {
     this.pageNumber = pageNumber
     this.searchParams = searchParams
+    this.pageKey = pageKey
     this.isCurrent = isCurrent
   }
 
@@ -30,11 +32,13 @@ export default class FuroPageContext {
   static create ({
     pageNumber,
     searchParams,
+    pageKey,
     isCurrent = false,
   }) {
     return new this({
       pageNumber,
       searchParams,
+      pageKey,
       isCurrent,
     })
   }
@@ -51,7 +55,7 @@ export default class FuroPageContext {
 
     const pageSearchParams = new URLSearchParams(this.searchParams)
     pageSearchParams.set(
-      'page',
+      this.pageKey,
       this.pageNumber.toString()
     )
 
@@ -90,6 +94,7 @@ export default class FuroPageContext {
  *   pageNumber: number | null
  *   isCurrent: boolean
  *   searchParams: URLSearchParams
+ *   pageKey: string
  * }} FuroPageContextParams
  */
 
@@ -98,5 +103,6 @@ export default class FuroPageContext {
  *   pageNumber: number | null
  *   isCurrent?: boolean
  *   searchParams: URLSearchParams
+ *   pageKey: string
  * }} FuroPageContextFactoryParams
  */
