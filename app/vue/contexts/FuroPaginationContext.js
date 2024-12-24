@@ -19,11 +19,13 @@ export default class FuroPaginationContext {
     currentPage,
     maxPageRange,
     lastPage,
+    pageKey,
   }) {
     this.searchParams = searchParams
     this.currentPage = currentPage
     this.maxPageRange = maxPageRange
     this.lastPage = lastPage
+    this.pageKey = pageKey
   }
 
   /**
@@ -57,6 +59,7 @@ export default class FuroPaginationContext {
       currentPage,
       lastPage,
       maxPageRange,
+      pageKey,
     })
   }
 
@@ -308,6 +311,7 @@ export default class FuroPaginationContext {
  *   currentPage: number
  *   maxPageRange: number
  *   lastPage: number
+ *   pageKey: string
  * }} FuroPaginationContextParams
  */
 
