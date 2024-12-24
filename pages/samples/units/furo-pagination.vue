@@ -62,6 +62,19 @@ export default defineComponent({
 
     <section class="unit-section sample-placeholder double">
       <h3 class="design-header secondary">
+        with pageKey &quot;p&quot; (design: &lt;FuroPagination&gt;)
+      </h3>
+
+      <FuroPagination page-key="p"
+        :pagination="{
+          limit: 5,
+          totalRecords: 53,
+        }"
+      />
+    </section>
+
+    <section class="unit-section sample-placeholder double">
+      <h3 class="design-header secondary">
         with SVG image for previous and next (design: alpha)
       </h3>
 
