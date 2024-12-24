@@ -356,7 +356,7 @@ describe('FuroPaginationContext', () => {
         },
       ]
 
-      test.each(cases)('current: $params.props.pagination.current', ({ params, expected }) => {
+      test.each(cases)('currentPage: $params.currentPage', ({ params, expected }) => {
         const SpyClass = globalThis.constructorSpy.spyOn(FuroPaginationContext)
 
         SpyClass.create(params)
