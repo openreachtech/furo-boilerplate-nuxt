@@ -63,13 +63,17 @@ export default class FuroPaginationContext {
    *
    * @param {{
    *   searchParams: URLSearchParams
+   *   pageKey: string
    * }} params - Parameters.
    * @returns {number} - Current page.
    */
   static extractCurrentPage ({
     searchParams,
+    pageKey,
   }) {
-    const rawPage = Number(searchParams.get('page'))
+    const rawPage = Number(
+      searchParams.get(pageKey)
+    )
 
     if (!rawPage) {
       return 1
