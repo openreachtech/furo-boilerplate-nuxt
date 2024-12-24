@@ -55,7 +55,7 @@ export default class FuroPageContext {
 
     const pageSearchParams = new URLSearchParams(this.searchParams)
     pageSearchParams.set(
-      'page',
+      this.pageKey,
       this.pageNumber.toString()
     )
 
