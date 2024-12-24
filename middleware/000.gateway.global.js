@@ -24,10 +24,10 @@ const {
 const SIGN_IN_PATH = '/samples/sign-in'
 
 /**
- * Alpha middleware (global)
+ * Gateway middleware (global)
  *
- * @param {import('#app').RouteMiddleware} context - The context
- * @returns {Promise<void>}
+ * @param {import('nuxt/app').RouteMiddleware} context - The context
+ * @returns {Promise<import('nuxt/app').RouteMiddleware>}
  */
 export default defineNuxtRouteMiddleware(async (to, from) => {
   const accessTokenClerk = AccessTokenClerk.create()
