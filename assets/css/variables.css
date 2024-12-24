@@ -9,6 +9,7 @@
 
   /* Colors */
   --color-primary: var(--palette-blue);
+  --color-secondary: var(--palette-yellow-300);
 
   /* Backgrounds */
   --color-background: var(--palette-gray-light);
