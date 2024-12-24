@@ -104,10 +104,10 @@ export default defineComponent({
 }
 
 .unit-pagination > .page {
+  height: 100%;
+
   padding-block: 0.25rem;
   padding-inline: 0.5rem;
-
-  height: 100%;
 }
 
 .unit-pagination > .page:hover {
@@ -126,15 +126,12 @@ export default defineComponent({
 }
 
 .unit-pagination > :where(.previous, .next) {
-  border-radius: 50%;
-
-  aspect-ratio: 1 / 1;
-
-  height: 2rem;
-  width: 2rem;
+  height: 100%;
 
   display: inline-grid;
   place-items: center;
+
+  padding-inline: 0.25rem;
 
   font-size: 1.2rem;
 }
