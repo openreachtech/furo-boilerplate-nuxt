@@ -34,6 +34,10 @@ export default defineComponent({
         return true
       },
     },
+    pageKey: {
+      type: String,
+      default: 'page',
+    },
   },
 
   setup (props) {
