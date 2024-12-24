@@ -129,6 +129,19 @@ export default defineComponent({
     </section>
 
     <section class="unit-section sample-placeholder double">
+      <h3 class="design-header secondary">
+        with pageKey &quot;pg&quot; (design: &lt;AppPagination&gt;)
+      </h3>
+
+      <AppPagination page-key="pg"
+        :pagination="{
+          limit: 5,
+          totalRecords: 53,
+        }"
+      />
+    </section>
+
+    <section class="unit-section sample-placeholder double">
       <h2 class="design-header secondary">
         with Emoji for previous and next (design: beta)
       </h2>
