@@ -32,6 +32,7 @@ describe('FuroPaginationContext', () => {
         test.each(cases)('searchParams: $params.searchParams', ({ params }) => {
           const args = {
             searchParams: params.searchParams,
+            pageKey: 'page',
             currentPage: 1,
             maxPageRange: 5,
             lastPage: 10,
@@ -41,6 +42,41 @@ describe('FuroPaginationContext', () => {
 
           expect(context)
             .toHaveProperty('searchParams', params.searchParams)
+        })
+      })
+
+      describe('#pageKey', () => {
+        const cases = [
+          {
+            params: {
+              pageKey: 'page',
+            },
+          },
+          {
+            params: {
+              pageKey: 'pg',
+            },
+          },
+          {
+            params: {
+              pageKey: 'p',
+            },
+          },
+        ]
+
+        test.each(cases)('pageKey: $params.pageKey', ({ params }) => {
+          const args = {
+            searchParams: new URLSearchParams(),
+            currentPage: 7,
+            maxPageRange: 5,
+            lastPage: 10,
+            pageKey: params.pageKey,
+          }
+
+          const context = new FuroPaginationContext(args)
+
+          expect(context)
+            .toHaveProperty('pageKey', params.pageKey)
         })
       })
 
@@ -66,6 +102,7 @@ describe('FuroPaginationContext', () => {
         test.each(cases)('currentPage: $params.currentPage', ({ params }) => {
           const args = {
             searchParams: new URLSearchParams(),
+            pageKey: 'page',
             currentPage: params.currentPage,
             maxPageRange: 5,
             lastPage: 10,
@@ -100,6 +137,7 @@ describe('FuroPaginationContext', () => {
         test.each(cases)('maxPageRange: $params.maxPageRange', ({ params }) => {
           const args = {
             searchParams: new URLSearchParams(),
+            pageKey: 'page',
             currentPage: 1,
             maxPageRange: params.maxPageRange,
             lastPage: 10,
@@ -134,6 +172,7 @@ describe('FuroPaginationContext', () => {
         test.each(cases)('lastPage: $params.lastPage', ({ params }) => {
           const args = {
             searchParams: new URLSearchParams(),
+            pageKey: 'page',
             currentPage: 1,
             maxPageRange: 5,
             lastPage: params.lastPage,
@@ -158,6 +197,7 @@ describe('FuroPaginationContext', () => {
             searchParams: new URLSearchParams(),
             currentPage: 1,
             maxPageRange: 3,
+            pageKey: 'pg',
             props: {
               pagination: {
                 limit: 10,
@@ -172,6 +212,7 @@ describe('FuroPaginationContext', () => {
               alpha: '1',
               beta: '2',
             }),
+            pageKey: 'p',
             currentPage: 2,
             maxPageRange: 5,
             props: {
@@ -188,6 +229,7 @@ describe('FuroPaginationContext', () => {
               gamma: '3',
               delta: '4',
             }),
+            // pageKey: 'page',
             currentPage: 3,
             maxPageRange: 7,
             props: {
@@ -220,10 +262,12 @@ describe('FuroPaginationContext', () => {
                 limit: 10,
                 totalRecords: 100,
               },
+              pageKey: 'page',
             },
           },
           expected: {
             searchParams: new URLSearchParams(),
+            pageKey: 'page',
             currentPage: 1,
             maxPageRange: 3,
             lastPage: 10,
@@ -242,6 +286,7 @@ describe('FuroPaginationContext', () => {
                 limit: 20,
                 totalRecords: 101,
               },
+              pageKey: 'pg',
             },
           },
           expected: {
@@ -249,6 +294,7 @@ describe('FuroPaginationContext', () => {
               alpha: '1',
               beta: '2',
             }),
+            pageKey: 'pg',
             currentPage: 2,
             maxPageRange: 5,
             lastPage: 6,
@@ -267,6 +313,7 @@ describe('FuroPaginationContext', () => {
                 limit: 30,
                 totalRecords: 102,
               },
+              pageKey: 'p',
             },
           },
           expected: {
@@ -274,6 +321,7 @@ describe('FuroPaginationContext', () => {
               gamma: '3',
               delta: '4',
             }),
+            pageKey: 'p',
             currentPage: 3,
             maxPageRange: 7,
             lastPage: 4,
@@ -292,6 +340,7 @@ describe('FuroPaginationContext', () => {
                 limit: 40,
                 totalRecords: 103,
               },
+              // pageKey: undefined,
             },
           },
           expected: {
@@ -299,6 +348,7 @@ describe('FuroPaginationContext', () => {
               epsilon: '5',
               zeta: '6',
             }),
+            pageKey: 'page', // default value
             currentPage: 4,
             maxPageRange: 9,
             lastPage: 3,
@@ -322,36 +372,95 @@ describe('FuroPaginationContext', () => {
   describe('.extractCurrentPage()', () => {
     const cases = [
       {
-        searchParams: new URLSearchParams(),
-        expected: 1,
+        params: {
+          pageKey: 'page',
+        },
+        searchParamsCases: [
+          {
+            searchParams: new URLSearchParams(),
+            expected: 1,
+          },
+          {
+            searchParams: new URLSearchParams({
+              page: '1',
+            }),
+            expected: 1,
+          },
+          {
+            searchParams: new URLSearchParams({
+              page: '3',
+            }),
+            expected: 3,
+          },
+          {
+            searchParams: new URLSearchParams({
+              page: 'string',
+            }),
+            expected: 1,
+          },
+          {
+            searchParams: new URLSearchParams({
+              pg: '10',
+            }),
+            expected: 1,
+          },
+        ],
       },
       {
-        searchParams: new URLSearchParams({
-          page: '1',
-        }),
-        expected: 1,
-      },
-      {
-        searchParams: new URLSearchParams({
-          page: '3',
-        }),
-        expected: 3,
-      },
-      {
-        searchParams: new URLSearchParams({
-          page: '5',
-        }),
-        expected: 5,
+        params: {
+          pageKey: 'pg',
+        },
+        searchParamsCases: [
+          {
+            searchParams: new URLSearchParams(),
+            expected: 1,
+          },
+          {
+            searchParams: new URLSearchParams({
+              pg: '1',
+            }),
+            expected: 1,
+          },
+          {
+            searchParams: new URLSearchParams({
+              pg: '3',
+            }),
+            expected: 3,
+          },
+          {
+            searchParams: new URLSearchParams({
+              pg: '5',
+            }),
+            expected: 5,
+          },
+          {
+            searchParams: new URLSearchParams({
+              pg: 'string',
+            }),
+            expected: 1,
+          },
+          {
+            searchParams: new URLSearchParams({
+              page: '10',
+            }),
+            expected: 1,
+          },
+        ],
       },
     ]
 
-    test.each(cases)('searchParams: $searchParams', ({ searchParams, expected }) => {
-      const actual = FuroPaginationContext.extractCurrentPage({
-        searchParams,
-      })
+    describe.each(cases)('pageKey: $params.pageKey', ({ params, searchParamsCases }) => {
+      test.each(searchParamsCases)('searchParams: $searchParams', ({ searchParams, expected }) => {
+        const args = {
+          searchParams,
+          pageKey: params.pageKey,
+        }
 
-      expect(actual)
-        .toBe(expected)
+        const actual = FuroPaginationContext.extractCurrentPage(args)
+
+        expect(actual)
+          .toBe(expected)
+      })
     })
   })
 })
@@ -559,6 +668,7 @@ describe('FuroPaginationContext', () => {
           test.each(currentPageCases)('currentPage: $currentPage', ({ currentPage, expected }) => {
             const args = {
               searchParams: new URLSearchParams(),
+              pageKey: 'pg',
               maxPageRange: params.maxPageRange,
               currentPage,
               lastPage,
@@ -661,6 +771,7 @@ describe('FuroPaginationContext', () => {
 
             const args = {
               searchParams: new URLSearchParams(),
+              pageKey: 'pg',
               maxPageRange: params.maxPageRange,
               currentPage,
               lastPage,
@@ -827,6 +938,7 @@ describe('FuroPaginationContext', () => {
           test.each(currentPageCases)('currentPage: $currentPage', ({ currentPage, expected }) => {
             const args = {
               searchParams: new URLSearchParams(),
+              pageKey: 'pg',
               maxPageRange: params.maxPageRange,
               currentPage,
               lastPage,
@@ -935,6 +1047,7 @@ describe('FuroPaginationContext', () => {
           test.each(currentPageCases)('currentPage: $currentPage', ({ currentPage }) => {
             const args = {
               searchParams: new URLSearchParams(),
+              pageKey: 'pg',
               maxPageRange: params.maxPageRange,
               currentPage,
               lastPage,
@@ -959,6 +1072,7 @@ describe('FuroPaginationContext', () => {
       {
         params: {
           searchParams: new URLSearchParams(),
+          pageKey: 'page',
           currentPage: 1,
           rangePages: [1, 2, 3],
         },
@@ -966,16 +1080,19 @@ describe('FuroPaginationContext', () => {
           FuroPageContext.create({
             pageNumber: 1,
             searchParams: new URLSearchParams(),
+            pageKey: 'page',
             isCurrent: true,
           }),
           FuroPageContext.create({
             pageNumber: 2,
             searchParams: new URLSearchParams(),
+            pageKey: 'page',
             isCurrent: false,
           }),
           FuroPageContext.create({
             pageNumber: 3,
             searchParams: new URLSearchParams(),
+            pageKey: 'page',
             isCurrent: false,
           }),
         ],
@@ -983,6 +1100,7 @@ describe('FuroPaginationContext', () => {
       {
         params: {
           searchParams: new URLSearchParams(),
+          pageKey: 'pg',
           currentPage: 2,
           rangePages: [1, 2, 3],
         },
@@ -990,16 +1108,19 @@ describe('FuroPaginationContext', () => {
           FuroPageContext.create({
             pageNumber: 1,
             searchParams: new URLSearchParams(),
+            pageKey: 'pg',
             isCurrent: false,
           }),
           FuroPageContext.create({
             pageNumber: 2,
             searchParams: new URLSearchParams(),
+            pageKey: 'pg',
             isCurrent: true,
           }),
           FuroPageContext.create({
             pageNumber: 3,
             searchParams: new URLSearchParams(),
+            pageKey: 'pg',
             isCurrent: false,
           }),
         ],
@@ -1007,6 +1128,7 @@ describe('FuroPaginationContext', () => {
       {
         params: {
           searchParams: new URLSearchParams(),
+          pageKey: 'p',
           currentPage: 3,
           rangePages: [1, 2, 3],
         },
@@ -1014,16 +1136,19 @@ describe('FuroPaginationContext', () => {
           FuroPageContext.create({
             pageNumber: 1,
             searchParams: new URLSearchParams(),
+            pageKey: 'p',
             isCurrent: false,
           }),
           FuroPageContext.create({
             pageNumber: 2,
             searchParams: new URLSearchParams(),
+            pageKey: 'p',
             isCurrent: false,
           }),
           FuroPageContext.create({
             pageNumber: 3,
             searchParams: new URLSearchParams(),
+            pageKey: 'p',
             isCurrent: true,
           }),
         ],
@@ -1033,6 +1158,7 @@ describe('FuroPaginationContext', () => {
     test.each(cases)('currentPage: $params.currentPage', ({ params, expected }) => {
       const args = {
         searchParams: params.searchParams,
+        pageKey: params.pageKey,
         currentPage: params.currentPage,
         maxPageRange: params.rangePages.length,
         lastPage: 10,
@@ -1055,11 +1181,13 @@ describe('FuroPaginationContext', () => {
       {
         params: {
           searchParams: new URLSearchParams(),
+          pageKey: 'page',
           currentPage: 1,
         },
         expected: FuroPageContext.create({
           pageNumber: 0,
           searchParams: new URLSearchParams(),
+          pageKey: 'page',
         }),
       },
       {
@@ -1067,6 +1195,7 @@ describe('FuroPaginationContext', () => {
           searchParams: new URLSearchParams({
             alpha: '111',
           }),
+          pageKey: 'pg',
           currentPage: 2,
         },
         expected: FuroPageContext.create({
@@ -1074,6 +1203,7 @@ describe('FuroPaginationContext', () => {
           searchParams: new URLSearchParams({
             alpha: '111',
           }),
+          pageKey: 'pg',
         }),
       },
       {
@@ -1081,6 +1211,7 @@ describe('FuroPaginationContext', () => {
           searchParams: new URLSearchParams({
             beta: '222',
           }),
+          pageKey: 'p',
           currentPage: 3,
         },
         expected: FuroPageContext.create({
@@ -1088,6 +1219,7 @@ describe('FuroPaginationContext', () => {
           searchParams: new URLSearchParams({
             beta: '222',
           }),
+          pageKey: 'p',
         }),
       },
     ]
@@ -1095,6 +1227,7 @@ describe('FuroPaginationContext', () => {
     test.each(cases)('currentPage: $params.currentPage', ({ params, expected }) => {
       const args = {
         searchParams: params.searchParams,
+        pageKey: params.pageKey,
         currentPage: params.currentPage,
         maxPageRange: 5,
         lastPage: 10,
@@ -1115,6 +1248,7 @@ describe('FuroPaginationContext', () => {
       {
         params: {
           searchParams: new URLSearchParams(),
+          pageKey: 'page',
           lastPage: 10,
         },
         currentPageCases: [
@@ -1123,6 +1257,7 @@ describe('FuroPaginationContext', () => {
             expected: FuroPageContext.create({
               pageNumber: 2,
               searchParams: new URLSearchParams(),
+              pageKey: 'page',
             }),
           },
           {
@@ -1130,6 +1265,7 @@ describe('FuroPaginationContext', () => {
             expected: FuroPageContext.create({
               pageNumber: 10,
               searchParams: new URLSearchParams(),
+              pageKey: 'page',
             }),
           },
           {
@@ -1137,6 +1273,7 @@ describe('FuroPaginationContext', () => {
             expected: FuroPageContext.create({
               pageNumber: null,
               searchParams: new URLSearchParams(),
+              pageKey: 'page',
             }),
           },
         ],
@@ -1146,6 +1283,7 @@ describe('FuroPaginationContext', () => {
           searchParams: new URLSearchParams({
             alpha: '111',
           }),
+          pageKey: 'pg',
           lastPage: 100,
         },
         currentPageCases: [
@@ -1156,6 +1294,7 @@ describe('FuroPaginationContext', () => {
               searchParams: new URLSearchParams({
                 alpha: '111',
               }),
+              pageKey: 'pg',
             }),
           },
           {
@@ -1165,6 +1304,7 @@ describe('FuroPaginationContext', () => {
               searchParams: new URLSearchParams({
                 alpha: '111',
               }),
+              pageKey: 'pg',
             }),
           },
           {
@@ -1174,6 +1314,7 @@ describe('FuroPaginationContext', () => {
               searchParams: new URLSearchParams({
                 alpha: '111',
               }),
+              pageKey: 'pg',
             }),
           },
         ],
@@ -1184,6 +1325,7 @@ describe('FuroPaginationContext', () => {
       test.each(currentPageCases)('currentPage: $currentPage', ({ currentPage, expected }) => {
         const args = {
           searchParams: params.searchParams,
+          pageKey: params.pageKey,
           currentPage,
           maxPageRange: 5,
           lastPage: params.lastPage,
@@ -1205,10 +1347,12 @@ describe('FuroPaginationContext', () => {
       {
         params: {
           searchParams: new URLSearchParams(),
+          pageKey: 'page',
         },
         expected: FuroPageContext.create({
           pageNumber: 1,
           searchParams: new URLSearchParams(),
+          pageKey: 'page',
         }),
       },
       {
@@ -1216,12 +1360,14 @@ describe('FuroPaginationContext', () => {
           searchParams: new URLSearchParams({
             alpha: '111',
           }),
+          pageKey: 'pg',
         },
         expected: FuroPageContext.create({
           pageNumber: 1,
           searchParams: new URLSearchParams({
             alpha: '111',
           }),
+          pageKey: 'pg',
         }),
       },
       {
@@ -1229,12 +1375,14 @@ describe('FuroPaginationContext', () => {
           searchParams: new URLSearchParams({
             beta: '222',
           }),
+          pageKey: 'p',
         },
         expected: FuroPageContext.create({
           pageNumber: 1,
           searchParams: new URLSearchParams({
             beta: '222',
           }),
+          pageKey: 'p',
         }),
       },
     ]
@@ -1242,6 +1390,7 @@ describe('FuroPaginationContext', () => {
     test.each(cases)('searchParams: $params.searchParams', ({ params, expected }) => {
       const context = new FuroPaginationContext({
         searchParams: params.searchParams,
+        pageKey: params.pageKey,
         currentPage: 1,
         maxPageRange: 5,
         lastPage: 10,
@@ -1261,11 +1410,13 @@ describe('FuroPaginationContext', () => {
       {
         params: {
           searchParams: new URLSearchParams(),
+          pageKey: 'page',
           lastPage: 10,
         },
         expected: FuroPageContext.create({
           pageNumber: 10,
           searchParams: new URLSearchParams(),
+          pageKey: 'page',
         }),
       },
       {
@@ -1273,6 +1424,7 @@ describe('FuroPaginationContext', () => {
           searchParams: new URLSearchParams({
             alpha: '111',
           }),
+          pageKey: 'pg',
           lastPage: 100,
         },
         expected: FuroPageContext.create({
@@ -1280,6 +1432,7 @@ describe('FuroPaginationContext', () => {
           searchParams: new URLSearchParams({
             alpha: '111',
           }),
+          pageKey: 'pg',
         }),
       },
       {
@@ -1287,6 +1440,7 @@ describe('FuroPaginationContext', () => {
           searchParams: new URLSearchParams({
             beta: '222',
           }),
+          pageKey: 'p',
           lastPage: 1000,
         },
         expected: FuroPageContext.create({
@@ -1294,6 +1448,7 @@ describe('FuroPaginationContext', () => {
           searchParams: new URLSearchParams({
             beta: '222',
           }),
+          pageKey: 'p',
         }),
       },
     ]
@@ -1301,6 +1456,7 @@ describe('FuroPaginationContext', () => {
     test.each(cases)('lastPage: $params.lastPage', ({ params, expected }) => {
       const context = new FuroPaginationContext({
         searchParams: params.searchParams,
+        pageKey: params.pageKey,
         currentPage: 1,
         maxPageRange: 5,
         lastPage: params.lastPage,
@@ -1328,6 +1484,7 @@ describe('FuroPaginationContext', () => {
       test.each(cases)('currentPage: $params.currentPage', ({ params }) => {
         const context = new FuroPaginationContext({
           searchParams: new URLSearchParams(),
+          pageKey: 'pg',
           currentPage: params.currentPage,
           maxPageRange: 5,
           lastPage: 10,
@@ -1357,6 +1514,7 @@ describe('FuroPaginationContext', () => {
       test.each(cases)('currentPage: $params.currentPage', ({ params }) => {
         const context = new FuroPaginationContext({
           searchParams: new URLSearchParams(),
+          pageKey: 'pg',
           currentPage: params.currentPage,
           maxPageRange: 5,
           lastPage: 10,
@@ -1414,6 +1572,7 @@ describe('FuroPaginationContext', () => {
         test.each(truthyCases)('currentPage: $currentPage', ({ currentPage }) => {
           const context = new FuroPaginationContext({
             searchParams: new URLSearchParams(),
+            pageKey: 'pg',
             currentPage,
             maxPageRange: 5,
             lastPage: params.lastPage,
@@ -1430,6 +1589,7 @@ describe('FuroPaginationContext', () => {
         test.each(falsyCases)('currentPage: $currentPage', ({ currentPage }) => {
           const context = new FuroPaginationContext({
             searchParams: new URLSearchParams(),
+            pageKey: 'pg',
             currentPage,
             maxPageRange: 5,
             lastPage: params.lastPage,
@@ -1464,6 +1624,7 @@ describe('FuroPaginationContext', () => {
       test.each(cases)('rangePages: $params.rangePages', ({ params }) => {
         const context = new FuroPaginationContext({
           searchParams: new URLSearchParams(),
+          pageKey: 'pg',
           currentPage: 3,
           maxPageRange: 5,
           lastPage: 10,
@@ -1496,6 +1657,7 @@ describe('FuroPaginationContext', () => {
       test.each(cases)('rangePages: $params.rangePages', ({ params }) => {
         const context = new FuroPaginationContext({
           searchParams: new URLSearchParams(),
+          pageKey: 'pg',
           currentPage: 3,
           maxPageRange: 5,
           lastPage: 10,
@@ -1549,6 +1711,7 @@ describe('FuroPaginationContext', () => {
         test.each(truthyCases)('rangePages: $rangePages', ({ rangePages }) => {
           const context = new FuroPaginationContext({
             searchParams: new URLSearchParams(),
+            pageKey: 'pg',
             currentPage: 3,
             maxPageRange: 5,
             lastPage: params.lastPage,
@@ -1568,6 +1731,7 @@ describe('FuroPaginationContext', () => {
         test.each(falsyCases)('rangePages: $rangePages', ({ rangePages }) => {
           const context = new FuroPaginationContext({
             searchParams: new URLSearchParams(),
+            pageKey: 'pg',
             currentPage: 3,
             maxPageRange: 5,
             lastPage: params.lastPage,
@@ -1615,6 +1779,7 @@ describe('FuroPaginationContext', () => {
       test.each(cases)('rangePages: $params.rangePages', ({ params }) => {
         const context = new FuroPaginationContext({
           searchParams: new URLSearchParams(),
+          pageKey: 'pg',
           currentPage: 3,
           maxPageRange: 5,
           lastPage: 10,
@@ -1647,6 +1812,7 @@ describe('FuroPaginationContext', () => {
       test.each(cases)('rangePages: $params.rangePages', ({ params }) => {
         const context = new FuroPaginationContext({
           searchParams: new URLSearchParams(),
+          pageKey: 'pg',
           currentPage: 3,
           maxPageRange: 5,
           lastPage: 10,
@@ -1700,6 +1866,7 @@ describe('FuroPaginationContext', () => {
         test.each(truthyCases)('rangePages: $rangePages', ({ rangePages }) => {
           const context = new FuroPaginationContext({
             searchParams: new URLSearchParams(),
+            pageKey: 'pg',
             currentPage: 3,
             maxPageRange: 5,
             lastPage: params.lastPage,
@@ -1719,6 +1886,7 @@ describe('FuroPaginationContext', () => {
         test.each(falsyCases)('rangePages: $rangePages', ({ rangePages }) => {
           const context = new FuroPaginationContext({
             searchParams: new URLSearchParams(),
+            pageKey: 'pg',
             currentPage: 3,
             maxPageRange: 5,
             lastPage: params.lastPage,
@@ -1853,6 +2021,7 @@ describe('FuroPaginationContext', () => {
     test.each(cases)('params: $params', ({ params, expected }) => {
       const context = new FuroPaginationContext({
         searchParams: new URLSearchParams(),
+        pageKey: 'pg',
         currentPage: 3,
         maxPageRange: 5,
         lastPage: 10,
