@@ -113,6 +113,52 @@ export default defineComponent({
     <br>
 
     <h2 class="design-header secondary">
+      &lt;FuroPagination&gt; with a few Total Records
+    </h2>
+
+    <section class="unit-section sample-placeholder double">
+      <h3 class="design-header secondary">
+        with Last Page 5
+      </h3>
+
+      <FuroPagination page-key="p"
+        :pagination="{
+          limit: 5,
+          totalRecords: 24,
+        }"
+      />
+    </section>
+
+    <section class="unit-section sample-placeholder double">
+      <h3 class="design-header secondary">
+        with Last Page 3
+      </h3>
+
+      <FuroPagination page-key="p"
+        :pagination="{
+          limit: 5,
+          totalRecords: 14,
+        }"
+      />
+    </section>
+
+    <section class="unit-section sample-placeholder double">
+      <h3 class="design-header secondary">
+        with Last Page 1
+      </h3>
+
+      <FuroPagination page-key="p"
+        :pagination="{
+          limit: 5,
+          totalRecords: 3,
+        }"
+      />
+    </section>
+
+    <br>
+    <br>
+
+    <h2 class="design-header secondary">
       &lt;AppPagination&gt; with default Previous and Next
     </h2>
 
