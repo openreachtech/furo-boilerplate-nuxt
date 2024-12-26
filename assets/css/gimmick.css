@@ -71,5 +71,5 @@
   * .-aim-unlock
 ) {
   pointer-events: inherit;
-  opacity: inherit;
+  filter: inherit;
 }
