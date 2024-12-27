@@ -163,9 +163,9 @@ export default defineComponent({
     </h2>
 
     <section class="unit-section sample-placeholder double">
-      <h2 class="design-header tertiary">
+      <h3 class="design-header tertiary">
         Default Previous and Next<br>(design: &lt;AppPagination&gt;)
-      </h2>
+      </h3>
 
       <AppPagination :pagination="{
         limit: 5,
@@ -188,9 +188,9 @@ export default defineComponent({
     </section>
 
     <section class="unit-section sample-placeholder double">
-      <h2 class="design-header tertiary">
+      <h3 class="design-header tertiary">
         with Emoji for previous and next<br>(design: beta)
-      </h2>
+      </h3>
 
       <AppPagination class="beta-design"
         :pagination="{
