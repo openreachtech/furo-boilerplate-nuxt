@@ -4,6 +4,7 @@
  * @property {number} current - Current page.
  * @property {number} perPage - Number of items per page.
  * @property {number} total - Total number of items.
+ * @property {boolean} isCurrent - Whether the page is current.
  */
 export default class FuroPageContext {
   /**
