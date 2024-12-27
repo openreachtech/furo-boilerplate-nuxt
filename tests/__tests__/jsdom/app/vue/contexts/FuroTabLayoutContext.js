@@ -40,6 +40,7 @@ describe('FuroTabLayoutContext', () => {
         test.each(cases)('tabContexts: $params.tabContexts', ({ params }) => {
           const args = {
             tabContexts: params.tabContexts,
+            activeTabKey: null,
           }
 
           const context = new FuroTabLayoutContext(args)
@@ -47,6 +48,43 @@ describe('FuroTabLayoutContext', () => {
           expect(context)
             .toHaveProperty('tabContexts', params.tabContexts)
         })
+      })
+    })
+
+    describe('#activeTabKey', () => {
+      const cases = [
+        {
+          params: {
+            activeTabKey: 'alpha',
+          },
+        },
+        {
+          params: {
+            activeTabKey: 'beta',
+          },
+        },
+        {
+          params: {
+            activeTabKey: 'gamma',
+          },
+        },
+        {
+          params: {
+            activeTabKey: null,
+          },
+        },
+      ]
+
+      test.each(cases)('activeTabKey: $params.activeTabKey', ({ params }) => {
+        const args = {
+          tabContexts: [],
+          activeTabKey: params.activeTabKey,
+        }
+
+        const context = new FuroTabLayoutContext(args)
+
+        expect(context)
+          .toHaveProperty('activeTabKey', params.activeTabKey)
       })
     })
   })
@@ -106,6 +144,7 @@ describe('FuroTabLayoutContext', () => {
                 { tabKey: 'alpha', label: 'Alpha' },
                 { tabKey: 'beta', label: 'Beta' },
               ],
+              activeTabKey: 'alpha',
             },
           },
           expected: {
@@ -114,6 +153,7 @@ describe('FuroTabLayoutContext', () => {
               FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha' }),
               FuroTabContext.create({ tabKey: 'beta', label: 'Beta' }),
             ],
+            activeTabKey: 'alpha',
           },
         },
         {
@@ -123,6 +163,7 @@ describe('FuroTabLayoutContext', () => {
                 { tabKey: 'alpha', label: 'Alpha' },
                 { tabKey: 'beta', label: 'Beta' },
               ],
+              activeTabKey: 'beta',
             },
           },
           expected: {
@@ -130,6 +171,7 @@ describe('FuroTabLayoutContext', () => {
               FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha' }),
               FuroTabContext.create({ tabKey: 'beta', label: 'Beta' }),
             ],
+            activeTabKey: 'beta',
           },
         },
         {
@@ -138,12 +180,14 @@ describe('FuroTabLayoutContext', () => {
               tabs: [
                 { tabKey: 'alpha', label: 'Alpha' },
               ],
+              // activeTabKey: 'alpha,
             },
           },
           expected: {
             tabContexts: [
               FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha' }),
             ],
+            activeTabKey: null,
           },
         },
       ]
@@ -199,6 +243,54 @@ describe('FuroTabLayoutContext', () => {
 })
 
 describe('FuroTabLayoutContext', () => {
+  describe('#isActiveTab()', () => {
+    const cases = [
+      {
+        params: {
+          activeTabKey: 'alpha',
+        },
+        truthyCases: [
+          { tabKey: 'alpha' },
+        ],
+        falsyCases: [
+          { tabKey: 'beta' },
+          { tabKey: 'gamma' },
+        ],
+      },
+    ]
+
+    describe.each(cases)('activeTabKey: $params.activeTabKey', ({ params, truthyCases, falsyCases }) => {
+      const context = new FuroTabLayoutContext({
+        tabContexts: [],
+        activeTabKey: params.activeTabKey,
+      })
+
+      describe('to be truthy', () => {
+        test.each(truthyCases)('tabKey: $tabKey', ({ tabKey }) => {
+          const actual = context.isActiveTab({
+            tabKey,
+          })
+
+          expect(actual)
+            .toBeTruthy()
+        })
+      })
+
+      describe('to be falsy', () => {
+        test.each(falsyCases)('tabKey: $tabKey', ({ tabKey }) => {
+          const actual = context.isActiveTab({
+            tabKey,
+          })
+
+          expect(actual)
+            .toBeFalsy()
+        })
+      })
+    })
+  })
+})
+
+describe('FuroTabLayoutContext', () => {
   describe('#onClickTab()', () => {
     const alphaElement = document.createElement('div')
     const betaElement = document.createElement('div')
@@ -212,6 +304,7 @@ describe('FuroTabLayoutContext', () => {
 
     const context = new FuroTabLayoutContext({
       tabContexts: [],
+      activeTabKey: null,
     })
 
     describe('on click alpha tab', () => {
