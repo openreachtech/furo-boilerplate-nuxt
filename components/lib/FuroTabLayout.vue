@@ -12,6 +12,7 @@ export default defineComponent({
 
   props: {
     tabs: {
+      /** @type {import('vue').PropType<Array<import('~/app/vue/contexts/FuroTabLayoutContext').FuroTabParams>>} */
       type: Array,
       default: () => [],
       validator: value => Array.isArray(value),
@@ -23,21 +24,8 @@ export default defineComponent({
     },
   },
 
-  /**
-   * Setup the component.
-   *
-   * @param {{
-   *   tabs: Array<* &
-   *     import('~/app/vue/contexts/FuroTabLayoutContext.js').FuroTabParams
-   *   >
-   *   activeTabKey: string
-   * }} props
-   * @returns {{
-   *   context: FuroTabLayoutContext
-   *   tabsRef: import('vue').Ref<Array<HTMLElement>>
-   * }}
-   */
   setup (props) {
+    /** @type {import('vue').Ref<Array<HTMLElement>>} */
     const tabsRef = ref([])
 
     const context = FuroTabLayoutContext.create({
