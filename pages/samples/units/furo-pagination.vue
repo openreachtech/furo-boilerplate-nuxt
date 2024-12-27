@@ -49,8 +49,8 @@ export default defineComponent({
     </h2>
 
     <section class="unit-section sample-placeholder double">
-      <h3 class="design-header secondary">
-        with default previous and next (design: &lt;FuroPagination&gt;)
+      <h3 class="design-header tertiary">
+        with default previous and next<br>(design: &lt;FuroPagination&gt;)
       </h3>
 
       <FuroPagination :pagination="{
@@ -61,8 +61,8 @@ export default defineComponent({
     </section>
 
     <section class="unit-section sample-placeholder double">
-      <h3 class="design-header secondary">
-        with pageKey &quot;p&quot; (design: &lt;FuroPagination&gt;)
+      <h3 class="design-header tertiary">
+        with pageKey &quot;p&quot;<br>(design: &lt;FuroPagination&gt;)
       </h3>
 
       <FuroPagination page-key="p"
@@ -74,8 +74,8 @@ export default defineComponent({
     </section>
 
     <section class="unit-section sample-placeholder double">
-      <h3 class="design-header secondary">
-        with SVG image for previous and next (design: alpha)
+      <h3 class="design-header tertiary">
+        with SVG image for previous and next<br>(design: alpha)
       </h3>
 
       <FuroPagination class="alpha-design"
@@ -117,7 +117,7 @@ export default defineComponent({
     </h2>
 
     <section class="unit-section sample-placeholder double">
-      <h3 class="design-header secondary">
+      <h3 class="design-header tertiary">
         with Last Page 5
       </h3>
 
@@ -130,7 +130,7 @@ export default defineComponent({
     </section>
 
     <section class="unit-section sample-placeholder double">
-      <h3 class="design-header secondary">
+      <h3 class="design-header tertiary">
         with Last Page 3
       </h3>
 
@@ -143,7 +143,7 @@ export default defineComponent({
     </section>
 
     <section class="unit-section sample-placeholder double">
-      <h3 class="design-header secondary">
+      <h3 class="design-header tertiary">
         with Last Page 1
       </h3>
 
@@ -163,9 +163,9 @@ export default defineComponent({
     </h2>
 
     <section class="unit-section sample-placeholder double">
-      <h2 class="design-header secondary">
-        Default Previous and Next (design: &lt;AppPagination&gt;)
-      </h2>
+      <h3 class="design-header tertiary">
+        Default Previous and Next<br>(design: &lt;AppPagination&gt;)
+      </h3>
 
       <AppPagination :pagination="{
         limit: 5,
@@ -175,8 +175,8 @@ export default defineComponent({
     </section>
 
     <section class="unit-section sample-placeholder double">
-      <h3 class="design-header secondary">
-        with pageKey &quot;pg&quot; (design: &lt;AppPagination&gt;)
+      <h3 class="design-header tertiary">
+        with pageKey &quot;pg&quot;<br>(design: &lt;AppPagination&gt;)
       </h3>
 
       <AppPagination page-key="pg"
@@ -188,9 +188,9 @@ export default defineComponent({
     </section>
 
     <section class="unit-section sample-placeholder double">
-      <h2 class="design-header secondary">
-        with Emoji for previous and next (design: beta)
-      </h2>
+      <h3 class="design-header tertiary">
+        with Emoji for previous and next<br>(design: beta)
+      </h3>
 
       <AppPagination class="beta-design"
         :pagination="{
@@ -211,26 +211,6 @@ export default defineComponent({
 
 <!-- can not use scoped here -->
 <style>
-.design-header.primary {
-  margin-block-end: 1rem;
-
-  font-size: 2rem;
-}
-
-.design-header.secondary {
-  margin-block-end: 1rem;
-
-  font-size: 1.618rem;
-}
-
-.design-header.tertiary {
-  margin-block-end: 1rem;
-}
-
-.unit-section + .unit-section {
-  margin-block-start: 2rem;
-}
-
 /*
  * Can customize the pagination component.
  */
