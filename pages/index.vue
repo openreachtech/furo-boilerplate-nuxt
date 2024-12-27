@@ -21,6 +21,7 @@ export default defineComponent({
   <div><a href="samples/units/trigger-unlock">Trigger Unlock Sample</a></div>
   <br>
   <div><a href="samples/units/furo-pagination">Furo Pagination Sample</a></div>
+  <div><a href="samples/units/furo-tab-layout">Furo TabLayout Sample</a></div>
   <div>1</div>
   <div>2</div>
   <div>3</div>
