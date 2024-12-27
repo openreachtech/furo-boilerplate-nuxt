@@ -50,7 +50,7 @@ export default defineComponent({
 
     <section class="unit-section sample-placeholder double">
       <h3 class="design-header tertiary">
-        with default previous and next (design: &lt;FuroPagination&gt;)
+        with default previous and next<br>(design: &lt;FuroPagination&gt;)
       </h3>
 
       <FuroPagination :pagination="{
@@ -62,7 +62,7 @@ export default defineComponent({
 
     <section class="unit-section sample-placeholder double">
       <h3 class="design-header tertiary">
-        with pageKey &quot;p&quot; (design: &lt;FuroPagination&gt;)
+        with pageKey &quot;p&quot;<br>(design: &lt;FuroPagination&gt;)
       </h3>
 
       <FuroPagination page-key="p"
@@ -75,7 +75,7 @@ export default defineComponent({
 
     <section class="unit-section sample-placeholder double">
       <h3 class="design-header tertiary">
-        with SVG image for previous and next (design: alpha)
+        with SVG image for previous and next<br>(design: alpha)
       </h3>
 
       <FuroPagination class="alpha-design"
@@ -164,7 +164,7 @@ export default defineComponent({
 
     <section class="unit-section sample-placeholder double">
       <h2 class="design-header tertiary">
-        Default Previous and Next (design: &lt;AppPagination&gt;)
+        Default Previous and Next<br>(design: &lt;AppPagination&gt;)
       </h2>
 
       <AppPagination :pagination="{
@@ -176,7 +176,7 @@ export default defineComponent({
 
     <section class="unit-section sample-placeholder double">
       <h3 class="design-header tertiary">
-        with pageKey &quot;pg&quot; (design: &lt;AppPagination&gt;)
+        with pageKey &quot;pg&quot;<br>(design: &lt;AppPagination&gt;)
       </h3>
 
       <AppPagination page-key="pg"
@@ -189,7 +189,7 @@ export default defineComponent({
 
     <section class="unit-section sample-placeholder double">
       <h2 class="design-header tertiary">
-        with Emoji for previous and next (design: beta)
+        with Emoji for previous and next<br>(design: beta)
       </h2>
 
       <AppPagination class="beta-design"
