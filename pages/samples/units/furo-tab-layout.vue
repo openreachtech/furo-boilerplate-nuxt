@@ -69,15 +69,15 @@ export default defineComponent({
       >
         <template #contents>
           <div class="alpha">
-            Alpha
+            Alpha Content
           </div>
 
           <div class="beta">
-            Beta
+            Beta Content
           </div>
 
           <div class="gamma">
-            Gamma
+            Gamma Content
           </div>
         </template>
       </FuroTabLayout>
@@ -94,15 +94,15 @@ export default defineComponent({
       >
         <template #contents>
           <div class="alpha">
-            Alpha
+            Alpha Content
           </div>
 
           <div class="beta">
-            Beta
+            Beta Content
           </div>
 
           <div class="gamma">
-            Gamma
+            Gamma Content
           </div>
         </template>
       </FuroTabLayout>
@@ -125,15 +125,15 @@ export default defineComponent({
       >
         <template #contents>
           <div class="alpha">
-            Alpha
+            Alpha Content
           </div>
 
           <div class="beta">
-            Beta
+            Beta Content
           </div>
 
           <div class="gamma">
-            Gamma
+            Gamma Content
           </div>
         </template>
       </AppTabLayout>
@@ -150,15 +150,15 @@ export default defineComponent({
       >
         <template #contents>
           <div class="alpha">
-            Alpha
+            Alpha Content
           </div>
 
           <div class="beta">
-            Beta
+            Beta Content
           </div>
 
           <div class="gamma">
-            Gamma
+            Gamma Content
           </div>
         </template>
       </AppTabLayout>
