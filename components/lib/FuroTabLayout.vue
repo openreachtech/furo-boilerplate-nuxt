@@ -50,8 +50,8 @@ export default defineComponent({
         ref="tabsRef"
         class="tab"
         :class="{
-          active: tab.isTargetTab({
-            tabKey: activeTabKey,
+          active: context.isActiveTab({
+            tabKey: tab.tabKey,
           }),
         }"
         @click="context.onClickTab({
