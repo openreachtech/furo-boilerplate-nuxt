@@ -26,3 +26,31 @@
    */
   border-width: calc(var(--size-thinnest) * 3);
 }
+
+/*
+ * Sample heading
+ */
+
+.design-header {
+  line-height: var(--value-golden-ratio);
+}
+
+.design-header.primary {
+  margin-block-end: 1rem;
+
+  font-size: 2rem;
+}
+
+.design-header.secondary {
+  margin-block-end: 1rem;
+
+  font-size: 1.618rem;
+}
+
+.design-header.tertiary {
+  margin-block-end: 1rem;
+}
+
+.unit-section + .unit-section {
+  margin-block-start: 2rem;
+}
