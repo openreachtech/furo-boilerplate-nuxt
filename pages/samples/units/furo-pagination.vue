@@ -211,26 +211,6 @@ export default defineComponent({
 
 <!-- can not use scoped here -->
 <style>
-.design-header.primary {
-  margin-block-end: 1rem;
-
-  font-size: 2rem;
-}
-
-.design-header.secondary {
-  margin-block-end: 1rem;
-
-  font-size: 1.618rem;
-}
-
-.design-header.tertiary {
-  margin-block-end: 1rem;
-}
-
-.unit-section + .unit-section {
-  margin-block-start: 2rem;
-}
-
 /*
  * Can customize the pagination component.
  */
