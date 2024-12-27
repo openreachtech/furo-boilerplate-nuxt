@@ -3,10 +3,8 @@ import FuroTabContext from './FuroTabContext.js'
 /**
  * Props context class for FuroTabLayout component.
  *
- * @property {Array} currentPage - Current page.
- * @property {number} maxPageRange - page range in view
- * @property {number} lastPage - Last page.
- * @property {URLSearchParams} searchParams - Search parameters.
+ * @property {Array} tabContexts - Tab contexts.
+ * @property {string | null} activeTabKey - Active tab key
  */
 export default class FuroTabLayoutContext {
   /**
@@ -16,8 +14,10 @@ export default class FuroTabLayoutContext {
    */
   constructor ({
     tabContexts,
+    activeTabKey,
   }) {
     this.tabContexts = tabContexts
+    this.activeTabKey = activeTabKey
   }
 
   /**
@@ -31,6 +31,7 @@ export default class FuroTabLayoutContext {
   static create ({
     props: {
       tabs,
+      activeTabKey = null,
     },
   }) {
     const tabContexts = tabs.map((it, index) =>
@@ -42,6 +43,7 @@ export default class FuroTabLayoutContext {
     return /** @type {InstanceType<T>} */ (
       new this({
         tabContexts,
+        activeTabKey,
       })
     )
   }
@@ -64,6 +66,20 @@ export default class FuroTabLayoutContext {
       tabKey,
       label,
     })
+  }
+
+  /**
+   * Is active tab.
+   *
+   * @param {{
+   *   tabKey: string
+   * }} params - Parameters of this method
+   * @returns {boolean} - true: if default active.
+   */
+  isActiveTab ({
+    tabKey,
+  }) {
+    return this.activeTabKey === tabKey
   }
 
   /**
@@ -96,6 +112,7 @@ export default class FuroTabLayoutContext {
 /**
  * @typedef {{
  *   tabContexts: Array<FuroTabContext>
+ *   activeTabKey: string | null
  * }} FuroTabLayoutContextParams
  */
 
@@ -103,7 +120,7 @@ export default class FuroTabLayoutContext {
  * @typedef {{
  *   props: {
  *     tabs: Array<FuroTabParams>
- *     activeTabKey?: string
+ *     activeTabKey?: string | null
  *   }
  * }} FuroTabLayoutContextFactoryParams
  */
