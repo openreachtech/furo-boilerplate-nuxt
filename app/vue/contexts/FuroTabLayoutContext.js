@@ -69,6 +69,20 @@ export default class FuroTabLayoutContext {
   }
 
   /**
+   * Is active tab.
+   *
+   * @param {{
+   *   tabKey: string
+   * }} params - Parameters of this method
+   * @returns {boolean} - true: if default active.
+   */
+  isActiveTab ({
+    tabKey,
+  }) {
+    return this.activeTabKey === tabKey
+  }
+
+  /**
    * On click tab.
    *
    * @param {{
