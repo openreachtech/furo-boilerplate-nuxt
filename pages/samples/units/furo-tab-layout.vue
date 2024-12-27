@@ -1,0 +1,222 @@
+<script>
+import {
+  defineComponent,
+} from 'vue'
+
+import {
+  definePageMeta,
+} from '#imports'
+
+import FuroTabLayout from '~/components/lib/FuroTabLayout.vue'
+import AppTabLayout from '~/components/units/AppTabLayout.vue'
+
+export default defineComponent({
+  name: 'Furo TabLayout',
+
+  components: {
+    FuroTabLayout,
+    AppTabLayout,
+  },
+
+  setup () {
+    definePageMeta({
+      $furo: {
+        pageTitle: 'Furo TabLayout Samples',
+        skipFilter: true,
+      },
+    })
+
+    return {
+      tabs: [
+        {
+          tabKey: 'alpha',
+          label: 'Alpha',
+        },
+        {
+          tabKey: 'beta',
+          label: 'Beta',
+        },
+        {
+          tabKey: 'gamma',
+          label: 'Gamma',
+        },
+      ],
+    }
+  },
+})
+</script>
+
+<template>
+  <div>
+    <h1 class="design-header primary">
+      Furo TabLayout Samples
+    </h1>
+
+    <br>
+    <br>
+
+    <h2 class="design-header secondary">
+      &lt;FuroTabLayout&gt; samples
+    </h2>
+
+    <section class="unit-section sample-placeholder double">
+      <h3 class="design-header tertiary">
+        &lt;FuroTabLayout&gt; with default design
+      </h3>
+
+      <FuroTabLayout :tabs="tabs"
+        :active-tab-key="tabs[0].tabKey"
+      >
+        <template #contents>
+          <div class="alpha">
+            Alpha
+          </div>
+
+          <div class="beta">
+            Beta
+          </div>
+
+          <div class="gamma">
+            Gamma
+          </div>
+        </template>
+      </FuroTabLayout>
+    </section>
+
+    <section class="unit-section sample-placeholder double">
+      <h3 class="design-header tertiary">
+        &lt;FuroTabLayout&gt; with customized alpha-design
+      </h3>
+
+      <FuroTabLayout :tabs="tabs"
+        :active-tab-key="tabs[0].tabKey"
+        class="alpha-design"
+      >
+        <template #contents>
+          <div class="alpha">
+            Alpha
+          </div>
+
+          <div class="beta">
+            Beta
+          </div>
+
+          <div class="gamma">
+            Gamma
+          </div>
+        </template>
+      </FuroTabLayout>
+    </section>
+
+    <br>
+    <br>
+
+    <h1 class="design-header primary">
+      App TabLayout Samples
+    </h1>
+
+    <section class="unit-section sample-placeholder double">
+      <h3 class="design-header tertiary">
+        &lt;AppTabLayout&gt; with default design
+      </h3>
+
+      <AppTabLayout :tabs="tabs"
+        :active-tab-key="tabs[0].tabKey"
+      >
+        <template #contents>
+          <div class="alpha">
+            Alpha
+          </div>
+
+          <div class="beta">
+            Beta
+          </div>
+
+          <div class="gamma">
+            Gamma
+          </div>
+        </template>
+      </AppTabLayout>
+    </section>
+
+    <section class="unit-section sample-placeholder double">
+      <h3 class="design-header tertiary">
+        &lt;AppTabLayout&gt; with customized beta-design
+      </h3>
+
+      <AppTabLayout :tabs="tabs"
+        :active-tab-key="tabs[0].tabKey"
+        class="beta-design"
+      >
+        <template #contents>
+          <div class="alpha">
+            Alpha
+          </div>
+
+          <div class="beta">
+            Beta
+          </div>
+
+          <div class="gamma">
+            Gamma
+          </div>
+        </template>
+      </AppTabLayout>
+    </section>
+  </div>
+</template>
+
+<!-- can not use scoped here -->
+<style>
+/*
+ * Common design
+ */
+
+.unit-tablayout > .contents {
+  padding-block-start: 0.25rem;
+}
+
+.unit-tablayout > .contents :where(.alpha, .beta, .gamma) {
+  border: var(--size-thinnest) var(--color-text) solid;
+
+  padding-block: 1rem;
+  padding-inline: 2rem;
+}
+
+/* alpha-design */
+
+.unit-tablayout.alpha-design > .tabs > .tab {
+  font-size: 1.5rem;
+
+  border-bottom: 0.25rem solid transparent;
+}
+
+.unit-tablayout.alpha-design > .tabs > .tab.active {
+  border-bottom: 0.25rem solid var(--color-primary);
+
+  background-color: inherit;
+  color: inherit;
+}
+
+/* beta-design */
+
+.unit-tablayout.beta-design > .tabs {
+  margin-block-start: 0;
+
+  gap: 0.25rem;
+}
+
+.unit-tablayout.beta-design > .contents {
+  padding-block-start: 0;
+}
+
+.unit-tablayout.beta-design > .tabs > .tab {
+  border-top: var(--size-thinnest) var(--color-text) solid;
+  border-left: var(--size-thinnest) var(--color-text) solid;
+  border-right: var(--size-thinnest) var(--color-text) solid;
+  border-radius: 0.5rem 0.5rem 0 0;
+
+  font-size: 1.5rem;
+}
+
+</style>
