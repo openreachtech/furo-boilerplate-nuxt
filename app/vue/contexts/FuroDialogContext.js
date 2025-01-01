@@ -1,0 +1,181 @@
+/**
+ * Props context class for FuroDialogContext component.
+ *
+ * @property {import('vue').Ref<HTMLDialogElement | null>} dialogRef - Dialog element.
+ * @property {FuroDialogContextEmit} emit - Emit event.
+ */
+export default class FuroDialogContext {
+  /**
+   * Constructor.
+   *
+   * @param {FuroDialogContextParams} params - Parameters of this constructor.
+   */
+  constructor ({
+    dialogElementRef,
+    emit,
+  }) {
+    this.dialogElementRef = dialogElementRef
+    this.emit = emit
+  }
+
+  /**
+   * Factory method to create a new instance of this class.
+   *
+   * @param {FuroDialogContextFactoryParams} params - Parameters of this factory method.
+   * @returns {FuroDialogContext} - New instance of this class.
+   */
+  static create ({
+    dialogElementRef,
+    emit,
+  }) {
+    return new this({
+      dialogElementRef,
+      emit,
+    })
+  }
+
+  /**
+   * emit() event name.
+   *
+   * @returns {{
+   *   SHOW_DIALOG: 'showDialog',
+   *   DISMISS_DIALOG: 'dismissDialog',
+   *   CLICK_BACKDROP: 'clickBackdrop',
+   * }}
+   */
+  static get EMIT_EVENT_NAME () {
+    return {
+      SHOW_DIALOG: 'showDialog',
+      DISMISS_DIALOG: 'dismissDialog',
+      CLICK_BACKDROP: 'clickBackdrop',
+    }
+  }
+
+  /**
+   * get: constructor.
+   *
+   * @returns {typeof FuroDialogContext}
+   */
+  get Ctor () {
+    return /** @type {*} */ (this.constructor)
+  }
+
+  /**
+   * get: dialog element.
+   *
+   * @returns {HTMLDialogElement | null}
+   */
+  get dialogElement () {
+    return this.dialogElementRef.value
+  }
+
+  /**
+   * Show dialog.
+   */
+  showDialog () {
+    this.dialogElement?.showModal()
+  }
+
+  /**
+   * Dismiss dialog.
+   */
+  dismissDialog () {
+    this.dialogElement?.close()
+  }
+
+  /**
+   * Click in backdrop.
+   *
+   * @returns {{
+   *   showDialog: () => void,
+   *   dismissDialog: () => void,
+   * }}
+   */
+  generateExposeHash () {
+    return {
+      showDialog: () => this.showDialog(),
+      dismissDialog: () => this.dismissDialog(),
+    }
+  }
+
+  /**
+   * Click in inner <dialog>.
+   *
+   * @param {{
+   *   event: MouseEvent
+   * }} params - Parameters of this method.
+   * @returns {void}
+   */
+  clickInInner ({
+    event: pointerEvent,
+  }) {
+    const isClickedOnBackdrop = this.isClickedOnBackdrop({
+      event: pointerEvent,
+    })
+
+    if (!isClickedOnBackdrop) {
+      return
+    }
+
+    this.emit(
+      this.Ctor
+        .EMIT_EVENT_NAME
+        .CLICK_BACKDROP
+    )
+  }
+
+  /**
+   * Is clicked on backdrop.
+   *
+   * @param {{
+   *   event: MouseEvent
+   * }} params - Parameters of this method.
+   * @returns {boolean} true: clicked on backdrop.
+   */
+  isClickedOnBackdrop ({
+    event: {
+      clientX,
+      clientY,
+    },
+  }) {
+    const dialogRect = this.extractDialogRect()
+
+    if (!dialogRect) {
+      return false
+    }
+
+    return clientX < dialogRect.left
+      || clientX > dialogRect.right
+      || clientY < dialogRect.top
+      || clientY > dialogRect.bottom
+  }
+
+  /**
+   * Extract dialog rect.
+   *
+   * @returns {DOMRect | null}
+   */
+  extractDialogRect () {
+    return this.dialogElementRef.value
+      ?.getBoundingClientRect()
+      ?? null
+  }
+}
+
+/**
+ * @typedef {{
+ *   dialogElementRef: import('vue').Ref<HTMLDialogElement | null>
+ *   emit: FuroDialogContextEmit
+ * }} FuroDialogContextParams
+ */
+
+/**
+ * @typedef {FuroDialogContextParams} FuroDialogContextFactoryParams
+ */
+
+/**
+ * @typedef {(
+ *   event: 'clickBackdrop',
+ *   ...args: Array<any>
+ * ) => void} FuroDialogContextEmit
+ */
