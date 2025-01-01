@@ -1,0 +1,561 @@
+import FuroButtonDialogContext from '~/app/vue/contexts/FuroButtonDialogContext.js'
+
+describe('FuroButtonDialogContext', () => {
+  describe('constructor', () => {
+    describe('to keep properties', () => {
+      describe('#dialogComponentRef', () => {
+        /**
+         * @type {Array<{
+         *   params: {
+         *     dialogComponentRef: {
+         *       value: import('~/components/lib/FuroDialog.vue').default | null
+         *     }
+         *   }
+         * }>}
+         */
+        const cases = /** @type {Array<*>} */ ([
+          {
+            params: {
+              dialogComponentRef: {
+                value: {
+                  showDialog: () => {},
+                  dismissDialog: () => {},
+                },
+              },
+            },
+          },
+          {
+            params: {
+              dialogComponentRef: {
+                value: null,
+              },
+            },
+          },
+        ])
+
+        test.each(cases)('dialogComponentRef: $params.dialogComponentRef', ({ params }) => {
+          const args = /** @type {*} */ ({
+            dialogComponentRef: params.dialogComponentRef,
+            emit: () => {},
+          })
+
+          const context = new FuroButtonDialogContext(args)
+
+          expect(context.dialogComponentRef)
+            .toBe(params.dialogComponentRef)
+        })
+      })
+
+      describe('#emit', () => {
+        const cases = [
+          {
+            params: {
+              emit: () => {
+                Symbol('alpha')
+              },
+            },
+          },
+          {
+            params: {
+              emit: () => {
+                Symbol('beta')
+              },
+            },
+          },
+        ]
+
+        test.each(cases)('emit: $params.emit', ({ params }) => {
+          const args = /** @type {*} */ ({
+            dialogComponentRef: {
+              value: null,
+            },
+            emit: params.emit,
+          })
+
+          const context = new FuroButtonDialogContext(args)
+
+          expect(context.emit)
+            .toBe(params.emit)
+        })
+      })
+    })
+  })
+})
+
+describe('FuroButtonDialogContext', () => {
+  describe('.create()', () => {
+    /**
+     * @type {Array<{
+     *   params: {
+     *     dialogComponentRef: import('vue').Ref<import('~/components/lib/FuroDialog.vue').default | null>
+     *     emit: (
+     *       event: 'clickBackdrop' | 'clickPositiveButton' | 'clickNegativeButton' | 'clickNeutralButton',
+     *       ...args: Array<any>
+     *     ) => void
+     *   }
+     * }>}
+     */
+    const cases = /** @type {Array<*>} */ ([
+      {
+        params: {
+          dialogComponentRef: {
+            value: {
+              showDialog: () => {},
+              dismissDialog: () => {},
+            },
+          },
+          emit: () => {},
+        },
+      },
+      {
+        params: {
+          dialogComponentRef: {
+            value: null,
+          },
+          emit: () => {},
+        },
+      },
+    ])
+
+    describe('to be instance of own class', () => {
+      test.each(cases)('dialogComponentRef: $params.dialogComponentRef', ({ params }) => {
+        const context = FuroButtonDialogContext.create(params)
+
+        expect(context)
+          .toBeInstanceOf(FuroButtonDialogContext)
+      })
+    })
+
+    describe('to call constructor', () => {
+      test.each(cases)('dialogComponentRef: $params.dialogComponentRef', ({ params }) => {
+        const SpyClass = globalThis.constructorSpy.spyOn(FuroButtonDialogContext)
+
+        SpyClass.create(params)
+
+        expect(SpyClass.__spy__)
+          .toHaveBeenCalledWith(params)
+      })
+    })
+  })
+})
+
+describe('FuroButtonDialogContext', () => {
+  describe('.get:EMIT_EVENT_NAME', () => {
+    test('to return fixed value', () => {
+      const expected = {
+        CLICK_POSITIVE_BUTTON: 'clickPositiveButton',
+        CLICK_NEGATIVE_BUTTON: 'clickNegativeButton',
+        CLICK_NEUTRAL_BUTTON: 'clickNeutralButton',
+      }
+
+      const actual = FuroButtonDialogContext.EMIT_EVENT_NAME
+
+      expect(actual)
+        .toEqual(expected)
+    })
+  })
+})
+
+describe('FuroButtonDialogContext', () => {
+  describe('#get:Ctor', () => {
+    /**
+     * @type {Array<{
+     *   params: {
+     *     dialogComponentRef: import('vue').Ref<import('~/components/lib/FuroDialog.vue').default | null>
+     *     emit: (
+     *       event: 'clickBackdrop' | 'clickPositiveButton' | 'clickNegativeButton' | 'clickNeutralButton',
+     *       ...args: Array<any>
+     *     ) => void
+     *   }
+     * }>}
+     */
+    const cases = /** @type {Array<*>} */ ([
+      {
+        params: {
+          dialogComponentRef: {
+            value: {
+              showDialog: () => {},
+              dismissDialog: () => {},
+            },
+          },
+          emit: () => {},
+        },
+      },
+      {
+        params: {
+          dialogComponentRef: {
+            value: null,
+          },
+          emit: () => {},
+        },
+      },
+    ])
+
+    test.each(cases)('dialogComponentRef: $params.dialogComponentRef', ({ params }) => {
+      const context = new FuroButtonDialogContext(params)
+
+      const actual = context.Ctor
+
+      expect(actual)
+        .toBe(FuroButtonDialogContext)
+    })
+  })
+})
+
+describe('FuroButtonDialogContext', () => {
+  describe('#get:dialogComponent', () => {
+    /**
+     * @type {Array<{
+     *   params: {
+     *     dialogComponentRef: import('vue').Ref<import('~/components/lib/FuroDialog.vue').default | null>
+     *     emit: (
+     *       event: 'clickBackdrop' | 'clickPositiveButton' | 'clickNegativeButton' | 'clickNeutralButton',
+     *       ...args: Array<any>
+     *     ) => void
+     *   }
+     * }>}
+     */
+    const cases = /** @type {Array<*>} */ ([
+      {
+        params: {
+          dialogComponentRef: {
+            value: {
+              showDialog: () => {},
+              dismissDialog: () => {},
+            },
+          },
+          emit: () => {},
+        },
+      },
+      {
+        params: {
+          dialogComponentRef: {
+            value: null,
+          },
+          emit: () => {},
+        },
+      },
+    ])
+
+    test.each(cases)('dialogComponentRef: $params.dialogComponentRef', ({ params }) => {
+      const context = new FuroButtonDialogContext(params)
+
+      const actual = context.dialogComponent
+
+      expect(actual)
+        .toBe(params.dialogComponentRef.value)
+    })
+  })
+})
+
+describe('FuroButtonDialogContext', () => {
+  describe('#showDialog()', () => {
+    /**
+     * @type {Array<{
+     *   params: {
+     *     dialogComponentRef: import('vue').Ref<import('~/components/lib/FuroDialog.vue').default & {
+     *       value: {
+     *         showDialog: () => void
+     *         dismissDialog: () => void
+     *       }
+     *     }>
+     *     emit: (
+     *       event: 'clickBackdrop' | 'clickPositiveButton' | 'clickNegativeButton' | 'clickNeutralButton',
+     *       ...args: Array<any>
+     *     ) => void
+     *   }
+     * }>}
+     */
+    const cases = /** @type {Array<*>} */ ([
+      {
+        params: {
+          dialogComponentRef: {
+            value: {
+              showDialog: () => {},
+              dismissDialog: () => {},
+            },
+          },
+          emit: () => {},
+        },
+      },
+    ])
+
+    test.each(cases)('dialogComponentRef: $params.dialogComponentRef', ({ params }) => {
+      const showDialogSpy = jest.spyOn(params.dialogComponentRef.value, 'showDialog')
+
+      const context = new FuroButtonDialogContext(params)
+
+      context.showDialog()
+
+      expect(showDialogSpy)
+        .toHaveBeenCalledWith()
+    })
+  })
+})
+
+describe('FuroButtonDialogContext', () => {
+  describe('#dismissDialog()', () => {
+    /**
+     * @type {Array<{
+     *   params: {
+     *     dialogComponentRef: import('vue').Ref<import('~/components/lib/FuroDialog.vue').default & {
+     *       value: {
+     *         showDialog: () => void
+     *         dismissDialog: () => void
+     *       }
+     *     }>
+     *     emit: (
+     *       event: 'clickBackdrop' | 'clickPositiveButton' | 'clickNegativeButton' | 'clickNeutralButton',
+     *       ...args: Array<any>
+     *     ) => void
+     *   }
+     * }>}
+     */
+    const cases = /** @type {Array<*>} */ ([
+      {
+        params: {
+          dialogComponentRef: {
+            value: {
+              showDialog: () => {},
+              dismissDialog: () => {},
+            },
+          },
+          emit: () => {},
+        },
+      },
+    ])
+
+    test.each(cases)('dialogComponentRef: $params.dialogComponentRef', ({ params }) => {
+      const dismissDialogSpy = jest.spyOn(params.dialogComponentRef.value, 'dismissDialog')
+
+      const context = new FuroButtonDialogContext(params)
+
+      context.dismissDialog()
+
+      expect(dismissDialogSpy)
+        .toHaveBeenCalledWith()
+    })
+  })
+})
+
+describe('FuroButtonDialogContext', () => {
+  describe('#generateExposeHash()', () => {
+    /**
+     * @type {Array<{
+     *   params: {
+     *     dialogComponentRef: import('vue').Ref<import('~/components/lib/FuroDialog.vue').default & {
+     *       value: {
+     *         showDialog: () => void
+     *         dismissDialog: () => void
+     *       }
+     *     }>
+     *     emit: (
+     *       event: 'clickBackdrop' | 'clickPositiveButton' | 'clickNegativeButton' | 'clickNeutralButton',
+     *       ...args: Array<any>
+     *     ) => void
+     *   }
+     * }>}
+     */
+    const cases = /** @type {Array<*>} */ ([
+      {
+        params: {
+          dialogComponentRef: {
+            value: {
+              showDialog: () => {},
+              dismissDialog: () => {},
+            },
+          },
+          emit: () => {},
+        },
+      },
+    ])
+
+    describe('to be object', () => {
+      test.each(cases)('dialogComponentRef: $params.dialogComponentRef', ({ params }) => {
+        const expected = {
+          showDialog: expect.any(Function),
+          dismissDialog: expect.any(Function),
+        }
+
+        const context = new FuroButtonDialogContext(params)
+
+        const exposeHash = context.generateExposeHash()
+
+        expect(exposeHash)
+          .toEqual(expected)
+      })
+    })
+
+    describe('to call #showDialog()', () => {
+      test.each(cases)('dialogComponentRef: $params.dialogComponentRef', ({ params }) => {
+        const context = new FuroButtonDialogContext(params)
+        const exposeHash = context.generateExposeHash()
+
+        const showDialogSpy = jest.spyOn(context, 'showDialog')
+
+        exposeHash.showDialog()
+
+        expect(showDialogSpy)
+          .toHaveBeenCalledWith()
+      })
+    })
+
+    describe('to call #dismissDialog()', () => {
+      test.each(cases)('dialogComponentRef: $params.dialogComponentRef', ({ params }) => {
+        const context = new FuroButtonDialogContext(params)
+        const exposeHash = context.generateExposeHash()
+
+        const dismissDialogSpy = jest.spyOn(context, 'dismissDialog')
+
+        exposeHash.dismissDialog()
+
+        expect(dismissDialogSpy)
+          .toHaveBeenCalledWith()
+      })
+    })
+  })
+})
+
+describe('FuroButtonDialogContext', () => {
+  describe('#clickPositiveButton()', () => {
+    /**
+     * @type {Array<{
+     *   params: {
+     *     dialogComponentRef: import('vue').Ref<import('~/components/lib/FuroDialog.vue').default & {
+     *       value: {
+     *         showDialog: () => void
+     *         dismissDialog: () => void
+     *       }
+     *     }>
+     *     emit: (
+     *       event: 'clickBackdrop' | 'clickPositiveButton' | 'clickNegativeButton' | 'clickNeutralButton',
+     *       ...args: Array<any>
+     *     ) => void
+     *   }
+     * }>}
+     */
+    const cases = /** @type {Array<*>} */ ([
+      {
+        params: {
+          dialogComponentRef: {
+            value: {
+              showDialog: () => {},
+              dismissDialog: () => {},
+            },
+          },
+          emit: () => {},
+        },
+      },
+    ])
+
+    test.each(cases)('dialogComponentRef: $params.dialogComponentRef', ({ params }) => {
+      const emitSpy = jest.spyOn(params, 'emit')
+
+      const context = new FuroButtonDialogContext(params)
+      const dismissDialogSpy = jest.spyOn(context, 'dismissDialog')
+
+      context.clickPositiveButton()
+
+      expect(dismissDialogSpy)
+        .toHaveBeenCalledWith()
+      expect(emitSpy)
+        .toHaveBeenCalledWith('clickPositiveButton')
+    })
+  })
+})
+
+describe('FuroButtonDialogContext', () => {
+  describe('#clickNegativeButton()', () => {
+    /**
+     * @type {Array<{
+     *   params: {
+     *     dialogComponentRef: import('vue').Ref<import('~/components/lib/FuroDialog.vue').default & {
+     *       value: {
+     *         showDialog: () => void
+     *         dismissDialog: () => void
+     *       }
+     *     }
+     *     emit: (
+     *       event: 'clickBackdrop' | 'clickPositiveButton' | 'clickNegativeButton' | 'clickNeutralButton',
+     *       ...args: Array<any>
+     *     ) => void
+     *   }
+     * }>}
+     */
+    const cases = /** @type {Array<*>} */ ([
+      {
+        params: {
+          dialogComponentRef: {
+            value: {
+              showDialog: () => {},
+              dismissDialog: () => {},
+            },
+          },
+          emit: () => {},
+        },
+      },
+    ])
+
+    test.each(cases)('dialogComponentRef: $params.dialogComponentRef', ({ params }) => {
+      const emitSpy = jest.spyOn(params, 'emit')
+
+      const context = new FuroButtonDialogContext(params)
+      const dismissDialogSpy = jest.spyOn(context, 'dismissDialog')
+
+      context.clickNegativeButton()
+
+      expect(dismissDialogSpy)
+        .toHaveBeenCalledWith()
+      expect(emitSpy)
+        .toHaveBeenCalledWith('clickNegativeButton')
+    })
+  })
+})
+
+describe('FuroButtonDialogContext', () => {
+  describe('#clickNeutralButton()', () => {
+    /**
+     * @type {Array<{
+     *   params: {
+     *     dialogComponentRef: import('vue').Ref<import('~/components/lib/FuroDialog.vue').default & {
+     *       value: {
+     *         showDialog: () => void
+     *         dismissDialog: () => void
+     *       }
+     *     }
+     *     emit: (
+     *       event: 'clickBackdrop' | 'clickPositiveButton' | 'clickNegativeButton' | 'clickNeutralButton',
+     *       ...args: Array<any>
+     *     ) => void
+     *   }
+     * }>}
+     */
+    const cases = /** @type {Array<*>} */ ([
+      {
+        params: {
+          dialogComponentRef: {
+            value: {
+              showDialog: () => {},
+              dismissDialog: () => {},
+            },
+          },
+          emit: () => {},
+        },
+      },
+    ])
+
+    test.each(cases)('dialogComponentRef: $params.dialogComponentRef', ({ params }) => {
+      const emitSpy = jest.spyOn(params, 'emit')
+
+      const context = new FuroButtonDialogContext(params)
+      const dismissDialogSpy = jest.spyOn(context, 'dismissDialog')
+
+      context.clickNeutralButton()
+
+      expect(dismissDialogSpy)
+        .toHaveBeenCalledWith()
+      expect(emitSpy)
+        .toHaveBeenCalledWith('clickNeutralButton')
+    })
+  })
+})
