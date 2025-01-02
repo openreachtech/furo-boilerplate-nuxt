@@ -73,3 +73,12 @@
   pointer-events: inherit;
   filter: inherit;
 }
+
+/******************************************************************************/
+
+/*
+ * Lock <body> on open <dialog>
+ */
+body:has(dialog[open]) {
+  overflow: hidden;
+}
