@@ -121,13 +121,13 @@ export default class FuroOffCanvasMenuLayoutContext extends BaseFuroContext {
       return false
     }
 
-    const dialogRect = this.extractNavRect()
+    const rect = this.extractNavRect()
 
-    if (!dialogRect) {
+    if (!rect) {
       return false
     }
 
-    return clientX > dialogRect.right
+    return clientX > rect.right
   }
 
   /**
