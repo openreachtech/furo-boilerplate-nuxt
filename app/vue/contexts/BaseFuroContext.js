@@ -1,0 +1,105 @@
+/**
+ * Furo Component Context.
+ */
+export default class BaseFuroContext {
+  /**
+   * Constructor.
+   *
+   * @param {BaseFuroContextParams} params - Parameters of this constructor.
+   */
+  constructor ({
+    props,
+    componentContext,
+  }) {
+    this.props = props
+    this.componentContext = componentContext
+  }
+
+  /**
+   * Factory method to create a new instance of this class.
+   *
+   * @template {X extends typeof BaseFuroContext ? X : never} T, X
+   * @param {BaseFuroContextFactoryParams} params - Parameters of this factory method.
+   * @returns {InstanceType<T>} - New instance of this class.
+   * @this {T}
+   */
+  static create ({
+    props,
+    componentContext,
+  }) {
+    return /** @type {InstanceType<T>} */ (
+      new this({
+        props,
+        componentContext,
+      })
+    )
+  }
+
+  /**
+   * emit() event name.
+   *
+   * @abstract
+   * @returns {Record<string, string>}
+   */
+  static get EMIT_EVENT_NAME () {
+    return {}
+  }
+
+  /**
+   * Get the constructor of this class.
+   *
+   * @template {X extends typeof BaseFuroContext ? X : never} T, X
+   * @returns {T} - Constructor of this
+   * @this {InstanceType<T>}
+   */
+  get Ctor () {
+    return /** @type {T} */ (this.constructor)
+  }
+
+  /**
+   * get: attrs of component context.
+   *
+   * @returns {import('vue').SetupContext['attrs']} - Attributes of component context.
+   */
+  get attrs () {
+    return this.componentContext.attrs
+  }
+
+  /**
+   * get: slots of component context.
+   *
+   * @returns {import('vue').SetupContext['emit']} - emit() function of component context.
+   */
+  get emit () {
+    return this.componentContext.emit
+  }
+
+  /**
+   * get: expose() of component context.
+   *
+   * @returns {import('vue').SetupContext['expose']} - Listeners of component context.
+   */
+  get expose () {
+    return this.componentContext.expose
+  }
+
+  /**
+   * get: slots of component context.
+   *
+   * @returns {import('vue').SetupContext['slots']} - Slots of component context.
+   */
+  get slots () {
+    return this.componentContext.slots
+  }
+}
+
+/**
+ * @typedef {{
+ *   props: import('vue').ComponentCustomProps
+ *   componentContext: import('vue').SetupContext
+ * }} BaseFuroContextParams
+ */
+
+/**
+ * @typedef {BaseFuroContextParams} BaseFuroContextFactoryParams
+ */
