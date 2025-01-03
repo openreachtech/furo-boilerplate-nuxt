@@ -1,0 +1,194 @@
+<script>
+import {
+  defineComponent,
+  ref,
+} from 'vue'
+
+import FuroOffCanvasMenuLayoutContext from '~/app/vue/contexts/FuroOffCanvasMenuLayoutContext.js'
+
+export default defineComponent({
+  name: 'FuroOffCanvasMenuLayout',
+
+  setup (
+    props,
+    componentContext
+  ) {
+    /** @type {import('vue').Ref<HTMLElement | null>} */
+    const rootElementRef = ref(null)
+
+    const context = FuroOffCanvasMenuLayoutContext.create({
+      props,
+      componentContext,
+      rootElementRef,
+    })
+
+    return {
+      context,
+      rootElementRef,
+    }
+  },
+})
+</script>
+
+<template>
+  <div ref="rootElementRef"
+    class="unit-body"
+  >
+    <header class="header">
+      <button class="button toggle-navigation"
+        @click="context.clickToggleNavigation()"
+      >
+        <slot name="toggle-menu" />
+      </button>
+
+      <slot name="header" />
+    </header>
+
+    <nav class="navigation"
+      @click="context.clickInNav({
+        event: $event,
+      })"
+    >
+      <slot name="navigation" />
+    </nav>
+
+    <main class="contents">
+      <slot name="contents" />
+    </main>
+  </div>
+</template>
+
+<style scoped>
+.unit-body {
+  min-height: var(--size-screen-height);
+
+  display: grid;
+  grid-template-columns: 0 1fr;
+}
+
+.unit-body > .header {
+  grid-column: 1 / -1;
+
+  height: var(--size-header-height);
+
+  position: sticky;
+  top: 0;
+
+  display: flex;
+  align-items: center;
+
+  padding-inline-start: 0.75rem;
+
+  background-color: var(--color-background-header);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.unit-body > .header > .button {
+  max-height: 100%;
+  width: 2rem;
+  aspect-ratio: 1 / 1;
+
+  display: grid;
+  place-items: center;
+
+  background-color: transparent;
+
+  appearance: none;
+  cursor: pointer;
+
+  @media (48rem <= width) {
+    display: none;
+  }
+}
+
+.unit-body > .header > .button.toggle-navigation {
+  border: none;
+
+  background: none;
+
+  padding-block: 0;
+  padding-inline: 0;
+
+  cursor: pointer;
+}
+
+.unit-body > .header > .button.toggle-navigation + * {
+  margin-inline-start: 1rem;
+}
+
+.unit-body > .navigation {
+  transform: translateX(-100%);
+
+  max-height: calc(
+    var(--size-screen-height)
+    - var(--size-header-height)
+  );
+  width: var(--size-nav-width);
+
+  position: sticky;
+  top: var(--size-header-height);
+
+  padding-block: 0.5rem;
+  padding-inline: 1rem;
+
+  background-color: var(--color-background-nav);
+
+  transition: transform 0.2s ease-out;
+
+  @media (48rem <= width) {
+    transform: translateX(0);
+  }
+}
+
+.unit-body.open-nav > .navigation {
+  transform: translateX(0);
+}
+
+.unit-body > .navigation::before {
+  content: '';
+
+  position: fixed;
+  top: 0;
+  left: 100%;
+
+  height: 100%;
+  width: 100vw;
+
+  display: inline-block;
+
+  background-color: rgba(0, 0, 0, 0);
+
+  transition:
+    background-color 0.2s ease-out,
+    width 0.2s ease-out
+  ;
+
+  @media (48rem <= width) {
+    display: none;
+  }
+}
+
+.unit-body.open-nav > .navigation::before {
+  background-color: rgba(0, 0, 0, 0.5);
+
+  width: calc(100vw - var(--size-nav-width));
+}
+
+.unit-body > .contents {
+  justify-self: end;
+
+  min-height: calc(
+    var(--size-screen-height)
+    - var(--size-header-height)
+  );
+  width: 100%;
+
+  transition:
+    width 0.2s ease-out
+  ;
+
+  @media (48rem <= width) {
+    width: calc(100% - var(--size-nav-width));
+  }
+}
+</style>
