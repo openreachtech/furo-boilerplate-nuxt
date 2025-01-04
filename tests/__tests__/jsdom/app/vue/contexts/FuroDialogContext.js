@@ -1,5 +1,18 @@
 import FuroDialogContext from '~/app/vue/contexts/FuroDialogContext.js'
 
+import BaseFuroContext from '~/app/vue/contexts/BaseFuroContext'
+
+describe('FuroDialogContext', () => {
+  describe('super class', () => {
+    test('to extend BaseFuroContext', () => {
+      const actual = FuroDialogContext.prototype
+
+      expect(actual)
+        .toBeInstanceOf(BaseFuroContext)
+    })
+  })
+})
+
 describe('FuroDialogContext', () => {
   describe('constructor', () => {
     describe('to keep properties', () => {
