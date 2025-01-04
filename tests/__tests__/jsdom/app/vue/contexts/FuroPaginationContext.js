@@ -1,9 +1,30 @@
 import FuroPaginationContext from '~/app/vue/contexts/FuroPaginationContext.js'
+
+import BaseFuroContext from '~/app/vue/contexts/BaseFuroContext.js'
 import FuroPageContext from '~/app/vue/contexts/FuroPageContext.js'
+
+describe('FuroPaginationContext', () => {
+  describe('super class', () => {
+    test('to be BaseFuroContext', () => {
+      const actual = FuroPaginationContext.prototype
+
+      expect(actual)
+        .toBeInstanceOf(BaseFuroContext)
+    })
+  })
+})
 
 describe('FuroPaginationContext', () => {
   describe('constructor', () => {
     describe('to keep properties', () => {
+      const propsMock = {}
+      const componentContextMock = {
+        attrs: {},
+        emit: () => {},
+        expose: () => {},
+        slots: {},
+      }
+
       describe('#searchParams', () => {
         const cases = [
           {
@@ -31,6 +52,8 @@ describe('FuroPaginationContext', () => {
 
         test.each(cases)('searchParams: $params.searchParams', ({ params }) => {
           const args = {
+            props: propsMock,
+            componentContext: componentContextMock,
             searchParams: params.searchParams,
             pageKey: 'page',
             currentPage: 1,
@@ -66,6 +89,8 @@ describe('FuroPaginationContext', () => {
 
         test.each(cases)('pageKey: $params.pageKey', ({ params }) => {
           const args = {
+            props: propsMock,
+            componentContext: componentContextMock,
             searchParams: new URLSearchParams(),
             currentPage: 7,
             maxPageRange: 5,
@@ -101,6 +126,8 @@ describe('FuroPaginationContext', () => {
 
         test.each(cases)('currentPage: $params.currentPage', ({ params }) => {
           const args = {
+            props: propsMock,
+            componentContext: componentContextMock,
             searchParams: new URLSearchParams(),
             pageKey: 'page',
             currentPage: params.currentPage,
@@ -136,6 +163,8 @@ describe('FuroPaginationContext', () => {
 
         test.each(cases)('maxPageRange: $params.maxPageRange', ({ params }) => {
           const args = {
+            props: propsMock,
+            componentContext: componentContextMock,
             searchParams: new URLSearchParams(),
             pageKey: 'page',
             currentPage: 1,
@@ -171,6 +200,8 @@ describe('FuroPaginationContext', () => {
 
         test.each(cases)('lastPage: $params.lastPage', ({ params }) => {
           const args = {
+            props: propsMock,
+            componentContext: componentContextMock,
             searchParams: new URLSearchParams(),
             pageKey: 'page',
             currentPage: 1,
@@ -194,50 +225,65 @@ describe('FuroPaginationContext', () => {
       const cases = [
         {
           params: {
-            searchParams: new URLSearchParams(),
-            currentPage: 1,
-            maxPageRange: 3,
-            pageKey: 'pg',
             props: {
               pagination: {
                 limit: 10,
                 totalRecords: 50,
               },
+              pageKey: 'pg',
             },
+            componentContext: {
+              attrs: {},
+              emit: () => {},
+              expose: () => {},
+              slots: {},
+            },
+            searchParams: new URLSearchParams(),
+            maxPageRange: 3,
           },
         },
         {
           params: {
-            searchParams: new URLSearchParams({
-              alpha: '1',
-              beta: '2',
-            }),
-            pageKey: 'p',
-            currentPage: 2,
-            maxPageRange: 5,
             props: {
               pagination: {
                 limit: 20,
                 totalRecords: 60,
               },
+              pageKey: 'p',
             },
+            componentContext: {
+              attrs: {},
+              emit: () => {},
+              expose: () => {},
+              slots: {},
+            },
+            searchParams: new URLSearchParams({
+              alpha: '1',
+              beta: '2',
+            }),
+            maxPageRange: 5,
           },
         },
         {
           params: {
-            searchParams: new URLSearchParams({
-              gamma: '3',
-              delta: '4',
-            }),
-            // pageKey: 'page',
-            currentPage: 3,
-            maxPageRange: 7,
             props: {
               pagination: {
                 limit: 30,
                 totalRecords: 70,
               },
+              // pageKey: 'page',
             },
+            componentContext: {
+              attrs: {},
+              emit: () => {},
+              expose: () => {},
+              slots: {},
+            },
+            searchParams: new URLSearchParams({
+              gamma: '3',
+              delta: '4',
+            }),
+            maxPageRange: 7,
           },
         },
       ]
@@ -254,18 +300,41 @@ describe('FuroPaginationContext', () => {
       const cases = [
         {
           params: {
-            searchParams: new URLSearchParams(),
-            currentPage: 1,
-            maxPageRange: 3,
             props: {
               pagination: {
                 limit: 10,
                 totalRecords: 100,
               },
               pageKey: 'page',
+              maxPageRange: 3,
             },
+            componentContext: {
+              attrs: {
+                alpha: 1,
+              },
+              emit: () => {},
+              expose: () => {},
+              slots: {},
+            },
+            searchParams: new URLSearchParams(),
           },
           expected: {
+            props: {
+              pagination: {
+                limit: 10,
+                totalRecords: 100,
+              },
+              pageKey: 'page',
+              maxPageRange: 3,
+            },
+            componentContext: {
+              attrs: {
+                alpha: 1,
+              },
+              emit: expect.any(Function),
+              expose: expect.any(Function),
+              slots: {},
+            },
             searchParams: new URLSearchParams(),
             pageKey: 'page',
             currentPage: 1,
@@ -275,49 +344,99 @@ describe('FuroPaginationContext', () => {
         },
         {
           params: {
-            searchParams: new URLSearchParams({
-              alpha: '1',
-              beta: '2',
-            }),
-            currentPage: 2,
-            maxPageRange: 5,
             props: {
               pagination: {
                 limit: 20,
                 totalRecords: 101,
               },
               pageKey: 'pg',
+              // maxPageRange: 5,
             },
+            componentContext: {
+              attrs: {
+                beta: 2,
+              },
+              emit: () => {},
+              expose: () => {},
+              slots: {},
+            },
+            searchParams: new URLSearchParams({
+              pg: '2',
+              alpha: '1',
+              beta: '2',
+            }),
           },
           expected: {
+            props: {
+              pagination: {
+                limit: 20,
+                totalRecords: 101,
+              },
+              pageKey: 'pg',
+              // maxPageRange: 5,
+            },
+            componentContext: {
+              attrs: {
+                beta: 2,
+              },
+              emit: expect.any(Function),
+              expose: expect.any(Function),
+              slots: {},
+            },
             searchParams: new URLSearchParams({
+              pg: '2',
               alpha: '1',
               beta: '2',
             }),
             pageKey: 'pg',
             currentPage: 2,
-            maxPageRange: 5,
+            maxPageRange: 5, // default value
             lastPage: 6,
           },
         },
         {
           params: {
-            searchParams: new URLSearchParams({
-              gamma: '3',
-              delta: '4',
-            }),
-            currentPage: 3,
-            maxPageRange: 7,
             props: {
               pagination: {
                 limit: 30,
                 totalRecords: 102,
               },
               pageKey: 'p',
+              maxPageRange: 7,
             },
+            componentContext: {
+              attrs: {
+                gamma: 3,
+              },
+              emit: () => {},
+              expose: () => {},
+              slots: {},
+            },
+            searchParams: new URLSearchParams({
+              p: '3', // eslint-disable-line id-length
+              gamma: '3',
+              delta: '4',
+            }),
           },
           expected: {
+            props: {
+              pagination: {
+                limit: 30,
+                totalRecords: 102,
+              },
+              pageKey: 'p',
+              maxPageRange: 7,
+            },
+            componentContext: {
+              attrs: {
+                gamma: 3,
+              },
+              emit: expect.any(Function),
+              expose: expect.any(Function),
+              slots: {},
+            },
             searchParams: new URLSearchParams({
+              p: '3', // eslint-disable-line id-length
               gamma: '3',
               delta: '4',
             }),
@@ -329,22 +448,47 @@ describe('FuroPaginationContext', () => {
         },
         {
           params: {
-            searchParams: new URLSearchParams({
-              epsilon: '5',
-              zeta: '6',
-            }),
-            currentPage: 4,
-            maxPageRange: 9,
             props: {
               pagination: {
                 limit: 40,
                 totalRecords: 103,
               },
+              maxPageRange: 9,
               // pageKey: undefined,
             },
+            componentContext: {
+              attrs: {
+                delta: 4,
+              },
+              emit: () => {},
+              expose: () => {},
+              slots: {},
+            },
+            searchParams: new URLSearchParams({
+              page: '4',
+              epsilon: '5',
+              zeta: '6',
+            }),
           },
           expected: {
+            props: {
+              pagination: {
+                limit: 40,
+                totalRecords: 103,
+              },
+              maxPageRange: 9,
+              // pageKey: undefined,
+            },
+            componentContext: {
+              attrs: {
+                delta: 4,
+              },
+              emit: expect.any(Function),
+              expose: expect.any(Function),
+              slots: {},
+            },
             searchParams: new URLSearchParams({
+              page: '4',
               epsilon: '5',
               zeta: '6',
             }),
@@ -522,6 +666,14 @@ describe('FuroPaginationContext', () => {
 
 describe('FuroPaginationContext', () => {
   describe('#calculateRangeStartedPage()', () => {
+    const propsMock = {}
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
     describe('with (lastPage > maxPageRange)', () => {
       const cases = [
         {
@@ -667,6 +819,8 @@ describe('FuroPaginationContext', () => {
         describe.each(lastPageCases)('lastPage: $lastPage', ({ lastPage, currentPageCases }) => {
           test.each(currentPageCases)('currentPage: $currentPage', ({ currentPage, expected }) => {
             const args = {
+              props: propsMock,
+              componentContext: componentContextMock,
               searchParams: new URLSearchParams(),
               pageKey: 'pg',
               maxPageRange: params.maxPageRange,
@@ -770,6 +924,8 @@ describe('FuroPaginationContext', () => {
             const expected = 1
 
             const args = {
+              props: propsMock,
+              componentContext: componentContextMock,
               searchParams: new URLSearchParams(),
               pageKey: 'pg',
               maxPageRange: params.maxPageRange,
@@ -792,6 +948,14 @@ describe('FuroPaginationContext', () => {
 
 describe('FuroPaginationContext', () => {
   describe('#generateRangePages()', () => {
+    const propsMock = {}
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
     describe('with (lastPage > maxPageRange)', () => {
       const cases = [
         {
@@ -937,6 +1101,8 @@ describe('FuroPaginationContext', () => {
         describe.each(lastPageCases)('lastPage: $lastPage', ({ lastPage, currentPageCases }) => {
           test.each(currentPageCases)('currentPage: $currentPage', ({ currentPage, expected }) => {
             const args = {
+              props: propsMock,
+              componentContext: componentContextMock,
               searchParams: new URLSearchParams(),
               pageKey: 'pg',
               maxPageRange: params.maxPageRange,
@@ -1046,6 +1212,8 @@ describe('FuroPaginationContext', () => {
         describe.each(lastPageCases)('lastPage: $lastPage', ({ lastPage, expected, currentPageCases }) => {
           test.each(currentPageCases)('currentPage: $currentPage', ({ currentPage }) => {
             const args = {
+              props: propsMock,
+              componentContext: componentContextMock,
               searchParams: new URLSearchParams(),
               pageKey: 'pg',
               maxPageRange: params.maxPageRange,
@@ -1068,6 +1236,14 @@ describe('FuroPaginationContext', () => {
 
 describe('FuroPaginationContext', () => {
   describe('#createRangePages()', () => {
+    const propsMock = {}
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
     const cases = [
       {
         params: {
@@ -1157,6 +1333,8 @@ describe('FuroPaginationContext', () => {
 
     test.each(cases)('currentPage: $params.currentPage', ({ params, expected }) => {
       const args = {
+        props: propsMock,
+        componentContext: componentContextMock,
         searchParams: params.searchParams,
         pageKey: params.pageKey,
         currentPage: params.currentPage,
@@ -1177,6 +1355,14 @@ describe('FuroPaginationContext', () => {
 
 describe('FuroPaginationContext', () => {
   describe('#createPreviousPage()', () => {
+    const propsMock = {}
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
     const cases = [
       {
         params: {
@@ -1226,6 +1412,8 @@ describe('FuroPaginationContext', () => {
 
     test.each(cases)('currentPage: $params.currentPage', ({ params, expected }) => {
       const args = {
+        props: propsMock,
+        componentContext: componentContextMock,
         searchParams: params.searchParams,
         pageKey: params.pageKey,
         currentPage: params.currentPage,
@@ -1244,6 +1432,14 @@ describe('FuroPaginationContext', () => {
 
 describe('FuroPaginationContext', () => {
   describe('#createNextPage()', () => {
+    const propsMock = {}
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
     const cases = [
       {
         params: {
@@ -1324,6 +1520,8 @@ describe('FuroPaginationContext', () => {
     describe.each(cases)('lastPage: $params.lastPage', ({ params, currentPageCases }) => {
       test.each(currentPageCases)('currentPage: $currentPage', ({ currentPage, expected }) => {
         const args = {
+          props: propsMock,
+          componentContext: componentContextMock,
           searchParams: params.searchParams,
           pageKey: params.pageKey,
           currentPage,
@@ -1343,6 +1541,14 @@ describe('FuroPaginationContext', () => {
 
 describe('FuroPaginationContext', () => {
   describe('#createFirstPage()', () => {
+    const propsMock = {}
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
     const cases = [
       {
         params: {
@@ -1388,13 +1594,16 @@ describe('FuroPaginationContext', () => {
     ]
 
     test.each(cases)('searchParams: $params.searchParams', ({ params, expected }) => {
-      const context = new FuroPaginationContext({
+      const args = {
+        props: propsMock,
+        componentContext: componentContextMock,
         searchParams: params.searchParams,
         pageKey: params.pageKey,
         currentPage: 1,
         maxPageRange: 5,
         lastPage: 10,
-      })
+      }
+      const context = new FuroPaginationContext(args)
 
       const actual = context.createFirstPage()
 
@@ -1406,6 +1615,14 @@ describe('FuroPaginationContext', () => {
 
 describe('FuroPaginationContext', () => {
   describe('#createLastPage()', () => {
+    const propsMock = {}
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
     const cases = [
       {
         params: {
@@ -1454,13 +1671,16 @@ describe('FuroPaginationContext', () => {
     ]
 
     test.each(cases)('lastPage: $params.lastPage', ({ params, expected }) => {
-      const context = new FuroPaginationContext({
+      const args = {
+        props: propsMock,
+        componentContext: componentContextMock,
         searchParams: params.searchParams,
         pageKey: params.pageKey,
         currentPage: 1,
         maxPageRange: 5,
         lastPage: params.lastPage,
-      })
+      }
+      const context = new FuroPaginationContext(args)
 
       const actual = context.createLastPage()
 
@@ -1472,6 +1692,14 @@ describe('FuroPaginationContext', () => {
 
 describe('FuroPaginationContext', () => {
   describe('#isDisabledPreviousPage()', () => {
+    const propsMock = {}
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
     describe('to be truthy', () => {
       const cases = [
         {
@@ -1482,13 +1710,16 @@ describe('FuroPaginationContext', () => {
       ]
 
       test.each(cases)('currentPage: $params.currentPage', ({ params }) => {
-        const context = new FuroPaginationContext({
+        const args = {
+          props: propsMock,
+          componentContext: componentContextMock,
           searchParams: new URLSearchParams(),
           pageKey: 'pg',
           currentPage: params.currentPage,
           maxPageRange: 5,
           lastPage: 10,
-        })
+        }
+        const context = new FuroPaginationContext(args)
 
         const actual = context.isDisabledPreviousPage()
 
@@ -1512,13 +1743,16 @@ describe('FuroPaginationContext', () => {
       ]
 
       test.each(cases)('currentPage: $params.currentPage', ({ params }) => {
-        const context = new FuroPaginationContext({
+        const args = {
+          props: propsMock,
+          componentContext: componentContextMock,
           searchParams: new URLSearchParams(),
           pageKey: 'pg',
           currentPage: params.currentPage,
           maxPageRange: 5,
           lastPage: 10,
-        })
+        }
+        const context = new FuroPaginationContext(args)
 
         const actual = context.isDisabledPreviousPage()
 
@@ -1531,6 +1765,14 @@ describe('FuroPaginationContext', () => {
 
 describe('FuroPaginationContext', () => {
   describe('#isDisabledNextPage()', () => {
+    const propsMock = {}
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
     const cases = [
       {
         params: {
@@ -1570,13 +1812,16 @@ describe('FuroPaginationContext', () => {
     describe.each(cases)('lastPage: $params.lastPage', ({ params, truthyCases, falsyCases }) => {
       describe('to be truthy', () => {
         test.each(truthyCases)('currentPage: $currentPage', ({ currentPage }) => {
-          const context = new FuroPaginationContext({
+          const args = {
+            props: propsMock,
+            componentContext: componentContextMock,
             searchParams: new URLSearchParams(),
             pageKey: 'pg',
             currentPage,
             maxPageRange: 5,
             lastPage: params.lastPage,
-          })
+          }
+          const context = new FuroPaginationContext(args)
 
           const actual = context.isDisabledNextPage()
 
@@ -1587,13 +1832,16 @@ describe('FuroPaginationContext', () => {
 
       describe('to be falsy', () => {
         test.each(falsyCases)('currentPage: $currentPage', ({ currentPage }) => {
-          const context = new FuroPaginationContext({
+          const args = {
+            props: propsMock,
+            componentContext: componentContextMock,
             searchParams: new URLSearchParams(),
             pageKey: 'pg',
             currentPage,
             maxPageRange: 5,
             lastPage: params.lastPage,
-          })
+          }
+          const context = new FuroPaginationContext(args)
 
           const actual = context.isDisabledNextPage()
 
@@ -1607,6 +1855,14 @@ describe('FuroPaginationContext', () => {
 
 describe('FuroPaginationContext', () => {
   describe('#isHiddenFirstPage()', () => {
+    const propsMock = {}
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
     describe('to be truthy', () => {
       const cases = [
         {
@@ -1622,13 +1878,16 @@ describe('FuroPaginationContext', () => {
       ]
 
       test.each(cases)('rangePages: $params.rangePages', ({ params }) => {
-        const context = new FuroPaginationContext({
+        const args = {
+          props: propsMock,
+          componentContext: componentContextMock,
           searchParams: new URLSearchParams(),
           pageKey: 'pg',
           currentPage: 3,
           maxPageRange: 5,
           lastPage: 10,
-        })
+        }
+        const context = new FuroPaginationContext(args)
 
         jest.spyOn(context, 'generateRangePages')
           .mockReturnValue(params.rangePages)
@@ -1655,13 +1914,16 @@ describe('FuroPaginationContext', () => {
       ]
 
       test.each(cases)('rangePages: $params.rangePages', ({ params }) => {
-        const context = new FuroPaginationContext({
+        const args = {
+          props: propsMock,
+          componentContext: componentContextMock,
           searchParams: new URLSearchParams(),
           pageKey: 'pg',
           currentPage: 3,
           maxPageRange: 5,
           lastPage: 10,
-        })
+        }
+        const context = new FuroPaginationContext(args)
 
         jest.spyOn(context, 'generateRangePages')
           .mockReturnValue(params.rangePages)
@@ -1677,6 +1939,14 @@ describe('FuroPaginationContext', () => {
 
 describe('FuroPaginationContext', () => {
   describe('#isHiddenLastPage()', () => {
+    const propsMock = {}
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
     const cases = [
       {
         params: {
@@ -1709,13 +1979,16 @@ describe('FuroPaginationContext', () => {
     describe.each(cases)('lastPage: $params.lastPage', ({ params, truthyCases, falsyCases }) => {
       describe('to be truthy', () => {
         test.each(truthyCases)('rangePages: $rangePages', ({ rangePages }) => {
-          const context = new FuroPaginationContext({
+          const args = {
+            props: propsMock,
+            componentContext: componentContextMock,
             searchParams: new URLSearchParams(),
             pageKey: 'pg',
             currentPage: 3,
             maxPageRange: 5,
             lastPage: params.lastPage,
-          })
+          }
+          const context = new FuroPaginationContext(args)
 
           jest.spyOn(context, 'generateRangePages')
             .mockReturnValue(rangePages)
@@ -1729,13 +2002,16 @@ describe('FuroPaginationContext', () => {
 
       describe('to be falsy', () => {
         test.each(falsyCases)('rangePages: $rangePages', ({ rangePages }) => {
-          const context = new FuroPaginationContext({
+          const args = {
+            props: propsMock,
+            componentContext: componentContextMock,
             searchParams: new URLSearchParams(),
             pageKey: 'pg',
             currentPage: 3,
             maxPageRange: 5,
             lastPage: params.lastPage,
-          })
+          }
+          const context = new FuroPaginationContext(args)
 
           jest.spyOn(context, 'generateRangePages')
             .mockReturnValue(rangePages)
@@ -1752,6 +2028,14 @@ describe('FuroPaginationContext', () => {
 
 describe('FuroPaginationContext', () => {
   describe('#isHiddenFirstPageDash()', () => {
+    const propsMock = {}
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
     describe('to be truthy', () => {
       const cases = [
         {
@@ -1777,13 +2061,16 @@ describe('FuroPaginationContext', () => {
       ]
 
       test.each(cases)('rangePages: $params.rangePages', ({ params }) => {
-        const context = new FuroPaginationContext({
+        const args = {
+          props: propsMock,
+          componentContext: componentContextMock,
           searchParams: new URLSearchParams(),
           pageKey: 'pg',
           currentPage: 3,
           maxPageRange: 5,
           lastPage: 10,
-        })
+        }
+        const context = new FuroPaginationContext(args)
 
         jest.spyOn(context, 'generateRangePages')
           .mockReturnValue(params.rangePages)
@@ -1810,13 +2097,16 @@ describe('FuroPaginationContext', () => {
       ]
 
       test.each(cases)('rangePages: $params.rangePages', ({ params }) => {
-        const context = new FuroPaginationContext({
+        const args = {
+          props: propsMock,
+          componentContext: componentContextMock,
           searchParams: new URLSearchParams(),
           pageKey: 'pg',
           currentPage: 3,
           maxPageRange: 5,
           lastPage: 10,
-        })
+        }
+        const context = new FuroPaginationContext(args)
 
         jest.spyOn(context, 'generateRangePages')
           .mockReturnValue(params.rangePages)
@@ -1832,6 +2122,14 @@ describe('FuroPaginationContext', () => {
 
 describe('FuroPaginationContext', () => {
   describe('#isHiddenLastPageDash()', () => {
+    const propsMock = {}
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
     const cases = [
       {
         params: {
@@ -1864,13 +2162,16 @@ describe('FuroPaginationContext', () => {
     describe.each(cases)('lastPage: $params.lastPage', ({ params, truthyCases, falsyCases }) => {
       describe('to be truthy', () => {
         test.each(truthyCases)('rangePages: $rangePages', ({ rangePages }) => {
-          const context = new FuroPaginationContext({
+          const args = {
+            props: propsMock,
+            componentContext: componentContextMock,
             searchParams: new URLSearchParams(),
             pageKey: 'pg',
             currentPage: 3,
             maxPageRange: 5,
             lastPage: params.lastPage,
-          })
+          }
+          const context = new FuroPaginationContext(args)
 
           jest.spyOn(context, 'generateRangePages')
             .mockReturnValue(rangePages)
@@ -1884,13 +2185,16 @@ describe('FuroPaginationContext', () => {
 
       describe('to be falsy', () => {
         test.each(falsyCases)('rangePages: $rangePages', ({ rangePages }) => {
-          const context = new FuroPaginationContext({
+          const args = {
+            props: propsMock,
+            componentContext: componentContextMock,
             searchParams: new URLSearchParams(),
             pageKey: 'pg',
             currentPage: 3,
             maxPageRange: 5,
             lastPage: params.lastPage,
-          })
+          }
+          const context = new FuroPaginationContext(args)
 
           jest.spyOn(context, 'generateRangePages')
             .mockReturnValue(rangePages)
@@ -1907,6 +2211,14 @@ describe('FuroPaginationContext', () => {
 
 describe('FuroPaginationContext', () => {
   describe('#generateControlClasses()', () => {
+    const propsMock = {}
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
     const cases = [
       {
         params: {
@@ -2019,13 +2331,16 @@ describe('FuroPaginationContext', () => {
     ]
 
     test.each(cases)('params: $params', ({ params, expected }) => {
-      const context = new FuroPaginationContext({
+      const args = {
+        props: propsMock,
+        componentContext: componentContextMock,
         searchParams: new URLSearchParams(),
         pageKey: 'pg',
         currentPage: 3,
         maxPageRange: 5,
         lastPage: 10,
-      })
+      }
+      const context = new FuroPaginationContext(args)
 
       jest.spyOn(context, 'isDisabledPreviousPage')
         .mockReturnValue(params.isDisabledPreviousPage)
