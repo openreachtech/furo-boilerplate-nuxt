@@ -332,3 +332,14 @@ export default class FuroPaginationContext {
  *   maxPageRange?: number
  * }} FuroPaginationContextFactoryParams
  */
+
+/**
+ * @typedef {{
+ *   pagination?: {
+ *     limit?: number
+ *     totalRecords?: number
+ *   }
+ *   pageKey?: string
+ *   maxPageRange?: number
+ * }} FuroPaginationContextProps
+ */
