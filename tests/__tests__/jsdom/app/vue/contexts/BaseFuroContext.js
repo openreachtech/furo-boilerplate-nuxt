@@ -217,6 +217,72 @@ describe('BaseFuroContext', () => {
 })
 
 describe('BaseFuroContext', () => {
+  describe('#get:EMIT_EVENT_NAME', () => {
+    describe('to be own class', () => {
+      /**
+       * @type {Array<{
+       *   params: {
+       *     props: import('vue').ComponentCustomProps
+       *     componentContext: import('vue').SetupContext
+       *     EMIT_EVENT_NAME: Record<string, string>
+       *   }
+       * }>}
+       */
+      const cases = /** @type {Array<*>} */ ([
+        {
+          params: {
+            props: {
+              label: 'alpha',
+            },
+            componentContext: {
+              attrs: {},
+              emit: () => {},
+              expose: () => {},
+              slots: {},
+            },
+            EMIT_EVENT_NAME: {
+              ALPHA: 'alpha',
+            },
+          },
+        },
+        {
+          params: {
+            props: {
+              label: 'beta',
+            },
+            componentContext: {
+              attrs: {},
+              emit: () => {},
+              expose: () => {},
+              slots: {},
+            },
+            EMIT_EVENT_NAME: {
+              BETA: 'beta',
+            },
+          },
+        },
+      ])
+
+      test.each(cases)('label: $params.props.label', ({ params }) => {
+        const args = {
+          props: params.props,
+          componentContext: params.componentContext,
+        }
+        const context = BaseFuroContext.create(args)
+
+        jest.spyOn(context, 'EMIT_EVENT_NAME', 'get')
+          .mockReturnValue(params.EMIT_EVENT_NAME)
+
+        const actual = context.EMIT_EVENT_NAME
+
+        expect(actual)
+          .toEqual(params.EMIT_EVENT_NAME)
+      })
+    })
+  })
+})
+
+describe('BaseFuroContext', () => {
   describe('#get:attrs', () => {
     /**
      * @type {Array<{
