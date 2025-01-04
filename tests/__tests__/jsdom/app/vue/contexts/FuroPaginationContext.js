@@ -1,5 +1,18 @@
 import FuroPaginationContext from '~/app/vue/contexts/FuroPaginationContext.js'
+
+import BaseFuroContext from '~/app/vue/contexts/BaseFuroContext.js'
 import FuroPageContext from '~/app/vue/contexts/FuroPageContext.js'
+
+describe('FuroPaginationContext', () => {
+  describe('super class', () => {
+    test('to be BaseFuroContext', () => {
+      const actual = FuroPaginationContext.prototype
+
+      expect(actual)
+        .toBeInstanceOf(BaseFuroContext)
+    })
+  })
+})
 
 describe('FuroPaginationContext', () => {
   describe('constructor', () => {
