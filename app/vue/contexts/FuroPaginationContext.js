@@ -35,20 +35,23 @@ export default class FuroPaginationContext {
    * @returns {FuroPaginationContext} - New instance of this class.
    */
   static create ({
-    props: {
+    props,
+    searchParams = new URLSearchParams(location.search),
+  }) {
+    const {
       pagination: {
         limit = 20,
-        totalRecords,
-      },
+        totalRecords = 0,
+      } = {},
       pageKey = 'page',
-    },
-    searchParams = new URLSearchParams(location.search),
-    maxPageRange = 5,
-    currentPage = this.extractCurrentPage({
+      maxPageRange = 5,
+    } = props
+
+    const currentPage = this.extractCurrentPage({
       searchParams,
       pageKey,
-    }),
-  }) {
+    })
+
     const lastPage = this.calculateLastPage({
       limit,
       totalRecords,
@@ -323,12 +326,18 @@ export default class FuroPaginationContext {
 
 /**
  * @typedef {{
- *   props: {
- *     pagination: Record<string, number>
- *     pageKey?: string
- *   }
+ *   props: FuroPaginationContextProps
  *   searchParams?: URLSearchParams
- *   currentPage?: number
- *   maxPageRange?: number
  * }} FuroPaginationContextFactoryParams
+ */
+
+/**
+ * @typedef {{
+ *   pagination?: {
+ *     limit?: number
+ *     totalRecords?: number
+ *   }
+ *   pageKey?: string
+ *   maxPageRange?: number
+ * }} FuroPaginationContextProps
  */

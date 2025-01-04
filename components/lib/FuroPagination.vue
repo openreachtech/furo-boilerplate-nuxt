@@ -13,10 +13,8 @@ export default defineComponent({
     pagination: {
       type: Object,
       default: () => ({
-        pagination: {
-          limit: 20,
-          totalRecords: 0,
-        },
+        limit: 20,
+        totalRecords: 0,
       }),
       validator: value => {
         if (typeof value !== 'object') {
@@ -37,6 +35,10 @@ export default defineComponent({
     pageKey: {
       type: String,
       default: 'page',
+    },
+    maxPageRange: {
+      type: Number,
+      default: 5,
     },
   },
 
