@@ -700,8 +700,6 @@ describe('FuroDialogContext', () => {
     /**
      * @type {Array<{
      *   params: {
-     *     dialogElementRef: import('vue').Ref<HTMLDialogElement | null>
-     *     emit: import('~/app/vue/contexts/FuroDialogContext.js').FuroDialogContextEmit
      *     dialogRect: {
      *       top: number
      *       left: number
