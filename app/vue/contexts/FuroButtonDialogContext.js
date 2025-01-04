@@ -100,8 +100,7 @@ export default class FuroButtonDialogContext extends BaseFuroContext {
    */
   clickPositiveButton () {
     this.emit(
-      this.Ctor
-        .EMIT_EVENT_NAME
+      this.EMIT_EVENT_NAME
         .CLICK_POSITIVE_BUTTON
     )
 
