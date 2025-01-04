@@ -21,17 +21,24 @@ export default class FuroDialogContext {
   /**
    * Factory method to create a new instance of this class.
    *
+   * @template {X extends typeof FuroDialogContext ? X : never} T, X
+   * @override
    * @param {FuroDialogContextFactoryParams} params - Parameters of this factory method.
-   * @returns {FuroDialogContext} - New instance of this class.
+   * @returns {InstanceType<T>} - New instance of this class.
+   * @this {T}
    */
   static create ({
+    props,
+    componentContext,
     dialogElementRef,
-    emit,
   }) {
-    return new this({
-      dialogElementRef,
-      emit,
-    })
+    return /** @type {*} */ (
+      new this({
+        props,
+        componentContext,
+        dialogElementRef,
+      })
+    )
   }
 
   /**
@@ -163,9 +170,8 @@ export default class FuroDialogContext {
 }
 
 /**
- * @typedef {{
+ * @typedef {import('./BaseFuroContext').BaseFuroContextParams & {
  *   dialogElementRef: import('vue').Ref<HTMLDialogElement | null>
- *   emit: FuroDialogContextEmit
  * }} FuroDialogContextParams
  */
 
