@@ -127,6 +127,13 @@ export default class FuroTabLayoutContext {
 
 /**
  * @typedef {{
+ *   tabs: Array<FuroTabParams>
+ *   activeTabKey?: string | null
+ * }} FuroTabLayoutContextProps
+ */
+
+/**
+ * @typedef {{
  *   tabKey: string
  *   label: string
  * }} FuroTabParams
