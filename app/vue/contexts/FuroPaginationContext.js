@@ -9,6 +9,7 @@ import FuroPageContext from './FuroPageContext.js'
  * @property {number} maxPageRange - page range in view
  * @property {number} lastPage - Last page.
  * @property {URLSearchParams} searchParams - Search parameters.
+ * @extends {BaseFuroContext<null>} - Base class.
  */
 export default class FuroPaginationContext extends BaseFuroContext {
   /**
