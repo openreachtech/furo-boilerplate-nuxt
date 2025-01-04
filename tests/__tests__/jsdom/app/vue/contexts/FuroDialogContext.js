@@ -90,26 +90,47 @@ describe('FuroDialogContext', () => {
       /**
        * @type {Array<{
        *   params: {
+       *     props: import('vue').ComponentCustomProps
+       *     componentContext: import('vue').SetupContext
        *     dialogElementRef: import('vue').Ref<HTMLDialogElement | null>
-       *     emit: import('~/app/vue/contexts/FuroDialogContext.js').FuroDialogContextEmit
        *   }
        * }>}
        */
       const cases = /** @type {Array<*>} */ ([
         {
           params: {
+            props: {
+              alpha: Symbol('alpha'),
+            },
+            componentContext: {
+              attrs: {
+                alpha: 1,
+              },
+              emit: () => {},
+              expose: () => {},
+              slots: {},
+            },
             dialogElementRef: {
               value: document.createElement('dialog'),
             },
-            emit: () => {},
           },
         },
         {
           params: {
+            props: {
+              beta: Symbol('beta'),
+            },
+            componentContext: {
+              attrs: {
+                beta: 2,
+              },
+              emit: () => {},
+              expose: () => {},
+              slots: {},
+            },
             dialogElementRef: {
               value: null,
             },
-            emit: () => {},
           },
         },
       ])
@@ -126,26 +147,47 @@ describe('FuroDialogContext', () => {
       /**
        * @type {Array<{
        *   params: {
+       *     props: import('vue').ComponentCustomProps
+       *     componentContext: import('vue').SetupContext
        *     dialogElementRef: import('vue').Ref<HTMLDialogElement | null>
-       *     emit: import('~/app/vue/contexts/FuroDialogContext.js').FuroDialogContextEmit
        *   }
        * }>}
        */
       const cases = /** @type {Array<*>} */ ([
         {
           params: {
+            props: {
+              alpha: Symbol('alpha'),
+            },
+            componentContext: {
+              attrs: {
+                alpha: 1,
+              },
+              emit: () => {},
+              expose: () => {},
+              slots: {},
+            },
             dialogElementRef: {
               value: document.createElement('dialog'),
             },
-            emit: () => {},
           },
         },
         {
           params: {
+            props: {
+              beta: Symbol('beta'),
+            },
+            componentContext: {
+              attrs: {
+                beta: 2,
+              },
+              emit: () => {},
+              expose: () => {},
+              slots: {},
+            },
             dialogElementRef: {
               value: null,
             },
-            emit: () => {},
           },
         },
       ])
