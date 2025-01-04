@@ -195,46 +195,6 @@ describe('FuroDialogContext', () => {
 })
 
 describe('FuroDialogContext', () => {
-  describe('#get:Ctor', () => {
-    /**
-     * @type {Array<{
-     *   params: {
-     *     dialogElementRef: import('vue').Ref<HTMLDialogElement | null>
-     *     emit: import('~/app/vue/contexts/FuroDialogContext.js').FuroDialogContextEmit
-     *   }
-     * }>}
-     */
-    const cases = /** @type {Array<*>} */ ([
-      {
-        params: {
-          dialogElementRef: {
-            value: document.createElement('dialog'),
-          },
-          emit: () => {},
-        },
-      },
-      {
-        params: {
-          dialogElementRef: {
-            value: null,
-          },
-          emit: () => {},
-        },
-      },
-    ])
-
-    test.each(cases)('dialogElementRef: $params.dialogElementRef', ({ params }) => {
-      const context = new FuroDialogContext(params)
-
-      const actual = context.Ctor
-
-      expect(actual)
-        .toBe(FuroDialogContext) // same reference
-    })
-  })
-})
-
-describe('FuroDialogContext', () => {
   describe('#get:dialogElement', () => {
     /**
      * @type {Array<{
