@@ -1,5 +1,18 @@
 import FuroButtonDialogContext from '~/app/vue/contexts/FuroButtonDialogContext.js'
 
+import BaseFuroContext from '~/app/vue/contexts/BaseFuroContext.js'
+
+describe('FuroButtonDialogContext', () => {
+  describe('super class', () => {
+    test('to be BaseFuroContext', () => {
+      const actual = FuroButtonDialogContext.prototype
+
+      expect(actual)
+        .toBeInstanceOf(BaseFuroContext)
+    })
+  })
+})
+
 describe('FuroButtonDialogContext', () => {
   describe('constructor', () => {
     describe('to keep properties', () => {
