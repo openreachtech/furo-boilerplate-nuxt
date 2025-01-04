@@ -1,5 +1,18 @@
 import FuroTabLayoutContext from '~/app/vue/contexts/FuroTabLayoutContext.js'
+
+import BaseFuroContext from '~/app/vue/contexts/BaseFuroContext.js'
 import FuroTabContext from '~/app/vue/contexts/FuroTabContext.js'
+
+describe('FuroTabLayoutContext', () => {
+  describe('super class', () => {
+    test('to be instance of BaseFuroContext', () => {
+      const actual = FuroTabLayoutContext.prototype
+
+      expect(actual)
+        .toBeInstanceOf(BaseFuroContext)
+    })
+  })
+})
 
 describe('FuroTabLayoutContext', () => {
   describe('constructor', () => {
