@@ -48,15 +48,7 @@ export default class FuroDialogContext extends BaseFuroContext {
     )
   }
 
-  /**
-   * emit() event name.
-   *
-   * @returns {{
-   *   SHOW_DIALOG: 'showDialog',
-   *   DISMISS_DIALOG: 'dismissDialog',
-   *   CLICK_BACKDROP: 'clickBackdrop',
-   * }}
-   */
+  /** @override */
   static get EMIT_EVENT_NAME () {
     return {
       SHOW_DIALOG: 'showDialog',
