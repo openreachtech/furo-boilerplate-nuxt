@@ -44,11 +44,12 @@ export default class FuroPaginationContext {
     },
     searchParams = new URLSearchParams(location.search),
     maxPageRange = 5,
-    currentPage = this.extractCurrentPage({
+  }) {
+    const currentPage = this.extractCurrentPage({
       searchParams,
       pageKey,
-    }),
-  }) {
+    })
+
     const lastPage = this.calculateLastPage({
       limit,
       totalRecords,
@@ -328,7 +329,6 @@ export default class FuroPaginationContext {
  *     pageKey?: string
  *   }
  *   searchParams?: URLSearchParams
- *   currentPage?: number
  *   maxPageRange?: number
  * }} FuroPaginationContextFactoryParams
  */
