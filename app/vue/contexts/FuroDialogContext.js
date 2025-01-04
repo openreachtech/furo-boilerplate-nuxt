@@ -163,9 +163,8 @@ export default class FuroDialogContext {
 }
 
 /**
- * @typedef {{
+ * @typedef {import('./BaseFuroContext').BaseFuroContextParams & {
  *   dialogElementRef: import('vue').Ref<HTMLDialogElement | null>
- *   emit: FuroDialogContextEmit
  * }} FuroDialogContextParams
  */
 
