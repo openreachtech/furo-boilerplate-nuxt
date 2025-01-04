@@ -2,6 +2,8 @@ import BaseFuroContext from './BaseFuroContext'
 
 /**
  * Furo Off Canvas Menu Layout Context
+ *
+ * @extends BaseFuroContext<null>
  */
 export default class FuroOffCanvasMenuLayoutContext extends BaseFuroContext {
   /**
