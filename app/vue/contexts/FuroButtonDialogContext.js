@@ -139,7 +139,7 @@ export default class FuroButtonDialogContext {
 }
 
 /**
- * @typedef {{
+ * @typedef {import('./BaseFuroContext').BaseFuroContextParams & {
  *   dialogComponentRef: import('vue').Ref<import('~/components/lib/FuroDialog.vue').default | null>
  *   emit: FuroButtonDialogContextEmit
  * }} FuroButtonDialogContextParams
