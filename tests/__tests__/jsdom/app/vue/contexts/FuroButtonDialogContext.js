@@ -84,35 +84,43 @@ describe('FuroButtonDialogContext', () => {
 
 describe('FuroButtonDialogContext', () => {
   describe('.create()', () => {
+    const propsMock = {}
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
     /**
      * @type {Array<{
      *   params: {
+     *     props: import('vue').ComponentCustomProps
+     *     componentContext: import('vue').SetupContext
      *     dialogComponentRef: import('vue').Ref<import('~/components/lib/FuroDialog.vue').default | null>
-     *     emit: (
-     *       event: 'clickBackdrop' | 'clickPositiveButton' | 'clickNegativeButton' | 'clickNeutralButton',
-     *       ...args: Array<any>
-     *     ) => void
      *   }
      * }>}
      */
     const cases = /** @type {Array<*>} */ ([
       {
         params: {
+          props: propsMock,
+          componentContext: componentContextMock,
           dialogComponentRef: {
             value: {
               showDialog: () => {},
               dismissDialog: () => {},
             },
           },
-          emit: () => {},
         },
       },
       {
         params: {
+          props: propsMock,
+          componentContext: componentContextMock,
           dialogComponentRef: {
             value: null,
           },
-          emit: () => {},
         },
       },
     ])
