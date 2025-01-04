@@ -8,6 +8,14 @@ import FuroDialog from '~/components/lib/FuroDialog.vue'
 
 import FuroButtonDialogContext from '~/app/vue/contexts/FuroButtonDialogContext.js'
 
+const EVENT_NAME = {
+  CLICK_BACKDROP: 'clickBackdrop',
+
+  CLICK_POSITIVE_BUTTON: 'clickPositiveButton',
+  CLICK_NEGATIVE_BUTTON: 'clickNegativeButton',
+  CLICK_NEUTRAL_BUTTON: 'clickNeutralButton',
+}
+
 export default defineComponent({
   name: 'FuroButtonDialog',
 
@@ -18,11 +26,11 @@ export default defineComponent({
   inheritAttrs: false,
 
   emits: [
-    'clickBackdrop',
+    EVENT_NAME.CLICK_BACKDROP,
 
-    'clickPositiveButton',
-    'clickNegativeButton',
-    'clickNeutralButton',
+    EVENT_NAME.CLICK_POSITIVE_BUTTON,
+    EVENT_NAME.CLICK_NEGATIVE_BUTTON,
+    EVENT_NAME.CLICK_NEUTRAL_BUTTON,
   ],
 
   setup (
