@@ -16,19 +16,29 @@ describe('FuroButtonDialogContext', () => {
 describe('FuroButtonDialogContext', () => {
   describe('constructor', () => {
     describe('to keep properties', () => {
+      const propsMock = {}
+      const componentContextMock = {
+        attrs: {},
+        emit: () => {},
+        expose: () => {},
+        slots: {},
+      }
+
       describe('#dialogComponentRef', () => {
         /**
          * @type {Array<{
          *   params: {
-         *     dialogComponentRef: {
-         *       value: import('~/components/lib/FuroDialog.vue').default | null
-         *     }
+         *     props: import('vue').ComponentCustomProps
+         *     componentContext: import('vue').SetupContext
+         *     dialogComponentRef: import('vue').Ref<import('~/components/lib/FuroDialog.vue').default | null>
          *   }
          * }>}
          */
         const cases = /** @type {Array<*>} */ ([
           {
             params: {
+              props: propsMock,
+              componentContext: componentContextMock,
               dialogComponentRef: {
                 value: {
                   showDialog: () => {},
@@ -39,6 +49,8 @@ describe('FuroButtonDialogContext', () => {
           },
           {
             params: {
+              props: propsMock,
+              componentContext: componentContextMock,
               dialogComponentRef: {
                 value: null,
               },
@@ -47,15 +59,10 @@ describe('FuroButtonDialogContext', () => {
         ])
 
         test.each(cases)('dialogComponentRef: $params.dialogComponentRef', ({ params }) => {
-          const args = /** @type {*} */ ({
-            dialogComponentRef: params.dialogComponentRef,
-            emit: () => {},
-          })
-
-          const context = new FuroButtonDialogContext(args)
+          const context = new FuroButtonDialogContext(params)
 
           expect(context.dialogComponentRef)
-            .toBe(params.dialogComponentRef)
+            .toBe(params.dialogComponentRef) // same reference
         })
       })
     })
