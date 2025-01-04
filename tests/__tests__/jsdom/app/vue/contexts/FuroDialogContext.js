@@ -43,6 +43,13 @@ describe('FuroDialogContext', () => {
 
         test.each(cases)('dialogElementRef: $params.dialogElementRef', ({ params }) => {
           const args = {
+            props: {},
+            componentContext: {
+              attrs: {},
+              emit: () => {},
+              expose: () => {},
+              slots: {},
+            },
             dialogElementRef: params.dialogElementRef,
             emit: () => {},
           }
@@ -199,8 +206,9 @@ describe('FuroDialogContext', () => {
     /**
      * @type {Array<{
      *   params: {
+     *     props: import('vue').ComponentCustomProps
+     *     componentContext: import('vue').SetupContext
      *     dialogElementRef: import('vue').Ref<HTMLDialogElement | null>
-     *     emit: import('~/app/vue/contexts/FuroDialogContext.js').FuroDialogContextEmit
      *   }
      *   expected: HTMLDialogElement | null
      * }>}
@@ -208,25 +216,45 @@ describe('FuroDialogContext', () => {
     const cases = /** @type {Array<*>} */ ([
       {
         params: {
+          props: {
+            alpha: Symbol('alpha'),
+          },
+          componentContext: {
+            attrs: {
+              alpha: 1,
+            },
+            emit: () => {},
+            expose: () => {},
+            slots: {},
+          },
           dialogElementRef: {
             value: document.createElement('dialog'),
           },
-          emit: () => {},
         },
         expected: expect.any(HTMLDialogElement),
       },
       {
         params: {
+          props: {
+            beta: Symbol('beta'),
+          },
+          componentContext: {
+            attrs: {
+              beta: 2,
+            },
+            emit: () => {},
+            expose: () => {},
+            slots: {},
+          },
           dialogElementRef: {
             value: null,
           },
-          emit: () => {},
         },
         expected: null,
       },
     ])
 
-    test.each(cases)('dialogElementRef: $params.dialogElementRef', ({ params, expected }) => {
+    test.each(cases)('props: $params.props', ({ params, expected }) => {
       const context = new FuroDialogContext(params)
 
       const actual = context.dialogElement
@@ -243,26 +271,37 @@ describe('FuroDialogContext', () => {
       /**
        * @type {Array<{
        *   params: {
+       *     props: import('vue').ComponentCustomProps
+       *     componentContext: import('vue').SetupContext
        *     dialogElementRef: import('vue').Ref<HTMLDialogElement | null>
-       *     emit: import('~/app/vue/contexts/FuroDialogContext.js').FuroDialogContextEmit
        *   }
        * }>}
        */
       const cases = /** @type {Array<*>} */ ([
         {
           params: {
+            props: {
+              alpha: Symbol('alpha'),
+            },
+            componentContext: {
+              attrs: {
+                alpha: 1,
+              },
+              emit: () => {},
+              expose: () => {},
+              slots: {},
+            },
             dialogElementRef: {
               value: {
                 showModal: () => {},
                 close: () => {},
               },
             },
-            emit: () => {},
           },
         },
       ])
 
-      test.each(cases)('dialogElementRef: $params.dialogElementRef', ({ params }) => {
+      test.each(cases)('props: $params.props', ({ params }) => {
         const showModalSpy = jest.spyOn(params.dialogElementRef.value, 'showModal')
 
         const context = new FuroDialogContext(params)
@@ -282,14 +321,26 @@ describe('FuroDialogContext', () => {
       /**
        * @type {Array<{
        *   params: {
+       *     props: import('vue').ComponentCustomProps
+       *     componentContext: import('vue').SetupContext
        *     dialogElementRef: import('vue').Ref<HTMLDialogElement | null>
-       *     emit: import('~/app/vue/contexts/FuroDialogContext.js').FuroDialogContextEmit
        *   }
        * }>}
        */
       const cases = /** @type {Array<*>} */ ([
         {
           params: {
+            props: {
+              alpha: Symbol('alpha'),
+            },
+            componentContext: {
+              attrs: {
+                alpha: 1,
+              },
+              emit: () => {},
+              expose: () => {},
+              slots: {},
+            },
             dialogElementRef: {
               value: {
                 showModal: () => {},
@@ -301,7 +352,7 @@ describe('FuroDialogContext', () => {
         },
       ])
 
-      test.each(cases)('dialogElementRef: $params.dialogElementRef', ({ params }) => {
+      test.each(cases)('props: $params.props', ({ params }) => {
         const closeSpy = jest.spyOn(params.dialogElementRef.value, 'close')
 
         const context = new FuroDialogContext(params)
@@ -320,22 +371,44 @@ describe('FuroDialogContext', () => {
     /**
      * @type {Array<{
      *   params: {
+     *     props: import('vue').ComponentCustomProps
+     *     componentContext: import('vue').SetupContext
      *     dialogElementRef: import('vue').Ref<HTMLDialogElement | null>
-     *     emit: import('~/app/vue/contexts/FuroDialogContext.js').FuroDialogContextEmit
      *   }
      * }>}
      */
     const cases = /** @type {Array<*>} */ ([
       {
         params: {
+          props: {
+            alpha: Symbol('alpha'),
+          },
+          componentContext: {
+            attrs: {
+              alpha: 1,
+            },
+            emit: () => {},
+            expose: () => {},
+            slots: {},
+          },
           dialogElementRef: {
             value: document.createElement('dialog'),
           },
-          emit: () => {},
         },
       },
       {
         params: {
+          props: {
+            beta: Symbol('beta'),
+          },
+          componentContext: {
+            attrs: {
+              beta: 2,
+            },
+            emit: () => {},
+            expose: () => {},
+            slots: {},
+          },
           dialogElementRef: {
             value: null,
           },
@@ -345,7 +418,7 @@ describe('FuroDialogContext', () => {
     ])
 
     describe('to be generated object', () => {
-      test.each(cases)('dialogElementRef: $params.dialogElementRef', ({ params }) => {
+      test.each(cases)('props: $params.props', ({ params }) => {
         const expected = {
           showDialog: expect.any(Function),
           dismissDialog: expect.any(Function),
@@ -361,7 +434,7 @@ describe('FuroDialogContext', () => {
     })
 
     describe('to call #showDialog()', () => {
-      test.each(cases)('dialogElementRef: $params.dialogElementRef', ({ params }) => {
+      test.each(cases)('props: $params.props', ({ params }) => {
         const context = new FuroDialogContext(params)
         const showDialogSpy = jest.spyOn(context, 'showDialog')
           .mockImplementation(() => {})
@@ -376,7 +449,7 @@ describe('FuroDialogContext', () => {
     })
 
     describe('to call #dismissDialog()', () => {
-      test.each(cases)('dialogElementRef: $params.dialogElementRef', ({ params }) => {
+      test.each(cases)('props: $params.props', ({ params }) => {
         const context = new FuroDialogContext(params)
         const dismissDialogSpy = jest.spyOn(context, 'dismissDialog')
           .mockImplementation(() => {})
@@ -398,14 +471,26 @@ describe('FuroDialogContext', () => {
       /**
        * @type {Array<{
        *   params: {
+       *     props: import('vue').ComponentCustomProps
+       *     componentContext: import('vue').SetupContext
        *     dialogElementRef: import('vue').Ref<HTMLDialogElement | null>
-       *     emit: import('~/app/vue/contexts/FuroDialogContext.js').FuroDialogContextEmit
        *   }
        * }>}
        */
       const cases = /** @type {Array<*>} */ ([
         {
           params: {
+            props: {
+              alpha: Symbol('alpha'),
+            },
+            componentContext: {
+              attrs: {
+                alpha: 1,
+              },
+              emit: () => {},
+              expose: () => {},
+              slots: {},
+            },
             dialogElementRef: {
               value: document.createElement('dialog'),
             },
@@ -413,7 +498,7 @@ describe('FuroDialogContext', () => {
         },
       ])
 
-      test.each(cases)('dialogElement: $params.dialogElement', ({ params }) => {
+      test.each(cases)('props: $params.props', ({ params }) => {
         const expected = {
           top: expect.any(Number),
           left: expect.any(Number),
@@ -438,14 +523,26 @@ describe('FuroDialogContext', () => {
       /**
        * @type {Array<{
        *   params: {
+       *     props: import('vue').ComponentCustomProps
+       *     componentContext: import('vue').SetupContext
        *     dialogElementRef: import('vue').Ref<HTMLDialogElement | null>
-       *     emit: import('~/app/vue/contexts/FuroDialogContext.js').FuroDialogContextEmit
        *   }
        * }>}
        */
       const cases = /** @type {Array<*>} */ ([
         {
           params: {
+            props: {
+              alpha: Symbol('alpha'),
+            },
+            componentContext: {
+              attrs: {
+                alpha: 1,
+              },
+              emit: () => {},
+              expose: () => {},
+              slots: {},
+            },
             dialogElementRef: {
               value: null,
             },
@@ -453,7 +550,7 @@ describe('FuroDialogContext', () => {
         },
       ])
 
-      test.each(cases)('dialogElement: $params.dialogElement', ({ params }) => {
+      test.each(cases)('props: $params.props', ({ params }) => {
         const context = new FuroDialogContext(params)
 
         const actual = context.extractDialogRect()
