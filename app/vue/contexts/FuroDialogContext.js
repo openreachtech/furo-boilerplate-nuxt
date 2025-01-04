@@ -1,21 +1,28 @@
+import BaseFuroContext from './BaseFuroContext'
+
 /**
  * Props context class for FuroDialogContext component.
  *
  * @property {import('vue').Ref<HTMLDialogElement | null>} dialogRef - Dialog element.
- * @property {FuroDialogContextEmit} emit - Emit event.
+ * @extends {BaseFuroContext<FuroDialogContextEmitOptions>}
  */
-export default class FuroDialogContext {
+export default class FuroDialogContext extends BaseFuroContext {
   /**
    * Constructor.
    *
    * @param {FuroDialogContextParams} params - Parameters of this constructor.
    */
   constructor ({
+    props,
+    componentContext,
     dialogElementRef,
-    emit,
   }) {
+    super({
+      props,
+      componentContext,
+    })
+
     this.dialogElementRef = dialogElementRef
-    this.emit = emit
   }
 
   /**
