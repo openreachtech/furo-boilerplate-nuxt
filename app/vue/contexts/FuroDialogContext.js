@@ -132,8 +132,7 @@ export default class FuroDialogContext extends BaseFuroContext {
     }
 
     this.emit(
-      this.Ctor
-        .EMIT_EVENT_NAME
+      this.EMIT_EVENT_NAME
         .CLICK_BACKDROP
     )
   }
