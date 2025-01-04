@@ -59,6 +59,15 @@ export default class BaseFuroContext {
   }
 
   /**
+   * get: emit() event name.
+   *
+   * @returns {Record<string, EE>} - emit() event name.
+   */
+  get EMIT_EVENT_NAME () {
+    return /** @type {*} */ (this.Ctor.EMIT_EVENT_NAME)
+  }
+
+  /**
    * get: attrs of component context.
    *
    * @returns {import('vue').SetupContext['attrs']} - Attributes of component context.
