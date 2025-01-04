@@ -42,9 +42,13 @@ export default defineComponent({
     },
   },
 
-  setup (props) {
+  setup (
+    props,
+    componentContext
+  ) {
     const context = FuroPaginationContext.create({
       props,
+      componentContext,
     })
 
     return {
