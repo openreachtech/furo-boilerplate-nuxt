@@ -16,6 +16,21 @@ describe('FuroTabLayoutContext', () => {
 
 describe('FuroTabLayoutContext', () => {
   describe('constructor', () => {
+    const propsMock = {
+      tabs: [
+        { tabKey: 'alpha', label: 'Alpha' },
+        { tabKey: 'beta', label: 'Beta' },
+        { tabKey: 'gamma', label: 'Gamma' },
+      ],
+      activeTabKey: 'alpha',
+    }
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
     describe('to keep properties', () => {
       describe('#tabContexts', () => {
         const cases = [
@@ -52,6 +67,8 @@ describe('FuroTabLayoutContext', () => {
 
         test.each(cases)('tabContexts: $params.tabContexts', ({ params }) => {
           const args = {
+            props: propsMock,
+            componentContext: componentContextMock,
             tabContexts: params.tabContexts,
             activeTabKey: null,
           }
@@ -90,6 +107,8 @@ describe('FuroTabLayoutContext', () => {
 
       test.each(cases)('activeTabKey: $params.activeTabKey', ({ params }) => {
         const args = {
+          props: propsMock,
+          componentContext: componentContextMock,
           tabContexts: [],
           activeTabKey: params.activeTabKey,
         }
