@@ -1,5 +1,18 @@
 import FuroDialogContext from '~/app/vue/contexts/FuroDialogContext.js'
 
+import BaseFuroContext from '~/app/vue/contexts/BaseFuroContext'
+
+describe('FuroDialogContext', () => {
+  describe('super class', () => {
+    test('to extend BaseFuroContext', () => {
+      const actual = FuroDialogContext.prototype
+
+      expect(actual)
+        .toBeInstanceOf(BaseFuroContext)
+    })
+  })
+})
+
 describe('FuroDialogContext', () => {
   describe('constructor', () => {
     describe('to keep properties', () => {
@@ -38,46 +51,6 @@ describe('FuroDialogContext', () => {
 
           expect(context.dialogElementRef)
             .toBe(params.dialogElementRef)
-        })
-      })
-
-      describe('#emit', () => {
-        /**
-         * @type {Array<{
-         *   params: {
-         *     emit: import('~/app/vue/contexts/FuroDialogContext.js').FuroDialogContextEmit
-         *   }
-         * }>}
-         */
-        const cases = /** @type {Array<*>} */ ([
-          {
-            params: {
-              emit: () => {
-                Symbol('alpha')
-              },
-            },
-          },
-          {
-            params: {
-              emit: () => {
-                Symbol('beta')
-              },
-            },
-          },
-        ])
-
-        test.each(cases)('emit: $params.emit', ({ params }) => {
-          const args = {
-            dialogElementRef: /** @type {*} */ ({
-              value: document.createElement('dialog'),
-            }),
-            emit: params.emit,
-          }
-
-          const context = new FuroDialogContext(args)
-
-          expect(context.emit)
-            .toBe(params.emit)
         })
       })
     })
@@ -536,10 +509,16 @@ describe('FuroDialogContext', () => {
   describe('#isClickedOnBackdrop()', () => {
     describe('when exists <dialog>', () => {
       const args = {
+        props: {},
+        componentContext: {
+          attrs: {},
+          emit: () => {},
+          expose: () => {},
+          slots: {},
+        },
         dialogElementRef: /** @type {*} */ ({
           value: document.createElement('dialog'),
         }),
-        emit: () => {},
       }
       const context = new FuroDialogContext(args)
 
@@ -648,10 +627,16 @@ describe('FuroDialogContext', () => {
 describe('FuroDialogContext', () => {
   describe('#clickInInner', () => {
     const args = {
+      props: {},
+      componentContext: {
+        attrs: {},
+        emit: () => {},
+        expose: () => {},
+        slots: {},
+      },
       dialogElementRef: /** @type {*} */ ({
         value: document.createElement('dialog'),
       }),
-      emit: () => {},
     }
     const context = new FuroDialogContext(args)
 
@@ -727,14 +712,14 @@ describe('FuroDialogContext', () => {
     ])
 
     describe.each(cases)('dialogRect: $params.dialogRect', ({ params, truthyCases, falsyCases }) => {
-      describe.each(truthyCases)('to call #emit()', () => {
+      describe.each(truthyCases)('to call #componentContext.emit()', () => {
         test.each(truthyCases)('event: $mouseEvent', ({ mouseEvent }) => {
           const expected = 'clickBackdrop'
 
           jest.spyOn(context, 'extractDialogRect')
             .mockReturnValue(params.dialogRect)
           const isClickedOnBackdropSpy = jest.spyOn(context, 'isClickedOnBackdrop')
-          const emitSpy = jest.spyOn(context, 'emit')
+          const emitSpy = jest.spyOn(context.componentContext, 'emit')
 
           context.clickInInner({
             event: mouseEvent,
@@ -749,12 +734,12 @@ describe('FuroDialogContext', () => {
         })
       })
 
-      describe.each(falsyCases)('not to call #emit()', () => {
+      describe.each(falsyCases)('not to call #componentContext.emit()', () => {
         test.each(falsyCases)('event: $mouseEvent', ({ mouseEvent }) => {
           jest.spyOn(context, 'extractDialogRect')
             .mockReturnValue(params.dialogRect)
           const isClickedOnBackdropSpy = jest.spyOn(context, 'isClickedOnBackdrop')
-          const emitSpy = jest.spyOn(context, 'emit')
+          const emitSpy = jest.spyOn(context.componentContext, 'emit')
 
           context.clickInInner({
             event: mouseEvent,
