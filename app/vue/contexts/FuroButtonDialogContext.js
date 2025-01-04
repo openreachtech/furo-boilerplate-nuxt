@@ -66,15 +66,6 @@ export default class FuroButtonDialogContext extends BaseFuroContext {
   }
 
   /**
-   * get: constructor.
-   *
-   * @returns {typeof FuroButtonDialogContext}
-   */
-  get Ctor () {
-    return /** @type {*} */ (this.constructor)
-  }
-
-  /**
    * get: dialog component.
    *
    * @returns {import('~/components/lib/FuroDialog.vue').default | null}
