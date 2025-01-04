@@ -75,6 +75,20 @@ export default defineComponent({
 
     <section class="unit-section sample-placeholder double">
       <h3 class="design-header tertiary">
+        with maxPageRange = 7 (design: &lt;FuroPagination&gt;)
+      </h3>
+
+      <FuroPagination page-key="p"
+        :pagination="{
+          limit: 5,
+          totalRecords: 100,
+        }"
+        :max-page-range="7"
+      />
+    </section>
+
+    <section class="unit-section sample-placeholder double">
+      <h3 class="design-header tertiary">
         with SVG image for previous and next<br>(design: alpha)
       </h3>
 
