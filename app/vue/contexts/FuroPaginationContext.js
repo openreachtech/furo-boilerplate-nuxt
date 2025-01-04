@@ -40,11 +40,15 @@ export default class FuroPaginationContext extends BaseFuroContext {
   /**
    * Factory method to create a new instance of this class.
    *
+   * @template {X extends typeof FuroPaginationContext ? X : never} T, X
+   * @override
    * @param {FuroPaginationContextFactoryParams} params - Parameters of this factory method.
-   * @returns {FuroPaginationContext} - New instance of this class.
+   * @returns {InstanceType<T>} - New instance of this class.
+   * @this {T}
    */
   static create ({
     props,
+    componentContext,
     searchParams = new URLSearchParams(location.search),
   }) {
     const {
@@ -66,13 +70,17 @@ export default class FuroPaginationContext extends BaseFuroContext {
       totalRecords,
     })
 
-    return new this({
-      searchParams,
-      currentPage,
-      lastPage,
-      maxPageRange,
-      pageKey,
-    })
+    return /** @type {InstanceType<T>} */ (
+      new this({
+        props,
+        componentContext,
+        searchParams,
+        currentPage,
+        lastPage,
+        maxPageRange,
+        pageKey,
+      })
+    )
   }
 
   /**
@@ -336,8 +344,9 @@ export default class FuroPaginationContext extends BaseFuroContext {
  */
 
 /**
- * @typedef {{
+ * @typedef {import('./BaseFuroContext.js').BaseFuroContextFactoryParams & {
  *   props: FuroPaginationContextProps
+ *   componentContext: import('vue').SetupContext
  *   searchParams?: URLSearchParams
  * }} FuroPaginationContextFactoryParams
  */
