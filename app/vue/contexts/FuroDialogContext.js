@@ -1,63 +1,60 @@
+import BaseFuroContext from './BaseFuroContext'
+
 /**
  * Props context class for FuroDialogContext component.
  *
  * @property {import('vue').Ref<HTMLDialogElement | null>} dialogRef - Dialog element.
- * @property {FuroDialogContextEmit} emit - Emit event.
+ * @extends {BaseFuroContext<FuroDialogContextEmitOptions>}
  */
-export default class FuroDialogContext {
+export default class FuroDialogContext extends BaseFuroContext {
   /**
    * Constructor.
    *
    * @param {FuroDialogContextParams} params - Parameters of this constructor.
    */
   constructor ({
+    props,
+    componentContext,
     dialogElementRef,
-    emit,
   }) {
+    super({
+      props,
+      componentContext,
+    })
+
     this.dialogElementRef = dialogElementRef
-    this.emit = emit
   }
 
   /**
    * Factory method to create a new instance of this class.
    *
+   * @template {X extends typeof FuroDialogContext ? X : never} T, X
+   * @override
    * @param {FuroDialogContextFactoryParams} params - Parameters of this factory method.
-   * @returns {FuroDialogContext} - New instance of this class.
+   * @returns {InstanceType<T>} - New instance of this class.
+   * @this {T}
    */
   static create ({
+    props,
+    componentContext,
     dialogElementRef,
-    emit,
   }) {
-    return new this({
-      dialogElementRef,
-      emit,
-    })
+    return /** @type {*} */ (
+      new this({
+        props,
+        componentContext,
+        dialogElementRef,
+      })
+    )
   }
 
-  /**
-   * emit() event name.
-   *
-   * @returns {{
-   *   SHOW_DIALOG: 'showDialog',
-   *   DISMISS_DIALOG: 'dismissDialog',
-   *   CLICK_BACKDROP: 'clickBackdrop',
-   * }}
-   */
+  /** @override */
   static get EMIT_EVENT_NAME () {
     return {
       SHOW_DIALOG: 'showDialog',
       DISMISS_DIALOG: 'dismissDialog',
       CLICK_BACKDROP: 'clickBackdrop',
     }
-  }
-
-  /**
-   * get: constructor.
-   *
-   * @returns {typeof FuroDialogContext}
-   */
-  get Ctor () {
-    return /** @type {*} */ (this.constructor)
   }
 
   /**
@@ -118,8 +115,7 @@ export default class FuroDialogContext {
     }
 
     this.emit(
-      this.Ctor
-        .EMIT_EVENT_NAME
+      this.EMIT_EVENT_NAME
         .CLICK_BACKDROP
     )
   }
@@ -163,9 +159,8 @@ export default class FuroDialogContext {
 }
 
 /**
- * @typedef {{
+ * @typedef {import('./BaseFuroContext').BaseFuroContextParams & {
  *   dialogElementRef: import('vue').Ref<HTMLDialogElement | null>
- *   emit: FuroDialogContextEmit
  * }} FuroDialogContextParams
  */
 
@@ -178,4 +173,8 @@ export default class FuroDialogContext {
  *   event: 'clickBackdrop',
  *   ...args: Array<any>
  * ) => void} FuroDialogContextEmit
+ */
+
+/**
+ * @typedef {'showDialog' | 'dismissDialog' | 'clickBackdrop'} FuroDialogContextEmitOptions
  */
