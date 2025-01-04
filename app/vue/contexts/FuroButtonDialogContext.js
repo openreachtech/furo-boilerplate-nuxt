@@ -48,15 +48,7 @@ export default class FuroButtonDialogContext extends BaseFuroContext {
     )
   }
 
-  /**
-   * emit() event name.
-   *
-   * @returns {{
-   *   CLICK_POSITIVE_BUTTON: 'clickPositiveButton',
-   *   CLICK_NEGATIVE_BUTTON: 'clickNegativeButton',
-   *   CLICK_NEUTRAL_BUTTON: 'clickNeutralButton',
-   * }}
-   */
+  /** @override */
   static get EMIT_EVENT_NAME () {
     return {
       CLICK_POSITIVE_BUTTON: 'clickPositiveButton',
