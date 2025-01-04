@@ -21,17 +21,24 @@ export default class FuroButtonDialogContext {
   /**
    * Factory method to create a new instance of this class.
    *
+   * @template {X extends typeof FuroButtonDialogContext ? X : never} T, X
+   * @override
    * @param {FuroButtonDialogContextFactoryParams} params - Parameters of this factory method.
-   * @returns {FuroButtonDialogContext} - New instance of this class.
+   * @returns {InstanceType<T>} - An instance of this class.
+   * @this {T}
    */
   static create ({
+    props,
+    componentContext,
     dialogComponentRef,
-    emit,
   }) {
-    return new this({
-      dialogComponentRef,
-      emit,
-    })
+    return /** @type {InstanceType<T>} */ (
+      new this({
+        props,
+        componentContext,
+        dialogComponentRef,
+      })
+    )
   }
 
   /**
@@ -139,7 +146,7 @@ export default class FuroButtonDialogContext {
 }
 
 /**
- * @typedef {{
+ * @typedef {import('./BaseFuroContext').BaseFuroContextParams & {
  *   dialogComponentRef: import('vue').Ref<import('~/components/lib/FuroDialog.vue').default | null>
  *   emit: FuroButtonDialogContextEmit
  * }} FuroButtonDialogContextParams
