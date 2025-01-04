@@ -124,8 +124,7 @@ export default class FuroButtonDialogContext extends BaseFuroContext {
    */
   clickNeutralButton () {
     this.emit(
-      this.Ctor
-        .EMIT_EVENT_NAME
+      this.EMIT_EVENT_NAME
         .CLICK_NEUTRAL_BUTTON
     )
 
