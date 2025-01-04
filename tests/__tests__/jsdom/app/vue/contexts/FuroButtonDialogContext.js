@@ -58,39 +58,6 @@ describe('FuroButtonDialogContext', () => {
             .toBe(params.dialogComponentRef)
         })
       })
-
-      describe('#emit', () => {
-        const cases = [
-          {
-            params: {
-              emit: () => {
-                Symbol('alpha')
-              },
-            },
-          },
-          {
-            params: {
-              emit: () => {
-                Symbol('beta')
-              },
-            },
-          },
-        ]
-
-        test.each(cases)('emit: $params.emit', ({ params }) => {
-          const args = /** @type {*} */ ({
-            dialogComponentRef: {
-              value: null,
-            },
-            emit: params.emit,
-          })
-
-          const context = new FuroButtonDialogContext(args)
-
-          expect(context.emit)
-            .toBe(params.emit)
-        })
-      })
     })
   })
 })
