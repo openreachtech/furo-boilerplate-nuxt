@@ -1,5 +1,7 @@
 /**
  * Furo Component Context.
+ *
+ * @template EE - emit() event names.
  */
 export default class BaseFuroContext {
   /**
@@ -68,10 +70,13 @@ export default class BaseFuroContext {
   /**
    * get: slots of component context.
    *
-   * @returns {import('vue').SetupContext['emit']} - emit() function of component context.
+   * @returns {(
+   *   event: EE,
+   *   ...args: Array<any>
+   * ) => void} - emit() function of component context.
    */
   get emit () {
-    return this.componentContext.emit
+    return /** @type {*} */ (this.componentContext.emit)
   }
 
   /**
