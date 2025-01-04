@@ -140,6 +140,13 @@ export default class FuroDialogContext extends BaseFuroContext {
       return false
     }
 
+    if (
+      dialogRect.height === 0
+      || dialogRect.width === 0
+    ) {
+      return false
+    }
+
     return clientX < dialogRect.left
       || clientX > dialogRect.right
       || clientY < dialogRect.top
