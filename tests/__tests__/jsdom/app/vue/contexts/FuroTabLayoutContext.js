@@ -314,6 +314,21 @@ describe('FuroTabLayoutContext', () => {
 
 describe('FuroTabLayoutContext', () => {
   describe('#isActiveTab()', () => {
+    const propsMock = {
+      tabs: [
+        { tabKey: 'alpha', label: 'Alpha' },
+        { tabKey: 'beta', label: 'Beta' },
+        { tabKey: 'gamma', label: 'Gamma' },
+      ],
+      activeTabKey: 'alpha',
+    }
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
     const cases = [
       {
         params: {
@@ -330,10 +345,14 @@ describe('FuroTabLayoutContext', () => {
     ]
 
     describe.each(cases)('activeTabKey: $params.activeTabKey', ({ params, truthyCases, falsyCases }) => {
-      const context = new FuroTabLayoutContext({
+      const args = {
+        props: propsMock,
+        componentContext: componentContextMock,
         tabContexts: [],
         activeTabKey: params.activeTabKey,
-      })
+      }
+
+      const context = new FuroTabLayoutContext(args)
 
       describe('to be truthy', () => {
         test.each(truthyCases)('tabKey: $tabKey', ({ tabKey }) => {
