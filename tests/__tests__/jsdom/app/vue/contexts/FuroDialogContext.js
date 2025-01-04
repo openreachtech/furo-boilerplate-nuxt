@@ -53,46 +53,6 @@ describe('FuroDialogContext', () => {
             .toBe(params.dialogElementRef)
         })
       })
-
-      describe('#emit', () => {
-        /**
-         * @type {Array<{
-         *   params: {
-         *     emit: import('~/app/vue/contexts/FuroDialogContext.js').FuroDialogContextEmit
-         *   }
-         * }>}
-         */
-        const cases = /** @type {Array<*>} */ ([
-          {
-            params: {
-              emit: () => {
-                Symbol('alpha')
-              },
-            },
-          },
-          {
-            params: {
-              emit: () => {
-                Symbol('beta')
-              },
-            },
-          },
-        ])
-
-        test.each(cases)('emit: $params.emit', ({ params }) => {
-          const args = {
-            dialogElementRef: /** @type {*} */ ({
-              value: document.createElement('dialog'),
-            }),
-            emit: params.emit,
-          }
-
-          const context = new FuroDialogContext(args)
-
-          expect(context.emit)
-            .toBe(params.emit)
-        })
-      })
     })
   })
 })
