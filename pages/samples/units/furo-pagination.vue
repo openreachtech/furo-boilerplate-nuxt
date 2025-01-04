@@ -135,7 +135,7 @@ export default defineComponent({
         with Last Page 5
       </h3>
 
-      <FuroPagination page-key="p"
+      <FuroPagination page-key="pg"
         :pagination="{
           limit: 5,
           totalRecords: 24,
@@ -148,7 +148,7 @@ export default defineComponent({
         with Last Page 3
       </h3>
 
-      <FuroPagination page-key="p"
+      <FuroPagination page-key="pg"
         :pagination="{
           limit: 5,
           totalRecords: 14,
@@ -161,7 +161,7 @@ export default defineComponent({
         with Last Page 1
       </h3>
 
-      <FuroPagination page-key="p"
+      <FuroPagination page-key="pg"
         :pagination="{
           limit: 5,
           totalRecords: 3,
