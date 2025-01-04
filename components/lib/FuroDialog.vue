@@ -24,15 +24,16 @@ export default defineComponent({
   ],
 
   setup (
-    _, // props
+    props,
     componentContext
   ) {
     /** @type {import('vue').Ref<HTMLDialogElement | null>} */
     const dialogElementRef = ref(null)
 
     const context = FuroDialogContext.create({
+      props,
+      componentContext,
       dialogElementRef,
-      emit: componentContext.emit,
     })
 
     componentContext.expose(
