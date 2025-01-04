@@ -152,52 +152,6 @@ describe('FuroButtonDialogContext', () => {
 })
 
 describe('FuroButtonDialogContext', () => {
-  describe('#get:Ctor', () => {
-    /**
-     * @type {Array<{
-     *   params: {
-     *     dialogComponentRef: import('vue').Ref<import('~/components/lib/FuroDialog.vue').default | null>
-     *     emit: (
-     *       event: 'clickBackdrop' | 'clickPositiveButton' | 'clickNegativeButton' | 'clickNeutralButton',
-     *       ...args: Array<any>
-     *     ) => void
-     *   }
-     * }>}
-     */
-    const cases = /** @type {Array<*>} */ ([
-      {
-        params: {
-          dialogComponentRef: {
-            value: {
-              showDialog: () => {},
-              dismissDialog: () => {},
-            },
-          },
-          emit: () => {},
-        },
-      },
-      {
-        params: {
-          dialogComponentRef: {
-            value: null,
-          },
-          emit: () => {},
-        },
-      },
-    ])
-
-    test.each(cases)('dialogComponentRef: $params.dialogComponentRef', ({ params }) => {
-      const context = new FuroButtonDialogContext(params)
-
-      const actual = context.Ctor
-
-      expect(actual)
-        .toBe(FuroButtonDialogContext)
-    })
-  })
-})
-
-describe('FuroButtonDialogContext', () => {
   describe('#get:dialogComponent', () => {
     const propsMock = {}
     const componentContextMock = {
