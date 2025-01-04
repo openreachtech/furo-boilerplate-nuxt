@@ -1,21 +1,28 @@
+import BaseFuroContext from './BaseFuroContext'
+
 /**
  * Props context class for FuroButtonDialogContext component.
  *
  * @property {import('vue').Ref<HTMLDialogElement | null>} dialogRef - Dialog element.
- * @property {FuroButtonDialogContextEmit} emit - Emit event.
+ * @extends {BaseFuroContext<FuroButtonDialogContextEmitOptions>} - Base class.
  */
-export default class FuroButtonDialogContext {
+export default class FuroButtonDialogContext extends BaseFuroContext {
   /**
    * Constructor.
    *
    * @param {FuroButtonDialogContextParams} params - Parameters of this constructor.
    */
   constructor ({
+    props,
+    componentContext,
     dialogComponentRef,
-    emit,
   }) {
+    super({
+      props,
+      componentContext,
+    })
+
     this.dialogComponentRef = dialogComponentRef
-    this.emit = emit
   }
 
   /**
@@ -148,12 +155,15 @@ export default class FuroButtonDialogContext {
 /**
  * @typedef {import('./BaseFuroContext').BaseFuroContextParams & {
  *   dialogComponentRef: import('vue').Ref<import('~/components/lib/FuroDialog.vue').default | null>
- *   emit: FuroButtonDialogContextEmit
  * }} FuroButtonDialogContextParams
  */
 
 /**
  * @typedef {FuroButtonDialogContextParams} FuroButtonDialogContextFactoryParams
+ */
+
+/**
+ * @typedef {'clickBackdrop' | 'clickPositiveButton' | 'clickNegativeButton' | 'clickNeutralButton'} FuroButtonDialogContextEmitOptions
  */
 
 /**

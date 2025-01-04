@@ -1,21 +1,44 @@
 import FuroButtonDialogContext from '~/app/vue/contexts/FuroButtonDialogContext.js'
 
+import BaseFuroContext from '~/app/vue/contexts/BaseFuroContext.js'
+
+describe('FuroButtonDialogContext', () => {
+  describe('super class', () => {
+    test('to be BaseFuroContext', () => {
+      const actual = FuroButtonDialogContext.prototype
+
+      expect(actual)
+        .toBeInstanceOf(BaseFuroContext)
+    })
+  })
+})
+
 describe('FuroButtonDialogContext', () => {
   describe('constructor', () => {
     describe('to keep properties', () => {
+      const propsMock = {}
+      const componentContextMock = {
+        attrs: {},
+        emit: () => {},
+        expose: () => {},
+        slots: {},
+      }
+
       describe('#dialogComponentRef', () => {
         /**
          * @type {Array<{
          *   params: {
-         *     dialogComponentRef: {
-         *       value: import('~/components/lib/FuroDialog.vue').default | null
-         *     }
+         *     props: import('vue').ComponentCustomProps
+         *     componentContext: import('vue').SetupContext
+         *     dialogComponentRef: import('vue').Ref<import('~/components/lib/FuroDialog.vue').default | null>
          *   }
          * }>}
          */
         const cases = /** @type {Array<*>} */ ([
           {
             params: {
+              props: propsMock,
+              componentContext: componentContextMock,
               dialogComponentRef: {
                 value: {
                   showDialog: () => {},
@@ -26,6 +49,8 @@ describe('FuroButtonDialogContext', () => {
           },
           {
             params: {
+              props: propsMock,
+              componentContext: componentContextMock,
               dialogComponentRef: {
                 value: null,
               },
@@ -34,48 +59,10 @@ describe('FuroButtonDialogContext', () => {
         ])
 
         test.each(cases)('dialogComponentRef: $params.dialogComponentRef', ({ params }) => {
-          const args = /** @type {*} */ ({
-            dialogComponentRef: params.dialogComponentRef,
-            emit: () => {},
-          })
-
-          const context = new FuroButtonDialogContext(args)
+          const context = new FuroButtonDialogContext(params)
 
           expect(context.dialogComponentRef)
-            .toBe(params.dialogComponentRef)
-        })
-      })
-
-      describe('#emit', () => {
-        const cases = [
-          {
-            params: {
-              emit: () => {
-                Symbol('alpha')
-              },
-            },
-          },
-          {
-            params: {
-              emit: () => {
-                Symbol('beta')
-              },
-            },
-          },
-        ]
-
-        test.each(cases)('emit: $params.emit', ({ params }) => {
-          const args = /** @type {*} */ ({
-            dialogComponentRef: {
-              value: null,
-            },
-            emit: params.emit,
-          })
-
-          const context = new FuroButtonDialogContext(args)
-
-          expect(context.emit)
-            .toBe(params.emit)
+            .toBe(params.dialogComponentRef) // same reference
         })
       })
     })
@@ -212,35 +199,43 @@ describe('FuroButtonDialogContext', () => {
 
 describe('FuroButtonDialogContext', () => {
   describe('#get:dialogComponent', () => {
+    const propsMock = {}
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
     /**
      * @type {Array<{
      *   params: {
+     *     props: import('vue').ComponentCustomProps
+     *     componentContext: import('vue').SetupContext
      *     dialogComponentRef: import('vue').Ref<import('~/components/lib/FuroDialog.vue').default | null>
-     *     emit: (
-     *       event: 'clickBackdrop' | 'clickPositiveButton' | 'clickNegativeButton' | 'clickNeutralButton',
-     *       ...args: Array<any>
-     *     ) => void
      *   }
      * }>}
      */
     const cases = /** @type {Array<*>} */ ([
       {
         params: {
+          props: propsMock,
+          componentContext: componentContextMock,
           dialogComponentRef: {
             value: {
               showDialog: () => {},
               dismissDialog: () => {},
             },
           },
-          emit: () => {},
         },
       },
       {
         params: {
+          props: propsMock,
+          componentContext: componentContextMock,
           dialogComponentRef: {
             value: null,
           },
-          emit: () => {},
         },
       },
     ])
@@ -258,32 +253,39 @@ describe('FuroButtonDialogContext', () => {
 
 describe('FuroButtonDialogContext', () => {
   describe('#showDialog()', () => {
+    const propsMock = {}
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
     /**
      * @type {Array<{
      *   params: {
+     *     props: import('vue').ComponentCustomProps
+     *     componentContext: import('vue').SetupContext
      *     dialogComponentRef: import('vue').Ref<import('~/components/lib/FuroDialog.vue').default & {
      *       value: {
      *         showDialog: () => void
      *         dismissDialog: () => void
      *       }
      *     }>
-     *     emit: (
-     *       event: 'clickBackdrop' | 'clickPositiveButton' | 'clickNegativeButton' | 'clickNeutralButton',
-     *       ...args: Array<any>
-     *     ) => void
      *   }
      * }>}
      */
     const cases = /** @type {Array<*>} */ ([
       {
         params: {
+          props: propsMock,
+          componentContext: componentContextMock,
           dialogComponentRef: {
             value: {
               showDialog: () => {},
               dismissDialog: () => {},
             },
           },
-          emit: () => {},
         },
       },
     ])
@@ -303,32 +305,39 @@ describe('FuroButtonDialogContext', () => {
 
 describe('FuroButtonDialogContext', () => {
   describe('#dismissDialog()', () => {
+    const propsMock = {}
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
     /**
      * @type {Array<{
      *   params: {
+     *     props: import('vue').ComponentCustomProps
+     *     componentContext: import('vue').SetupContext
      *     dialogComponentRef: import('vue').Ref<import('~/components/lib/FuroDialog.vue').default & {
      *       value: {
      *         showDialog: () => void
      *         dismissDialog: () => void
      *       }
      *     }>
-     *     emit: (
-     *       event: 'clickBackdrop' | 'clickPositiveButton' | 'clickNegativeButton' | 'clickNeutralButton',
-     *       ...args: Array<any>
-     *     ) => void
      *   }
      * }>}
      */
     const cases = /** @type {Array<*>} */ ([
       {
         params: {
+          props: propsMock,
+          componentContext: componentContextMock,
           dialogComponentRef: {
             value: {
               showDialog: () => {},
               dismissDialog: () => {},
             },
           },
-          emit: () => {},
         },
       },
     ])
@@ -348,32 +357,39 @@ describe('FuroButtonDialogContext', () => {
 
 describe('FuroButtonDialogContext', () => {
   describe('#generateExposeHash()', () => {
+    const propsMock = {}
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
     /**
      * @type {Array<{
      *   params: {
+     *     props: import('vue').ComponentCustomProps
+     *     componentContext: import('vue').SetupContext
      *     dialogComponentRef: import('vue').Ref<import('~/components/lib/FuroDialog.vue').default & {
      *       value: {
      *         showDialog: () => void
      *         dismissDialog: () => void
      *       }
      *     }>
-     *     emit: (
-     *       event: 'clickBackdrop' | 'clickPositiveButton' | 'clickNegativeButton' | 'clickNeutralButton',
-     *       ...args: Array<any>
-     *     ) => void
      *   }
      * }>}
      */
     const cases = /** @type {Array<*>} */ ([
       {
         params: {
+          props: propsMock,
+          componentContext: componentContextMock,
           dialogComponentRef: {
             value: {
               showDialog: () => {},
               dismissDialog: () => {},
             },
           },
-          emit: () => {},
         },
       },
     ])
@@ -426,38 +442,45 @@ describe('FuroButtonDialogContext', () => {
 
 describe('FuroButtonDialogContext', () => {
   describe('#clickPositiveButton()', () => {
+    const propsMock = {}
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
     /**
      * @type {Array<{
      *   params: {
+     *     props: import('vue').ComponentCustomProps
+     *     componentContext: import('vue').SetupContext
      *     dialogComponentRef: import('vue').Ref<import('~/components/lib/FuroDialog.vue').default & {
      *       value: {
      *         showDialog: () => void
      *         dismissDialog: () => void
      *       }
      *     }>
-     *     emit: (
-     *       event: 'clickBackdrop' | 'clickPositiveButton' | 'clickNegativeButton' | 'clickNeutralButton',
-     *       ...args: Array<any>
-     *     ) => void
      *   }
      * }>}
      */
     const cases = /** @type {Array<*>} */ ([
       {
         params: {
+          props: propsMock,
+          componentContext: componentContextMock,
           dialogComponentRef: {
             value: {
               showDialog: () => {},
               dismissDialog: () => {},
             },
           },
-          emit: () => {},
         },
       },
     ])
 
     test.each(cases)('dialogComponentRef: $params.dialogComponentRef', ({ params }) => {
-      const emitSpy = jest.spyOn(params, 'emit')
+      const emitSpy = jest.spyOn(params.componentContext, 'emit')
 
       const context = new FuroButtonDialogContext(params)
       const dismissDialogSpy = jest.spyOn(context, 'dismissDialog')
@@ -474,38 +497,45 @@ describe('FuroButtonDialogContext', () => {
 
 describe('FuroButtonDialogContext', () => {
   describe('#clickNegativeButton()', () => {
+    const propsMock = {}
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
     /**
      * @type {Array<{
      *   params: {
+     *     props: import('vue').ComponentCustomProps
+     *     componentContext: import('vue').SetupContext
      *     dialogComponentRef: import('vue').Ref<import('~/components/lib/FuroDialog.vue').default & {
      *       value: {
      *         showDialog: () => void
      *         dismissDialog: () => void
      *       }
      *     }
-     *     emit: (
-     *       event: 'clickBackdrop' | 'clickPositiveButton' | 'clickNegativeButton' | 'clickNeutralButton',
-     *       ...args: Array<any>
-     *     ) => void
      *   }
      * }>}
      */
     const cases = /** @type {Array<*>} */ ([
       {
         params: {
+          props: propsMock,
+          componentContext: componentContextMock,
           dialogComponentRef: {
             value: {
               showDialog: () => {},
               dismissDialog: () => {},
             },
           },
-          emit: () => {},
         },
       },
     ])
 
     test.each(cases)('dialogComponentRef: $params.dialogComponentRef', ({ params }) => {
-      const emitSpy = jest.spyOn(params, 'emit')
+      const emitSpy = jest.spyOn(params.componentContext, 'emit')
 
       const context = new FuroButtonDialogContext(params)
       const dismissDialogSpy = jest.spyOn(context, 'dismissDialog')
@@ -522,38 +552,45 @@ describe('FuroButtonDialogContext', () => {
 
 describe('FuroButtonDialogContext', () => {
   describe('#clickNeutralButton()', () => {
+    const propsMock = {}
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
     /**
      * @type {Array<{
      *   params: {
+     *     props: import('vue').ComponentCustomProps
+     *     componentContext: import('vue').SetupContext
      *     dialogComponentRef: import('vue').Ref<import('~/components/lib/FuroDialog.vue').default & {
      *       value: {
      *         showDialog: () => void
      *         dismissDialog: () => void
      *       }
      *     }
-     *     emit: (
-     *       event: 'clickBackdrop' | 'clickPositiveButton' | 'clickNegativeButton' | 'clickNeutralButton',
-     *       ...args: Array<any>
-     *     ) => void
      *   }
      * }>}
      */
     const cases = /** @type {Array<*>} */ ([
       {
         params: {
+          props: propsMock,
+          componentContext: componentContextMock,
           dialogComponentRef: {
             value: {
               showDialog: () => {},
               dismissDialog: () => {},
             },
           },
-          emit: () => {},
         },
       },
     ])
 
     test.each(cases)('dialogComponentRef: $params.dialogComponentRef', ({ params }) => {
-      const emitSpy = jest.spyOn(params, 'emit')
+      const emitSpy = jest.spyOn(params.componentContext, 'emit')
 
       const context = new FuroButtonDialogContext(params)
       const dismissDialogSpy = jest.spyOn(context, 'dismissDialog')
