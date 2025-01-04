@@ -58,15 +58,6 @@ export default class FuroDialogContext extends BaseFuroContext {
   }
 
   /**
-   * get: constructor.
-   *
-   * @returns {typeof FuroDialogContext}
-   */
-  get Ctor () {
-    return /** @type {*} */ (this.constructor)
-  }
-
-  /**
    * get: dialog element.
    *
    * @returns {HTMLDialogElement | null}
