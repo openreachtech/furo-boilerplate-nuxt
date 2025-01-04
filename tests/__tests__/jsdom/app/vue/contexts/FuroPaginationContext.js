@@ -194,20 +194,26 @@ describe('FuroPaginationContext', () => {
       const cases = [
         {
           params: {
-            searchParams: new URLSearchParams(),
-            currentPage: 1,
-            maxPageRange: 3,
-            pageKey: 'pg',
             props: {
               pagination: {
                 limit: 10,
                 totalRecords: 50,
               },
             },
+            searchParams: new URLSearchParams(),
+            currentPage: 1,
+            maxPageRange: 3,
+            pageKey: 'pg',
           },
         },
         {
           params: {
+            props: {
+              pagination: {
+                limit: 20,
+                totalRecords: 60,
+              },
+            },
             searchParams: new URLSearchParams({
               alpha: '1',
               beta: '2',
@@ -215,16 +221,16 @@ describe('FuroPaginationContext', () => {
             pageKey: 'p',
             currentPage: 2,
             maxPageRange: 5,
-            props: {
-              pagination: {
-                limit: 20,
-                totalRecords: 60,
-              },
-            },
           },
         },
         {
           params: {
+            props: {
+              pagination: {
+                limit: 30,
+                totalRecords: 70,
+              },
+            },
             searchParams: new URLSearchParams({
               gamma: '3',
               delta: '4',
@@ -232,12 +238,6 @@ describe('FuroPaginationContext', () => {
             // pageKey: 'page',
             currentPage: 3,
             maxPageRange: 7,
-            props: {
-              pagination: {
-                limit: 30,
-                totalRecords: 70,
-              },
-            },
           },
         },
       ]
@@ -254,9 +254,6 @@ describe('FuroPaginationContext', () => {
       const cases = [
         {
           params: {
-            searchParams: new URLSearchParams(),
-            currentPage: 1,
-            maxPageRange: 3,
             props: {
               pagination: {
                 limit: 10,
@@ -264,6 +261,9 @@ describe('FuroPaginationContext', () => {
               },
               pageKey: 'page',
             },
+            searchParams: new URLSearchParams(),
+            currentPage: 1,
+            maxPageRange: 3,
           },
           expected: {
             searchParams: new URLSearchParams(),
@@ -275,12 +275,6 @@ describe('FuroPaginationContext', () => {
         },
         {
           params: {
-            searchParams: new URLSearchParams({
-              alpha: '1',
-              beta: '2',
-            }),
-            currentPage: 2,
-            maxPageRange: 5,
             props: {
               pagination: {
                 limit: 20,
@@ -288,6 +282,12 @@ describe('FuroPaginationContext', () => {
               },
               pageKey: 'pg',
             },
+            searchParams: new URLSearchParams({
+              alpha: '1',
+              beta: '2',
+            }),
+            currentPage: 2,
+            maxPageRange: 5,
           },
           expected: {
             searchParams: new URLSearchParams({
@@ -302,12 +302,6 @@ describe('FuroPaginationContext', () => {
         },
         {
           params: {
-            searchParams: new URLSearchParams({
-              gamma: '3',
-              delta: '4',
-            }),
-            currentPage: 3,
-            maxPageRange: 7,
             props: {
               pagination: {
                 limit: 30,
@@ -315,6 +309,12 @@ describe('FuroPaginationContext', () => {
               },
               pageKey: 'p',
             },
+            searchParams: new URLSearchParams({
+              gamma: '3',
+              delta: '4',
+            }),
+            currentPage: 3,
+            maxPageRange: 7,
           },
           expected: {
             searchParams: new URLSearchParams({
@@ -329,12 +329,6 @@ describe('FuroPaginationContext', () => {
         },
         {
           params: {
-            searchParams: new URLSearchParams({
-              epsilon: '5',
-              zeta: '6',
-            }),
-            currentPage: 4,
-            maxPageRange: 9,
             props: {
               pagination: {
                 limit: 40,
@@ -342,6 +336,12 @@ describe('FuroPaginationContext', () => {
               },
               // pageKey: undefined,
             },
+            searchParams: new URLSearchParams({
+              epsilon: '5',
+              zeta: '6',
+            }),
+            currentPage: 4,
+            maxPageRange: 9,
           },
           expected: {
             searchParams: new URLSearchParams({
