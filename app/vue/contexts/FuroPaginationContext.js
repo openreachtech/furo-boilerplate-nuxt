@@ -1,3 +1,5 @@
+import BaseFuroContext from './BaseFuroContext.js'
+
 import FuroPageContext from './FuroPageContext.js'
 
 /**
@@ -8,19 +10,26 @@ import FuroPageContext from './FuroPageContext.js'
  * @property {number} lastPage - Last page.
  * @property {URLSearchParams} searchParams - Search parameters.
  */
-export default class FuroPaginationContext {
+export default class FuroPaginationContext extends BaseFuroContext {
   /**
    * Constructor.
    *
    * @param {FuroPaginationContextParams} params - Parameters of this constructor.
    */
   constructor ({
+    props,
+    componentContext,
     searchParams,
     currentPage,
     maxPageRange,
     lastPage,
     pageKey,
   }) {
+    super({
+      props,
+      componentContext,
+    })
+
     this.searchParams = searchParams
     this.currentPage = currentPage
     this.maxPageRange = maxPageRange
@@ -315,7 +324,9 @@ export default class FuroPaginationContext {
 }
 
 /**
- * @typedef {{
+ * @typedef {import('./BaseFuroContext.js').BaseFuroContextParams & {
+ *   props: FuroPaginationContextProps
+ *   componentContext: import('vue').SetupContext
  *   searchParams: URLSearchParams
  *   currentPage: number
  *   maxPageRange: number
