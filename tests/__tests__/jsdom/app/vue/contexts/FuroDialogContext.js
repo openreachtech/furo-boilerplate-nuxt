@@ -564,21 +564,21 @@ describe('FuroDialogContext', () => {
 
 describe('FuroDialogContext', () => {
   describe('#isClickedOnBackdrop()', () => {
-    describe('when exists <dialog>', () => {
-      const args = {
-        props: {},
-        componentContext: {
-          attrs: {},
-          emit: () => {},
-          expose: () => {},
-          slots: {},
-        },
-        dialogElementRef: /** @type {*} */ ({
-          value: document.createElement('dialog'),
-        }),
-      }
-      const context = new FuroDialogContext(args)
+    const args = {
+      props: {},
+      componentContext: {
+        attrs: {},
+        emit: () => {},
+        expose: () => {},
+        slots: {},
+      },
+      dialogElementRef: /** @type {*} */ ({
+        value: document.createElement('dialog'),
+      }),
+    }
+    const context = new FuroDialogContext(args)
 
+    describe('when exists <dialog>', () => {
       /**
        * @type {Array<{
        *   params: {
@@ -609,6 +609,8 @@ describe('FuroDialogContext', () => {
               left: 50,
               right: 100,
               bottom: 100,
+              height: 50,
+              width: 50,
             },
           },
           truthyCases: [
@@ -631,6 +633,8 @@ describe('FuroDialogContext', () => {
               left: 200,
               right: 400,
               bottom: 600,
+              height: 100,
+              width: 200,
             },
           },
           truthyCases: [
@@ -649,7 +653,7 @@ describe('FuroDialogContext', () => {
       ])
 
       describe.each(cases)('dialogRect: $params.dialogRect', ({ params, truthyCases, falsyCases }) => {
-        describe.each(truthyCases)('to be truthy', () => {
+        describe('to be truthy', () => {
           test.each(truthyCases)('event: $mouseEvent', ({ mouseEvent }) => {
             jest.spyOn(context, 'extractDialogRect')
               .mockReturnValue(params.dialogRect)
@@ -663,7 +667,7 @@ describe('FuroDialogContext', () => {
           })
         })
 
-        describe.each(falsyCases)('to be falsy', () => {
+        describe('to be falsy', () => {
           test.each(falsyCases)('event: $mouseEvent', ({ mouseEvent }) => {
             jest.spyOn(context, 'extractDialogRect')
               .mockReturnValue(params.dialogRect)
@@ -675,6 +679,132 @@ describe('FuroDialogContext', () => {
             expect(actual)
               .toBeFalsy()
           })
+        })
+      })
+    })
+
+    describe('when closed <dialog>', () => {
+      /**
+       * @type {Array<{
+       *   params: {
+       *     dialogRect: {
+       *       top: number
+       *       left: number
+       *       right: number
+       *       bottom: number
+       *       height: number
+       *       width: number
+       *       x: number
+       *       y: number
+       *     }
+       *   }
+       *   eventCases: Array<{
+       *     mouseEvent: MouseEvent
+       *   }>
+       * }>}
+       */
+      const cases = /** @type {Array<*>} */ ([
+        {
+          params: {
+            dialogRect: {
+              top: 50,
+              left: 50,
+              right: 100,
+              bottom: 100,
+              height: 0,
+              width: 0,
+            },
+          },
+          eventCases: [
+            { mouseEvent: { clientX: 49, clientY: 50 } },
+            { mouseEvent: { clientX: 50, clientY: 49 } },
+            { mouseEvent: { clientX: 100, clientY: 101 } },
+            { mouseEvent: { clientX: 101, clientY: 100 } },
+            { mouseEvent: { clientX: 50, clientY: 50 } },
+            { mouseEvent: { clientX: 50, clientY: 100 } },
+            { mouseEvent: { clientX: 100, clientY: 50 } },
+            { mouseEvent: { clientX: 100, clientY: 100 } },
+          ],
+        },
+        {
+          params: {
+            dialogRect: {
+              top: 500,
+              left: 200,
+              right: 400,
+              bottom: 600,
+              height: 0,
+              width: 0,
+            },
+          },
+          eventCases: [
+            { mouseEvent: { clientX: 199, clientY: 500 } },
+            { mouseEvent: { clientX: 200, clientY: 499 } },
+            { mouseEvent: { clientX: 400, clientY: 601 } },
+            { mouseEvent: { clientX: 401, clientY: 600 } },
+            { mouseEvent: { clientX: 200, clientY: 500 } },
+            { mouseEvent: { clientX: 200, clientY: 600 } },
+            { mouseEvent: { clientX: 400, clientY: 500 } },
+            { mouseEvent: { clientX: 400, clientY: 600 } },
+          ],
+        },
+        {
+          params: {
+            dialogRect: {
+              top: 500,
+              left: 200,
+              right: 400,
+              bottom: 600,
+              height: 100,
+              width: 0,
+            },
+          },
+          eventCases: [
+            { mouseEvent: { clientX: 199, clientY: 500 } },
+            { mouseEvent: { clientX: 200, clientY: 499 } },
+            { mouseEvent: { clientX: 400, clientY: 601 } },
+            { mouseEvent: { clientX: 401, clientY: 600 } },
+            { mouseEvent: { clientX: 200, clientY: 500 } },
+            { mouseEvent: { clientX: 200, clientY: 600 } },
+            { mouseEvent: { clientX: 400, clientY: 500 } },
+            { mouseEvent: { clientX: 400, clientY: 600 } },
+          ],
+        },
+        {
+          params: {
+            dialogRect: {
+              top: 500,
+              left: 200,
+              right: 400,
+              bottom: 600,
+              height: 0,
+              width: 200,
+            },
+          },
+          eventCases: [
+            { mouseEvent: { clientX: 199, clientY: 500 } },
+            { mouseEvent: { clientX: 200, clientY: 499 } },
+            { mouseEvent: { clientX: 400, clientY: 601 } },
+            { mouseEvent: { clientX: 401, clientY: 600 } },
+            { mouseEvent: { clientX: 200, clientY: 500 } },
+            { mouseEvent: { clientX: 200, clientY: 600 } },
+            { mouseEvent: { clientX: 400, clientY: 500 } },
+            { mouseEvent: { clientX: 400, clientY: 600 } },
+          ],
+        },
+      ])
+
+      describe.each(cases)('dialogRect: $params.dialogRect', ({ params, eventCases }) => {
+        test.each(eventCases)('event: $mouseEvent', ({ mouseEvent }) => {
+          jest.spyOn(context, 'extractDialogRect')
+            .mockReturnValue(params.dialogRect)
+
+          const actual = context.isClickedOnBackdrop({
+            event: mouseEvent,
+          })
+
+          expect(actual)
+            .toBeFalsy()
         })
       })
     })
