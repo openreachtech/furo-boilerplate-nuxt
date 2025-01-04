@@ -827,116 +827,235 @@ describe('FuroDialogContext', () => {
     }
     const context = new FuroDialogContext(args)
 
-    /**
-     * @type {Array<{
-     *   params: {
-     *     dialogRect: {
-     *       top: number
-     *       left: number
-     *       right: number
-     *       bottom: number
-     *       height: number
-     *       width: number
-     *       x: number
-     *       y: number
-     *     }
-     *   }
-     *   truthyCases: Array<{
-     *     mouseEvent: MouseEvent
-     *   }>
-     *   falsyCases: Array<{
-     *     mouseEvent: MouseEvent
-     *   }>
-     * }>}
-     */
-    const cases = /** @type {Array<*>} */ ([
-      {
-        params: {
-          dialogRect: {
-            top: 50,
-            left: 50,
-            right: 100,
-            bottom: 100,
+    describe('when exists <dialog>', () => {
+      /**
+       * @type {Array<{
+       *   params: {
+       *     dialogRect: {
+       *       top: number
+       *       left: number
+       *       right: number
+       *       bottom: number
+       *       height: number
+       *       width: number
+       *       x: number
+       *       y: number
+       *     }
+       *   }
+       *   truthyCases: Array<{
+       *     mouseEvent: MouseEvent
+       *   }>
+       *   falsyCases: Array<{
+       *     mouseEvent: MouseEvent
+       *   }>
+       * }>}
+       */
+      const cases = /** @type {Array<*>} */ ([
+        {
+          params: {
+            dialogRect: {
+              top: 50,
+              left: 50,
+              right: 100,
+              bottom: 100,
+              height: 50,
+              width: 50,
+            },
           },
+          truthyCases: [
+            { mouseEvent: { clientX: 49, clientY: 50 } },
+            { mouseEvent: { clientX: 50, clientY: 49 } },
+            { mouseEvent: { clientX: 100, clientY: 101 } },
+            { mouseEvent: { clientX: 101, clientY: 100 } },
+          ],
+          falsyCases: [
+            { mouseEvent: { clientX: 50, clientY: 50 } },
+            { mouseEvent: { clientX: 50, clientY: 100 } },
+            { mouseEvent: { clientX: 100, clientY: 50 } },
+            { mouseEvent: { clientX: 100, clientY: 100 } },
+          ],
         },
-        truthyCases: [
-          { mouseEvent: { clientX: 49, clientY: 50 } },
-          { mouseEvent: { clientX: 50, clientY: 49 } },
-          { mouseEvent: { clientX: 100, clientY: 101 } },
-          { mouseEvent: { clientX: 101, clientY: 100 } },
-        ],
-        falsyCases: [
-          { mouseEvent: { clientX: 50, clientY: 50 } },
-          { mouseEvent: { clientX: 50, clientY: 100 } },
-          { mouseEvent: { clientX: 100, clientY: 50 } },
-          { mouseEvent: { clientX: 100, clientY: 100 } },
-        ],
-      },
-      {
-        params: {
-          dialogRect: {
-            top: 500,
-            left: 200,
-            right: 400,
-            bottom: 700,
+        {
+          params: {
+            dialogRect: {
+              top: 500,
+              left: 200,
+              right: 400,
+              bottom: 700,
+              height: 200,
+              width: 200,
+            },
           },
+          truthyCases: [
+            { mouseEvent: { clientX: 199, clientY: 500 } },
+            { mouseEvent: { clientX: 200, clientY: 499 } },
+            { mouseEvent: { clientX: 400, clientY: 701 } },
+            { mouseEvent: { clientX: 401, clientY: 700 } },
+          ],
+          falsyCases: [
+            { mouseEvent: { clientX: 200, clientY: 500 } },
+            { mouseEvent: { clientX: 200, clientY: 700 } },
+            { mouseEvent: { clientX: 400, clientY: 500 } },
+            { mouseEvent: { clientX: 400, clientY: 700 } },
+          ],
         },
-        truthyCases: [
-          { mouseEvent: { clientX: 199, clientY: 500 } },
-          { mouseEvent: { clientX: 200, clientY: 499 } },
-          { mouseEvent: { clientX: 400, clientY: 701 } },
-          { mouseEvent: { clientX: 401, clientY: 700 } },
-        ],
-        falsyCases: [
-          { mouseEvent: { clientX: 200, clientY: 500 } },
-          { mouseEvent: { clientX: 200, clientY: 700 } },
-          { mouseEvent: { clientX: 400, clientY: 500 } },
-          { mouseEvent: { clientX: 400, clientY: 700 } },
-        ],
-      },
-    ])
+      ])
 
-    describe.each(cases)('dialogRect: $params.dialogRect', ({ params, truthyCases, falsyCases }) => {
-      describe.each(truthyCases)('to call #componentContext.emit()', () => {
-        test.each(truthyCases)('event: $mouseEvent', ({ mouseEvent }) => {
-          const expected = 'clickBackdrop'
+      describe.each(cases)('dialogRect: $params.dialogRect', ({ params, truthyCases, falsyCases }) => {
+        describe('to call #componentContext.emit()', () => {
+          test.each(truthyCases)('event: $mouseEvent', ({ mouseEvent }) => {
+            const expected = 'clickBackdrop'
 
-          jest.spyOn(context, 'extractDialogRect')
-            .mockReturnValue(params.dialogRect)
-          const isClickedOnBackdropSpy = jest.spyOn(context, 'isClickedOnBackdrop')
-          const emitSpy = jest.spyOn(context.componentContext, 'emit')
+            jest.spyOn(context, 'extractDialogRect')
+              .mockReturnValue(params.dialogRect)
+            const isClickedOnBackdropSpy = jest.spyOn(context, 'isClickedOnBackdrop')
+            const emitSpy = jest.spyOn(context.componentContext, 'emit')
 
-          context.clickInInner({
-            event: mouseEvent,
-          })
-
-          expect(isClickedOnBackdropSpy)
-            .toHaveBeenCalledWith({
+            context.clickInInner({
               event: mouseEvent,
             })
-          expect(emitSpy)
-            .toHaveBeenCalledWith(expected)
+
+            expect(isClickedOnBackdropSpy)
+              .toHaveBeenCalledWith({
+                event: mouseEvent,
+              })
+            expect(emitSpy)
+              .toHaveBeenCalledWith(expected)
+          })
+        })
+
+        describe('not to call #componentContext.emit()', () => {
+          test.each(falsyCases)('event: $mouseEvent', ({ mouseEvent }) => {
+            jest.spyOn(context, 'extractDialogRect')
+              .mockReturnValue(params.dialogRect)
+            const isClickedOnBackdropSpy = jest.spyOn(context, 'isClickedOnBackdrop')
+            const emitSpy = jest.spyOn(context.componentContext, 'emit')
+
+            context.clickInInner({
+              event: mouseEvent,
+            })
+
+            expect(isClickedOnBackdropSpy)
+              .toHaveBeenCalledWith({
+                event: mouseEvent,
+              })
+            expect(emitSpy)
+              .not
+              .toHaveBeenCalled()
+          })
         })
       })
+    })
 
-      describe.each(falsyCases)('not to call #componentContext.emit()', () => {
-        test.each(falsyCases)('event: $mouseEvent', ({ mouseEvent }) => {
-          jest.spyOn(context, 'extractDialogRect')
-            .mockReturnValue(params.dialogRect)
-          const isClickedOnBackdropSpy = jest.spyOn(context, 'isClickedOnBackdrop')
-          const emitSpy = jest.spyOn(context.componentContext, 'emit')
+    describe('when closed <dialog>', () => {
+      /**
+       * @type {Array<{
+       *   params: {
+       *     dialogRect: {
+       *       top: number
+       *       left: number
+       *       right: number
+       *       bottom: number
+       *       height: number
+       *       width: number
+       *       x: number
+       *       y: number
+       *     }
+       *   }
+       *   eventCases: Array<{
+       *     mouseEvent: MouseEvent
+       *   }>
+       * }>}
+       */
+      const cases = /** @type {Array<*>} */ ([
+        {
+          params: {
+            dialogRect: {
+              top: 50,
+              left: 50,
+              right: 100,
+              bottom: 100,
+              height: 0,
+              width: 0,
+            },
+          },
+          eventCases: [
+            { mouseEvent: { clientX: 49, clientY: 50 } },
+            { mouseEvent: { clientX: 50, clientY: 49 } },
+            { mouseEvent: { clientX: 100, clientY: 101 } },
+            { mouseEvent: { clientX: 101, clientY: 100 } },
+            { mouseEvent: { clientX: 50, clientY: 50 } },
+            { mouseEvent: { clientX: 50, clientY: 100 } },
+            { mouseEvent: { clientX: 100, clientY: 50 } },
+            { mouseEvent: { clientX: 100, clientY: 100 } },
+          ],
+        },
+        {
+          params: {
+            dialogRect: {
+              top: 500,
+              left: 200,
+              right: 400,
+              bottom: 700,
+              height: 200,
+              width: 0,
+            },
+          },
+          eventCases: [
+            { mouseEvent: { clientX: 199, clientY: 500 } },
+            { mouseEvent: { clientX: 200, clientY: 499 } },
+            { mouseEvent: { clientX: 400, clientY: 701 } },
+            { mouseEvent: { clientX: 401, clientY: 700 } },
+            { mouseEvent: { clientX: 200, clientY: 500 } },
+            { mouseEvent: { clientX: 200, clientY: 700 } },
+            { mouseEvent: { clientX: 400, clientY: 500 } },
+            { mouseEvent: { clientX: 400, clientY: 700 } },
+          ],
+        },
+        {
+          params: {
+            dialogRect: {
+              top: 500,
+              left: 200,
+              right: 400,
+              bottom: 700,
+              height: 0,
+              width: 200,
+            },
+          },
+          eventCases: [
+            { mouseEvent: { clientX: 199, clientY: 500 } },
+            { mouseEvent: { clientX: 200, clientY: 499 } },
+            { mouseEvent: { clientX: 400, clientY: 701 } },
+            { mouseEvent: { clientX: 401, clientY: 700 } },
+            { mouseEvent: { clientX: 200, clientY: 500 } },
+            { mouseEvent: { clientX: 200, clientY: 700 } },
+            { mouseEvent: { clientX: 400, clientY: 500 } },
+            { mouseEvent: { clientX: 400, clientY: 700 } },
+          ],
+        },
+      ])
 
-          context.clickInInner({
-            event: mouseEvent,
-          })
+      describe.each(cases)('dialogRect: $params.dialogRect', ({ params, eventCases }) => {
+        describe('not to call #componentContext.emit()', () => {
+          test.each(eventCases)('event: $mouseEvent', ({ mouseEvent }) => {
+            jest.spyOn(context, 'extractDialogRect')
+              .mockReturnValue(params.dialogRect)
+            const isClickedOnBackdropSpy = jest.spyOn(context, 'isClickedOnBackdrop')
+            const emitSpy = jest.spyOn(context.componentContext, 'emit')
 
-          expect(isClickedOnBackdropSpy)
-            .toHaveBeenCalledWith({
+            context.clickInInner({
               event: mouseEvent,
             })
-          expect(emitSpy)
-            .not
-            .toHaveBeenCalled()
+
+            expect(isClickedOnBackdropSpy)
+              .toHaveBeenCalledWith({
+                event: mouseEvent,
+              })
+            expect(emitSpy)
+              .not
+              .toHaveBeenCalled()
+          })
         })
       })
     })
