@@ -157,6 +157,10 @@ export default class FuroButtonDialogContext {
  */
 
 /**
+ * @typedef {'clickBackdrop' | 'clickPositiveButton' | 'clickNegativeButton' | 'clickNeutralButton'} FuroButtonDialogContextEmitOptions
+ */
+
+/**
  * @typedef {(
  *   event: 'clickBackdrop' | 'clickPositiveButton' | 'clickNegativeButton' | 'clickNeutralButton',
  *   ...args: Array<any>
