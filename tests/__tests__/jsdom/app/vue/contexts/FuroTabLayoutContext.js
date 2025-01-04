@@ -391,7 +391,24 @@ describe('FuroTabLayoutContext', () => {
       gammaElement,
     ]
 
+    const propsMock = {
+      tabs: [
+        { tabKey: 'alpha', label: 'Alpha' },
+        { tabKey: 'beta', label: 'Beta' },
+        { tabKey: 'gamma', label: 'Gamma' },
+      ],
+      activeTabKey: 'alpha',
+    }
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
     const context = new FuroTabLayoutContext({
+      props: propsMock,
+      componentContext: componentContextMock,
       tabContexts: [],
       activeTabKey: null,
     })
