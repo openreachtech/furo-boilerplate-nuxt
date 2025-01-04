@@ -185,3 +185,7 @@ export default class FuroDialogContext {
  *   ...args: Array<any>
  * ) => void} FuroDialogContextEmit
  */
+
+/**
+ * @typedef {'showDialog' | 'dismissDialog' | 'clickBackdrop'} FuroDialogContextEmitOptions
+ */
