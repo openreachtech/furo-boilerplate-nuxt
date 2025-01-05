@@ -510,3 +510,65 @@ describe('BaseFuroContext', () => {
     })
   })
 })
+
+describe('BaseFuroContext', () => {
+  describe('#setupComponent()', () => {
+    /**
+     * @type {Array<{
+     *   params: {
+     *     props: import('vue').ComponentCustomProps
+     *     componentContext: import('vue').SetupContext
+     *   }
+     * }>}
+     */
+    const cases = /** @type {Array<*>} */ ([
+      {
+        params: {
+          props: {
+            label: 'alpha',
+          },
+          componentContext: {
+            attrs: {
+              command: 'alpha',
+            },
+            emit: () => {},
+            expose: () => {},
+            slots: {
+              default: () => {},
+              alpha: () => {},
+            },
+          },
+        },
+      },
+      {
+        params: {
+          props: {
+            label: 'beta',
+          },
+          componentContext: {
+            attrs: {
+              command: 'beta',
+            },
+            emit: () => {},
+            expose: () => {},
+            slots: {
+              default: () => {},
+              beta: () => {},
+            },
+          },
+        },
+      },
+    ])
+
+    describe('to return own instance for method chaining', () => {
+      test.each(cases)('label: $params.props.label', ({ params }) => {
+        const context = BaseFuroContext.create(params)
+
+        const actual = context.setupComponent()
+
+        expect(actual)
+          .toBe(context) // same reference
+      })
+    })
+  })
+})
