@@ -60,7 +60,6 @@ export default defineComponent({
         }"
         @click="context.onClickTab({
           event: $event,
-          tabsRef,
         })"
       >
         {{ tab.label }}
