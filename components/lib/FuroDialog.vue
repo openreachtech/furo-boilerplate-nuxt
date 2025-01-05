@@ -71,8 +71,6 @@ export default defineComponent({
 }
 
 .unit-dialog.x-close {
-  --size-x-button: 2rem;
-
   overflow: visible;
 }
 
