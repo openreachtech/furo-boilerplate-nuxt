@@ -1234,3 +1234,407 @@ describe('FuroDialogContext', () => {
     })
   })
 })
+
+describe('FuroDialogContext', () => {
+  describe('#generateMutationObserverHandler()', () => {
+    describe('to be instance of Function', () => {
+      const cases = [
+        {
+          params: {
+            dialogElementRef: ref(
+              document.createElement('dialog')
+            ),
+          },
+        },
+        {
+          params: {
+            dialogElementRef: ref(null),
+          },
+        },
+      ]
+
+      test.each(cases)('dialogElementRef: $params.dialogElementRef', ({ params }) => {
+        const args = {
+          props: {},
+          componentContext: {
+            attrs: {},
+            emit: () => {},
+            expose: () => {},
+            slots: {},
+          },
+          dialogElementRef: params.dialogElementRef,
+        }
+        const context = new FuroDialogContext(args)
+
+        const actual = context.generateMutationObserverHandler()
+
+        expect(actual)
+          .toBeInstanceOf(Function)
+      })
+    })
+
+    describe('to emit showDialog when dialog is opened', () => {
+      const alphaDialogElement = document.createElement('dialog')
+      const betaDialogElement = document.createElement('dialog')
+
+      alphaDialogElement.setAttribute('open', '')
+      betaDialogElement.setAttribute('open', '')
+
+      const cases = [
+        {
+          params: {
+            dialogElementRef: ref(alphaDialogElement),
+          },
+        },
+        {
+          params: {
+            dialogElementRef: ref(betaDialogElement),
+          },
+        },
+      ]
+
+      test.each(cases)('dialogElementRef: $params.dialogElementRef', ({ params }) => {
+        const expectedEmitEvent = 'showDialog'
+
+        const emitSpy = jest.fn()
+
+        const args = {
+          props: {},
+          componentContext: {
+            attrs: {},
+            emit: emitSpy, // ✅️
+            expose: () => {},
+            slots: {},
+          },
+          dialogElementRef: params.dialogElementRef,
+        }
+        const context = new FuroDialogContext(args)
+
+        const handler = context.generateMutationObserverHandler()
+
+        /** @type {Array<MutationRecord>} */
+        const mutations = /** @type {Array<*>} */ ([{
+          type: 'attributes',
+          attributeName: 'open',
+          target: params.dialogElementRef.value,
+          oldValue: null,
+        }])
+
+        handler(
+          mutations,
+          new MutationObserver(() => {})
+        )
+
+        expect(emitSpy)
+          .toHaveBeenCalledWith(expectedEmitEvent)
+      })
+    })
+
+    describe('to emit dismissDialog when dialog is closed', () => {
+      const alphaDialogElement = document.createElement('dialog')
+      const betaDialogElement = document.createElement('dialog')
+
+      alphaDialogElement.removeAttribute('open')
+      betaDialogElement.removeAttribute('open')
+
+      const cases = [
+        {
+          params: {
+            dialogElementRef: ref(alphaDialogElement),
+          },
+        },
+        {
+          params: {
+            dialogElementRef: ref(betaDialogElement),
+          },
+        },
+      ]
+
+      test.each(cases)('dialogElementRef: $params.dialogElementRef', ({ params }) => {
+        const expectedEmitEvent = 'dismissDialog'
+
+        const emitSpy = jest.fn()
+
+        const args = {
+          props: {},
+          componentContext: {
+            attrs: {},
+            emit: emitSpy, // ✅️
+            expose: () => {},
+            slots: {},
+          },
+          dialogElementRef: params.dialogElementRef,
+        }
+        const context = new FuroDialogContext(args)
+
+        const handler = context.generateMutationObserverHandler()
+
+        /** @type {Array<MutationRecord>} */
+        const mutations = /** @type {Array<*>} */ ([{
+          type: 'attributes',
+          attributeName: 'open',
+          target: params.dialogElementRef.value,
+          oldValue: null,
+        }])
+
+        handler(
+          mutations,
+          new MutationObserver(() => {})
+        )
+
+        expect(emitSpy)
+          .toHaveBeenCalledWith(expectedEmitEvent)
+      })
+    })
+
+    describe('to not emit when mutation is not for open attribute', () => {
+      const alphaDialogElement = document.createElement('dialog')
+      const betaDialogElement = document.createElement('dialog')
+
+      alphaDialogElement.setAttribute('open', '')
+      betaDialogElement.removeAttribute('open')
+
+      const cases = [
+        {
+          params: {
+            dialogElementRef: ref(alphaDialogElement),
+          },
+        },
+        {
+          params: {
+            dialogElementRef: ref(betaDialogElement),
+          },
+        },
+      ]
+
+      test.each(cases)('dialogElementRef: $params.dialogElementRef', ({ params }) => {
+        const emitSpy = jest.fn()
+
+        const args = {
+          props: {},
+          componentContext: {
+            attrs: {},
+            emit: emitSpy, // ✅️
+            expose: () => {},
+            slots: {},
+          },
+          dialogElementRef: params.dialogElementRef,
+        }
+        const context = new FuroDialogContext(args)
+
+        const handler = context.generateMutationObserverHandler()
+
+        /** @type {Array<MutationRecord>} */
+        const mutations = /** @type {Array<*>} */ ([{
+          type: 'attributes',
+          attributeName: 'class', // ❌️ not 'open' attribute
+          target: params.dialogElementRef.value,
+          oldValue: null,
+        }])
+
+        handler(
+          mutations,
+          new MutationObserver(() => {})
+        )
+
+        expect(emitSpy)
+          .not
+          .toHaveBeenCalled()
+      })
+    })
+
+    describe('to not emit when mutation target is not dialog element', () => {
+      const alphaDialogElement = document.createElement('dialog')
+      const betaDialogElement = document.createElement('dialog')
+
+      alphaDialogElement.setAttribute('open', '')
+      betaDialogElement.removeAttribute('open')
+
+      const cases = [
+        {
+          params: {
+            dialogElementRef: ref(alphaDialogElement),
+          },
+        },
+        {
+          params: {
+            dialogElementRef: ref(betaDialogElement),
+          },
+        },
+      ]
+
+      test.each(cases)('dialogElementRef: $params.dialogElementRef', ({ params }) => {
+        const emitSpy = jest.fn()
+
+        const args = {
+          props: {},
+          componentContext: {
+            attrs: {},
+            emit: emitSpy, // ✅️
+            expose: () => {},
+            slots: {},
+          },
+          dialogElementRef: params.dialogElementRef,
+        }
+        const context = new FuroDialogContext(args)
+
+        const handler = context.generateMutationObserverHandler()
+
+        /** @type {Array<MutationRecord>} */
+        const mutations = /** @type {Array<*>} */ ([{
+          type: 'attributes',
+          attributeName: 'open',
+          target: document.createElement('dialog'), // ❌️ not same dialog element
+          oldValue: null,
+        }])
+
+        handler(
+          mutations,
+          new MutationObserver(() => {})
+        )
+
+        expect(emitSpy)
+          .not
+          .toHaveBeenCalled()
+      })
+    })
+  })
+})
+
+describe('FuroDialogContext', () => {
+  describe('#setupComponent()', () => {
+    describe('to call expose() with generated hash', () => {
+      const cases = [
+        {
+          params: {
+            dialogElementRef: ref(
+              document.createElement('dialog')
+            ),
+          },
+        },
+        {
+          params: {
+            dialogElementRef: ref(null),
+          },
+        },
+      ]
+
+      test.each(cases)('dialogElementRef: $params.dialogElementRef', ({ params }) => {
+        const expected = {
+          showDialog: expect.any(Function),
+          dismissDialog: expect.any(Function),
+        }
+
+        const exposeSpy = jest.fn()
+
+        const args = {
+          props: {},
+          componentContext: {
+            attrs: {},
+            emit: () => {},
+            expose: exposeSpy,
+            slots: {},
+          },
+          dialogElementRef: params.dialogElementRef,
+        }
+        const context = new FuroDialogContext(args)
+
+        context.setupComponent()
+
+        expect(exposeSpy)
+          .toHaveBeenCalledWith(expected)
+      })
+    })
+
+    describe('to call watch() with dialogElementRef and generated callback', () => {
+      const cases = [
+        {
+          params: {
+            dialogElementRef: ref(
+              document.createElement('dialog')
+            ),
+          },
+        },
+        {
+          params: {
+            dialogElementRef: ref(null),
+          },
+        },
+      ]
+
+      test.each(cases)('dialogElementRef: $params.dialogElementRef', ({ params }) => {
+        const args = {
+          props: {},
+          componentContext: {
+            attrs: {},
+            emit: () => {},
+            expose: () => {},
+            slots: {},
+          },
+          dialogElementRef: params.dialogElementRef,
+        }
+        const context = new FuroDialogContext(args)
+
+        const watchSpy = jest.fn()
+
+        /**
+         * Callback function for watch()
+         */
+        function callbackTally () {
+          // noop
+        }
+
+        jest.spyOn(context, 'watch', 'get')
+          .mockReturnValue(watchSpy)
+        jest.spyOn(context, 'generateWatchCallback')
+          .mockReturnValue(callbackTally)
+
+        context.setupComponent()
+
+        expect(watchSpy)
+          .toHaveBeenCalledWith(
+            [
+              params.dialogElementRef,
+            ],
+            callbackTally
+          )
+      })
+    })
+
+    describe('to return own instance for method chaining', () => {
+      const cases = [
+        {
+          params: {
+            dialogElementRef: ref(
+              document.createElement('dialog')
+            ),
+          },
+        },
+        {
+          params: {
+            dialogElementRef: ref(null),
+          },
+        },
+      ]
+
+      test.each(cases)('dialogElementRef: $params.dialogElementRef', ({ params }) => {
+        const args = {
+          props: {},
+          componentContext: {
+            attrs: {},
+            emit: () => {},
+            expose: () => {},
+            slots: {},
+          },
+          dialogElementRef: params.dialogElementRef,
+        }
+        const context = new FuroDialogContext(args)
+
+        const actual = context.setupComponent()
+
+        expect(actual)
+          .toBe(context) // same reference
+      })
+    })
+  })
+})
