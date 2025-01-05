@@ -18,6 +18,7 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
   constructor ({
     props,
     componentContext,
+    tabElementsRef,
     tabContexts,
     activeTabKey,
   }) {
@@ -26,6 +27,7 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
       componentContext,
     })
 
+    this.tabElementsRef = tabElementsRef
     this.tabContexts = tabContexts
     this.activeTabKey = activeTabKey
   }
@@ -42,6 +44,7 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
   static create ({
     props,
     componentContext,
+    tabElementsRef,
   }) {
     const {
       tabs,
@@ -57,6 +60,7 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
     return /** @type {InstanceType<T>} */ (
       new this({
         props,
+        tabElementsRef,
         componentContext,
         tabContexts,
         activeTabKey,
@@ -129,6 +133,7 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
  * @typedef {{
  *   props: FuroTabLayoutContextProps
  *   componentContext: import('vue').SetupContext
+ *   tabElementsRef: import('vue').Ref<Array<HTMLElement>>
  *   tabContexts: Array<FuroTabContext>
  *   activeTabKey: string | null
  * }} FuroTabLayoutContextParams
@@ -138,6 +143,7 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
  * @typedef {{
  *   props: FuroTabLayoutContextProps
  *   componentContext: import('vue').SetupContext
+ *   tabElementsRef: import('vue').Ref<Array<HTMLElement>>
  * }} FuroTabLayoutContextFactoryParams
  */
 
