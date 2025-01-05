@@ -57,6 +57,22 @@ export default class FuroDialogContext extends BaseFuroContext {
     }
   }
 
+  /** @override */
+  setupComponent () {
+    this.expose(
+      this.generateExposeHash()
+    )
+
+    this.watch(
+      [
+        this.dialogElementRef,
+      ],
+      this.generateWatchCallback()
+    )
+
+    return this
+  }
+
   /**
    * get: dialog element.
    *
@@ -64,6 +80,64 @@ export default class FuroDialogContext extends BaseFuroContext {
    */
   get dialogElement () {
     return this.dialogElementRef.value
+  }
+
+  /**
+   * generate watch handler.
+   *
+   * @returns {import('vue').WatchCallback}
+   */
+  generateWatchCallback () {
+    return ([newOne], [oldOne]) => {
+      if (oldOne) {
+        return
+      }
+
+      if (!this.dialogElementRef.value) {
+        return
+      }
+
+      const handler = this.generateMutationObserverHandler()
+      const observer = this.Ctor
+        .createMutationObserver({
+          handler,
+        })
+
+      observer.observe(this.dialogElementRef.value, {
+        attributes: true,
+        attributeFilter: [
+          'open',
+        ],
+        attributeOldValue: true,
+      })
+    }
+  }
+
+  /**
+   * Generate mutation observer handler.
+   *
+   * @returns {MutationCallback}
+   */
+  generateMutationObserverHandler () {
+    return mutations => {
+      const mutation = [...mutations]
+        .filter(it => it.type === 'attributes')
+        .filter(it => it.attributeName === 'open')
+        .find(it => it.target === this.dialogElementRef.value)
+
+      if (!mutation) {
+        return
+      }
+
+      const hasOpened = this.dialogElementRef.value
+        ?.hasAttribute('open')
+
+      const resolvedEmitEvent = hasOpened
+        ? this.EMIT_EVENT_NAME.SHOW_DIALOG
+        : this.EMIT_EVENT_NAME.DISMISS_DIALOG
+
+      this.emit(resolvedEmitEvent)
+    }
   }
 
   /**
