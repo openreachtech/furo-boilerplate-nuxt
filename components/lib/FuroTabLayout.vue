@@ -29,7 +29,7 @@ export default defineComponent({
     componentContext
   ) {
     /** @type {import('vue').Ref<Array<HTMLElement>>} */
-    const tabsRef = ref([])
+    const tabElementsRef = ref([])
 
     const context = FuroTabLayoutContext.create({
       props,
@@ -38,7 +38,7 @@ export default defineComponent({
 
     return {
       context,
-      tabsRef,
+      tabElementsRef,
     }
   },
 })
@@ -51,7 +51,7 @@ export default defineComponent({
     <div class="tabs">
       <button v-for="(tab, index) in context.tabContexts"
         :key="index"
-        ref="tabsRef"
+        ref="tabElementsRef"
         class="tab"
         :class="{
           active: context.isActiveTab({
@@ -60,7 +60,6 @@ export default defineComponent({
         }"
         @click="context.onClickTab({
           event: $event,
-          tabsRef,
         })"
       >
         {{ tab.label }}
