@@ -67,6 +67,37 @@ export default class FuroDialogContext extends BaseFuroContext {
   }
 
   /**
+   * generate watch handler.
+   *
+   * @returns {import('vue').WatchCallback}
+   */
+  generateWatchCallback () {
+    return ([newOne], [oldOne]) => {
+      if (oldOne) {
+        return
+      }
+
+      if (!this.dialogElementRef.value) {
+        return
+      }
+
+      const handler = this.generateMutationObserverHandler()
+      const observer = this.Ctor
+        .createMutationObserver({
+          handler,
+        })
+
+      observer.observe(this.dialogElementRef.value, {
+        attributes: true,
+        attributeFilter: [
+          'open',
+        ],
+        attributeOldValue: true,
+      })
+    }
+  }
+
+  /**
    * Generate mutation observer handler.
    *
    * @returns {MutationCallback}
