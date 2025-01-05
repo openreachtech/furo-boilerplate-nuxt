@@ -57,6 +57,22 @@ export default class FuroDialogContext extends BaseFuroContext {
     }
   }
 
+  /** @override */
+  setupComponent () {
+    this.expose(
+      this.generateExposeHash()
+    )
+
+    this.watch(
+      [
+        this.dialogElementRef,
+      ],
+      this.generateWatchCallback()
+    )
+
+    return this
+  }
+
   /**
    * get: dialog element.
    *
