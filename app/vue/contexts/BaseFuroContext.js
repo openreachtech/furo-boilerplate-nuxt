@@ -1,5 +1,7 @@
 /**
  * Furo Component Context.
+ *
+ * @template EE - emit() event names.
  */
 export default class BaseFuroContext {
   /**
@@ -57,6 +59,15 @@ export default class BaseFuroContext {
   }
 
   /**
+   * get: emit() event name.
+   *
+   * @returns {Record<string, EE>} - emit() event name.
+   */
+  get EMIT_EVENT_NAME () {
+    return /** @type {*} */ (this.Ctor.EMIT_EVENT_NAME)
+  }
+
+  /**
    * get: attrs of component context.
    *
    * @returns {import('vue').SetupContext['attrs']} - Attributes of component context.
@@ -68,10 +79,13 @@ export default class BaseFuroContext {
   /**
    * get: slots of component context.
    *
-   * @returns {import('vue').SetupContext['emit']} - emit() function of component context.
+   * @returns {(
+   *   event: EE,
+   *   ...args: Array<any>
+   * ) => void} - emit() function of component context.
    */
   get emit () {
-    return this.componentContext.emit
+    return /** @type {*} */ (this.componentContext.emit)
   }
 
   /**

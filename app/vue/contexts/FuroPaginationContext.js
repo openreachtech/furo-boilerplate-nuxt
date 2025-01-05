@@ -1,3 +1,5 @@
+import BaseFuroContext from './BaseFuroContext.js'
+
 import FuroPageContext from './FuroPageContext.js'
 
 /**
@@ -7,20 +9,28 @@ import FuroPageContext from './FuroPageContext.js'
  * @property {number} maxPageRange - page range in view
  * @property {number} lastPage - Last page.
  * @property {URLSearchParams} searchParams - Search parameters.
+ * @extends {BaseFuroContext<null>} - Base class.
  */
-export default class FuroPaginationContext {
+export default class FuroPaginationContext extends BaseFuroContext {
   /**
    * Constructor.
    *
    * @param {FuroPaginationContextParams} params - Parameters of this constructor.
    */
   constructor ({
+    props,
+    componentContext,
     searchParams,
     currentPage,
     maxPageRange,
     lastPage,
     pageKey,
   }) {
+    super({
+      props,
+      componentContext,
+    })
+
     this.searchParams = searchParams
     this.currentPage = currentPage
     this.maxPageRange = maxPageRange
@@ -31,36 +41,47 @@ export default class FuroPaginationContext {
   /**
    * Factory method to create a new instance of this class.
    *
+   * @template {X extends typeof FuroPaginationContext ? X : never} T, X
+   * @override
    * @param {FuroPaginationContextFactoryParams} params - Parameters of this factory method.
-   * @returns {FuroPaginationContext} - New instance of this class.
+   * @returns {InstanceType<T>} - New instance of this class.
+   * @this {T}
    */
   static create ({
+    props,
+    componentContext,
     searchParams = new URLSearchParams(location.search),
-    maxPageRange = 5,
-    props: {
+  }) {
+    const {
       pagination: {
         limit = 20,
-        totalRecords,
-      },
+        totalRecords = 0,
+      } = {},
       pageKey = 'page',
-    },
-    currentPage = this.extractCurrentPage({
+      maxPageRange = 5,
+    } = props
+
+    const currentPage = this.extractCurrentPage({
       searchParams,
       pageKey,
-    }),
-  }) {
+    })
+
     const lastPage = this.calculateLastPage({
       limit,
       totalRecords,
     })
 
-    return new this({
-      searchParams,
-      currentPage,
-      lastPage,
-      maxPageRange,
-      pageKey,
-    })
+    return /** @type {InstanceType<T>} */ (
+      new this({
+        props,
+        componentContext,
+        searchParams,
+        currentPage,
+        lastPage,
+        maxPageRange,
+        pageKey,
+      })
+    )
   }
 
   /**
@@ -312,7 +333,9 @@ export default class FuroPaginationContext {
 }
 
 /**
- * @typedef {{
+ * @typedef {import('./BaseFuroContext.js').BaseFuroContextParams & {
+ *   props: FuroPaginationContextProps
+ *   componentContext: import('vue').SetupContext
  *   searchParams: URLSearchParams
  *   currentPage: number
  *   maxPageRange: number
@@ -322,13 +345,20 @@ export default class FuroPaginationContext {
  */
 
 /**
- * @typedef {{
+ * @typedef {import('./BaseFuroContext.js').BaseFuroContextFactoryParams & {
+ *   props: FuroPaginationContextProps
+ *   componentContext: import('vue').SetupContext
  *   searchParams?: URLSearchParams
- *   currentPage?: number
- *   maxPageRange?: number
- *   props: {
- *     pagination: Record<string, number>
- *     pageKey?: string
- *   }
  * }} FuroPaginationContextFactoryParams
+ */
+
+/**
+ * @typedef {{
+ *   pagination?: {
+ *     limit?: number
+ *     totalRecords?: number
+ *   }
+ *   pageKey?: string
+ *   maxPageRange?: number
+ * }} FuroPaginationContextProps
  */
