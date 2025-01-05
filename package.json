@@ -25,8 +25,8 @@
     "@openreachtech/furo-nuxt": "^1.1.2",
     "@openreachtech/jest-constructor-spy": "^1.1.0",
     "core-js": "^3.36.0",
-    "nuxt": "^3.10.3",
-    "vue": "^3.4.21"
+    "nuxt": "^3.15.0",
+    "vue": "^3.5.13"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0",
