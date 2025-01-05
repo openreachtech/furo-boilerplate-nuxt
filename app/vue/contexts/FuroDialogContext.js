@@ -67,6 +67,33 @@ export default class FuroDialogContext extends BaseFuroContext {
   }
 
   /**
+   * Generate mutation observer handler.
+   *
+   * @returns {MutationCallback}
+   */
+  generateMutationObserverHandler () {
+    return mutations => {
+      const mutation = [...mutations]
+        .filter(it => it.type === 'attributes')
+        .filter(it => it.attributeName === 'open')
+        .find(it => it.target === this.dialogElementRef.value)
+
+      if (!mutation) {
+        return
+      }
+
+      const hasOpened = this.dialogElementRef.value
+        ?.hasAttribute('open')
+
+      const resolvedEmitEvent = hasOpened
+        ? this.EMIT_EVENT_NAME.SHOW_DIALOG
+        : this.EMIT_EVENT_NAME.DISMISS_DIALOG
+
+      this.emit(resolvedEmitEvent)
+    }
+  }
+
+  /**
    * Show dialog.
    */
   showDialog () {
