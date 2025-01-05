@@ -13,10 +13,8 @@ export default defineComponent({
     pagination: {
       type: Object,
       default: () => ({
-        pagination: {
-          limit: 20,
-          totalRecords: 0,
-        },
+        limit: 20,
+        totalRecords: 0,
       }),
       validator: value => {
         if (typeof value !== 'object') {
@@ -38,11 +36,19 @@ export default defineComponent({
       type: String,
       default: 'page',
     },
+    maxPageRange: {
+      type: Number,
+      default: 5,
+    },
   },
 
-  setup (props) {
+  setup (
+    props,
+    componentContext
+  ) {
     const context = FuroPaginationContext.create({
       props,
+      componentContext,
     })
 
     return {

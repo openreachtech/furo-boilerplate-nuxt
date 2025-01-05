@@ -1,3 +1,5 @@
+import BaseFuroContext from './BaseFuroContext.js'
+
 import FuroTabContext from './FuroTabContext.js'
 
 /**
@@ -5,17 +7,25 @@ import FuroTabContext from './FuroTabContext.js'
  *
  * @property {Array} tabContexts - Tab contexts.
  * @property {string | null} activeTabKey - Active tab key
+ * @extends {BaseFuroContext<null>}
  */
-export default class FuroTabLayoutContext {
+export default class FuroTabLayoutContext extends BaseFuroContext {
   /**
    * Constructor.
    *
    * @param {FuroTabLayoutContextParams} params - Parameters of this constructor.
    */
   constructor ({
+    props,
+    componentContext,
     tabContexts,
     activeTabKey,
   }) {
+    super({
+      props,
+      componentContext,
+    })
+
     this.tabContexts = tabContexts
     this.activeTabKey = activeTabKey
   }
@@ -24,16 +34,20 @@ export default class FuroTabLayoutContext {
    * Factory method to create a new instance of this class.
    *
    * @template {X extends typeof FuroTabLayoutContext ? X : never} T, X
+   * @override
    * @param {FuroTabLayoutContextFactoryParams} params - Parameters of this factory method.
    * @returns {InstanceType<T>} - New instance of this class.
    * @this {T}
    */
   static create ({
-    props: {
+    props,
+    componentContext,
+  }) {
+    const {
       tabs,
       activeTabKey = null,
-    },
-  }) {
+    } = props
+
     const tabContexts = tabs.map((it, index) =>
       this.createTabContexts({
         tab: it,
@@ -42,6 +56,8 @@ export default class FuroTabLayoutContext {
 
     return /** @type {InstanceType<T>} */ (
       new this({
+        props,
+        componentContext,
         tabContexts,
         activeTabKey,
       })
@@ -111,6 +127,8 @@ export default class FuroTabLayoutContext {
 
 /**
  * @typedef {{
+ *   props: FuroTabLayoutContextProps
+ *   componentContext: import('vue').SetupContext
  *   tabContexts: Array<FuroTabContext>
  *   activeTabKey: string | null
  * }} FuroTabLayoutContextParams
@@ -118,11 +136,16 @@ export default class FuroTabLayoutContext {
 
 /**
  * @typedef {{
- *   props: {
- *     tabs: Array<FuroTabParams>
- *     activeTabKey?: string | null
- *   }
+ *   props: FuroTabLayoutContextProps
+ *   componentContext: import('vue').SetupContext
  * }} FuroTabLayoutContextFactoryParams
+ */
+
+/**
+ * @typedef {{
+ *   tabs: Array<FuroTabParams>
+ *   activeTabKey?: string | null
+ * }} FuroTabLayoutContextProps
  */
 
 /**

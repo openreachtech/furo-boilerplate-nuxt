@@ -1,8 +1,36 @@
 import FuroTabLayoutContext from '~/app/vue/contexts/FuroTabLayoutContext.js'
+
+import BaseFuroContext from '~/app/vue/contexts/BaseFuroContext.js'
 import FuroTabContext from '~/app/vue/contexts/FuroTabContext.js'
 
 describe('FuroTabLayoutContext', () => {
+  describe('super class', () => {
+    test('to be instance of BaseFuroContext', () => {
+      const actual = FuroTabLayoutContext.prototype
+
+      expect(actual)
+        .toBeInstanceOf(BaseFuroContext)
+    })
+  })
+})
+
+describe('FuroTabLayoutContext', () => {
   describe('constructor', () => {
+    const propsMock = {
+      tabs: [
+        { tabKey: 'alpha', label: 'Alpha' },
+        { tabKey: 'beta', label: 'Beta' },
+        { tabKey: 'gamma', label: 'Gamma' },
+      ],
+      activeTabKey: 'alpha',
+    }
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
     describe('to keep properties', () => {
       describe('#tabContexts', () => {
         const cases = [
@@ -39,6 +67,8 @@ describe('FuroTabLayoutContext', () => {
 
         test.each(cases)('tabContexts: $params.tabContexts', ({ params }) => {
           const args = {
+            props: propsMock,
+            componentContext: componentContextMock,
             tabContexts: params.tabContexts,
             activeTabKey: null,
           }
@@ -77,6 +107,8 @@ describe('FuroTabLayoutContext', () => {
 
       test.each(cases)('activeTabKey: $params.activeTabKey', ({ params }) => {
         const args = {
+          props: propsMock,
+          componentContext: componentContextMock,
           tabContexts: [],
           activeTabKey: params.activeTabKey,
         }
@@ -92,6 +124,13 @@ describe('FuroTabLayoutContext', () => {
 
 describe('FuroTabLayoutContext', () => {
   describe('.create()', () => {
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
     describe('to be instance of own class', () => {
       const cases = [
         {
@@ -127,7 +166,11 @@ describe('FuroTabLayoutContext', () => {
       ]
 
       test.each(cases)('tabs length: $params.props.tabs.length', ({ params }) => {
-        const actual = FuroTabLayoutContext.create(params)
+        const args = {
+          props: params.props,
+          componentContext: componentContextMock,
+        }
+        const actual = FuroTabLayoutContext.create(args)
 
         expect(actual)
           .toBeInstanceOf(FuroTabLayoutContext)
@@ -146,8 +189,18 @@ describe('FuroTabLayoutContext', () => {
               ],
               activeTabKey: 'alpha',
             },
+            componentContext: componentContextMock,
           },
           expected: {
+            props: {
+              tabs: [
+                { tabKey: 'gamma', label: 'Gamma' },
+                { tabKey: 'alpha', label: 'Alpha' },
+                { tabKey: 'beta', label: 'Beta' },
+              ],
+              activeTabKey: 'alpha',
+            },
+            componentContext: componentContextMock,
             tabContexts: [
               FuroTabContext.create({ tabKey: 'gamma', label: 'Gamma' }),
               FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha' }),
@@ -165,8 +218,17 @@ describe('FuroTabLayoutContext', () => {
               ],
               activeTabKey: 'beta',
             },
+            componentContext: componentContextMock,
           },
           expected: {
+            props: {
+              tabs: [
+                { tabKey: 'alpha', label: 'Alpha' },
+                { tabKey: 'beta', label: 'Beta' },
+              ],
+              activeTabKey: 'beta',
+            },
+            componentContext: componentContextMock,
             tabContexts: [
               FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha' }),
               FuroTabContext.create({ tabKey: 'beta', label: 'Beta' }),
@@ -182,8 +244,16 @@ describe('FuroTabLayoutContext', () => {
               ],
               // activeTabKey: 'alpha,
             },
+            componentContext: componentContextMock,
           },
           expected: {
+            props: {
+              tabs: [
+                { tabKey: 'alpha', label: 'Alpha' },
+              ],
+              // activeTabKey: 'alpha,
+            },
+            componentContext: componentContextMock,
             tabContexts: [
               FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha' }),
             ],
@@ -244,6 +314,21 @@ describe('FuroTabLayoutContext', () => {
 
 describe('FuroTabLayoutContext', () => {
   describe('#isActiveTab()', () => {
+    const propsMock = {
+      tabs: [
+        { tabKey: 'alpha', label: 'Alpha' },
+        { tabKey: 'beta', label: 'Beta' },
+        { tabKey: 'gamma', label: 'Gamma' },
+      ],
+      activeTabKey: 'alpha',
+    }
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
     const cases = [
       {
         params: {
@@ -260,10 +345,14 @@ describe('FuroTabLayoutContext', () => {
     ]
 
     describe.each(cases)('activeTabKey: $params.activeTabKey', ({ params, truthyCases, falsyCases }) => {
-      const context = new FuroTabLayoutContext({
+      const args = {
+        props: propsMock,
+        componentContext: componentContextMock,
         tabContexts: [],
         activeTabKey: params.activeTabKey,
-      })
+      }
+
+      const context = new FuroTabLayoutContext(args)
 
       describe('to be truthy', () => {
         test.each(truthyCases)('tabKey: $tabKey', ({ tabKey }) => {
@@ -302,7 +391,24 @@ describe('FuroTabLayoutContext', () => {
       gammaElement,
     ]
 
+    const propsMock = {
+      tabs: [
+        { tabKey: 'alpha', label: 'Alpha' },
+        { tabKey: 'beta', label: 'Beta' },
+        { tabKey: 'gamma', label: 'Gamma' },
+      ],
+      activeTabKey: 'alpha',
+    }
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
     const context = new FuroTabLayoutContext({
+      props: propsMock,
+      componentContext: componentContextMock,
       tabContexts: [],
       activeTabKey: null,
     })
