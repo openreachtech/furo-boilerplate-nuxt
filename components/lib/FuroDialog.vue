@@ -55,7 +55,7 @@ export default defineComponent({
   >
     <slot name="contents" />
 
-    <button class="close"
+    <button class="built-in-close"
       @click="context.dismissDialog()"
     >
       <slot name="x-button">
@@ -76,7 +76,7 @@ export default defineComponent({
   overflow: visible;
 }
 
-.unit-dialog.x-close .close {
+.unit-dialog.x-close .built-in-close {
   position: absolute;
   top: calc(var(--size-x-button) * -0.4);
   right: calc(var(--size-x-button) * -0.4);
@@ -95,15 +95,15 @@ export default defineComponent({
   appearance: none;
 }
 
-.unit-dialog.x-close .close {
+.unit-dialog.x-close .built-in-close {
   display: inline-block;
 }
 
-.unit-dialog.x-close .close:active {
+.unit-dialog.x-close .built-in-close:active {
   filter: brightness(0.8);
 }
 
-.unit-dialog:not(.x-close) .close {
+.unit-dialog:not(.x-close) .built-in-close {
   display: none;
 }
 </style>
