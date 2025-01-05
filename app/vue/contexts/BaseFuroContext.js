@@ -105,6 +105,33 @@ export default class BaseFuroContext {
   get slots () {
     return this.componentContext.slots
   }
+
+  /**
+   * Setup component context.
+   *
+   * @param {object} [args] - Arguments of this method.
+   * @returns {BaseFuroContext<EE>} - For method chaining.
+   * @example
+   * ```
+   * setupComponent (args) {
+   *   this..expose(
+   *     this.generateExposeHash()
+   *   )
+   *
+   *   watch(
+   *     [
+   *       this.rootElementRef,
+   *     ],
+   *     this.generateWatchRootElementHandler()
+   *   )
+   *
+   *   return this
+   * }
+   * ```
+   */
+  setupComponent (args = {}) {
+    return this
+  }
 }
 
 /**
