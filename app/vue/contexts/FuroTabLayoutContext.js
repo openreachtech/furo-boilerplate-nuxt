@@ -18,6 +18,7 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
   constructor ({
     props,
     componentContext,
+    tabElementsRef,
     tabContexts,
     activeTabKey,
   }) {
@@ -26,6 +27,7 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
       componentContext,
     })
 
+    this.tabElementsRef = tabElementsRef
     this.tabContexts = tabContexts
     this.activeTabKey = activeTabKey
   }
@@ -42,6 +44,7 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
   static create ({
     props,
     componentContext,
+    tabElementsRef,
   }) {
     const {
       tabs,
@@ -57,6 +60,7 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
     return /** @type {InstanceType<T>} */ (
       new this({
         props,
+        tabElementsRef,
         componentContext,
         tabContexts,
         activeTabKey,
@@ -85,6 +89,15 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
   }
 
   /**
+   * get: tabElements.
+   *
+   * @returns {Array<HTMLElement>} - Tab elements.
+   */
+  get tabElements () {
+    return this.tabElementsRef.value
+  }
+
+  /**
    * Is active tab.
    *
    * @param {{
@@ -105,7 +118,6 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
    *   event: {
    *     target: HTMLElement
    *   }
-   *   tabsRef: Array<HTMLElement>
    * }} params - Parameters of this method
    * @returns {void}
    */
@@ -113,13 +125,13 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
     event: {
       target,
     },
-    tabsRef,
   }) {
     const ACTIVE_CLASS = 'active'
 
-    tabsRef.forEach(it => {
-      it['classList'].remove(ACTIVE_CLASS)
-    })
+    this.tabElements
+      .forEach(it => {
+        it['classList'].remove(ACTIVE_CLASS)
+      })
 
     target['classList'].add(ACTIVE_CLASS)
   }
@@ -129,6 +141,7 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
  * @typedef {{
  *   props: FuroTabLayoutContextProps
  *   componentContext: import('vue').SetupContext
+ *   tabElementsRef: import('vue').Ref<Array<HTMLElement>>
  *   tabContexts: Array<FuroTabContext>
  *   activeTabKey: string | null
  * }} FuroTabLayoutContextParams
@@ -138,6 +151,7 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
  * @typedef {{
  *   props: FuroTabLayoutContextProps
  *   componentContext: import('vue').SetupContext
+ *   tabElementsRef: import('vue').Ref<Array<HTMLElement>>
  * }} FuroTabLayoutContextFactoryParams
  */
 

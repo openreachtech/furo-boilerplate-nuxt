@@ -1,3 +1,7 @@
+import {
+  ref,
+} from 'vue'
+
 import FuroTabLayoutContext from '~/app/vue/contexts/FuroTabLayoutContext.js'
 
 import BaseFuroContext from '~/app/vue/contexts/BaseFuroContext.js'
@@ -30,6 +34,61 @@ describe('FuroTabLayoutContext', () => {
       expose: () => {},
       slots: {},
     }
+
+    describe('to keep properties', () => {
+      describe('#tabElementsRef', () => {
+        const alphaTabElement = document.createElement('div')
+        const betaTabElement = document.createElement('div')
+        const gammaTabElement = document.createElement('div')
+
+        const cases = [
+          {
+            params: {
+              tabElementsRef: ref([
+                alphaTabElement,
+                betaTabElement,
+                gammaTabElement,
+              ]),
+            },
+          },
+          {
+            params: {
+              tabElementsRef: ref([
+                betaTabElement,
+                gammaTabElement,
+              ]),
+            },
+          },
+          {
+            params: {
+              tabElementsRef: ref([
+                gammaTabElement,
+              ]),
+            },
+          },
+          {
+            params: {
+              tabElementsRef: ref([]),
+            },
+          },
+        ]
+
+        test.each(cases)('tabElementsRef: $params.tabElementsRef', ({ params }) => {
+          const args = {
+            props: propsMock,
+            componentContext: componentContextMock,
+            tabElementsRef: params.tabElementsRef,
+            tabContexts: [],
+            activeTabKey: null,
+          }
+
+          const context = new FuroTabLayoutContext(args)
+
+          expect(context)
+            .toHaveProperty('tabElementsRef', params.tabElementsRef)
+        })
+      })
+    })
 
     describe('to keep properties', () => {
       describe('#tabContexts', () => {
@@ -69,6 +128,7 @@ describe('FuroTabLayoutContext', () => {
           const args = {
             props: propsMock,
             componentContext: componentContextMock,
+            tabElementsRef: ref([]),
             tabContexts: params.tabContexts,
             activeTabKey: null,
           }
@@ -109,6 +169,7 @@ describe('FuroTabLayoutContext', () => {
         const args = {
           props: propsMock,
           componentContext: componentContextMock,
+          tabElementsRef: ref([]),
           tabContexts: [],
           activeTabKey: params.activeTabKey,
         }
@@ -169,6 +230,7 @@ describe('FuroTabLayoutContext', () => {
         const args = {
           props: params.props,
           componentContext: componentContextMock,
+          tabElementsRef: ref([]),
         }
         const actual = FuroTabLayoutContext.create(args)
 
@@ -178,6 +240,10 @@ describe('FuroTabLayoutContext', () => {
     })
 
     describe('to call constructor', () => {
+      const alphaTabElement = document.createElement('div')
+      const betaTabElement = document.createElement('div')
+      const gammaTabElement = document.createElement('div')
+
       const cases = [
         {
           params: {
@@ -190,6 +256,11 @@ describe('FuroTabLayoutContext', () => {
               activeTabKey: 'alpha',
             },
             componentContext: componentContextMock,
+            tabElementsRef: ref([
+              alphaTabElement,
+              betaTabElement,
+              gammaTabElement,
+            ]),
           },
           expected: {
             props: {
@@ -201,6 +272,11 @@ describe('FuroTabLayoutContext', () => {
               activeTabKey: 'alpha',
             },
             componentContext: componentContextMock,
+            tabElementsRef: ref([
+              alphaTabElement,
+              betaTabElement,
+              gammaTabElement,
+            ]),
             tabContexts: [
               FuroTabContext.create({ tabKey: 'gamma', label: 'Gamma' }),
               FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha' }),
@@ -219,6 +295,10 @@ describe('FuroTabLayoutContext', () => {
               activeTabKey: 'beta',
             },
             componentContext: componentContextMock,
+            tabElementsRef: ref([
+              betaTabElement,
+              gammaTabElement,
+            ]),
           },
           expected: {
             props: {
@@ -229,6 +309,10 @@ describe('FuroTabLayoutContext', () => {
               activeTabKey: 'beta',
             },
             componentContext: componentContextMock,
+            tabElementsRef: ref([
+              betaTabElement,
+              gammaTabElement,
+            ]),
             tabContexts: [
               FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha' }),
               FuroTabContext.create({ tabKey: 'beta', label: 'Beta' }),
@@ -245,6 +329,9 @@ describe('FuroTabLayoutContext', () => {
               // activeTabKey: 'alpha,
             },
             componentContext: componentContextMock,
+            tabElementsRef: ref([
+              gammaTabElement,
+            ]),
           },
           expected: {
             props: {
@@ -254,6 +341,9 @@ describe('FuroTabLayoutContext', () => {
               // activeTabKey: 'alpha,
             },
             componentContext: componentContextMock,
+            tabElementsRef: ref([
+              gammaTabElement,
+            ]),
             tabContexts: [
               FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha' }),
             ],
@@ -313,6 +403,91 @@ describe('FuroTabLayoutContext', () => {
 })
 
 describe('FuroTabLayoutContext', () => {
+  describe('#get:tabElements', () => {
+    const propsMock = {
+      tabs: [
+        { tabKey: 'alpha', label: 'Alpha' },
+        { tabKey: 'beta', label: 'Beta' },
+        { tabKey: 'gamma', label: 'Gamma' },
+      ],
+      activeTabKey: 'alpha',
+    }
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
+    const alphaTabElement = document.createElement('div')
+    const betaTabElement = document.createElement('div')
+    const gammaTabElement = document.createElement('div')
+
+    const cases = [
+      {
+        params: {
+          tabElementsRef: ref([
+            alphaTabElement,
+            betaTabElement,
+            gammaTabElement,
+          ]),
+        },
+        expected: [
+          alphaTabElement,
+          betaTabElement,
+          gammaTabElement,
+        ],
+      },
+      {
+        params: {
+          tabElementsRef: ref([
+            betaTabElement,
+            gammaTabElement,
+          ]),
+        },
+        expected: [
+          betaTabElement,
+          gammaTabElement,
+        ],
+      },
+      {
+        params: {
+          tabElementsRef: ref([
+            gammaTabElement,
+          ]),
+        },
+        expected: [
+          gammaTabElement,
+        ],
+      },
+      {
+        params: {
+          tabElementsRef: ref([]),
+        },
+        expected: [],
+      },
+    ]
+
+    test.each(cases)('tabElementsRef: $params.tabElementsRef', ({ params, expected }) => {
+      const args = {
+        props: propsMock,
+        componentContext: componentContextMock,
+        tabElementsRef: params.tabElementsRef,
+        tabContexts: [],
+        activeTabKey: null,
+      }
+
+      const context = new FuroTabLayoutContext(args)
+
+      const actual = context.tabElements
+
+      expect(actual)
+        .toEqual(expected)
+    })
+  })
+})
+
+describe('FuroTabLayoutContext', () => {
   describe('#isActiveTab()', () => {
     const propsMock = {
       tabs: [
@@ -348,6 +523,7 @@ describe('FuroTabLayoutContext', () => {
       const args = {
         props: propsMock,
         componentContext: componentContextMock,
+        tabElementsRef: ref([]),
         tabContexts: [],
         activeTabKey: params.activeTabKey,
       }
@@ -409,6 +585,7 @@ describe('FuroTabLayoutContext', () => {
     const context = new FuroTabLayoutContext({
       props: propsMock,
       componentContext: componentContextMock,
+      tabElementsRef: ref(tabElements),
       tabContexts: [],
       activeTabKey: null,
     })
@@ -420,7 +597,6 @@ describe('FuroTabLayoutContext', () => {
         event: {
           target: alphaElement,
         },
-        tabsRef: tabElements,
       }
 
       test('to call #remove()', () => {
@@ -463,7 +639,6 @@ describe('FuroTabLayoutContext', () => {
         event: {
           target: betaElement,
         },
-        tabsRef: tabElements,
       }
 
       test('to call #remove()', () => {
@@ -506,7 +681,6 @@ describe('FuroTabLayoutContext', () => {
         event: {
           target: gammaElement,
         },
-        tabsRef: tabElements,
       }
 
       test('to call #remove()', () => {
