@@ -89,6 +89,15 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
   }
 
   /**
+   * get: tabElements.
+   *
+   * @returns {Array<HTMLElement>} - Tab elements.
+   */
+  get tabElements () {
+    return this.tabElementsRef.value
+  }
+
+  /**
    * Is active tab.
    *
    * @param {{
