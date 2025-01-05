@@ -584,8 +584,8 @@ describe('FuroTabLayoutContext', () => {
 
     const context = new FuroTabLayoutContext({
       props: propsMock,
-      tabElementsRef: ref(tabElements),
       componentContext: componentContextMock,
+      tabElementsRef: ref(tabElements),
       tabContexts: [],
       activeTabKey: null,
     })
