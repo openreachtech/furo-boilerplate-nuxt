@@ -1,3 +1,7 @@
+import {
+  watch,
+} from 'vue'
+
 /**
  * Furo Component Context.
  *
@@ -104,6 +108,15 @@ export default class BaseFuroContext {
    */
   get slots () {
     return this.componentContext.slots
+  }
+
+  /**
+   * get: watch() of component context.
+   *
+   * @returns {import('vue').watch} - Watch of component context.
+   */
+  get watch () {
+    return watch
   }
 
   /**
