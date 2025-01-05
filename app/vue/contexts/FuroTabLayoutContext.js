@@ -118,7 +118,6 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
    *   event: {
    *     target: HTMLElement
    *   }
-   *   tabsRef: Array<HTMLElement>
    * }} params - Parameters of this method
    * @returns {void}
    */
@@ -126,13 +125,13 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
     event: {
       target,
     },
-    tabsRef,
   }) {
     const ACTIVE_CLASS = 'active'
 
-    tabsRef.forEach(it => {
-      it['classList'].remove(ACTIVE_CLASS)
-    })
+    this.tabElements
+      .forEach(it => {
+        it['classList'].remove(ACTIVE_CLASS)
+      })
 
     target['classList'].add(ACTIVE_CLASS)
   }
