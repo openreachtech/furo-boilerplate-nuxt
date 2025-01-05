@@ -1,3 +1,7 @@
+import {
+  ref,
+} from 'vue'
+
 import FuroTabLayoutContext from '~/app/vue/contexts/FuroTabLayoutContext.js'
 
 import BaseFuroContext from '~/app/vue/contexts/BaseFuroContext.js'
@@ -30,6 +34,61 @@ describe('FuroTabLayoutContext', () => {
       expose: () => {},
       slots: {},
     }
+
+    describe('to keep properties', () => {
+      describe('#tabElementsRef', () => {
+        const alphaTabElement = document.createElement('div')
+        const betaTabElement = document.createElement('div')
+        const gammaTabElement = document.createElement('div')
+
+        const cases = [
+          {
+            params: {
+              tabElementsRef: ref([
+                alphaTabElement,
+                betaTabElement,
+                gammaTabElement,
+              ]),
+            },
+          },
+          {
+            params: {
+              tabElementsRef: ref([
+                betaTabElement,
+                gammaTabElement,
+              ]),
+            },
+          },
+          {
+            params: {
+              tabElementsRef: ref([
+                gammaTabElement,
+              ]),
+            },
+          },
+          {
+            params: {
+              tabElementsRef: ref([]),
+            },
+          },
+        ]
+
+        test.each(cases)('tabElementsRef: $params.tabElementsRef', ({ params }) => {
+          const args = {
+            props: propsMock,
+            componentContext: componentContextMock,
+            tabElementsRef: params.tabElementsRef,
+            tabContexts: [],
+            activeTabKey: null,
+          }
+
+          const context = new FuroTabLayoutContext(args)
+
+          expect(context)
+            .toHaveProperty('tabElementsRef', params.tabElementsRef)
+        })
+      })
+    })
 
     describe('to keep properties', () => {
       describe('#tabContexts', () => {
