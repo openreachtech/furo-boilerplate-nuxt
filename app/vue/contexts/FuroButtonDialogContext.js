@@ -1,63 +1,60 @@
+import BaseFuroContext from './BaseFuroContext'
+
 /**
  * Props context class for FuroButtonDialogContext component.
  *
  * @property {import('vue').Ref<HTMLDialogElement | null>} dialogRef - Dialog element.
- * @property {FuroButtonDialogContextEmit} emit - Emit event.
+ * @extends {BaseFuroContext<FuroButtonDialogContextEmitOptions>} - Base class.
  */
-export default class FuroButtonDialogContext {
+export default class FuroButtonDialogContext extends BaseFuroContext {
   /**
    * Constructor.
    *
    * @param {FuroButtonDialogContextParams} params - Parameters of this constructor.
    */
   constructor ({
+    props,
+    componentContext,
     dialogComponentRef,
-    emit,
   }) {
+    super({
+      props,
+      componentContext,
+    })
+
     this.dialogComponentRef = dialogComponentRef
-    this.emit = emit
   }
 
   /**
    * Factory method to create a new instance of this class.
    *
+   * @template {X extends typeof FuroButtonDialogContext ? X : never} T, X
+   * @override
    * @param {FuroButtonDialogContextFactoryParams} params - Parameters of this factory method.
-   * @returns {FuroButtonDialogContext} - New instance of this class.
+   * @returns {InstanceType<T>} - An instance of this class.
+   * @this {T}
    */
   static create ({
+    props,
+    componentContext,
     dialogComponentRef,
-    emit,
   }) {
-    return new this({
-      dialogComponentRef,
-      emit,
-    })
+    return /** @type {InstanceType<T>} */ (
+      new this({
+        props,
+        componentContext,
+        dialogComponentRef,
+      })
+    )
   }
 
-  /**
-   * emit() event name.
-   *
-   * @returns {{
-   *   CLICK_POSITIVE_BUTTON: 'clickPositiveButton',
-   *   CLICK_NEGATIVE_BUTTON: 'clickNegativeButton',
-   *   CLICK_NEUTRAL_BUTTON: 'clickNeutralButton',
-   * }}
-   */
+  /** @override */
   static get EMIT_EVENT_NAME () {
     return {
       CLICK_POSITIVE_BUTTON: 'clickPositiveButton',
       CLICK_NEGATIVE_BUTTON: 'clickNegativeButton',
       CLICK_NEUTRAL_BUTTON: 'clickNeutralButton',
     }
-  }
-
-  /**
-   * get: constructor.
-   *
-   * @returns {typeof FuroButtonDialogContext}
-   */
-  get Ctor () {
-    return /** @type {*} */ (this.constructor)
   }
 
   /**
@@ -103,8 +100,7 @@ export default class FuroButtonDialogContext {
    */
   clickPositiveButton () {
     this.emit(
-      this.Ctor
-        .EMIT_EVENT_NAME
+      this.EMIT_EVENT_NAME
         .CLICK_POSITIVE_BUTTON
     )
 
@@ -116,8 +112,7 @@ export default class FuroButtonDialogContext {
    */
   clickNegativeButton () {
     this.emit(
-      this.Ctor
-        .EMIT_EVENT_NAME
+      this.EMIT_EVENT_NAME
         .CLICK_NEGATIVE_BUTTON
     )
 
@@ -129,8 +124,7 @@ export default class FuroButtonDialogContext {
    */
   clickNeutralButton () {
     this.emit(
-      this.Ctor
-        .EMIT_EVENT_NAME
+      this.EMIT_EVENT_NAME
         .CLICK_NEUTRAL_BUTTON
     )
 
@@ -139,14 +133,17 @@ export default class FuroButtonDialogContext {
 }
 
 /**
- * @typedef {{
+ * @typedef {import('./BaseFuroContext').BaseFuroContextParams & {
  *   dialogComponentRef: import('vue').Ref<import('~/components/lib/FuroDialog.vue').default | null>
- *   emit: FuroButtonDialogContextEmit
  * }} FuroButtonDialogContextParams
  */
 
 /**
  * @typedef {FuroButtonDialogContextParams} FuroButtonDialogContextFactoryParams
+ */
+
+/**
+ * @typedef {'clickBackdrop' | 'clickPositiveButton' | 'clickNegativeButton' | 'clickNeutralButton'} FuroButtonDialogContextEmitOptions
  */
 
 /**
