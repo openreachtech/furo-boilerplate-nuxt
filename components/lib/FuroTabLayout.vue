@@ -31,10 +31,13 @@ export default defineComponent({
     /** @type {import('vue').Ref<Array<HTMLElement>>} */
     const tabElementsRef = ref([])
 
-    const context = FuroTabLayoutContext.create({
+    const args = {
       props,
       componentContext,
-    })
+      tabElementsRef,
+    }
+    const context = FuroTabLayoutContext.create(args)
+      .setupComponent()
 
     return {
       context,

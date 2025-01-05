@@ -57,6 +57,15 @@ export default class FuroButtonDialogContext extends BaseFuroContext {
     }
   }
 
+  /** @override */
+  setupComponent () {
+    this.expose(
+      this.generateExposeHash()
+    )
+
+    return this
+  }
+
   /**
    * get: dialog component.
    *

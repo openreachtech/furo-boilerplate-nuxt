@@ -1,3 +1,7 @@
+import {
+  ref,
+} from 'vue'
+
 import FuroButtonDialogContext from '~/app/vue/contexts/FuroButtonDialogContext.js'
 
 import BaseFuroContext from '~/app/vue/contexts/BaseFuroContext.js'
@@ -555,6 +559,74 @@ describe('FuroButtonDialogContext', () => {
         .toHaveBeenCalledWith()
       expect(emitSpy)
         .toHaveBeenCalledWith('clickNeutralButton')
+    })
+  })
+})
+
+describe('FuroButtonDialogContext', () => {
+  describe('#setupComponent()', () => {
+    /**
+     * @type {Array<{
+     *   params: {
+     *     dialogComponentRef: import('vue').Ref<import('~/components/lib/FuroDialog.vue').default | null>
+     *   }
+     * }>}
+     */
+    const cases = /** @type {Array<*>} */ ([
+      {
+        params: {
+          dialogComponentRef: ref(null),
+        },
+      },
+    ])
+
+    describe('to call expose() with generated hash', () => {
+      test.each(cases)('dialogComponentRef: $params.dialogComponentRef', ({ params }) => {
+        const expected = {
+          showDialog: expect.any(Function),
+          dismissDialog: expect.any(Function),
+        }
+
+        const exposeSpy = jest.fn()
+
+        const args = {
+          props: {},
+          componentContext: {
+            attrs: {},
+            emit: () => {},
+            expose: exposeSpy, // ✅️
+            slots: {},
+          },
+          dialogComponentRef: params.dialogComponentRef,
+        }
+        const context = new FuroButtonDialogContext(args)
+
+        context.setupComponent()
+
+        expect(exposeSpy)
+          .toHaveBeenCalledWith(expected)
+      })
+    })
+
+    describe('to return own instance for method chaining', () => {
+      test.each(cases)('dialogComponentRef: $params.dialogComponentRef', ({ params }) => {
+        const args = {
+          props: {},
+          componentContext: {
+            attrs: {},
+            emit: () => {},
+            expose: () => {},
+            slots: {},
+          },
+          dialogComponentRef: params.dialogComponentRef,
+        }
+        const context = new FuroButtonDialogContext(args)
+
+        const actual = context.setupComponent()
+
+        expect(actual)
+          .toBe(context) // same reference
+      })
     })
   })
 })

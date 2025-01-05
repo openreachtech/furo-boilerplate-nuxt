@@ -2,7 +2,6 @@
 import {
   defineComponent,
   ref,
-  watch,
 } from 'vue'
 
 import FuroDialogContext from '~/app/vue/contexts/FuroDialogContext.js'
@@ -30,54 +29,13 @@ export default defineComponent({
     /** @type {import('vue').Ref<HTMLDialogElement | null>} */
     const dialogElementRef = ref(null)
 
-    const context = FuroDialogContext.create({
+    const args = {
       props,
       componentContext,
       dialogElementRef,
-    })
-
-    componentContext.expose(
-      context.generateExposeHash()
-    )
-
-    watch([dialogElementRef], ([newOne], [oldOne]) => {
-      if (oldOne) {
-        return
-      }
-
-      if (!dialogElementRef.value) {
-        return
-      }
-
-      // MutationObserverの設定
-      const observer = new MutationObserver(mutations => {
-        const mutation = [...mutations]
-          .filter(it => it.type === 'attributes')
-          .filter(it => it.attributeName === 'open')
-          .find(it => it.target === dialogElementRef.value)
-
-        if (!mutation) {
-          return
-        }
-
-        const isOpen = dialogElementRef.value
-          ?.hasAttribute('open')
-
-        componentContext.emit(
-          isOpen
-            ? EVENT_NAME.SHOW_DIALOG
-            : EVENT_NAME.DISMISS_DIALOG
-        )
-      })
-
-      observer.observe(dialogElementRef.value, {
-        attributes: true,
-        attributeFilter: [
-          'open',
-        ],
-        attributeOldValue: true,
-      })
-    })
+    }
+    const context = FuroDialogContext.create(args)
+      .setupComponent()
 
     return {
       context,
