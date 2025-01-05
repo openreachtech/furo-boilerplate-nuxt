@@ -40,15 +40,14 @@ export default defineComponent({
     /** @type {import('vue').Ref<FuroDialog | null>} */
     const dialogComponentRef = ref(null)
 
-    const context = FuroButtonDialogContext.create({
+    const args = {
       props,
       componentContext,
       dialogComponentRef,
-    })
+    }
 
-    componentContext.expose(
-      context.generateExposeHash()
-    )
+    const context = FuroButtonDialogContext.create(args)
+      .setupComponent()
 
     return {
       dialogComponentRef,

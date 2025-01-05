@@ -16,11 +16,13 @@ export default defineComponent({
     /** @type {import('vue').Ref<HTMLElement | null>} */
     const rootElementRef = ref(null)
 
-    const context = FuroOffCanvasMenuLayoutContext.create({
+    const args = {
       props,
       componentContext,
       rootElementRef,
-    })
+    }
+    const context = FuroOffCanvasMenuLayoutContext.create(args)
+      .setupComponent()
 
     return {
       context,

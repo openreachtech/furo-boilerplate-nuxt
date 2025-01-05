@@ -1,3 +1,7 @@
+import {
+  watch,
+} from 'vue'
+
 import BaseFuroContext from '~/app/vue/contexts/BaseFuroContext.js'
 
 describe('BaseFuroContext', () => {
@@ -160,6 +164,34 @@ describe('BaseFuroContext', () => {
 
       expect(actual)
         .toStrictEqual(expected)
+    })
+  })
+})
+
+describe('BaseFuroContext', () => {
+  describe('.createMutationObserver()', () => {
+    /**
+     * @type {Array<{
+     *   params: {
+     *     handler: MutationCallback
+     *   }
+     * }>}
+     */
+    const cases = /** @type {Array<*>} */ ([
+      {
+        params: {
+          handler: () => {},
+        },
+      },
+    ])
+
+    describe('to be instance of MutationObserver', () => {
+      test.each(cases)('handler: $params.handler', ({ params }) => {
+        const actual = BaseFuroContext.createMutationObserver(params)
+
+        expect(actual)
+          .toBeInstanceOf(MutationObserver)
+      })
     })
   })
 })
@@ -507,6 +539,130 @@ describe('BaseFuroContext', () => {
 
       expect(actual)
         .toBe(params.componentContext.slots) // same reference
+    })
+  })
+})
+
+describe('BaseFuroContext', () => {
+  describe('#setupComponent()', () => {
+    /**
+     * @type {Array<{
+     *   params: {
+     *     props: import('vue').ComponentCustomProps
+     *     componentContext: import('vue').SetupContext
+     *   }
+     * }>}
+     */
+    const cases = /** @type {Array<*>} */ ([
+      {
+        params: {
+          props: {
+            label: 'alpha',
+          },
+          componentContext: {
+            attrs: {
+              command: 'alpha',
+            },
+            emit: () => {},
+            expose: () => {},
+            slots: {
+              default: () => {},
+              alpha: () => {},
+            },
+          },
+        },
+      },
+      {
+        params: {
+          props: {
+            label: 'beta',
+          },
+          componentContext: {
+            attrs: {
+              command: 'beta',
+            },
+            emit: () => {},
+            expose: () => {},
+            slots: {
+              default: () => {},
+              beta: () => {},
+            },
+          },
+        },
+      },
+    ])
+
+    describe('to return own instance for method chaining', () => {
+      test.each(cases)('label: $params.props.label', ({ params }) => {
+        const context = BaseFuroContext.create(params)
+
+        const actual = context.setupComponent()
+
+        expect(actual)
+          .toBe(context) // same reference
+      })
+    })
+  })
+})
+
+describe('BaseFuroContext', () => {
+  describe('#get:watch()', () => {
+    /**
+     * @type {Array<{
+     *   params: {
+     *     props: import('vue').ComponentCustomProps
+     *     componentContext: import('vue').SetupContext
+     *   }
+     * }>}
+     */
+    const cases = /** @type {Array<*>} */ ([
+      {
+        params: {
+          props: {
+            label: 'alpha',
+          },
+          componentContext: {
+            attrs: {
+              command: 'alpha',
+            },
+            emit: () => {},
+            expose: () => {},
+            slots: {
+              default: () => {},
+              alpha: () => {},
+            },
+          },
+        },
+      },
+      {
+        params: {
+          props: {
+            label: 'beta',
+          },
+          componentContext: {
+            attrs: {
+              command: 'beta',
+            },
+            emit: () => {},
+            expose: () => {},
+            slots: {
+              default: () => {},
+              beta: () => {},
+            },
+          },
+        },
+      },
+    ])
+
+    describe('to return own instance for method chaining', () => {
+      test.each(cases)('label: $params.props.label', ({ params }) => {
+        const context = BaseFuroContext.create(params)
+
+        const actual = context.watch
+
+        expect(actual)
+          .toBe(watch) // same reference
+      })
     })
   })
 })

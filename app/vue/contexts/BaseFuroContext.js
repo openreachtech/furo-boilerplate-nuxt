@@ -1,3 +1,7 @@
+import {
+  watch,
+} from 'vue'
+
 /**
  * Furo Component Context.
  *
@@ -45,6 +49,20 @@ export default class BaseFuroContext {
    */
   static get EMIT_EVENT_NAME () {
     return {}
+  }
+
+  /**
+   * Create MutationObserver.
+   *
+   * @param {{
+   *   handler: MutationCallback
+   * }} args - Arguments of this method.
+   * @returns {MutationObserver} - New instance of MutationObserver.
+   */
+  static createMutationObserver ({
+    handler,
+  }) {
+    return new MutationObserver(handler)
   }
 
   /**
@@ -104,6 +122,44 @@ export default class BaseFuroContext {
    */
   get slots () {
     return this.componentContext.slots
+  }
+
+  /**
+   * get: watch() of component context.
+   *
+   * @returns {import('vue').watch} - Watch of component context.
+   */
+  get watch () {
+    return watch
+  }
+
+  /**
+   * Setup component context.
+   *
+   * @template {X extends typeof BaseFuroContext<EE> ? X : never} T, X
+   * @param {object} [args] - Arguments of this method.
+   * @returns {T} - For method chaining.
+   * @this {T}
+   * @example
+   * ```
+   * setupComponent (args) {
+   *   this..expose(
+   *     this.generateExposeHash()
+   *   )
+   *
+   *   watch(
+   *     [
+   *       this.rootElementRef,
+   *     ],
+   *     this.generateWatchRootElementHandler()
+   *   )
+   *
+   *   return this
+   * }
+   * ```
+   */
+  setupComponent (args = {}) {
+    return this
   }
 }
 
