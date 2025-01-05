@@ -372,6 +372,91 @@ describe('FuroTabLayoutContext', () => {
 })
 
 describe('FuroTabLayoutContext', () => {
+  describe('#get:tabElements', () => {
+    const propsMock = {
+      tabs: [
+        { tabKey: 'alpha', label: 'Alpha' },
+        { tabKey: 'beta', label: 'Beta' },
+        { tabKey: 'gamma', label: 'Gamma' },
+      ],
+      activeTabKey: 'alpha',
+    }
+    const componentContextMock = {
+      attrs: {},
+      emit: () => {},
+      expose: () => {},
+      slots: {},
+    }
+
+    const alphaTabElement = document.createElement('div')
+    const betaTabElement = document.createElement('div')
+    const gammaTabElement = document.createElement('div')
+
+    const cases = [
+      {
+        params: {
+          tabElementsRef: ref([
+            alphaTabElement,
+            betaTabElement,
+            gammaTabElement,
+          ]),
+        },
+        expected: [
+          alphaTabElement,
+          betaTabElement,
+          gammaTabElement,
+        ],
+      },
+      {
+        params: {
+          tabElementsRef: ref([
+            betaTabElement,
+            gammaTabElement,
+          ]),
+        },
+        expected: [
+          betaTabElement,
+          gammaTabElement,
+        ],
+      },
+      {
+        params: {
+          tabElementsRef: ref([
+            gammaTabElement,
+          ]),
+        },
+        expected: [
+          gammaTabElement,
+        ],
+      },
+      {
+        params: {
+          tabElementsRef: ref([]),
+        },
+        expected: [],
+      },
+    ]
+
+    test.each(cases)('tabElementsRef: $params.tabElementsRef', ({ params, expected }) => {
+      const args = {
+        props: propsMock,
+        componentContext: componentContextMock,
+        tabElementsRef: params.tabElementsRef,
+        tabContexts: [],
+        activeTabKey: null,
+      }
+
+      const context = new FuroTabLayoutContext(args)
+
+      const actual = context.tabElements
+
+      expect(actual)
+        .toEqual(expected)
+    })
+  })
+})
+
+describe('FuroTabLayoutContext', () => {
   describe('#isActiveTab()', () => {
     const propsMock = {
       tabs: [
