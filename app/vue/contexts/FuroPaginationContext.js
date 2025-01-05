@@ -5,10 +5,11 @@ import FuroPageContext from './FuroPageContext.js'
 /**
  * Props context class for FuroPagination component.
  *
+ * @property {URLSearchParams} searchParams - Search parameters.
  * @property {number} currentPage - Current page.
  * @property {number} maxPageRange - page range in view
  * @property {number} lastPage - Last page.
- * @property {URLSearchParams} searchParams - Search parameters.
+ * @property {string} pageKey - Page key.
  * @extends {BaseFuroContext<null>} - Base class.
  */
 export default class FuroPaginationContext extends BaseFuroContext {
