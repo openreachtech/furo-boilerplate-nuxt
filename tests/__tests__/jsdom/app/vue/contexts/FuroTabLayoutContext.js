@@ -128,6 +128,7 @@ describe('FuroTabLayoutContext', () => {
           const args = {
             props: propsMock,
             componentContext: componentContextMock,
+            tabElementsRef: ref([]),
             tabContexts: params.tabContexts,
             activeTabKey: null,
           }
@@ -168,6 +169,7 @@ describe('FuroTabLayoutContext', () => {
         const args = {
           props: propsMock,
           componentContext: componentContextMock,
+          tabElementsRef: ref([]),
           tabContexts: [],
           activeTabKey: params.activeTabKey,
         }
@@ -228,6 +230,7 @@ describe('FuroTabLayoutContext', () => {
         const args = {
           props: params.props,
           componentContext: componentContextMock,
+          tabElementsRef: ref([]),
         }
         const actual = FuroTabLayoutContext.create(args)
 
@@ -237,6 +240,10 @@ describe('FuroTabLayoutContext', () => {
     })
 
     describe('to call constructor', () => {
+      const alphaTabElement = document.createElement('div')
+      const betaTabElement = document.createElement('div')
+      const gammaTabElement = document.createElement('div')
+
       const cases = [
         {
           params: {
@@ -249,6 +256,11 @@ describe('FuroTabLayoutContext', () => {
               activeTabKey: 'alpha',
             },
             componentContext: componentContextMock,
+            tabElementsRef: ref([
+              alphaTabElement,
+              betaTabElement,
+              gammaTabElement,
+            ]),
           },
           expected: {
             props: {
@@ -260,6 +272,11 @@ describe('FuroTabLayoutContext', () => {
               activeTabKey: 'alpha',
             },
             componentContext: componentContextMock,
+            tabElementsRef: ref([
+              alphaTabElement,
+              betaTabElement,
+              gammaTabElement,
+            ]),
             tabContexts: [
               FuroTabContext.create({ tabKey: 'gamma', label: 'Gamma' }),
               FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha' }),
@@ -278,6 +295,10 @@ describe('FuroTabLayoutContext', () => {
               activeTabKey: 'beta',
             },
             componentContext: componentContextMock,
+            tabElementsRef: ref([
+              betaTabElement,
+              gammaTabElement,
+            ]),
           },
           expected: {
             props: {
@@ -288,6 +309,10 @@ describe('FuroTabLayoutContext', () => {
               activeTabKey: 'beta',
             },
             componentContext: componentContextMock,
+            tabElementsRef: ref([
+              betaTabElement,
+              gammaTabElement,
+            ]),
             tabContexts: [
               FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha' }),
               FuroTabContext.create({ tabKey: 'beta', label: 'Beta' }),
@@ -304,6 +329,9 @@ describe('FuroTabLayoutContext', () => {
               // activeTabKey: 'alpha,
             },
             componentContext: componentContextMock,
+            tabElementsRef: ref([
+              gammaTabElement,
+            ]),
           },
           expected: {
             props: {
@@ -313,6 +341,9 @@ describe('FuroTabLayoutContext', () => {
               // activeTabKey: 'alpha,
             },
             componentContext: componentContextMock,
+            tabElementsRef: ref([
+              gammaTabElement,
+            ]),
             tabContexts: [
               FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha' }),
             ],
@@ -492,6 +523,7 @@ describe('FuroTabLayoutContext', () => {
       const args = {
         props: propsMock,
         componentContext: componentContextMock,
+        tabElementsRef: ref([]),
         tabContexts: [],
         activeTabKey: params.activeTabKey,
       }
@@ -552,6 +584,7 @@ describe('FuroTabLayoutContext', () => {
 
     const context = new FuroTabLayoutContext({
       props: propsMock,
+      tabElementsRef: ref(tabElements),
       componentContext: componentContextMock,
       tabContexts: [],
       activeTabKey: null,
