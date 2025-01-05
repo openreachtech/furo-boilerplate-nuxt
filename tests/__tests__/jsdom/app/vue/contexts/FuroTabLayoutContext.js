@@ -597,7 +597,6 @@ describe('FuroTabLayoutContext', () => {
         event: {
           target: alphaElement,
         },
-        tabsRef: tabElements,
       }
 
       test('to call #remove()', () => {
@@ -640,7 +639,6 @@ describe('FuroTabLayoutContext', () => {
         event: {
           target: betaElement,
         },
-        tabsRef: tabElements,
       }
 
       test('to call #remove()', () => {
@@ -683,7 +681,6 @@ describe('FuroTabLayoutContext', () => {
         event: {
           target: gammaElement,
         },
-        tabsRef: tabElements,
       }
 
       test('to call #remove()', () => {
