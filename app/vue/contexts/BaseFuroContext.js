@@ -136,8 +136,10 @@ export default class BaseFuroContext {
   /**
    * Setup component context.
    *
+   * @template {X extends typeof BaseFuroContext<EE> ? X : never} T, X
    * @param {object} [args] - Arguments of this method.
-   * @returns {BaseFuroContext<EE>} - For method chaining.
+   * @returns {T} - For method chaining.
+   * @this {T}
    * @example
    * ```
    * setupComponent (args) {
