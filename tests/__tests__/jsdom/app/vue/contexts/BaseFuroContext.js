@@ -169,6 +169,34 @@ describe('BaseFuroContext', () => {
 })
 
 describe('BaseFuroContext', () => {
+  describe('.createMutationObserver()', () => {
+    /**
+     * @type {Array<{
+     *   params: {
+     *     handler: MutationCallback
+     *   }
+     * }>}
+     */
+    const cases = /** @type {Array<*>} */ ([
+      {
+        params: {
+          handler: () => {},
+        },
+      },
+    ])
+
+    describe('to be instance of MutationObserver', () => {
+      test.each(cases)('handler: $params.handler', ({ params }) => {
+        const actual = BaseFuroContext.createMutationObserver(params)
+
+        expect(actual)
+          .toBeInstanceOf(MutationObserver)
+      })
+    })
+  })
+})
+
+describe('BaseFuroContext', () => {
   describe('#get:Ctor', () => {
     describe('to be own class', () => {
       /**

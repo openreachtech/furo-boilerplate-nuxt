@@ -52,6 +52,20 @@ export default class BaseFuroContext {
   }
 
   /**
+   * Create MutationObserver.
+   *
+   * @param {{
+   *   handler: MutationCallback
+   * }} args - Arguments of this method.
+   * @returns {MutationObserver} - New instance of MutationObserver.
+   */
+  static createMutationObserver ({
+    handler,
+  }) {
+    return new MutationObserver(handler)
+  }
+
+  /**
    * Get the constructor of this class.
    *
    * @template {X extends typeof BaseFuroContext ? X : never} T, X
