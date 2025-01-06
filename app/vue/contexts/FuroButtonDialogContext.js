@@ -92,6 +92,7 @@ export default class FuroButtonDialogContext extends BaseFuroContext {
   /**
    * Click in backdrop.
    *
+   * @override
    * @returns {{
    *   showDialog: () => void,
    *   dismissDialog: () => void,
