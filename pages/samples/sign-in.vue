@@ -30,6 +30,7 @@ export default defineComponent({
         pageTitle: 'Sign In',
         skipFilter: true,
       },
+      layout: 'gateway',
     })
 
     const statusReactive = reactive({
