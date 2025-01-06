@@ -1,7 +1,7 @@
 import FuroPaginationContext from '~/app/vue/contexts/FuroPaginationContext.js'
 
 import BaseFuroContext from '~/app/vue/contexts/BaseFuroContext.js'
-import FuroPageContext from '~/app/vue/contexts/FuroPageContext.js'
+import FuroPageItemContext from '~/app/vue/contexts/FuroPageItemContext.js'
 
 describe('FuroPaginationContext', () => {
   describe('super class', () => {
@@ -1253,19 +1253,19 @@ describe('FuroPaginationContext', () => {
           rangePages: [1, 2, 3],
         },
         expected: [
-          FuroPageContext.create({
+          FuroPageItemContext.create({
             pageNumber: 1,
             searchParams: new URLSearchParams(),
             pageKey: 'page',
             isCurrent: true,
           }),
-          FuroPageContext.create({
+          FuroPageItemContext.create({
             pageNumber: 2,
             searchParams: new URLSearchParams(),
             pageKey: 'page',
             isCurrent: false,
           }),
-          FuroPageContext.create({
+          FuroPageItemContext.create({
             pageNumber: 3,
             searchParams: new URLSearchParams(),
             pageKey: 'page',
@@ -1281,19 +1281,19 @@ describe('FuroPaginationContext', () => {
           rangePages: [1, 2, 3],
         },
         expected: [
-          FuroPageContext.create({
+          FuroPageItemContext.create({
             pageNumber: 1,
             searchParams: new URLSearchParams(),
             pageKey: 'pg',
             isCurrent: false,
           }),
-          FuroPageContext.create({
+          FuroPageItemContext.create({
             pageNumber: 2,
             searchParams: new URLSearchParams(),
             pageKey: 'pg',
             isCurrent: true,
           }),
-          FuroPageContext.create({
+          FuroPageItemContext.create({
             pageNumber: 3,
             searchParams: new URLSearchParams(),
             pageKey: 'pg',
@@ -1309,19 +1309,19 @@ describe('FuroPaginationContext', () => {
           rangePages: [1, 2, 3],
         },
         expected: [
-          FuroPageContext.create({
+          FuroPageItemContext.create({
             pageNumber: 1,
             searchParams: new URLSearchParams(),
             pageKey: 'p',
             isCurrent: false,
           }),
-          FuroPageContext.create({
+          FuroPageItemContext.create({
             pageNumber: 2,
             searchParams: new URLSearchParams(),
             pageKey: 'p',
             isCurrent: false,
           }),
-          FuroPageContext.create({
+          FuroPageItemContext.create({
             pageNumber: 3,
             searchParams: new URLSearchParams(),
             pageKey: 'p',
@@ -1370,7 +1370,7 @@ describe('FuroPaginationContext', () => {
           pageKey: 'page',
           currentPage: 1,
         },
-        expected: FuroPageContext.create({
+        expected: FuroPageItemContext.create({
           pageNumber: 0,
           searchParams: new URLSearchParams(),
           pageKey: 'page',
@@ -1384,7 +1384,7 @@ describe('FuroPaginationContext', () => {
           pageKey: 'pg',
           currentPage: 2,
         },
-        expected: FuroPageContext.create({
+        expected: FuroPageItemContext.create({
           pageNumber: 1,
           searchParams: new URLSearchParams({
             alpha: '111',
@@ -1400,7 +1400,7 @@ describe('FuroPaginationContext', () => {
           pageKey: 'p',
           currentPage: 3,
         },
-        expected: FuroPageContext.create({
+        expected: FuroPageItemContext.create({
           pageNumber: 2,
           searchParams: new URLSearchParams({
             beta: '222',
@@ -1450,7 +1450,7 @@ describe('FuroPaginationContext', () => {
         currentPageCases: [
           {
             currentPage: 1,
-            expected: FuroPageContext.create({
+            expected: FuroPageItemContext.create({
               pageNumber: 2,
               searchParams: new URLSearchParams(),
               pageKey: 'page',
@@ -1458,7 +1458,7 @@ describe('FuroPaginationContext', () => {
           },
           {
             currentPage: 9,
-            expected: FuroPageContext.create({
+            expected: FuroPageItemContext.create({
               pageNumber: 10,
               searchParams: new URLSearchParams(),
               pageKey: 'page',
@@ -1466,7 +1466,7 @@ describe('FuroPaginationContext', () => {
           },
           {
             currentPage: 10,
-            expected: FuroPageContext.create({
+            expected: FuroPageItemContext.create({
               pageNumber: null,
               searchParams: new URLSearchParams(),
               pageKey: 'page',
@@ -1485,7 +1485,7 @@ describe('FuroPaginationContext', () => {
         currentPageCases: [
           {
             currentPage: 98,
-            expected: FuroPageContext.create({
+            expected: FuroPageItemContext.create({
               pageNumber: 99,
               searchParams: new URLSearchParams({
                 alpha: '111',
@@ -1495,7 +1495,7 @@ describe('FuroPaginationContext', () => {
           },
           {
             currentPage: 99,
-            expected: FuroPageContext.create({
+            expected: FuroPageItemContext.create({
               pageNumber: 100,
               searchParams: new URLSearchParams({
                 alpha: '111',
@@ -1505,7 +1505,7 @@ describe('FuroPaginationContext', () => {
           },
           {
             currentPage: 100,
-            expected: FuroPageContext.create({
+            expected: FuroPageItemContext.create({
               pageNumber: null,
               searchParams: new URLSearchParams({
                 alpha: '111',
@@ -1555,7 +1555,7 @@ describe('FuroPaginationContext', () => {
           searchParams: new URLSearchParams(),
           pageKey: 'page',
         },
-        expected: FuroPageContext.create({
+        expected: FuroPageItemContext.create({
           pageNumber: 1,
           searchParams: new URLSearchParams(),
           pageKey: 'page',
@@ -1568,7 +1568,7 @@ describe('FuroPaginationContext', () => {
           }),
           pageKey: 'pg',
         },
-        expected: FuroPageContext.create({
+        expected: FuroPageItemContext.create({
           pageNumber: 1,
           searchParams: new URLSearchParams({
             alpha: '111',
@@ -1583,7 +1583,7 @@ describe('FuroPaginationContext', () => {
           }),
           pageKey: 'p',
         },
-        expected: FuroPageContext.create({
+        expected: FuroPageItemContext.create({
           pageNumber: 1,
           searchParams: new URLSearchParams({
             beta: '222',
@@ -1630,7 +1630,7 @@ describe('FuroPaginationContext', () => {
           pageKey: 'page',
           lastPage: 10,
         },
-        expected: FuroPageContext.create({
+        expected: FuroPageItemContext.create({
           pageNumber: 10,
           searchParams: new URLSearchParams(),
           pageKey: 'page',
@@ -1644,7 +1644,7 @@ describe('FuroPaginationContext', () => {
           pageKey: 'pg',
           lastPage: 100,
         },
-        expected: FuroPageContext.create({
+        expected: FuroPageItemContext.create({
           pageNumber: 100,
           searchParams: new URLSearchParams({
             alpha: '111',
@@ -1660,7 +1660,7 @@ describe('FuroPaginationContext', () => {
           pageKey: 'p',
           lastPage: 1000,
         },
-        expected: FuroPageContext.create({
+        expected: FuroPageItemContext.create({
           pageNumber: 1000,
           searchParams: new URLSearchParams({
             beta: '222',
