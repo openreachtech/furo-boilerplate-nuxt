@@ -6,6 +6,10 @@ import {
 
 import FuroTabLayoutContext from '~/app/vue/contexts/FuroTabLayoutContext.js'
 
+const EVENT_NAME = {
+  CHANGE_TAB: 'changeTab',
+}
+
 export default defineComponent({
   name: 'FuroTabLayout',
   inheritAttrs: false,
@@ -23,6 +27,10 @@ export default defineComponent({
       default: null,
     },
   },
+
+  emits: [
+    EVENT_NAME.CHANGE_TAB,
+  ],
 
   setup (
     props,
