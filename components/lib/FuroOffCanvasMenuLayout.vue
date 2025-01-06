@@ -85,8 +85,6 @@ export default defineComponent({
   display: flex;
   align-items: center;
 
-  padding-inline-start: 0.75rem;
-
   background-color: var(--color-background-header);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
