@@ -7,7 +7,7 @@ import FuroTabContext from './FuroTabContext.js'
  *
  * @property {Array} tabContexts - Tab contexts.
  * @property {string | null} activeTabKey - Active tab key
- * @extends {BaseFuroContext<null>}
+ * @extends {BaseFuroContext<FuroTabLayoutContextEmitOptions>}
  */
 export default class FuroTabLayoutContext extends BaseFuroContext {
   /**
@@ -54,6 +54,7 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
     const tabContexts = tabs.map((it, index) =>
       this.createTabContexts({
         tab: it,
+        index,
       })
     )
 
@@ -68,11 +69,19 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
     )
   }
 
+  /** @override */
+  static get EMIT_EVENT_NAME () {
+    return {
+      CHANGE_TAB: 'changeTab',
+    }
+  }
+
   /**
    * Create tab contexts.
    *
    * @param {{
    *   tab: FuroTabParams
+   *   index: number
    * }} params - Parameters of this factory method.
    * @returns {FuroTabContext} - New instance of this class.
    */
@@ -81,10 +90,12 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
       tabKey,
       label,
     },
+    index,
   }) {
     return FuroTabContext.create({
       tabKey,
       label,
+      index,
     })
   }
 
@@ -128,12 +139,25 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
   }) {
     const ACTIVE_CLASS = 'active'
 
-    this.tabElements
-      .forEach(it => {
-        it['classList'].remove(ACTIVE_CLASS)
-      })
+    const fromTabIndex = this.tabElements
+      .findIndex(it =>
+        it['classList'].contains(ACTIVE_CLASS)
+      )
+    const toTagIndex = this.tabElements
+      .findIndex(it =>
+        it === target
+      )
 
-    target['classList'].add(ACTIVE_CLASS)
+    this.emit(this.EMIT_EVENT_NAME.CHANGE_TAB, {
+      fromTab: this.tabContexts[fromTabIndex] ?? null,
+      toTab: this.tabContexts[toTagIndex] ?? null,
+    })
+
+    this.tabElements[fromTabIndex]
+      ?.['classList']
+      .remove(ACTIVE_CLASS)
+    target['classList']
+      .add(ACTIVE_CLASS)
   }
 }
 
@@ -167,4 +191,8 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
  *   tabKey: string
  *   label: string
  * }} FuroTabParams
+ */
+
+/**
+ * @typedef {'changeTab'} FuroTabLayoutContextEmitOptions
  */

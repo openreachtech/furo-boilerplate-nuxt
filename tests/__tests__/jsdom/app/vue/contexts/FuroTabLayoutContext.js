@@ -96,24 +96,24 @@ describe('FuroTabLayoutContext', () => {
           {
             params: {
               tabContexts: [
-                FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha' }),
-                FuroTabContext.create({ tabKey: 'beta', label: 'Beta' }),
-                FuroTabContext.create({ tabKey: 'gamma', label: 'Gamma' }),
+                FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha', index: 0 }),
+                FuroTabContext.create({ tabKey: 'beta', label: 'Beta', index: 1 }),
+                FuroTabContext.create({ tabKey: 'gamma', label: 'Gamma', index: 2 }),
               ],
             },
           },
           {
             params: {
               tabContexts: [
-                FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha' }),
-                FuroTabContext.create({ tabKey: 'beta', label: 'Beta' }),
+                FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha', index: 0 }),
+                FuroTabContext.create({ tabKey: 'beta', label: 'Beta', index: 1 }),
               ],
             },
           },
           {
             params: {
               tabContexts: [
-                FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha' }),
+                FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha', index: 0 }),
               ],
             },
           },
@@ -278,9 +278,9 @@ describe('FuroTabLayoutContext', () => {
               gammaTabElement,
             ]),
             tabContexts: [
-              FuroTabContext.create({ tabKey: 'gamma', label: 'Gamma' }),
-              FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha' }),
-              FuroTabContext.create({ tabKey: 'beta', label: 'Beta' }),
+              FuroTabContext.create({ tabKey: 'gamma', label: 'Gamma', index: 0 }),
+              FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha', index: 1 }),
+              FuroTabContext.create({ tabKey: 'beta', label: 'Beta', index: 2 }),
             ],
             activeTabKey: 'alpha',
           },
@@ -314,8 +314,8 @@ describe('FuroTabLayoutContext', () => {
               gammaTabElement,
             ]),
             tabContexts: [
-              FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha' }),
-              FuroTabContext.create({ tabKey: 'beta', label: 'Beta' }),
+              FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha', index: 0 }),
+              FuroTabContext.create({ tabKey: 'beta', label: 'Beta', index: 1 }),
             ],
             activeTabKey: 'beta',
           },
@@ -345,7 +345,7 @@ describe('FuroTabLayoutContext', () => {
               gammaTabElement,
             ]),
             tabContexts: [
-              FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha' }),
+              FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha', index: 0 }),
             ],
             activeTabKey: null,
           },
@@ -365,6 +365,21 @@ describe('FuroTabLayoutContext', () => {
 })
 
 describe('FuroTabLayoutContext', () => {
+  describe('.get:EMIT_EVENT_NAME', () => {
+    test('to be fixed value', () => {
+      const expected = {
+        CHANGE_TAB: 'changeTab',
+      }
+
+      const actual = FuroTabLayoutContext.EMIT_EVENT_NAME
+
+      expect(actual)
+        .toStrictEqual(expected)
+    })
+  })
+})
+
+describe('FuroTabLayoutContext', () => {
   describe('.createTabContexts()', () => {
     const cases = [
       {
@@ -373,10 +388,12 @@ describe('FuroTabLayoutContext', () => {
             tabKey: 'alpha',
             label: 'Alpha',
           },
+          index: 0,
         },
         expected: FuroTabContext.create({
           tabKey: 'alpha',
           label: 'Alpha',
+          index: 0,
         }),
       },
       {
@@ -385,10 +402,12 @@ describe('FuroTabLayoutContext', () => {
             tabKey: 'beta',
             label: 'Beta',
           },
+          index: 1,
         },
         expected: FuroTabContext.create({
           tabKey: 'beta',
           label: 'Beta',
+          index: 1,
         }),
       },
     ]
@@ -557,162 +576,368 @@ describe('FuroTabLayoutContext', () => {
 
 describe('FuroTabLayoutContext', () => {
   describe('#onClickTab()', () => {
-    const alphaElement = document.createElement('div')
-    const betaElement = document.createElement('div')
-    const gammaElement = document.createElement('div')
+    describe('to change tab by updating class', () => {
+      const alphaElement = document.createElement('div')
+      const betaElement = document.createElement('div')
+      const gammaElement = document.createElement('div')
 
-    const tabElements = [
-      alphaElement,
-      betaElement,
-      gammaElement,
-    ]
+      const tabElements = [
+        alphaElement,
+        betaElement,
+        gammaElement,
+      ]
 
-    const propsMock = {
-      tabs: [
-        { tabKey: 'alpha', label: 'Alpha' },
-        { tabKey: 'beta', label: 'Beta' },
-        { tabKey: 'gamma', label: 'Gamma' },
-      ],
-      activeTabKey: 'alpha',
-    }
-    const componentContextMock = {
-      attrs: {},
-      emit: () => {},
-      expose: () => {},
-      slots: {},
-    }
-
-    const context = new FuroTabLayoutContext({
-      props: propsMock,
-      componentContext: componentContextMock,
-      tabElementsRef: ref(tabElements),
-      tabContexts: [],
-      activeTabKey: null,
-    })
-
-    describe('on click alpha tab', () => {
-      const expected = 'active'
-
-      const args = {
-        event: {
-          target: alphaElement,
-        },
+      const propsMock = {
+        tabs: [
+          { tabKey: 'alpha', label: 'Alpha' },
+          { tabKey: 'beta', label: 'Beta' },
+          { tabKey: 'gamma', label: 'Gamma' },
+        ],
+        activeTabKey: 'alpha',
+      }
+      const componentContextMock = {
+        attrs: {},
+        emit: () => {},
+        expose: () => {},
+        slots: {},
       }
 
-      test('to call #remove()', () => {
-        const alphaRemoveSpy = jest.spyOn(alphaElement['classList'], 'remove')
-        const betaRemoveSpy = jest.spyOn(betaElement['classList'], 'remove')
-        const gammaRemoveSpy = jest.spyOn(gammaElement['classList'], 'remove')
-
-        context.onClickTab(args)
-
-        expect(alphaRemoveSpy)
-          .toHaveBeenCalledWith(expected)
-        expect(betaRemoveSpy)
-          .toHaveBeenCalledWith(expected)
-        expect(gammaRemoveSpy)
-          .toHaveBeenCalledWith(expected)
+      const context = new FuroTabLayoutContext({
+        props: propsMock,
+        componentContext: componentContextMock,
+        tabElementsRef: ref(tabElements),
+        tabContexts: [],
+        activeTabKey: null,
       })
 
-      test('to call #add()', () => {
-        const alphaAddSpy = jest.spyOn(alphaElement['classList'], 'add')
-        const betaAddSpy = jest.spyOn(betaElement['classList'], 'add')
-        const gammaAddSpy = jest.spyOn(gammaElement['classList'], 'add')
+      describe('on click alpha tab', () => {
+        const expected = 'active'
 
-        context.onClickTab(args)
+        const args = {
+          event: {
+            target: alphaElement,
+          },
+        }
 
-        expect(alphaAddSpy)
-          .toHaveBeenCalledWith(expected)
-        expect(betaAddSpy)
-          .not
-          .toHaveBeenCalledWith(expected)
-        expect(gammaAddSpy)
-          .not
-          .toHaveBeenCalledWith(expected)
+        test('to call #remove()', () => {
+          alphaElement['classList'].remove('active')
+          betaElement['classList'].remove('active')
+          gammaElement['classList'].add('active')
+
+          const alphaRemoveSpy = jest.spyOn(alphaElement['classList'], 'remove')
+          const betaRemoveSpy = jest.spyOn(betaElement['classList'], 'remove')
+          const gammaRemoveSpy = jest.spyOn(gammaElement['classList'], 'remove')
+
+          context.onClickTab(args)
+
+          expect(alphaRemoveSpy)
+            .not
+            .toHaveBeenCalledWith(expected)
+          expect(betaRemoveSpy)
+            .not
+            .toHaveBeenCalledWith(expected)
+          expect(gammaRemoveSpy)
+            .toHaveBeenCalledWith(expected)
+        })
+
+        test('to call #add()', () => {
+          alphaElement['classList'].remove('active')
+          betaElement['classList'].remove('active')
+          gammaElement['classList'].add('active')
+
+          const alphaAddSpy = jest.spyOn(alphaElement['classList'], 'add')
+          const betaAddSpy = jest.spyOn(betaElement['classList'], 'add')
+          const gammaAddSpy = jest.spyOn(gammaElement['classList'], 'add')
+
+          context.onClickTab(args)
+
+          expect(alphaAddSpy)
+            .toHaveBeenCalledWith(expected)
+          expect(betaAddSpy)
+            .not
+            .toHaveBeenCalledWith(expected)
+          expect(gammaAddSpy)
+            .not
+            .toHaveBeenCalledWith(expected)
+        })
+      })
+
+      describe('on click beta tab', () => {
+        const expected = 'active'
+
+        const args = {
+          event: {
+            target: betaElement,
+          },
+        }
+
+        test('to call #remove()', () => {
+          alphaElement['classList'].add('active')
+          betaElement['classList'].remove('active')
+          gammaElement['classList'].remove('active')
+
+          const alphaRemoveSpy = jest.spyOn(alphaElement['classList'], 'remove')
+          const betaRemoveSpy = jest.spyOn(betaElement['classList'], 'remove')
+          const gammaRemoveSpy = jest.spyOn(gammaElement['classList'], 'remove')
+
+          context.onClickTab(args)
+
+          expect(alphaRemoveSpy)
+            .toHaveBeenCalledWith(expected)
+          expect(betaRemoveSpy)
+            .not
+            .toHaveBeenCalledWith(expected)
+          expect(gammaRemoveSpy)
+            .not
+            .toHaveBeenCalledWith(expected)
+        })
+
+        test('to call #add()', () => {
+          alphaElement['classList'].add('active')
+          betaElement['classList'].remove('active')
+          gammaElement['classList'].remove('active')
+
+          const alphaAddSpy = jest.spyOn(alphaElement['classList'], 'add')
+          const betaAddSpy = jest.spyOn(betaElement['classList'], 'add')
+          const gammaAddSpy = jest.spyOn(gammaElement['classList'], 'add')
+
+          context.onClickTab(args)
+
+          expect(alphaAddSpy)
+            .not
+            .toHaveBeenCalledWith(expected)
+          expect(betaAddSpy)
+            .toHaveBeenCalledWith(expected)
+          expect(gammaAddSpy)
+            .not
+            .toHaveBeenCalledWith(expected)
+        })
+      })
+
+      describe('on click gamma tab', () => {
+        const expected = 'active'
+
+        const args = {
+          event: {
+            target: gammaElement,
+          },
+        }
+
+        test('to call #remove()', () => {
+          alphaElement['classList'].remove('active')
+          betaElement['classList'].add('active')
+          gammaElement['classList'].remove('active')
+
+          const alphaRemoveSpy = jest.spyOn(alphaElement['classList'], 'remove')
+          const betaRemoveSpy = jest.spyOn(betaElement['classList'], 'remove')
+          const gammaRemoveSpy = jest.spyOn(gammaElement['classList'], 'remove')
+
+          context.onClickTab(args)
+
+          expect(alphaRemoveSpy)
+            .not
+            .toHaveBeenCalledWith(expected)
+          expect(betaRemoveSpy)
+            .toHaveBeenCalledWith(expected)
+          expect(gammaRemoveSpy)
+            .not
+            .toHaveBeenCalledWith(expected)
+        })
+
+        test('to call #add()', () => {
+          alphaElement['classList'].remove('active')
+          betaElement['classList'].add('active')
+          gammaElement['classList'].remove('active')
+
+          const alphaAddSpy = jest.spyOn(alphaElement['classList'], 'add')
+          const betaAddSpy = jest.spyOn(betaElement['classList'], 'add')
+          const gammaAddSpy = jest.spyOn(gammaElement['classList'], 'add')
+
+          context.onClickTab(args)
+
+          expect(alphaAddSpy)
+            .not
+            .toHaveBeenCalledWith(expected)
+          expect(betaAddSpy)
+            .not
+            .toHaveBeenCalledWith(expected)
+          expect(gammaAddSpy)
+            .toHaveBeenCalledWith(expected)
+        })
       })
     })
 
-    describe('on click beta tab', () => {
-      const expected = 'active'
-
-      const args = {
-        event: {
-          target: betaElement,
-        },
+    describe('to emit tab change event', () => {
+      const propsMock = {
+        tabs: [
+          { tabKey: 'alpha', label: 'Alpha' },
+          { tabKey: 'beta', label: 'Beta' },
+          { tabKey: 'gamma', label: 'Gamma' },
+        ],
+        activeTabKey: 'alpha',
       }
 
-      test('to call #remove()', () => {
-        const alphaRemoveSpy = jest.spyOn(alphaElement['classList'], 'remove')
-        const betaRemoveSpy = jest.spyOn(betaElement['classList'], 'remove')
-        const gammaRemoveSpy = jest.spyOn(gammaElement['classList'], 'remove')
+      const alphaTabContext = FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha', index: 0 })
+      const betaTabContext = FuroTabContext.create({ tabKey: 'beta', label: 'Beta', index: 1 })
+      const gammaTabContext = FuroTabContext.create({ tabKey: 'gamma', label: 'Gamma', index: 2 })
 
-        context.onClickTab(args)
+      const tabContexts = [
+        alphaTabContext,
+        betaTabContext,
+        gammaTabContext,
+      ]
 
-        expect(alphaRemoveSpy)
-          .toHaveBeenCalledWith(expected)
-        expect(betaRemoveSpy)
-          .toHaveBeenCalledWith(expected)
-        expect(gammaRemoveSpy)
-          .toHaveBeenCalledWith(expected)
+      describe('on click alpha tab', () => {
+        const emitMock = jest.fn()
+        const componentContextMock = {
+          attrs: {},
+          emit: emitMock,
+          expose: () => {},
+          slots: {},
+        }
+
+        const alphaElement = document.createElement('div')
+        const betaElement = document.createElement('div')
+        const gammaElement = document.createElement('div')
+
+        gammaElement['classList'].add('active')
+
+        const tabElements = [
+          alphaElement,
+          betaElement,
+          gammaElement,
+        ]
+
+        const context = new FuroTabLayoutContext({
+          props: propsMock,
+          componentContext: componentContextMock,
+          tabElementsRef: ref(tabElements),
+          tabContexts,
+          activeTabKey: propsMock.activeTabKey,
+        })
+
+        const args = {
+          event: {
+            target: alphaElement,
+          },
+        }
+
+        test('to emit change tab event', () => {
+          const expected = [
+            FuroTabLayoutContext.EMIT_EVENT_NAME.CHANGE_TAB,
+            {
+              fromTab: gammaTabContext,
+              toTab: alphaTabContext,
+            },
+          ]
+
+          context.onClickTab(args)
+
+          expect(emitMock)
+            .toHaveBeenCalledWith(...expected)
+        })
       })
 
-      test('to call #add()', () => {
-        const alphaAddSpy = jest.spyOn(alphaElement['classList'], 'add')
-        const betaAddSpy = jest.spyOn(betaElement['classList'], 'add')
-        const gammaAddSpy = jest.spyOn(gammaElement['classList'], 'add')
+      describe('on click beta tab', () => {
+        const emitMock = jest.fn()
+        const componentContextMock = {
+          attrs: {},
+          emit: emitMock,
+          expose: () => {},
+          slots: {},
+        }
 
-        context.onClickTab(args)
+        const alphaElement = document.createElement('div')
+        const betaElement = document.createElement('div')
+        const gammaElement = document.createElement('div')
 
-        expect(alphaAddSpy)
-          .not
-          .toHaveBeenCalledWith(expected)
-        expect(betaAddSpy)
-          .toHaveBeenCalledWith(expected)
-        expect(gammaAddSpy)
-          .not
-          .toHaveBeenCalledWith(expected)
+        alphaElement['classList'].add('active')
+
+        const tabElements = [
+          alphaElement,
+          betaElement,
+          gammaElement,
+        ]
+
+        const context = new FuroTabLayoutContext({
+          props: propsMock,
+          componentContext: componentContextMock,
+          tabElementsRef: ref(tabElements),
+          tabContexts,
+          activeTabKey: propsMock.activeTabKey,
+        })
+
+        const args = {
+          event: {
+            target: betaElement,
+          },
+        }
+
+        test('to emit change tab event', () => {
+          const expected = [
+            FuroTabLayoutContext.EMIT_EVENT_NAME.CHANGE_TAB,
+            {
+              fromTab: alphaTabContext,
+              toTab: betaTabContext,
+            },
+          ]
+
+          context.onClickTab(args)
+
+          expect(emitMock)
+            .toHaveBeenCalledWith(...expected)
+        })
       })
-    })
 
-    describe('on click gamma tab', () => {
-      const expected = 'active'
+      describe('on click gamma tab', () => {
+        const emitMock = jest.fn()
+        const componentContextMock = {
+          attrs: {},
+          emit: emitMock,
+          expose: () => {},
+          slots: {},
+        }
 
-      const args = {
-        event: {
-          target: gammaElement,
-        },
-      }
+        const alphaElement = document.createElement('div')
+        const betaElement = document.createElement('div')
+        const gammaElement = document.createElement('div')
 
-      test('to call #remove()', () => {
-        const alphaRemoveSpy = jest.spyOn(alphaElement['classList'], 'remove')
-        const betaRemoveSpy = jest.spyOn(betaElement['classList'], 'remove')
-        const gammaRemoveSpy = jest.spyOn(gammaElement['classList'], 'remove')
+        betaElement['classList'].add('active')
 
-        context.onClickTab(args)
+        const tabElements = [
+          alphaElement,
+          betaElement,
+          gammaElement,
+        ]
 
-        expect(alphaRemoveSpy)
-          .toHaveBeenCalledWith(expected)
-        expect(betaRemoveSpy)
-          .toHaveBeenCalledWith(expected)
-        expect(gammaRemoveSpy)
-          .toHaveBeenCalledWith(expected)
-      })
+        const context = new FuroTabLayoutContext({
+          props: propsMock,
+          componentContext: componentContextMock,
+          tabElementsRef: ref(tabElements),
+          tabContexts,
+          activeTabKey: propsMock.activeTabKey,
+        })
 
-      test('to call #add()', () => {
-        const alphaAddSpy = jest.spyOn(alphaElement['classList'], 'add')
-        const betaAddSpy = jest.spyOn(betaElement['classList'], 'add')
-        const gammaAddSpy = jest.spyOn(gammaElement['classList'], 'add')
+        const args = {
+          event: {
+            target: gammaElement,
+          },
+        }
 
-        context.onClickTab(args)
+        test('to emit change tab event', () => {
+          const expected = [
+            FuroTabLayoutContext.EMIT_EVENT_NAME.CHANGE_TAB,
+            {
+              fromTab: betaTabContext,
+              toTab: gammaTabContext,
+            },
+          ]
 
-        expect(alphaAddSpy)
-          .not
-          .toHaveBeenCalledWith(expected)
-        expect(betaAddSpy)
-          .not
-          .toHaveBeenCalledWith(expected)
-        expect(gammaAddSpy)
-          .toHaveBeenCalledWith(expected)
+          context.onClickTab(args)
+
+          expect(emitMock)
+            .toHaveBeenCalledWith(...expected)
+        })
       })
     })
   })
