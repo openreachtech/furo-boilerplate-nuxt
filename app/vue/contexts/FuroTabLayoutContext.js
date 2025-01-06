@@ -54,6 +54,7 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
     const tabContexts = tabs.map((it, index) =>
       this.createTabContexts({
         tab: it,
+        index,
       })
     )
 
@@ -73,6 +74,7 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
    *
    * @param {{
    *   tab: FuroTabParams
+   *   index: number
    * }} params - Parameters of this factory method.
    * @returns {FuroTabContext} - New instance of this class.
    */
@@ -81,10 +83,12 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
       tabKey,
       label,
     },
+    index,
   }) {
     return FuroTabContext.create({
       tabKey,
       label,
+      index,
     })
   }
 
