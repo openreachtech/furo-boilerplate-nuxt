@@ -51,6 +51,11 @@ export default {
   width: 2rem;
 }
 
+.unit-body > .navigation {
+  padding-block: 1rem;
+  padding-inline: 1.5rem;
+}
+
 .unit-body > .contents {
   background-color: var(--color-background);
 
