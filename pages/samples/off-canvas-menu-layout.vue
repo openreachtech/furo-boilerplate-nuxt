@@ -16,7 +16,6 @@ export default defineComponent({
         pageTitle: 'Off-Canvas Menu Layout Sample',
         // skipFilter: true,
       },
-      layout: 'off-canvas-menu-layout',
     })
 
     return {}
