@@ -7,7 +7,7 @@ import FuroTabContext from './FuroTabContext.js'
  *
  * @property {Array} tabContexts - Tab contexts.
  * @property {string | null} activeTabKey - Active tab key
- * @extends {BaseFuroContext<null>}
+ * @extends {BaseFuroContext<FuroTabLayoutContextEmitOptions>}
  */
 export default class FuroTabLayoutContext extends BaseFuroContext {
   /**
