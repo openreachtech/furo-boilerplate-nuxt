@@ -26,6 +26,7 @@ describe('FuroTabContext', () => {
           const args = {
             tabKey: params.tabKey,
             label: 'Test Tab',
+            index: 999,
           }
 
           const context = new FuroTabContext(args)
@@ -58,12 +59,46 @@ describe('FuroTabContext', () => {
           const args = {
             tabKey: 'test-tab',
             label: params.label,
+            index: 999,
           }
 
           const context = new FuroTabContext(args)
 
           expect(context)
             .toHaveProperty('label', params.label)
+        })
+      })
+
+      describe('#index', () => {
+        const cases = [
+          {
+            params: {
+              index: 0,
+            },
+          },
+          {
+            params: {
+              index: 1,
+            },
+          },
+          {
+            params: {
+              index: 2,
+            },
+          },
+        ]
+
+        test.each(cases)('index: $params.index', ({ params }) => {
+          const args = {
+            tabKey: 'test-tab',
+            label: 'Test Tab',
+            index: params.index,
+          }
+
+          const context = new FuroTabContext(args)
+
+          expect(context)
+            .toHaveProperty('index', params.index)
         })
       })
     })
@@ -78,18 +113,21 @@ describe('FuroTabContext', () => {
           params: {
             tabKey: 'alpha',
             label: 'Alpha',
+            index: 0,
           },
         },
         {
           params: {
             tabKey: 'beta',
             label: 'Beta',
+            index: 1,
           },
         },
         {
           params: {
             tabKey: 'gamma',
             label: 'Gamma',
+            index: 2,
           },
         },
       ]
@@ -108,30 +146,36 @@ describe('FuroTabContext', () => {
           params: {
             tabKey: 'alpha',
             label: 'Alpha',
+            index: 0,
           },
           expected: {
             tabKey: 'alpha',
             label: 'Alpha',
+            index: 0,
           },
         },
         {
           params: {
             tabKey: 'beta',
             label: 'Beta',
+            index: 1,
           },
           expected: {
             tabKey: 'beta',
             label: 'Beta',
+            index: 1,
           },
         },
         {
           params: {
             tabKey: 'gamma',
             label: 'Gamma',
+            index: 2,
           },
           expected: {
             tabKey: 'gamma',
             label: 'Gamma',
+            index: 2,
           },
         },
       ]
@@ -156,6 +200,7 @@ describe('FuroTabContext', () => {
           context: {
             tabKey: 'alpha',
             label: 'Alpha',
+            index: 0,
           },
         },
         truthyCases: [
@@ -171,6 +216,7 @@ describe('FuroTabContext', () => {
           context: {
             tabKey: 'beta',
             label: 'Beta',
+            index: 1,
           },
         },
         truthyCases: [
@@ -186,6 +232,7 @@ describe('FuroTabContext', () => {
           context: {
             tabKey: 'gamma',
             label: 'Gamma',
+            index: 2,
           },
         },
         truthyCases: [
