@@ -170,9 +170,6 @@ export default defineComponent({
   position: sticky;
   top: var(--size-header-height);
 
-  padding-block: 0.5rem;
-  padding-inline: 1rem;
-
   background-color: var(--color-background-nav);
 
   transition:
