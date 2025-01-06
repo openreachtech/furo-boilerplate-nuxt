@@ -618,7 +618,7 @@ export default defineComponent({
 </template>
 
 <!-- can not use scoped here -->
-<style scoped>
+<style>
 /******************************************************************************/
 /* page design */
 /******************************************************************************/
@@ -694,6 +694,17 @@ export default defineComponent({
 
 .unit-dialog[open] .centering {
   text-align: center;
+}
+
+/*
+ * <button> design in <FuroButtonDialog>
+ */
+.unit-dialog[open] > .unit-buttons .button {
+  border-radius: 0.3rem;
+  border: var(--size-thinnest) #000 solid;
+
+  padding-block: 0.25rem;
+  padding-inline: 0.5rem;
 }
 
 /******************************************************************************/
