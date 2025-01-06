@@ -10,6 +10,21 @@ import {
 import FuroTabLayout from '~/components/lib/FuroTabLayout.vue'
 import AppTabLayout from '~/components/units/AppTabLayout.vue'
 
+const tabs = [
+  {
+    tabKey: 'alpha',
+    label: 'Alpha',
+  },
+  {
+    tabKey: 'beta',
+    label: 'Beta',
+  },
+  {
+    tabKey: 'gamma',
+    label: 'Gamma',
+  },
+]
+
 export default defineComponent({
   name: 'Furo TabLayout',
 
@@ -27,20 +42,7 @@ export default defineComponent({
     })
 
     return {
-      tabs: [
-        {
-          tabKey: 'alpha',
-          label: 'Alpha',
-        },
-        {
-          tabKey: 'beta',
-          label: 'Beta',
-        },
-        {
-          tabKey: 'gamma',
-          label: 'Gamma',
-        },
-      ],
+      tabs,
     }
   },
 })
