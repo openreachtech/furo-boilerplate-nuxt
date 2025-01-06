@@ -43,6 +43,27 @@ export default defineComponent({
 
     return {
       tabs,
+
+      changeTab,
+    }
+
+    /**
+     * Change tab.
+     *
+     * @param {{
+     *   fromTab: import('~/app/vue/contexts/FuroTabContext').default
+     *   toTab: import('~/app/vue/contexts/FuroTabContext').default
+     * }} params - Parameters.
+     * @returns {void}
+     */
+    function changeTab ({
+      fromTab,
+      toTab,
+    }) {
+      changeTabResultRef.value = {
+        fromTab,
+        toTab,
+      }
     }
   },
 })
