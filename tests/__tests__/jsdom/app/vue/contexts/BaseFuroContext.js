@@ -666,3 +666,67 @@ describe('BaseFuroContext', () => {
     })
   })
 })
+
+describe('BaseFuroContext', () => {
+  describe('#generateExposeHash()', () => {
+    /**
+     * @type {Array<{
+     *   params: {
+     *     props: import('vue').ComponentCustomProps
+     *     componentContext: import('vue').SetupContext
+     *   }
+     * }>}
+     */
+    const cases = /** @type {Array<*>} */ ([
+      {
+        params: {
+          props: {
+            label: 'alpha',
+          },
+          componentContext: {
+            attrs: {
+              command: 'alpha',
+            },
+            emit: () => {},
+            expose: () => {},
+            slots: {
+              default: () => {},
+              alpha: () => {},
+            },
+          },
+        },
+      },
+      {
+        params: {
+          props: {
+            label: 'beta',
+          },
+          componentContext: {
+            attrs: {
+              command: 'beta',
+            },
+            emit: () => {},
+            expose: () => {},
+            slots: {
+              default: () => {},
+              beta: () => {},
+            },
+          },
+        },
+      },
+    ])
+
+    describe('to be fixed value', () => {
+      test.each(cases)('label: $params.props.label', ({ params }) => {
+        const expected = {}
+
+        const context = BaseFuroContext.create(params)
+
+        const actual = context.generateExposeHash()
+
+        expect(actual)
+          .toEqual(expected)
+      })
+    })
+  })
+})
