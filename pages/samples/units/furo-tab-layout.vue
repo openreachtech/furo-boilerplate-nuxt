@@ -44,8 +44,8 @@ export default defineComponent({
 
     /**
      * @type {import('vue').Ref<{
-     *   fromTab: import('~/app/vue/contexts/FuroTabContext').default | null
-     *   toTab: import('~/app/vue/contexts/FuroTabContext').default | null
+     *   fromTab: import('~/app/vue/contexts/FuroTabItemContext').default | null
+     *   toTab: import('~/app/vue/contexts/FuroTabItemContext').default | null
      * }>}
      */
     const changeTabResultRef = ref({
@@ -64,8 +64,8 @@ export default defineComponent({
      * Change tab.
      *
      * @param {{
-     *   fromTab: import('~/app/vue/contexts/FuroTabContext').default
-     *   toTab: import('~/app/vue/contexts/FuroTabContext').default
+     *   fromTab: import('~/app/vue/contexts/FuroTabItemContext').default
+     *   toTab: import('~/app/vue/contexts/FuroTabItemContext').default
      * }} params - Parameters.
      * @returns {void}
      */

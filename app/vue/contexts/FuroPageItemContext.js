@@ -6,11 +6,11 @@
  * @property {number} total - Total number of items.
  * @property {boolean} isCurrent - Whether the page is current.
  */
-export default class FuroPageContext {
+export default class FuroPageItemContext {
   /**
    * Constructor.
    *
-   * @param {FuroPageContextParams} params - Parameters of this constructor.
+   * @param {FuroPageItemContextParams} params - Parameters of this constructor.
    */
   constructor ({
     pageNumber,
@@ -27,8 +27,8 @@ export default class FuroPageContext {
   /**
    * Factory method to create a new instance of this class.
    *
-   * @param {FuroPageContextFactoryParams} params - Parameters of this factory method.
-   * @returns {FuroPageContext} - New instance of this class.
+   * @param {FuroPageItemContextFactoryParams} params - Parameters of this factory method.
+   * @returns {FuroPageItemContext} - New instance of this class.
    */
   static create ({
     pageNumber,
@@ -96,7 +96,7 @@ export default class FuroPageContext {
  *   isCurrent: boolean
  *   searchParams: URLSearchParams
  *   pageKey: string
- * }} FuroPageContextParams
+ * }} FuroPageItemContextParams
  */
 
 /**
@@ -105,5 +105,5 @@ export default class FuroPageContext {
  *   isCurrent?: boolean
  *   searchParams: URLSearchParams
  *   pageKey: string
- * }} FuroPageContextFactoryParams
+ * }} FuroPageItemContextFactoryParams
  */

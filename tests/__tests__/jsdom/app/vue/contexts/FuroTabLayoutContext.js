@@ -5,7 +5,7 @@ import {
 import FuroTabLayoutContext from '~/app/vue/contexts/FuroTabLayoutContext.js'
 
 import BaseFuroContext from '~/app/vue/contexts/BaseFuroContext.js'
-import FuroTabContext from '~/app/vue/contexts/FuroTabContext.js'
+import FuroTabItemContext from '~/app/vue/contexts/FuroTabItemContext.js'
 
 describe('FuroTabLayoutContext', () => {
   describe('super class', () => {
@@ -96,24 +96,24 @@ describe('FuroTabLayoutContext', () => {
           {
             params: {
               tabContexts: [
-                FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha', index: 0 }),
-                FuroTabContext.create({ tabKey: 'beta', label: 'Beta', index: 1 }),
-                FuroTabContext.create({ tabKey: 'gamma', label: 'Gamma', index: 2 }),
+                FuroTabItemContext.create({ tabKey: 'alpha', label: 'Alpha', index: 0 }),
+                FuroTabItemContext.create({ tabKey: 'beta', label: 'Beta', index: 1 }),
+                FuroTabItemContext.create({ tabKey: 'gamma', label: 'Gamma', index: 2 }),
               ],
             },
           },
           {
             params: {
               tabContexts: [
-                FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha', index: 0 }),
-                FuroTabContext.create({ tabKey: 'beta', label: 'Beta', index: 1 }),
+                FuroTabItemContext.create({ tabKey: 'alpha', label: 'Alpha', index: 0 }),
+                FuroTabItemContext.create({ tabKey: 'beta', label: 'Beta', index: 1 }),
               ],
             },
           },
           {
             params: {
               tabContexts: [
-                FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha', index: 0 }),
+                FuroTabItemContext.create({ tabKey: 'alpha', label: 'Alpha', index: 0 }),
               ],
             },
           },
@@ -278,9 +278,9 @@ describe('FuroTabLayoutContext', () => {
               gammaTabElement,
             ]),
             tabContexts: [
-              FuroTabContext.create({ tabKey: 'gamma', label: 'Gamma', index: 0 }),
-              FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha', index: 1 }),
-              FuroTabContext.create({ tabKey: 'beta', label: 'Beta', index: 2 }),
+              FuroTabItemContext.create({ tabKey: 'gamma', label: 'Gamma', index: 0 }),
+              FuroTabItemContext.create({ tabKey: 'alpha', label: 'Alpha', index: 1 }),
+              FuroTabItemContext.create({ tabKey: 'beta', label: 'Beta', index: 2 }),
             ],
             activeTabKey: 'alpha',
           },
@@ -314,8 +314,8 @@ describe('FuroTabLayoutContext', () => {
               gammaTabElement,
             ]),
             tabContexts: [
-              FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha', index: 0 }),
-              FuroTabContext.create({ tabKey: 'beta', label: 'Beta', index: 1 }),
+              FuroTabItemContext.create({ tabKey: 'alpha', label: 'Alpha', index: 0 }),
+              FuroTabItemContext.create({ tabKey: 'beta', label: 'Beta', index: 1 }),
             ],
             activeTabKey: 'beta',
           },
@@ -345,7 +345,7 @@ describe('FuroTabLayoutContext', () => {
               gammaTabElement,
             ]),
             tabContexts: [
-              FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha', index: 0 }),
+              FuroTabItemContext.create({ tabKey: 'alpha', label: 'Alpha', index: 0 }),
             ],
             activeTabKey: null,
           },
@@ -390,7 +390,7 @@ describe('FuroTabLayoutContext', () => {
           },
           index: 0,
         },
-        expected: FuroTabContext.create({
+        expected: FuroTabItemContext.create({
           tabKey: 'alpha',
           label: 'Alpha',
           index: 0,
@@ -404,7 +404,7 @@ describe('FuroTabLayoutContext', () => {
           },
           index: 1,
         },
-        expected: FuroTabContext.create({
+        expected: FuroTabItemContext.create({
           tabKey: 'beta',
           label: 'Beta',
           index: 1,
@@ -777,9 +777,9 @@ describe('FuroTabLayoutContext', () => {
         activeTabKey: 'alpha',
       }
 
-      const alphaTabContext = FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha', index: 0 })
-      const betaTabContext = FuroTabContext.create({ tabKey: 'beta', label: 'Beta', index: 1 })
-      const gammaTabContext = FuroTabContext.create({ tabKey: 'gamma', label: 'Gamma', index: 2 })
+      const alphaTabContext = FuroTabItemContext.create({ tabKey: 'alpha', label: 'Alpha', index: 0 })
+      const betaTabContext = FuroTabItemContext.create({ tabKey: 'beta', label: 'Beta', index: 1 })
+      const gammaTabContext = FuroTabItemContext.create({ tabKey: 'gamma', label: 'Gamma', index: 2 })
 
       const tabContexts = [
         alphaTabContext,
