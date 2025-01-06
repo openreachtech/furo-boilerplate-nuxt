@@ -365,6 +365,21 @@ describe('FuroTabLayoutContext', () => {
 })
 
 describe('FuroTabLayoutContext', () => {
+  describe('.get:EMIT_EVENT_NAME', () => {
+    test('to be fixed value', () => {
+      const expected = {
+        CHANGE_TAB: 'changeTab',
+      }
+
+      const actual = FuroTabLayoutContext.EMIT_EVENT_NAME
+
+      expect(actual)
+        .toStrictEqual(expected)
+    })
+  })
+})
+
+describe('FuroTabLayoutContext', () => {
   describe('.createTabContexts()', () => {
     const cases = [
       {
