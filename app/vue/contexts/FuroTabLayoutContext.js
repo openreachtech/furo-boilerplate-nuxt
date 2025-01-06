@@ -172,3 +172,7 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
  *   label: string
  * }} FuroTabParams
  */
+
+/**
+ * @typedef {'changeTab'} FuroTabLayoutContextEmitOptions
+ */
