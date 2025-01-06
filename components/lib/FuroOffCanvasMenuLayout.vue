@@ -60,6 +60,12 @@ export default defineComponent({
   </div>
 </template>
 
+<style>
+:root {
+  --time-transition-nav-toggle: 0.3s;
+}
+</style>
+
 <style scoped>
 .unit-body {
   min-height: var(--size-screen-height);
@@ -118,6 +124,40 @@ export default defineComponent({
   margin-inline-start: 1rem;
 }
 
+/******************************************************************************/
+
+.unit-body > .header::after {
+  content: '';
+
+  position: fixed;
+  top: var(--size-header-height);
+  left: 0;
+
+  height: calc(
+    var(--size-screen-height)
+    - var(--size-header-height)
+  );
+  width: 100vw;
+
+  transform: translateZ(1rem);
+
+  background-color: rgba(0, 0, 0, 0.5);
+
+  transition:
+    background-color var(--time-transition-nav-toggle) ease-out,
+  ;
+
+  display: none;
+}
+
+@media (width < 48rem) {
+  .unit-body.open-nav > .header::after {
+    display: inherit;
+
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}
+
 .unit-body > .navigation {
   transform: translateX(-100%);
 
@@ -135,7 +175,9 @@ export default defineComponent({
 
   background-color: var(--color-background-nav);
 
-  transition: transform 0.2s ease-out;
+  transition:
+    transform var(--time-transition-nav-toggle) ease-out
+  ;
 
   @media (48rem <= width) {
     transform: translateX(0);
@@ -144,36 +186,6 @@ export default defineComponent({
 
 .unit-body.open-nav > .navigation {
   transform: translateX(0);
-}
-
-.unit-body > .navigation::before {
-  content: '';
-
-  position: fixed;
-  top: 0;
-  left: 100%;
-
-  height: 100%;
-  width: 100vw;
-
-  display: inline-block;
-
-  background-color: rgba(0, 0, 0, 0);
-
-  transition:
-    background-color 0.2s ease-out,
-    width 0.2s ease-out
-  ;
-
-  @media (48rem <= width) {
-    display: none;
-  }
-}
-
-.unit-body.open-nav > .navigation::before {
-  background-color: rgba(0, 0, 0, 0.5);
-
-  width: calc(100vw - var(--size-nav-width));
 }
 
 .unit-body > .contents {
@@ -186,7 +198,7 @@ export default defineComponent({
   width: 100%;
 
   transition:
-    width 0.2s ease-out
+    width var(--time-transition-nav-toggle) ease-out
   ;
 
   @media (48rem <= width) {
