@@ -61,6 +61,9 @@ export default defineComponent({
       &lt;FuroTabLayout&gt; samples
     </h2>
 
+    <!-- ///////////////////////////////////////////////////////////////// -->
+    <!-- <FuroTabLayout> with default design -->
+    <!-- ///////////////////////////////////////////////////////////////// -->
     <section class="unit-section sample-placeholder double">
       <h3 class="design-header tertiary">
         &lt;FuroTabLayout&gt; with default design
@@ -85,6 +88,9 @@ export default defineComponent({
       </FuroTabLayout>
     </section>
 
+    <!-- ///////////////////////////////////////////////////////////////// -->
+    <!-- <FuroTabLayout> with customized alpha-design -->
+    <!-- ///////////////////////////////////////////////////////////////// -->
     <section class="unit-section sample-placeholder double">
       <h3 class="design-header tertiary">
         &lt;FuroTabLayout&gt; with customized alpha-design
@@ -117,6 +123,9 @@ export default defineComponent({
       App TabLayout Samples
     </h1>
 
+    <!-- ///////////////////////////////////////////////////////////////// -->
+    <!-- <AppTabLayout> with default design -->
+    <!-- ///////////////////////////////////////////////////////////////// -->
     <section class="unit-section sample-placeholder double">
       <h3 class="design-header tertiary">
         &lt;AppTabLayout&gt; with default design
@@ -141,6 +150,9 @@ export default defineComponent({
       </AppTabLayout>
     </section>
 
+    <!-- ///////////////////////////////////////////////////////////////// -->
+    <!-- <AppTabLayout> with customized beta-design -->
+    <!-- ///////////////////////////////////////////////////////////////// -->
     <section class="unit-section sample-placeholder double">
       <h3 class="design-header tertiary">
         &lt;AppTabLayout&gt; with customized beta-design
