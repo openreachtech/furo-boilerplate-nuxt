@@ -44,7 +44,7 @@ export default defineComponent({
       </label>
       <br>
 
-      <button class="-aim-unlock design-button"
+      <button class="-aim-unlock button usual"
         type="submit"
         onclick="alert('Submit!')"
       >
@@ -64,7 +64,7 @@ export default defineComponent({
       <label for="labeled-input">I agree it</label>
       <br>
 
-      <button class="-aim-unlock design-button"
+      <button class="-aim-unlock button usual"
         type="submit"
         onclick="alert('Submit!')"
       >
@@ -88,7 +88,7 @@ export default defineComponent({
       </label>
       <br>
 
-      <button class="-aim-unlock design-button"
+      <button class="-aim-unlock button usual"
         type="submit"
         onclick="alert('Submit!')"
       >
@@ -113,7 +113,7 @@ export default defineComponent({
         </label>
       </div>
 
-      <button class="-aim-unlock design-button"
+      <button class="-aim-unlock button usual"
         type="submit"
         onclick="alert('Submit!')"
       >
@@ -152,7 +152,7 @@ export default defineComponent({
       </label>
       <br>
 
-      <button class="-aim-unlock design-button"
+      <button class="-aim-unlock button usual"
         type="submit"
         onclick="alert('Submit!')"
       >
@@ -188,7 +188,7 @@ export default defineComponent({
         </label>
       </div>
 
-      <button class="-aim-unlock design-button"
+      <button class="-aim-unlock button usual"
         type="submit"
         onclick="alert('Submit!')"
       >
@@ -216,22 +216,14 @@ export default defineComponent({
   margin-block-end: 1rem;
 }
 
-.design-button {
-  margin-block-start: 0.5rem;
-  border: none;
-  border-radius: 0.25rem;
-
-  background-color: #55f;
-  color: #fff;
-
-  padding-block: 0.25rem;
-  padding-inline: 0.75rem;
-}
-
 .unit-section {
   margin-block-start: 1rem;
 
   padding-block: 0.5rem;
   padding-inline: 1rem;
+}
+
+.unit-section .button {
+  margin-block-start: 0.5rem;
 }
 </style>
