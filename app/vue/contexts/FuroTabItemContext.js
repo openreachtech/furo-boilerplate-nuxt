@@ -5,11 +5,11 @@
  * @property {string} label - Tab label.
  * @property {boolean} isActive - Whether the tab is active.
  */
-export default class FuroTabContext {
+export default class FuroTabItemContext {
   /**
    * Constructor.
    *
-   * @param {FuroTabContextParams} params - Parameters of this constructor.
+   * @param {FuroTabItemContextParams} params - Parameters of this constructor.
    */
   constructor ({
     tabKey,
@@ -24,8 +24,8 @@ export default class FuroTabContext {
   /**
    * Factory method to create a new instance of this class.
    *
-   * @param {FuroTabContextFactoryParams} params - Parameters of this factory method.
-   * @returns {FuroTabContext} - New instance of this class.
+   * @param {FuroTabItemContextFactoryParams} params - Parameters of this factory method.
+   * @returns {FuroTabItemContext} - New instance of this class.
    */
   static create ({
     tabKey,
@@ -59,9 +59,9 @@ export default class FuroTabContext {
  *   tabKey: string
  *   label: string
  *   index: number
- * }} FuroTabContextParams
+ * }} FuroTabItemContextParams
  */
 
 /**
- * @typedef {FuroTabContextParams} FuroTabContextFactoryParams
+ * @typedef {FuroTabItemContextParams} FuroTabItemContextFactoryParams
  */
