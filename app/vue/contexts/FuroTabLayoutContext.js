@@ -69,6 +69,13 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
     )
   }
 
+  /** @override */
+  static get EMIT_EVENT_NAME () {
+    return {
+      CHANGE_TAB: 'changeTab',
+    }
+  }
+
   /**
    * Create tab contexts.
    *
