@@ -96,24 +96,24 @@ describe('FuroTabLayoutContext', () => {
           {
             params: {
               tabContexts: [
-                FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha' }),
-                FuroTabContext.create({ tabKey: 'beta', label: 'Beta' }),
-                FuroTabContext.create({ tabKey: 'gamma', label: 'Gamma' }),
+                FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha', index: 0 }),
+                FuroTabContext.create({ tabKey: 'beta', label: 'Beta', index: 1 }),
+                FuroTabContext.create({ tabKey: 'gamma', label: 'Gamma', index: 2 }),
               ],
             },
           },
           {
             params: {
               tabContexts: [
-                FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha' }),
-                FuroTabContext.create({ tabKey: 'beta', label: 'Beta' }),
+                FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha', index: 0 }),
+                FuroTabContext.create({ tabKey: 'beta', label: 'Beta', index: 1 }),
               ],
             },
           },
           {
             params: {
               tabContexts: [
-                FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha' }),
+                FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha', index: 0 }),
               ],
             },
           },
@@ -278,9 +278,9 @@ describe('FuroTabLayoutContext', () => {
               gammaTabElement,
             ]),
             tabContexts: [
-              FuroTabContext.create({ tabKey: 'gamma', label: 'Gamma' }),
-              FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha' }),
-              FuroTabContext.create({ tabKey: 'beta', label: 'Beta' }),
+              FuroTabContext.create({ tabKey: 'gamma', label: 'Gamma', index: 0 }),
+              FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha', index: 1 }),
+              FuroTabContext.create({ tabKey: 'beta', label: 'Beta', index: 2 }),
             ],
             activeTabKey: 'alpha',
           },
@@ -314,8 +314,8 @@ describe('FuroTabLayoutContext', () => {
               gammaTabElement,
             ]),
             tabContexts: [
-              FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha' }),
-              FuroTabContext.create({ tabKey: 'beta', label: 'Beta' }),
+              FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha', index: 0 }),
+              FuroTabContext.create({ tabKey: 'beta', label: 'Beta', index: 1 }),
             ],
             activeTabKey: 'beta',
           },
@@ -345,7 +345,7 @@ describe('FuroTabLayoutContext', () => {
               gammaTabElement,
             ]),
             tabContexts: [
-              FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha' }),
+              FuroTabContext.create({ tabKey: 'alpha', label: 'Alpha', index: 0 }),
             ],
             activeTabKey: null,
           },
@@ -373,10 +373,12 @@ describe('FuroTabLayoutContext', () => {
             tabKey: 'alpha',
             label: 'Alpha',
           },
+          index: 0,
         },
         expected: FuroTabContext.create({
           tabKey: 'alpha',
           label: 'Alpha',
+          index: 0,
         }),
       },
       {
@@ -385,10 +387,12 @@ describe('FuroTabLayoutContext', () => {
             tabKey: 'beta',
             label: 'Beta',
           },
+          index: 1,
         },
         expected: FuroTabContext.create({
           tabKey: 'beta',
           label: 'Beta',
+          index: 1,
         }),
       },
     ]
