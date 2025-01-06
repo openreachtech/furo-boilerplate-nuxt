@@ -198,6 +198,15 @@ export default defineComponent({
   </div>
 </template>
 
+<style>
+/**
+ * FIXME: Try to kick out the z-index property.
+ */
+.unit-body > .contents {
+  z-index: -100;
+}
+</style>
+
 <style scoped>
 .design-header.primary {
   margin-block-end: 1rem;
