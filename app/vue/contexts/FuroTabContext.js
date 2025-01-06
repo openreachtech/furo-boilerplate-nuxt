@@ -30,10 +30,12 @@ export default class FuroTabContext {
   static create ({
     tabKey,
     label,
+    index,
   }) {
     return new this({
       tabKey,
       label,
+      index,
     })
   }
 
@@ -61,8 +63,5 @@ export default class FuroTabContext {
  */
 
 /**
- * @typedef {{
- *   tabKey: string
- *   label: string
- * }} FuroTabContextFactoryParams
+ * @typedef {FuroTabContextParams} FuroTabContextFactoryParams
  */
