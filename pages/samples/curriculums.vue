@@ -80,21 +80,24 @@ export default defineComponent({
 
   <h2>Curriculums</h2>
 
-  <button @click="invokeRequestOnEvent({
-    variables: {
-      input: {
-        pagination: {
-          limit: 5,
-          offset: 2,
-          sort: {
-            targetColumn: 'title',
-            orderBy: 'ASC',
+  <br>
+
+  <button class="usual"
+    @click="invokeRequestOnEvent({
+      variables: {
+        input: {
+          pagination: {
+            limit: 5,
+            offset: 2,
+            sort: {
+              targetColumn: 'title',
+              orderBy: 'ASC',
+            },
           },
         },
       },
-    },
-    hooks: launcherHooks,
-  })"
+      hooks: launcherHooks,
+    })"
   >
     Fetch curriculums with offset 2
   </button>

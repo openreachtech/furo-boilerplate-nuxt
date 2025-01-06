@@ -73,7 +73,7 @@ export default defineComponent({
       formElement: formRef,
     })"
   >
-    <button class="standard"
+    <button class="usual"
       type="submit"
     >
       Submit (above)
@@ -319,7 +319,7 @@ export default defineComponent({
       </select>
     </label>
 
-    <button class="standard"
+    <button class="usual"
       type="submit"
     >
       Submit (below)
@@ -349,20 +349,6 @@ label.column {
 
 form button {
   margin-block-start: 1rem;
-}
-
-form button.standard {
-  border: none;
-  border-radius: .25rem;
-
-  padding-block: .5rem;
-  padding-inline: 1rem;
-  background-color: #007bff;
-  color: #fff;
-}
-
-form button.standard:active {
-  background-color: #03c;
 }
 
 form button[disabled] {
