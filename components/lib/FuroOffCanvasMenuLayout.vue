@@ -118,6 +118,40 @@ export default defineComponent({
   margin-inline-start: 1rem;
 }
 
+/******************************************************************************/
+
+.unit-body > .header::after {
+  content: '';
+
+  position: fixed;
+  top: var(--size-header-height);
+  left: 0;
+
+  height: calc(
+    var(--size-screen-height)
+    - var(--size-header-height)
+  );
+  width: 100vw;
+
+  transform: translateZ(1rem);
+
+  background-color: rgba(0, 0, 0, 0.5);
+
+  transition:
+    background-color 0.3s ease-out,
+  ;
+
+  display: none;
+}
+
+@media (width < 48rem) {
+  .unit-body.open-nav > .header::after {
+    display: inherit;
+
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}
+
 .unit-body > .navigation {
   transform: translateX(-100%);
 
