@@ -1,4 +1,4 @@
-import FuroTabContext from '~/app/vue/contexts/FuroTabContext'
+import FuroTabContext from '~/app/vue/contexts/FuroTabItemContext'
 
 describe('FuroTabContext', () => {
   describe('constructor', () => {

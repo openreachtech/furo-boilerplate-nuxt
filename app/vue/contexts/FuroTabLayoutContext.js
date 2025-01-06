@@ -1,6 +1,6 @@
 import BaseFuroContext from './BaseFuroContext.js'
 
-import FuroTabContext from './FuroTabContext.js'
+import FuroTabContext from './FuroTabItemContext.js'
 
 /**
  * Props context class for FuroTabLayout component.

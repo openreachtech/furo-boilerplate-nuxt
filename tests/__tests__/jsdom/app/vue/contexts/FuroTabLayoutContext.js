@@ -5,7 +5,7 @@ import {
 import FuroTabLayoutContext from '~/app/vue/contexts/FuroTabLayoutContext.js'
 
 import BaseFuroContext from '~/app/vue/contexts/BaseFuroContext.js'
-import FuroTabContext from '~/app/vue/contexts/FuroTabContext.js'
+import FuroTabContext from '~/app/vue/contexts/FuroTabItemContext.js'
 
 describe('FuroTabLayoutContext', () => {
   describe('super class', () => {
