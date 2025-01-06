@@ -1,6 +1,7 @@
 <script>
 import {
   defineComponent,
+  ref,
 } from 'vue'
 
 import {
@@ -41,9 +42,21 @@ export default defineComponent({
       },
     })
 
+    /**
+     * @type {import('vue').Ref<{
+     *   fromTab: import('~/app/vue/contexts/FuroTabContext').default | null
+     *   toTab: import('~/app/vue/contexts/FuroTabContext').default | null
+     * }>}
+     */
+    const changeTabResultRef = ref({
+      fromTab: null,
+      toTab: null,
+    })
+
     return {
       tabs,
 
+      changeTabResultRef,
       changeTab,
     }
 
@@ -107,6 +120,40 @@ export default defineComponent({
           </div>
         </template>
       </FuroTabLayout>
+    </section>
+
+    <!-- ///////////////////////////////////////////////////////////////// -->
+    <!-- <FuroTabLayout> with change tab event -->
+    <!-- ///////////////////////////////////////////////////////////////// -->
+    <section class="unit-section sample-placeholder double">
+      <h3 class="design-header tertiary">
+        &lt;FuroTabLayout&gt; with change tab event
+      </h3>
+
+      <FuroTabLayout :tabs="tabs"
+        :active-tab-key="tabs[0].tabKey"
+        @change-tab="changeTab"
+      >
+        <template #contents>
+          <div class="alpha">
+            Alpha Content
+          </div>
+
+          <div class="beta">
+            Beta Content
+          </div>
+
+          <div class="gamma">
+            Gamma Content
+          </div>
+        </template>
+      </FuroTabLayout>
+
+      <div class="button-reaction-placeholder">
+        <div>[from: [{{ changeTabResultRef.fromTab?.index }}] {{ changeTabResultRef.fromTab?.tabKey }}]</div>
+        <div>↓</div>
+        <div>[to: [{{ changeTabResultRef.toTab?.index }}] {{ changeTabResultRef.toTab?.tabKey }}]</div>
+      </div>
     </section>
 
     <!-- ///////////////////////////////////////////////////////////////// -->
@@ -254,4 +301,17 @@ export default defineComponent({
   font-size: 1.5rem;
 }
 
+/******************************************************************************/
+
+.button-reaction-placeholder {
+  border: var(--size-thinnest) var(--color-text) solid;
+  border-radius: .5rem;
+
+  margin-block: 1rem;
+
+  padding-block: .5rem;
+  padding-inline: 1rem;
+
+  font-size: 1.2rem;
+}
 </style>
