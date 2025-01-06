@@ -1,6 +1,6 @@
-import FuroPageContext from '~/app/vue/contexts/FuroPageItemContext'
+import FuroPageItemContext from '~/app/vue/contexts/FuroPageItemContext'
 
-describe('FuroPageContext', () => {
+describe('FuroPageItemContext', () => {
   describe('constructor', () => {
     describe('to keep properties', () => {
       describe('#pageNumber', () => {
@@ -30,7 +30,7 @@ describe('FuroPageContext', () => {
             isCurrent: false,
           }
 
-          const context = new FuroPageContext(args)
+          const context = new FuroPageItemContext(args)
 
           expect(context)
             .toHaveProperty('pageNumber', params.pageNumber)
@@ -70,7 +70,7 @@ describe('FuroPageContext', () => {
             isCurrent: false,
           }
 
-          const context = new FuroPageContext(args)
+          const context = new FuroPageItemContext(args)
 
           expect(context)
             .toHaveProperty('searchParams', params.searchParams)
@@ -104,7 +104,7 @@ describe('FuroPageContext', () => {
             isCurrent: false,
           }
 
-          const context = new FuroPageContext(args)
+          const context = new FuroPageItemContext(args)
 
           expect(context)
             .toHaveProperty('pageKey', params.pageKey)
@@ -133,7 +133,7 @@ describe('FuroPageContext', () => {
             isCurrent: params.isCurrent,
           }
 
-          const context = new FuroPageContext(args)
+          const context = new FuroPageItemContext(args)
 
           expect(context)
             .toHaveProperty('isCurrent', params.isCurrent)
@@ -143,7 +143,7 @@ describe('FuroPageContext', () => {
   })
 })
 
-describe('FuroPageContext', () => {
+describe('FuroPageItemContext', () => {
   describe('.create()', () => {
     describe('to be instance of own class', () => {
       const cases = [
@@ -180,10 +180,10 @@ describe('FuroPageContext', () => {
       ]
 
       test.each(cases)('pageNumber: $params.pageNumber', ({ params }) => {
-        const actual = FuroPageContext.create(params)
+        const actual = FuroPageItemContext.create(params)
 
         expect(actual)
-          .toBeInstanceOf(FuroPageContext)
+          .toBeInstanceOf(FuroPageItemContext)
       })
     })
 
@@ -246,7 +246,7 @@ describe('FuroPageContext', () => {
       ]
 
       test.each(cases)('pageNumber: $params.pageNumber', ({ params, expected }) => {
-        const SpyClass = globalThis.constructorSpy.spyOn(FuroPageContext)
+        const SpyClass = globalThis.constructorSpy.spyOn(FuroPageItemContext)
 
         SpyClass.create(params)
 
@@ -257,7 +257,7 @@ describe('FuroPageContext', () => {
   })
 })
 
-describe('FuroPageContext', () => {
+describe('FuroPageItemContext', () => {
   describe('#generateHref()', () => {
     describe('to return string', () => {
       const cases = [
@@ -307,7 +307,7 @@ describe('FuroPageContext', () => {
       ]
 
       test.each(cases)('pageNumber: $params.pageNumber', ({ params, expected }) => {
-        const context = FuroPageContext.create(params)
+        const context = FuroPageItemContext.create(params)
 
         const actual = context.generateHref()
 
@@ -348,7 +348,7 @@ describe('FuroPageContext', () => {
       ]
 
       test.each(cases)('pageNumber: $params.pageNumber', ({ params }) => {
-        const context = FuroPageContext.create(params)
+        const context = FuroPageItemContext.create(params)
 
         const actual = context.generateHref()
 
@@ -359,7 +359,7 @@ describe('FuroPageContext', () => {
   })
 })
 
-describe('FuroPageContext', () => {
+describe('FuroPageItemContext', () => {
   describe('#generateText()', () => {
     describe('to return string', () => {
       const cases = [
@@ -396,7 +396,7 @@ describe('FuroPageContext', () => {
       ]
 
       test.each(cases)('pageNumber: $params.pageNumber', ({ params, expected }) => {
-        const context = FuroPageContext.create(params)
+        const context = FuroPageItemContext.create(params)
 
         const actual = context.generateText()
 
@@ -437,7 +437,7 @@ describe('FuroPageContext', () => {
       ]
 
       test.each(cases)('pageNumber: $params.pageNumber', ({ params }) => {
-        const context = FuroPageContext.create(params)
+        const context = FuroPageItemContext.create(params)
 
         const actual = context.generateText()
 
@@ -448,7 +448,7 @@ describe('FuroPageContext', () => {
   })
 })
 
-describe('FuroPageContext', () => {
+describe('FuroPageItemContext', () => {
   describe('#generateControlClasses()', () => {
     describe('to return object', () => {
       const cases = [
@@ -494,7 +494,7 @@ describe('FuroPageContext', () => {
       ]
 
       test.each(cases)('pageNumber: $params.pageNumber', ({ params, expected }) => {
-        const context = FuroPageContext.create(params)
+        const context = FuroPageItemContext.create(params)
 
         const actual = context.generateControlClasses()
 
