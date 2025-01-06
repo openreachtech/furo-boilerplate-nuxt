@@ -161,6 +161,15 @@ export default class BaseFuroContext {
   setupComponent (args = {}) {
     return this
   }
+
+  /**
+   * Generate expose() hash.
+   *
+   * @returns {Record<string, () => void>} - expose() hash.
+   */
+  generateExposeHash () {
+    return {}
+  }
 }
 
 /**
