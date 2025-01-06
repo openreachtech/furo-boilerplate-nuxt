@@ -1,6 +1,6 @@
 import BaseFuroContext from './BaseFuroContext.js'
 
-import FuroTabContext from './FuroTabContext.js'
+import FuroTabItemContext from './FuroTabItemContext.js'
 
 /**
  * Props context class for FuroTabLayout component.
@@ -83,7 +83,7 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
    *   tab: FuroTabParams
    *   index: number
    * }} params - Parameters of this factory method.
-   * @returns {FuroTabContext} - New instance of this class.
+   * @returns {FuroTabItemContext} - New instance of this class.
    */
   static createTabContexts ({
     tab: {
@@ -92,7 +92,7 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
     },
     index,
   }) {
-    return FuroTabContext.create({
+    return FuroTabItemContext.create({
       tabKey,
       label,
       index,
@@ -166,7 +166,7 @@ export default class FuroTabLayoutContext extends BaseFuroContext {
  *   props: FuroTabLayoutContextProps
  *   componentContext: import('vue').SetupContext
  *   tabElementsRef: import('vue').Ref<Array<HTMLElement>>
- *   tabContexts: Array<FuroTabContext>
+ *   tabContexts: Array<FuroTabItemContext>
  *   activeTabKey: string | null
  * }} FuroTabLayoutContextParams
  */
