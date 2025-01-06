@@ -165,10 +165,24 @@ export default defineComponent({
     width 0.2s ease-out
   ;
 
+  /**
+   * NOTE: When @media in ::before selector, it does not work in Safari.
+   */
   @media (48rem <= width) {
     display: none;
   }
 }
+
+/******************************************************************************/
+/**
+ * NOTE: This is a workaround for the issue that the Safari.
+ */
+@media (48rem <= width) {
+  .unit-body > .navigation::before {
+    display: none;
+  }
+}
+/******************************************************************************/
 
 .unit-body.open-nav > .navigation::before {
   background-color: rgba(0, 0, 0, 0.5);
