@@ -1,7 +1,7 @@
 import FuroPaginationContext from '~/app/vue/contexts/FuroPaginationContext.js'
 
 import BaseFuroContext from '~/app/vue/contexts/BaseFuroContext.js'
-import FuroPageContext from '~/app/vue/contexts/FuroPageContext.js'
+import FuroPageContext from '~/app/vue/contexts/FuroPageItemContext.js'
 
 describe('FuroPaginationContext', () => {
   describe('super class', () => {
