@@ -218,7 +218,7 @@ export default defineComponent({
           Alert Dialog
         </h3>
 
-        <button class="button"
+        <button class="button usual"
           @click="showDialog({
             dialog: alertFuroButtonDialogRef,
           })"
@@ -247,7 +247,7 @@ export default defineComponent({
           Confirm Dialog
         </h3>
 
-        <button class="button"
+        <button class="button usual"
           @click="showDialog({
             dialog: confirmFuroButtonDialogRef,
           })"
@@ -280,7 +280,7 @@ export default defineComponent({
           Ternary Confirm Dialog
         </h3>
 
-        <button class="button"
+        <button class="button usual"
           @click="showDialog({
             dialog: ternaryConfirmFuroButtonDialogRef,
           })"
@@ -332,7 +332,7 @@ export default defineComponent({
           Message with ⊗<br>(x-close button)
         </h3>
 
-        <button class="button"
+        <button class="button usual"
           @click="showDialog({
             dialog: messageAndXCloseButtonFuroDialogRef,
           })"
@@ -359,7 +359,7 @@ export default defineComponent({
           Dialog Status Callbacks
         </h3>
 
-        <button class="button"
+        <button class="button usual"
           @click="showDialog({
             dialog: dialogStatusCallbackFuroDialogRef,
           })"
@@ -378,9 +378,10 @@ export default defineComponent({
                 Dialog Status Callbacks
               </div>
               <br>
-              <button @click="dismissDialog({
-                dialog: dialogStatusCallbackFuroDialogRef,
-              })"
+              <button class="button usual"
+                @click="dismissDialog({
+                  dialog: dialogStatusCallbackFuroDialogRef,
+                })"
               >
                 Close
               </button>
@@ -397,7 +398,7 @@ export default defineComponent({
           Close by clicked on Backdrop
         </h3>
 
-        <button class="button"
+        <button class="button usual"
           @click="showDialog({
             dialog: closeByClickedOnBackdropFuroDialogRef,
           })"
@@ -417,9 +418,10 @@ export default defineComponent({
                 Close by clicked on Backdrop
               </div>
               <br>
-              <button @click="dismissDialog({
-                dialog: closeByClickedOnBackdropFuroDialogRef,
-              })"
+              <button class="button usual"
+                @click="dismissDialog({
+                  dialog: closeByClickedOnBackdropFuroDialogRef,
+                })"
               >
                 Close
               </button>
@@ -445,7 +447,7 @@ export default defineComponent({
           Custom Design of &lt;FuroDialog&gt; [alpha]
         </h3>
 
-        <button class="button"
+        <button class="button usual"
           @click="showDialog({
             dialog: customDesignedFuroDialogRef,
           })"
@@ -461,9 +463,10 @@ export default defineComponent({
               Custom Design from &lt;FuroDialog&gt; [alpha]
             </div>
 
-            <button @click="dismissDialog({
-              dialog: customDesignedFuroDialogRef,
-            })"
+            <button class="button usual"
+              @click="dismissDialog({
+                dialog: customDesignedFuroDialogRef,
+              })"
             >
               OK
             </button>
@@ -479,7 +482,7 @@ export default defineComponent({
           Default Design of &lt;AppDialog&gt;
         </h3>
 
-        <button class="button"
+        <button class="button usual"
           @click="showDialog({
             dialog: defaultAppDialogRef,
           })"
@@ -493,9 +496,10 @@ export default defineComponent({
               Default Design of &lt;AppDialog&gt;
             </div>
 
-            <button @click="dismissDialog({
-              dialog: defaultAppDialogRef,
-            })"
+            <button class="button usual"
+              @click="dismissDialog({
+                dialog: defaultAppDialogRef,
+              })"
             >
               OK
             </button>
@@ -511,7 +515,7 @@ export default defineComponent({
           Custom Design of &lt;AppDialog&gt;
         </h3>
 
-        <button class="button"
+        <button class="button usual"
           @click="showDialog({
             dialog: customAppDialogRef,
           })"
@@ -527,9 +531,10 @@ export default defineComponent({
               Custom Design of &lt;AppDialog&gt;
             </div>
 
-            <button @click="dismissDialog({
-              dialog: customAppDialogRef,
-            })"
+            <button class="button usual"
+              @click="dismissDialog({
+                dialog: customAppDialogRef,
+              })"
             >
               OK
             </button>
@@ -554,7 +559,7 @@ export default defineComponent({
           &lt;form&gt; Dialog sample
         </h3>
 
-        <button class="button"
+        <button class="button usual"
           @click="showDialog({
             dialog: formDialogRef,
           })"
@@ -589,8 +594,8 @@ export default defineComponent({
                 value="Who are you?"
               >
 
-              <button type="submit"
-                class="button submit"
+              <button class="button usual submit"
+                type="submit"
               >
                 Submit
               </button>
