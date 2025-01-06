@@ -14,9 +14,11 @@ export default class FuroTabContext {
   constructor ({
     tabKey,
     label,
+    index,
   }) {
     this.tabKey = tabKey
     this.label = label
+    this.index = index
   }
 
   /**
@@ -54,6 +56,7 @@ export default class FuroTabContext {
  * @typedef {{
  *   tabKey: string
  *   label: string
+ *   index: number
  * }} FuroTabContextParams
  */
 
