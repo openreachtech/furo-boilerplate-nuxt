@@ -146,36 +146,6 @@ export default defineComponent({
   transform: translateX(0);
 }
 
-.unit-body > .navigation::before {
-  content: '';
-
-  position: fixed;
-  top: 0;
-  left: 100%;
-
-  height: 100%;
-  width: 100vw;
-
-  display: inline-block;
-
-  background-color: rgba(0, 0, 0, 0);
-
-  transition:
-    background-color 0.2s ease-out,
-    width 0.2s ease-out
-  ;
-
-  @media (48rem <= width) {
-    display: none;
-  }
-}
-
-.unit-body.open-nav > .navigation::before {
-  background-color: rgba(0, 0, 0, 0.5);
-
-  width: calc(100vw - var(--size-nav-width));
-}
-
 .unit-body > .contents {
   justify-self: end;
 
