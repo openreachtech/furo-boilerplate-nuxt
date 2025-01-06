@@ -120,7 +120,7 @@ export default defineComponent({
     <br>
 
     <h1 class="design-header primary">
-      App TabLayout Samples
+      &lt;AppTabLayout&gt; Samples
     </h1>
 
     <!-- ///////////////////////////////////////////////////////////////// -->
