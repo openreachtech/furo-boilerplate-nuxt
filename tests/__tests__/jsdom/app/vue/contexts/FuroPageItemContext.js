@@ -1,4 +1,4 @@
-import FuroPageContext from '~/app/vue/contexts/FuroPageContext'
+import FuroPageContext from '~/app/vue/contexts/FuroPageItemContext'
 
 describe('FuroPageContext', () => {
   describe('constructor', () => {

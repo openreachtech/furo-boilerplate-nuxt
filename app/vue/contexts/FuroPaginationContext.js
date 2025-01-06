@@ -1,6 +1,6 @@
 import BaseFuroContext from './BaseFuroContext.js'
 
-import FuroPageContext from './FuroPageContext.js'
+import FuroPageContext from './FuroPageItemContext.js'
 
 /**
  * Props context class for FuroPagination component.
