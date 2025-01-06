@@ -89,7 +89,9 @@ export default defineComponent({
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.unit-body > .header > .button {
+.unit-body > .header > .button.toggle-navigation {
+  margin-inline-start: 0.75rem;
+
   max-height: 100%;
   width: 2rem;
   aspect-ratio: 1 / 1;
@@ -99,23 +101,9 @@ export default defineComponent({
 
   background-color: transparent;
 
-  appearance: none;
-  cursor: pointer;
-
   @media (48rem <= width) {
     display: none;
   }
-}
-
-.unit-body > .header > .button.toggle-navigation {
-  border: none;
-
-  background: none;
-
-  padding-block: 0;
-  padding-inline: 0;
-
-  cursor: pointer;
 }
 
 .unit-body > .header > .button.toggle-navigation + * {
