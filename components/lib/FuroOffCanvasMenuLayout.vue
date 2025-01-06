@@ -60,6 +60,12 @@ export default defineComponent({
   </div>
 </template>
 
+<style>
+:root {
+  --time-transition-nav-toggle: 0.3s;
+}
+</style>
+
 <style scoped>
 .unit-body {
   min-height: var(--size-screen-height);
@@ -169,7 +175,9 @@ export default defineComponent({
 
   background-color: var(--color-background-nav);
 
-  transition: transform 0.2s ease-out;
+  transition:
+    transform var(--time-transition-nav-toggle) ease-out
+  ;
 
   @media (48rem <= width) {
     transform: translateX(0);
@@ -190,7 +198,7 @@ export default defineComponent({
   width: 100%;
 
   transition:
-    width 0.2s ease-out
+    width var(--time-transition-nav-toggle) ease-out
   ;
 
   @media (48rem <= width) {
