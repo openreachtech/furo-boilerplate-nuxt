@@ -1,6 +1,6 @@
 import BaseFuroContext from './BaseFuroContext.js'
 
-import FuroPageContext from './FuroPageContext.js'
+import FuroPageItemContext from './FuroPageItemContext.js'
 
 /**
  * Props context class for FuroPagination component.
@@ -131,13 +131,13 @@ export default class FuroPaginationContext extends BaseFuroContext {
    * @param {{
    *   rangePages?: Array<number>
    * }} [params] - Parameters.
-   * @returns {Array<FuroPageContext>} - Pages.
+   * @returns {Array<FuroPageItemContext>} - Pages.
    */
   createRangePages ({
     rangePages = this.generateRangePages(),
   } = {}) {
     return rangePages.map(page =>
-      FuroPageContext.create({
+      FuroPageItemContext.create({
         pageNumber: page,
         searchParams: this.searchParams,
         pageKey: this.pageKey,
@@ -189,14 +189,14 @@ export default class FuroPaginationContext extends BaseFuroContext {
   /**
    * Create previous page.
    *
-   * @returns {FuroPageContext} - Previous page.
+   * @returns {FuroPageItemContext} - Previous page.
    */
   createPreviousPage () {
     const previousPage = this.currentPage
       ? this.currentPage - 1
       : null
 
-    return FuroPageContext.create({
+    return FuroPageItemContext.create({
       pageNumber: previousPage,
       searchParams: this.searchParams,
       pageKey: this.pageKey,
@@ -206,11 +206,11 @@ export default class FuroPaginationContext extends BaseFuroContext {
   /**
    * Create next page.
    *
-   * @returns {FuroPageContext} - Next page.
+   * @returns {FuroPageItemContext} - Next page.
    */
   createNextPage () {
     if (this.lastPage <= this.currentPage) {
-      return FuroPageContext.create({
+      return FuroPageItemContext.create({
         pageNumber: null,
         searchParams: this.searchParams,
         pageKey: this.pageKey,
@@ -219,7 +219,7 @@ export default class FuroPaginationContext extends BaseFuroContext {
 
     const nextPage = this.currentPage + 1
 
-    return FuroPageContext.create({
+    return FuroPageItemContext.create({
       pageNumber: nextPage,
       searchParams: this.searchParams,
       pageKey: this.pageKey,
@@ -229,10 +229,10 @@ export default class FuroPaginationContext extends BaseFuroContext {
   /**
    * Create first page.
    *
-   * @returns {FuroPageContext} - First page.
+   * @returns {FuroPageItemContext} - First page.
    */
   createFirstPage () {
-    return FuroPageContext.create({
+    return FuroPageItemContext.create({
       pageNumber: 1,
       searchParams: this.searchParams,
       pageKey: this.pageKey,
@@ -242,10 +242,10 @@ export default class FuroPaginationContext extends BaseFuroContext {
   /**
    * Create last page.
    *
-   * @returns {FuroPageContext} - Last page.
+   * @returns {FuroPageItemContext} - Last page.
    */
   createLastPage () {
-    return FuroPageContext.create({
+    return FuroPageItemContext.create({
       pageNumber: this.lastPage,
       searchParams: this.searchParams,
       pageKey: this.pageKey,
