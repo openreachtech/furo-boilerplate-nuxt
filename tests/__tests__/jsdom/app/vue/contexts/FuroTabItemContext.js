@@ -1,6 +1,6 @@
-import FuroTabContext from '~/app/vue/contexts/FuroTabItemContext'
+import FuroTabItemContext from '~/app/vue/contexts/FuroTabItemContext'
 
-describe('FuroTabContext', () => {
+describe('FuroTabItemContext', () => {
   describe('constructor', () => {
     describe('to keep properties', () => {
       describe('#tabKey', () => {
@@ -29,7 +29,7 @@ describe('FuroTabContext', () => {
             index: 999,
           }
 
-          const context = new FuroTabContext(args)
+          const context = new FuroTabItemContext(args)
 
           expect(context)
             .toHaveProperty('tabKey', params.tabKey)
@@ -62,7 +62,7 @@ describe('FuroTabContext', () => {
             index: 999,
           }
 
-          const context = new FuroTabContext(args)
+          const context = new FuroTabItemContext(args)
 
           expect(context)
             .toHaveProperty('label', params.label)
@@ -95,7 +95,7 @@ describe('FuroTabContext', () => {
             index: params.index,
           }
 
-          const context = new FuroTabContext(args)
+          const context = new FuroTabItemContext(args)
 
           expect(context)
             .toHaveProperty('index', params.index)
@@ -105,7 +105,7 @@ describe('FuroTabContext', () => {
   })
 })
 
-describe('FuroTabContext', () => {
+describe('FuroTabItemContext', () => {
   describe('.create()', () => {
     describe('to be instance of own class', () => {
       const cases = [
@@ -133,10 +133,10 @@ describe('FuroTabContext', () => {
       ]
 
       test.each(cases)('tabKey: $params.tabKey', ({ params }) => {
-        const actual = FuroTabContext.create(params)
+        const actual = FuroTabItemContext.create(params)
 
         expect(actual)
-          .toBeInstanceOf(FuroTabContext)
+          .toBeInstanceOf(FuroTabItemContext)
       })
     })
 
@@ -181,7 +181,7 @@ describe('FuroTabContext', () => {
       ]
 
       test.each(cases)('tabKey: $params.tabKey', ({ params, expected }) => {
-        const SpyClass = globalThis.constructorSpy.spyOn(FuroTabContext)
+        const SpyClass = globalThis.constructorSpy.spyOn(FuroTabItemContext)
 
         SpyClass.create(params)
 
@@ -192,7 +192,7 @@ describe('FuroTabContext', () => {
   })
 })
 
-describe('FuroTabContext', () => {
+describe('FuroTabItemContext', () => {
   describe('#isTargetTab()', () => {
     const cases = [
       {
@@ -246,7 +246,7 @@ describe('FuroTabContext', () => {
     ]
 
     describe.each(cases)('tabKey: $params.context.tabKey', ({ params, truthyCases, falsyCases }) => {
-      const context = FuroTabContext.create(params.context)
+      const context = FuroTabItemContext.create(params.context)
 
       describe('to be truthy', () => {
         test.each(truthyCases)('tabKey: $tabKey', ({ tabKey }) => {
