@@ -302,7 +302,7 @@ describe('BaseFuroContext', () => {
         }
         const context = BaseFuroContext.create(args)
 
-        jest.spyOn(context, 'EMIT_EVENT_NAME', 'get')
+        jest.spyOn(BaseFuroContext, 'EMIT_EVENT_NAME', 'get')
           .mockReturnValue(params.EMIT_EVENT_NAME)
 
         const actual = context.EMIT_EVENT_NAME
