@@ -13,35 +13,18 @@ import {
 } from '@openreachtech/furo-nuxt'
 
 import CurriculumsQueryGraphqlLauncher from '~/app/graphql/client/queries/curriculums/CurriculumsQueryGraphqlLauncher'
-
-const statusReactive = reactive({
-  isLoading: true,
-})
-
-const {
-  capsuleRef,
-  invokeRequestOnEvent,
-  invokeRequestOnMounted,
-} = useGraphqlClient(CurriculumsQueryGraphqlLauncher)
-
-/**
- * @type {furo.GraphqlLauncherHooks}
- */
-const launcherHooks = {
-  async beforeRequest (payload) {
-    statusReactive.isLoading = true
-
-    return false
-  },
-  async afterRequest (capsule) {
-    statusReactive.isLoading = false
-  },
-}
+import CurriculumsPageContext from '~/app/vue/contexts/CurriculumsPageContext'
 
 export default defineComponent({
   name: 'IndexPage',
 
-  setup () {
+  setup (
+    props,
+    componentContext
+  ) {
+    /*
+     * Setup page meta
+     */
     definePageMeta({
       $furo: {
         pageTitle: 'Curriculums',
@@ -49,27 +32,31 @@ export default defineComponent({
       },
     })
 
-    invokeRequestOnMounted({
-      variables: { // TODO: Remove this variables with default values in Payload
-        input: {
-          pagination: {
-            limit: 5,
-            offset: 0,
-            sort: {
-              targetColumn: 'title',
-              orderBy: 'ASC',
-            },
-          },
-        },
-      },
-      hooks: launcherHooks,
+    /*
+     * Setup page context
+     */
+    const statusReactive = reactive({
+      isLoading: true,
     })
+    const graphqlClient = useGraphqlClient(CurriculumsQueryGraphqlLauncher)
 
-    return {
-      capsuleRef,
+    const args = {
+      props,
+      componentContext,
+      graphqlClient,
       statusReactive,
-      invokeRequestOnEvent,
-      launcherHooks,
+    }
+
+    const context = CurriculumsPageContext.create(args)
+      .setupComponent()
+
+    /**
+     * Return reactive data
+     */
+    return {
+      capsuleRef: graphqlClient.capsuleRef,
+      statusReactive,
+      context,
     }
   },
 })
@@ -83,33 +70,40 @@ export default defineComponent({
   <br>
 
   <button class="usual"
-    @click="invokeRequestOnEvent({
-      variables: {
-        input: {
-          pagination: {
-            limit: 5,
-            offset: 2,
-            sort: {
-              targetColumn: 'title',
-              orderBy: 'ASC',
-            },
-          },
-        },
-      },
-      hooks: launcherHooks,
+    @click="context.requestCurriculums()"
+  >
+    Fetch curriculums with offset 0
+  </button>
+
+  <br>
+  <br>
+
+  <button class="usual"
+    @click="context.requestCurriculums({
+      offset: 2,
     })"
   >
     Fetch curriculums with offset 2
   </button>
-  <pre>
-    {{
-      JSON.stringify(
-        capsuleRef.curriculums,
-        null,
-        2
-      )
-    }}
-  </pre>
+
+  <br>
+  <br>
+
+  <button class="usual"
+    @click="context.requestCurriculums({
+      offset: 4,
+    })"
+  >
+    Fetch curriculums with offset 4
+  </button>
+
+  <pre>{{
+    JSON.stringify(
+      capsuleRef.curriculums,
+      null,
+      2
+    )
+  }}</pre>
 
   <div v-if="statusReactive.isLoading"
     class="unit-loading"
