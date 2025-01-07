@@ -289,6 +289,12 @@ export default [
           multiline: 1,
         },
       ],
+      'vue/multi-word-component-names': [
+        'error',
+        {
+          ignores: [],
+        },
+      ],
       'vue/multiline-html-element-content-newline': [
         'error',
         {
@@ -662,6 +668,16 @@ export default [
       'vue/valid-next-tick': [
         'error',
       ],
+    },
+  },
+
+  {
+    files: [
+      'pages/**/*.vue',
+      'layouts/**/*.vue',
+    ],
+    rules: {
+      'vue/multi-word-component-names': 'off',
     },
   },
 ]
