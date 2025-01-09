@@ -3,7 +3,7 @@ import {
   defineComponent,
 } from 'vue'
 
-import FuroPagination from '~/components/lib/FuroPagination.vue'
+import FuroPagination from '@openreachtech/furo-nuxt/lib/components/FuroPagination.vue'
 
 export default defineComponent({
   name: 'AppPagination',
