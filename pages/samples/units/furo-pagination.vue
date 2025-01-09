@@ -7,7 +7,8 @@ import {
   definePageMeta,
 } from '#imports'
 
-import FuroPagination from '~/components/lib/FuroPagination.vue'
+import FuroPagination from '@openreachtech/furo-nuxt/lib/components/FuroPagination.vue'
+
 import AppPagination from '~/components/units/AppPagination.vue'
 
 export default defineComponent({
