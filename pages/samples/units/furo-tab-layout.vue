@@ -8,7 +8,8 @@ import {
   definePageMeta,
 } from '#imports'
 
-import FuroTabLayout from '~/components/lib/FuroTabLayout.vue'
+import FuroTabLayout from '@openreachtech/furo-nuxt/lib/components/FuroTabLayout.vue'
+
 import AppTabLayout from '~/components/units/AppTabLayout.vue'
 
 const tabs = [
