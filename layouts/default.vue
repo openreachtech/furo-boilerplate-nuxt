@@ -4,7 +4,7 @@ import {
   NuxtLink,
 } from '#components'
 
-import FuroOffCanvasMenuLayout from '~/components/lib/FuroOffCanvasMenuLayout.vue'
+import FuroOffCanvasMenuLayout from '@openreachtech/furo-nuxt/lib/components/FuroOffCanvasMenuLayout.vue'
 
 export default {
   name: 'DefaultLayout',
