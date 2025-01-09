@@ -3,7 +3,9 @@ import {
   useSeoMeta,
 } from '#imports'
 
-import FuroMeta from '~/app/tools/FuroMeta.js'
+import {
+  FuroMeta,
+} from '@openreachtech/furo-nuxt'
 
 /**
  * Page Title middleware (global)
