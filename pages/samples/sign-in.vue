@@ -12,14 +12,14 @@ import {
 import {
   useFormClerk,
   useGraphqlClient,
+
+  AccessTokenClerk,
 } from '@openreachtech/furo-nuxt'
 
 import useRedirect from '~/composables/useRedirect.js'
 
 import SignInMutationGraphqlLauncher from '~/app/graphql/client/mutations/signIn/SignInMutationGraphqlLauncher'
 import SignInFormElementClerk from '~/app/domClerk/SignInFormElementClerk'
-
-import AccessTokenClerk from '~/app/tools/AccessTokenClerk.js'
 
 export default defineComponent({
   name: 'SignInPage',
