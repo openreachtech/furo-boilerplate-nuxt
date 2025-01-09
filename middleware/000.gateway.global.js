@@ -8,11 +8,10 @@ import {
 
 import {
   useGraphqlClient,
+
+  AccessTokenClerk,
+  FuroMeta,
 } from '@openreachtech/furo-nuxt'
-
-import AccessTokenClerk from '~/app/tools/AccessTokenClerk.js'
-
-import FuroMeta from '~/app/tools/FuroMeta.js'
 
 import RenewAccessTokenMutationGraphqlLauncher from '~/app/graphql/client/mutations/renewAccessToken/RenewAccessTokenMutationGraphqlLauncher.js'
 

@@ -8,9 +8,11 @@ import {
   ref,
 } from 'vue'
 
-import FuroDialog from '~/components/lib/FuroDialog.vue'
+import {
+  FuroButtonDialogContext,
+} from '@openreachtech/furo-nuxt'
 
-import FuroButtonDialogContext from '~/app/vue/contexts/FuroButtonDialogContext.js'
+import FuroDialog from '@openreachtech/furo-nuxt/lib/components/FuroDialog.vue'
 
 export default defineComponent({
   name: 'AppDialog',
