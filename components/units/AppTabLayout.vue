@@ -3,7 +3,7 @@ import {
   defineComponent,
 } from 'vue'
 
-import FuroTabLayout from '~/components/lib/FuroTabLayout.vue'
+import FuroTabLayout from '@openreachtech/furo-nuxt/lib/components/FuroTabLayout.vue'
 
 export default defineComponent({
   name: 'AppTabLayout',
