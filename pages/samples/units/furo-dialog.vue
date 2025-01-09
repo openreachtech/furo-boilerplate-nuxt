@@ -8,8 +8,8 @@ import {
   definePageMeta,
 } from '#imports'
 
-import FuroDialog from '~/components/lib/FuroDialog.vue'
-import FuroButtonDialog from '~/components/lib/FuroButtonDialog.vue'
+import FuroDialog from '@openreachtech/furo-nuxt/lib/components/FuroDialog.vue'
+import FuroButtonDialog from '@openreachtech/furo-nuxt/lib/components/FuroButtonDialog.vue'
 import AppDialog from '~/components/units/AppDialog.vue'
 
 export default defineComponent({
