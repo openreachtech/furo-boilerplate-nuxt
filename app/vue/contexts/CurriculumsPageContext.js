@@ -1,4 +1,6 @@
-import BaseFuroContext from './BaseFuroContext'
+import {
+  BaseFuroContext,
+} from '@openreachtech/furo-nuxt'
 
 /**
  * Props context class for CurriculumsPageContext component.
