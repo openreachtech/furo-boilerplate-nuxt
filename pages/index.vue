@@ -18,7 +18,7 @@ export default defineComponent({
   <div><a href="samples/upload-customer-forum-post-image">Upload Customer Forum Post Image</a></div>
   <br>
   <div><a href="samples/form-controls-inspector">Form Controls Inspector</a></div>
-  <div><a href="samples/units/trigger-unlock">Trigger Unlock Sample</a></div>
+  <div><a href="samples/trigger-unlock">Trigger Unlock Sample</a></div>
   <br>
   <div><a href="samples/components/furo-pagination">Furo Pagination Sample</a></div>
   <div><a href="samples/components/furo-tab-layout">Furo TabLayout Sample</a></div>
