@@ -20,7 +20,7 @@ export default defineComponent({
   <div><a href="samples/form-controls-inspector">Form Controls Inspector</a></div>
   <div><a href="samples/units/trigger-unlock">Trigger Unlock Sample</a></div>
   <br>
-  <div><a href="samples/units/furo-pagination">Furo Pagination Sample</a></div>
+  <div><a href="samples/components/furo-pagination">Furo Pagination Sample</a></div>
   <div><a href="samples/units/furo-tab-layout">Furo TabLayout Sample</a></div>
   <div><a href="samples/units/furo-dialog">Furo Dialog Sample</a></div>
   <div>1</div>
