@@ -2,6 +2,7 @@
 <script>
 import {
   NuxtLink,
+  NuxtPage,
 } from '#components'
 
 import FuroOffCanvasMenuLayout from '@openreachtech/furo-nuxt/lib/components/FuroOffCanvasMenuLayout.vue'
@@ -12,6 +13,7 @@ export default {
   components: {
     FuroOffCanvasMenuLayout,
     NuxtLink,
+    NuxtPage,
   },
 }
 </script>
@@ -40,7 +42,7 @@ export default {
     </template>
 
     <template #contents>
-      <slot />
+      <NuxtPage />
     </template>
   </FuroOffCanvasMenuLayout>
 </template>
