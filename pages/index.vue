@@ -22,7 +22,7 @@ export default defineComponent({
   <br>
   <div><a href="samples/components/furo-pagination">Furo Pagination Sample</a></div>
   <div><a href="samples/components/furo-tab-layout">Furo TabLayout Sample</a></div>
-  <div><a href="samples/units/furo-dialog">Furo Dialog Sample</a></div>
+  <div><a href="samples/components/furo-dialog">Furo Dialog Sample</a></div>
   <div>1</div>
   <div>2</div>
   <div>3</div>
