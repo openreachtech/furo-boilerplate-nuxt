@@ -1,4 +1,3 @@
-<!-- layouts/default.vue -->
 <script>
 import {
   NuxtLink,
