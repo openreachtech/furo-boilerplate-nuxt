@@ -77,6 +77,7 @@ export default defineComponent({
         pageTitle: 'Sign Up',
         skipFilter: true,
       },
+      layout: 'gateway',
     })
 
     return {

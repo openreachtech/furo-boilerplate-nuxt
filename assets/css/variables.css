@@ -7,11 +7,17 @@
   --palette-gray-light: #f7f7f7;
   --palette-white: #fff;
 
+  --palette-ivory: #fefefe;
+
   /* Colors */
   --color-primary: var(--palette-blue);
+  --color-secondary: var(--palette-yellow-300);
 
   /* Backgrounds */
   --color-background: var(--palette-gray-light);
+
+  --color-background-header: var(--palette-ivory);
+  --color-background-nav: var(--palette-ivory);
 
   /* Text */
   --color-text: var(--palette-black);
@@ -20,8 +26,10 @@
   /* Sizes */
   --size-thinnest: 1px;
 
-  --size-header-height: 5rem;
+  --size-screen-height: 100dvh;
+  --size-header-height: 4.5rem;
   --size-footer-height: 6rem;
+  --size-nav-width: 15rem;
 
   /* Values */
   --value-golden-ratio: 1.618;

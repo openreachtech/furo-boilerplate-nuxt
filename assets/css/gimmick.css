@@ -71,5 +71,14 @@
   * .-aim-unlock
 ) {
   pointer-events: inherit;
-  opacity: inherit;
+  filter: inherit;
+}
+
+/******************************************************************************/
+
+/*
+ * Lock <body> on open <dialog>
+ */
+body:has(dialog[open]) {
+  overflow: hidden;
 }

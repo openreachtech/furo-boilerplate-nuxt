@@ -1,69 +1,65 @@
 <!-- layouts/default.vue -->
 <script>
+import {
+  NuxtLink,
+} from '#components'
+
+import FuroOffCanvasMenuLayout from '@openreachtech/furo-nuxt/lib/components/FuroOffCanvasMenuLayout.vue'
+
 export default {
   name: 'DefaultLayout',
+
+  components: {
+    FuroOffCanvasMenuLayout,
+    NuxtLink,
+  },
 }
 </script>
 
 <template>
-  <div class="unit-body">
-    <header class="header">
-      I am Header
-    </header>
+  <FuroOffCanvasMenuLayout>
+    <template #header>
+      <div class="header">
+        <NuxtLink to="/">
+          [Go to Home]
+        </NuxtLink>
+      </div>
+    </template>
 
-    <main class="main">
+    <template #toggle-menu>
+      <img class="toggle-navigation-image"
+        src="/assets/img/samples/hanburger-menu.png"
+        alt="Logo"
+      >
+    </template>
+
+    <template #navigation>
+      <div class="navigation">
+        I am Navigation
+      </div>
+    </template>
+
+    <template #contents>
       <slot />
-    </main>
-
-    <footer class="footer">
-      I am Footer
-    </footer>
-  </div>
+    </template>
+  </FuroOffCanvasMenuLayout>
 </template>
 
+<!-- never use <style scoped> here -->
 <style>
-/* Custom Properties */
-
-/* Layout */
-
-.unit-body {
-  min-height: 100vh;
-
-  display: flex;
-  flex-direction: column;
+.unit-body > .header .toggle-navigation-image {
+  width: 2rem;
 }
 
-</style>
-
-<style scoped>
-.header {
-  position: sticky;
-  top: 0;
-
-  height: var(--size-header-height);
-
-  display: grid;
-  place-items: center;
-
-  background-color: rgba(0, 255, 0, .5);
-  color: #fff;
+.unit-body > .navigation {
+  padding-block: 1rem;
+  padding-inline: 1.5rem;
 }
 
-.main {
-  flex: 1;
+.unit-body > .contents {
+  background-color: var(--color-background);
 
-  padding-block: .5rem;
-  padding-inline: 1rem;
-  background: #eee;
-}
-
-.footer {
-  height: var(--size-footer-height);
-
-  display: grid;
-  place-items: center;
-
-  background-color: rgba(0, 0, 255, .5);
-  color: #fff;
+  padding-block: 1rem;
+  padding-inline: 1.5rem;
 }
 </style>

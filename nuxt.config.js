@@ -28,6 +28,7 @@ export default defineNuxtConfig({
   // Global CSS: https://nuxt.com/docs/api/nuxt-config#css.
   css: [
     '~/assets/css/variables-palette-color-scale.css',
+    '~/assets/css/variables-component-default.css',
     '~/assets/css/variables.css',
     '~/assets/css/reset.css',
     '~/assets/css/gimmick.css',

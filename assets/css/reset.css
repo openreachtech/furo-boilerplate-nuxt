@@ -62,3 +62,21 @@ p {
   margin: 0;
   line-height: var(--value-golden-ratio);
 }
+
+dialog {
+  border: none;
+
+  padding-block: 0;
+  padding-inline: 0;
+}
+
+button {
+  border: none;
+
+  background: none;
+
+  padding-block: 0;
+  padding-inline: 0;
+
+  cursor: pointer;
+}
