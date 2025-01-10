@@ -31,8 +31,9 @@ export default defineComponent({
     const dialogComponentRef = ref(null)
 
     const context = FuroButtonDialogContext.create({
+      props,
+      componentContext,
       dialogComponentRef,
-      emit: componentContext.emit,
     })
 
     componentContext.expose(
