@@ -1,7 +1,6 @@
-<!-- layouts/default.vue -->
 <script>
 export default {
-  name: 'DefaultLayout',
+  name: 'GatewayLayout',
 }
 </script>
 
