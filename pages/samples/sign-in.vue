@@ -90,6 +90,8 @@ export default defineComponent({
             return false
           },
           async afterRequest (capsule) {
+            statusReactive.isLoading = false
+
             const hasSaved = AccessTokenClerk.create()
               .saveToken({
                 token: capsule.accessToken,
@@ -97,8 +99,6 @@ export default defineComponent({
 
             if (!hasSaved) {
               onFailToGetAccessToken()
-
-              statusReactive.isLoading = false
 
               return
             }
