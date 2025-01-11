@@ -45,8 +45,8 @@ export default defineComponent({
 
     /**
      * @type {import('vue').Ref<{
-     *   fromTab: import('~/app/vue/contexts/FuroTabItemContext').default | null
-     *   toTab: import('~/app/vue/contexts/FuroTabItemContext').default | null
+     *   fromTab: import('@openreachtech/furo-nuxt').FuroTabItemContext | null
+     *   toTab: import('@openreachtech/furo-nuxt').FuroTabItemContext | null
      * }>}
      */
     const changeTabResultRef = ref({
@@ -65,8 +65,8 @@ export default defineComponent({
      * Change tab.
      *
      * @param {{
-     *   fromTab: import('~/app/vue/contexts/FuroTabItemContext').default
-     *   toTab: import('~/app/vue/contexts/FuroTabItemContext').default
+     *   fromTab: import('@openreachtech/furo-nuxt').FuroTabItemContext
+     *   toTab: import('@openreachtech/furo-nuxt').FuroTabItemContext
      * }} params - Parameters.
      * @returns {void}
      */
