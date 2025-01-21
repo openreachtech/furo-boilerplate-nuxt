@@ -80,3 +80,11 @@ button {
 
   cursor: pointer;
 }
+
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+}
