@@ -7,8 +7,7 @@ import graphqlConfig from '~/app/graphql/graphql.config'
 /**
  * Company sponsors query graphql launcher.
  *
- * @template T
- * @extends {BaseGraphqlLauncher<typeof BaseAppGraphqlLauncher>}
+ * @extends {BaseGraphqlLauncher}
  */
 export default class BaseAppGraphqlLauncher extends BaseGraphqlLauncher {
   /** @override */
