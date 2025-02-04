@@ -46,21 +46,19 @@ export default {
   </FuroOffCanvasMenuLayout>
 </template>
 
-<!-- never use <style scoped> here -->
+<!-- NOTE: Never use <style scoped> here -->
 <style>
-.unit-body > .header .toggle-navigation-image {
-  width: 2rem;
-}
+@layer app {
+  .furo-layout.off-canvas-menu > .unit-nav {
+    padding-block: 1rem;
+    padding-inline: 1.5rem;
+  }
 
-.unit-body > .navigation {
-  padding-block: 1rem;
-  padding-inline: 1.5rem;
-}
+  .furo-layout.off-canvas-menu > .unit-main {
+    background-color: var(--color-background);
 
-.unit-body > .contents {
-  background-color: var(--color-background);
-
-  padding-block: 1rem;
-  padding-inline: 1.5rem;
+    padding-block: 1rem;
+    padding-inline: 1.5rem;
+  }
 }
 </style>
