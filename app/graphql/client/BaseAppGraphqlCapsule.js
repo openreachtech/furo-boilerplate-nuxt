@@ -5,9 +5,8 @@ import {
 /**
  * Company sponsors query graphql launcher.
  *
- * @template T - Type of this class.
  * @template D - Type of content (data).
- * @extends {BaseGraphqlCapsule<typeof BaseAppGraphqlCapsule, D>}
+ * @extends {BaseGraphqlCapsule<D>}
  */
 export default class BaseAppGraphqlCapsule extends BaseGraphqlCapsule {
 
