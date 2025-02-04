@@ -13,36 +13,31 @@ export default {
 </script>
 
 <template>
-  <div class="unit-body">
-    <header class="header">
+  <div class="unit-layout gateway">
+    <header class="unit-header">
       I am Header
     </header>
 
-    <main class="main">
+    <main class="unit-main">
       <NuxtPage />
     </main>
 
-    <footer class="footer">
+    <footer class="unit-footer">
       I am Footer
     </footer>
   </div>
 </template>
 
+<!-- NOTE: Never use <style scoped> here -->
 <style>
-/* Custom Properties */
-
-/* Layout */
-
-.unit-body {
+.unit-layout.gateway {
   min-height: 100vh;
 
   display: flex;
   flex-direction: column;
 }
-</style>
 
-<style scoped>
-.header {
+.unit-layout.gateway > .unit-header {
   position: sticky;
   top: 0;
 
@@ -55,7 +50,7 @@ export default {
   color: #fff;
 }
 
-.main {
+.unit-layout.gateway > .unit-main {
   flex: 1;
 
   padding-block: .5rem;
@@ -63,7 +58,7 @@ export default {
   background: #eee;
 }
 
-.footer {
+.unit-layout.gateway > .unit-footer {
   height: var(--size-footer-height);
 
   display: grid;
