@@ -11,9 +11,8 @@ import {
 /**
  * Company sponsors query graphql launcher.
  *
- * @template T
  * @template {furo.GraphqlRequestVariables} SV
- * @extends {BaseGraphqlPayload<typeof BaseAppGraphqlPayload, SV>}
+ * @extends {BaseGraphqlPayload<SV>}
  */
 export default class BaseAppGraphqlPayload extends BaseGraphqlPayload {
   /**
