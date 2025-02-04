@@ -5,7 +5,7 @@ import CompanySponsorsQueryGraphqlCapsule from '~/app/graphql/client/queries/com
 /**
  * Company sponsors query graphql launcher.
  *
- * @extends {BaseAppGraphqlLauncher<typeof CompanySponsorsQueryGraphqlLauncher>}
+ * @extends {BaseAppGraphqlLauncher}
  */
 export default class CompanySponsorsQueryGraphqlLauncher extends BaseAppGraphqlLauncher {
   /** @override */
