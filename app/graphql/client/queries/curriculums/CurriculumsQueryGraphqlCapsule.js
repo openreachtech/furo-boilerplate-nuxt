@@ -3,7 +3,7 @@ import BaseAppGraphqlCapsule from '~/app/graphql/client/BaseAppGraphqlCapsule'
 /**
  * Curriculums query graphql capsule.
  *
- * @extends {BaseAppGraphqlCapsule<typeof CurriculumsQueryGraphqlCapsule, CurriculumsQueryResponseContent>}
+ * @extends {BaseAppGraphqlCapsule<CurriculumsQueryResponseContent>}
  */
 export default class CurriculumsQueryGraphqlCapsule extends BaseAppGraphqlCapsule {
   /**
