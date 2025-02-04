@@ -27,6 +27,7 @@ export default defineNuxtConfig({
 
   // Global CSS: https://nuxt.com/docs/api/nuxt-config#css.
   css: [
+    '~/node_modules/@openreachtech/furo-nuxt/lib/assets/css/0000.furo.css',
     '~/assets/css/variables-palette-color-scale.css',
     '~/assets/css/variables-component-default.css',
     '~/assets/css/variables.css',
