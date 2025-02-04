@@ -10,9 +10,10 @@ export default {
   name: 'DefaultLayout',
 
   components: {
-    FuroOffCanvasMenuLayout,
     NuxtLink,
     NuxtPage,
+
+    FuroOffCanvasMenuLayout,
   },
 }
 </script>
