@@ -12,8 +12,9 @@ import {
   useGraphqlClient,
 } from '@openreachtech/furo-nuxt'
 
+import CurriculumsPageContext from './CurriculumsPageContext.js'
+
 import CurriculumsQueryGraphqlLauncher from '~/app/graphql/client/queries/curriculums/CurriculumsQueryGraphqlLauncher'
-import CurriculumsPageContext from '~/app/vue/contexts/CurriculumsPageContext'
 
 export default defineComponent({
   name: 'IndexPage',
@@ -22,9 +23,6 @@ export default defineComponent({
     props,
     componentContext
   ) {
-    /*
-     * Setup page meta
-     */
     definePageMeta({
       $furo: {
         pageTitle: 'Curriculums',
@@ -32,13 +30,11 @@ export default defineComponent({
       },
     })
 
-    /*
-     * Setup page context
-     */
+    const graphqlClient = useGraphqlClient(CurriculumsQueryGraphqlLauncher)
+
     const statusReactive = reactive({
       isLoading: true,
     })
-    const graphqlClient = useGraphqlClient(CurriculumsQueryGraphqlLauncher)
 
     const args = {
       props,
@@ -46,16 +42,11 @@ export default defineComponent({
       graphqlClient,
       statusReactive,
     }
-
+    // @ts-expect-error
     const context = CurriculumsPageContext.create(args)
       .setupComponent()
 
-    /**
-     * Return reactive data
-     */
     return {
-      capsuleRef: graphqlClient.capsuleRef,
-      statusReactive,
       context,
     }
   },
@@ -63,56 +54,50 @@ export default defineComponent({
 </script>
 
 <template>
-  <h1>Hello I&#39;m pages/curriculums.vue!</h1>
+  <div class="unit-page">
+    <h1>Curriculums</h1>
 
-  <h2>Curriculums</h2>
+    <button @click="context.requestCurriculums()">
+      Fetch curriculums with offset 0
+    </button>
 
-  <br>
+    <br>
+    <br>
 
-  <button class="usual"
-    @click="context.requestCurriculums()"
-  >
-    Fetch curriculums with offset 0
-  </button>
-
-  <br>
-  <br>
-
-  <button class="usual"
-    @click="context.requestCurriculums({
+    <button @click="context.requestCurriculums({
       offset: 2,
     })"
-  >
-    Fetch curriculums with offset 2
-  </button>
+    >
+      Fetch curriculums with offset 2
+    </button>
 
-  <br>
-  <br>
+    <br>
+    <br>
 
-  <button class="usual"
-    @click="context.requestCurriculums({
+    <button @click="context.requestCurriculums({
       offset: 4,
     })"
-  >
-    Fetch curriculums with offset 4
-  </button>
+    >
+      Fetch curriculums with offset 4
+    </button>
 
-  <pre>{{
-    JSON.stringify(
-      capsuleRef.curriculums,
-      null,
-      2
-    )
-  }}</pre>
+    <pre>{{
+      JSON.stringify(
+        context.curriculums,
+        null,
+        2
+      )
+    }}</pre>
+  </div>
 
-  <div v-if="statusReactive.isLoading"
+  <div v-if="context.isLoading"
     class="unit-loading"
   >
     Loading ...
   </div>
 </template>
 
-<style>
+<style scoped>
 .unit-loading {
   position: fixed;
   top: 0;
@@ -128,5 +113,7 @@ export default defineComponent({
   background-color: rgba(0, 0, 0, 0.8);
   color: #fff;
   font-size: 3rem;
+
+  z-index: calc(var(--value-z-index-layer-overlay) + 0);
 }
 </style>

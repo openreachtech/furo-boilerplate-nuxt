@@ -3,9 +3,8 @@ import {
 } from '@openreachtech/furo-nuxt'
 
 /**
- * Props context class for CurriculumsPageContext component.
+ * CurriculumsPageContext.
  *
- * @property {import('vue').Ref<HTMLDialogElement | null>} dialogRef - Dialog element.
  * @extends {BaseFuroContext<null>} - Base class.
  */
 export default class CurriculumsPageContext extends BaseFuroContext {
@@ -17,6 +16,7 @@ export default class CurriculumsPageContext extends BaseFuroContext {
   constructor ({
     props,
     componentContext,
+
     graphqlClient,
     statusReactive,
   }) {
@@ -41,6 +41,7 @@ export default class CurriculumsPageContext extends BaseFuroContext {
   static create ({
     props,
     componentContext,
+
     graphqlClient,
     statusReactive,
   }) {
@@ -48,6 +49,7 @@ export default class CurriculumsPageContext extends BaseFuroContext {
       new this({
         props,
         componentContext,
+
         graphqlClient,
         statusReactive,
       })
@@ -59,22 +61,22 @@ export default class CurriculumsPageContext extends BaseFuroContext {
     this.graphqlClient
       .invokeRequestOnMounted({
         variables: this.defaultVariables,
-        hooks: this.launcherHooks,
+        hooks: this.graphqlRequestHooks,
       })
 
     return this
   }
 
   /**
-   * get: default variables.
+   * get: defaultVariables.
    *
    * @returns {CurriculumsDefaultVariables} - Default variables.
    */
   get defaultVariables () {
-    return {
+    return { // TODO: Remove this variables with default values in Payload
       input: {
         pagination: {
-          limit: 10,
+          limit: 5,
           offset: 0,
           sort: {
             targetColumn: 'title',
@@ -83,6 +85,57 @@ export default class CurriculumsPageContext extends BaseFuroContext {
         },
       },
     }
+  }
+
+  /**
+   * get: graphqlRequestHooks.
+   *
+   * @returns {{
+   *   beforeRequest: (payload: furo.Payload<*>) => Promise<boolean>
+   *   afterRequest: (capsule: furo.Capsule<*>) => Promise<void>
+   * }}
+   */
+  get graphqlRequestHooks () {
+    return {
+      beforeRequest: async payload => {
+        this.statusReactive.isLoading = true
+
+        return false
+      },
+      afterRequest: async capsule => {
+        this.statusReactive.isLoading = false
+      },
+    }
+  }
+
+  /**
+   * get: capsuleRef.
+   *
+   * @returns {import('vue').Ref<import('../../../app/graphql/client/queries/curriculums/CurriculumsQueryGraphqlCapsule.js').default>} - Capsule reference.
+   */
+  get capsuleRef () {
+    return /** @type {*} */ (
+      this.graphqlClient.capsuleRef
+    )
+  }
+
+  /**
+   * get: curriculums.
+   *
+   * @returns {import('../../../app/graphql/client/queries/curriculums/CurriculumsQueryGraphqlCapsule.js').CurriculumsQueryResponseContent['curriculums']['curriculums']} - Array of curriculum.
+   */
+  get curriculums () {
+    return this.capsuleRef.value
+      .curriculums
+  }
+
+  /**
+   * get: isLoading.
+   *
+   * @returns {boolean} - Loading status.
+   */
+  get isLoading () {
+    return this.statusReactive.isLoading
   }
 
   /**
@@ -110,7 +163,7 @@ export default class CurriculumsPageContext extends BaseFuroContext {
    *   offset?: number
    *   hooks?: furo.GraphqlLauncherHooks
    * }} [args] - Arguments.
-   * @returns {Promise<void>}
+   * @returns {Promise<void>} - A promise.
    */
   async requestCurriculums ({
     offset = 0,
@@ -119,7 +172,7 @@ export default class CurriculumsPageContext extends BaseFuroContext {
     const variables = {
       input: {
         pagination: {
-          limit: 10,
+          limit: 5,
           offset,
           sort: {
             targetColumn: 'title',
@@ -129,17 +182,18 @@ export default class CurriculumsPageContext extends BaseFuroContext {
       },
     }
 
-    await this.graphqlClient.invokeRequestOnEvent({
-      variables,
-      hooks,
-    })
+    await this.graphqlClient
+      .invokeRequestOnEvent({
+        variables,
+        hooks: this.graphqlRequestHooks,
+      })
   }
 }
 
 /**
- * @typedef {import('./BaseFuroContext').BaseFuroContextParams & {
+ * @typedef {import('@openreachtech/furo-nuxt/lib/contexts/BaseFuroContext.js').BaseFuroContextParams & {
  *   graphqlClient: FuroGraphqlClient
- *   statusReactive: import('vue').Reactive<CurriculumsStatusReactive>
+ *   statusReactive: import('vue').Reactive<Record<string, boolean>>
  * }} CurriculumsPageContextParams
  */
 
@@ -149,7 +203,7 @@ export default class CurriculumsPageContext extends BaseFuroContext {
 
 /**
  * @typedef {{
- *   capsuleRef: import('vue').Ref<furo.CapsuleInstance<*, *> | null>
+ *   capsuleRef: import('vue').Ref<furo.Capsule<*>>
  *   invokeRequestOnEvent: (args?: furo.GraphqlRequestArgs) => Promise<void>
  *   invokeRequestOnMounted: (args?: furo.GraphqlRequestArgs) => void
  *   invokeRequestWithFormValueHash?: (args: furo.GraphqlRequestArgs) => Promise<void>
@@ -164,15 +218,9 @@ export default class CurriculumsPageContext extends BaseFuroContext {
  *       offset?: number
  *       sort?: {
  *         targetColumn?: string
- *         orderBy?: string
+ *         orderBy?: 'ASC' | 'DESC'
  *       }
  *     }
  *   }
  * }} CurriculumsDefaultVariables
- */
-
-/**
- * @typedef {{
- *   isLoading: boolean
- * }} CurriculumsStatusReactive
  */
