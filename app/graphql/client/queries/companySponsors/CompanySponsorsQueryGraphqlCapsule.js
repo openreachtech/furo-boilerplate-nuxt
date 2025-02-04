@@ -3,7 +3,7 @@ import BaseAppGraphqlCapsule from '~/app/graphql/client/BaseAppGraphqlCapsule'
 /**
  * CompanySponsorsQueryGraphqlCapsule
  *
- * @extends {BaseAppGraphqlCapsule<typeof CompanySponsorsQueryGraphqlCapsule, CompanySponsorsQueryResponseContent>}
+ * @extends {BaseAppGraphqlCapsule<CompanySponsorsQueryResponseContent>}
  */
 export default class CompanySponsorsQueryGraphqlCapsule extends BaseAppGraphqlCapsule {
   /**
