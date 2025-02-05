@@ -9,23 +9,9 @@ import {
 } from '#imports'
 
 import FuroTabLayout from '@openreachtech/furo-nuxt/lib/components/FuroTabLayout.vue'
-
 import AppTabLayout from '~/components/units/AppTabLayout.vue'
 
-const tabs = [
-  {
-    tabKey: 'alpha',
-    label: 'Alpha',
-  },
-  {
-    tabKey: 'beta',
-    label: 'Beta',
-  },
-  {
-    tabKey: 'gamma',
-    label: 'Gamma',
-  },
-]
+import FuroTabLayoutPageContext from './FuroTabLayoutPageContext.js'
 
 export default defineComponent({
   name: 'Furo TabLayout',
@@ -35,7 +21,10 @@ export default defineComponent({
     AppTabLayout,
   },
 
-  setup () {
+  setup (
+    props,
+    componentContext
+  ) {
     definePageMeta({
       $furo: {
         pageTitle: 'Furo TabLayout Samples',
@@ -45,8 +34,8 @@ export default defineComponent({
 
     /**
      * @type {import('vue').Ref<{
-     *   fromTab: import('@openreachtech/furo-nuxt').FuroTabItemContext | null
-     *   toTab: import('@openreachtech/furo-nuxt').FuroTabItemContext | null
+     *   fromTab: import('@openreachtech/furo-nuxt/lib/contexts/concretes/FuroTabItemContext').default | null
+     *   toTab: import('@openreachtech/furo-nuxt/lib/contexts/concretes/FuroTabItemContext').default | null
      * }>}
      */
     const changeTabResultRef = ref({
@@ -54,30 +43,17 @@ export default defineComponent({
       toTab: null,
     })
 
+    const args = {
+      props,
+      componentContext,
+      changeTabResultRef,
+    }
+    const context = FuroTabLayoutPageContext.create(args)
+
     return {
-      tabs,
+      context,
 
       changeTabResultRef,
-      changeTab,
-    }
-
-    /**
-     * Change tab.
-     *
-     * @param {{
-     *   fromTab: import('@openreachtech/furo-nuxt').FuroTabItemContext
-     *   toTab: import('@openreachtech/furo-nuxt').FuroTabItemContext
-     * }} params - Parameters.
-     * @returns {void}
-     */
-    function changeTab ({
-      fromTab,
-      toTab,
-    }) {
-      changeTabResultRef.value = {
-        fromTab,
-        toTab,
-      }
     }
   },
 })
@@ -85,27 +61,18 @@ export default defineComponent({
 
 <template>
   <div>
-    <h1 class="design-header primary">
-      Furo TabLayout Samples
-    </h1>
+    <h1>Furo TabLayout Samples</h1>
 
-    <br>
-    <br>
-
-    <h2 class="design-header secondary">
-      &lt;FuroTabLayout&gt; samples
-    </h2>
+    <h2>&lt;FuroTabLayout&gt; samples</h2>
 
     <!-- ///////////////////////////////////////////////////////////////// -->
     <!-- <FuroTabLayout> with default design -->
     <!-- ///////////////////////////////////////////////////////////////// -->
-    <section class="unit-section sample-placeholder double">
-      <h3 class="design-header tertiary">
-        &lt;FuroTabLayout&gt; with default design
-      </h3>
+    <section class="unit-section">
+      <h3>&lt;FuroTabLayout&gt; with default design</h3>
 
-      <FuroTabLayout :tabs="tabs"
-        :active-tab-key="tabs[0].tabKey"
+      <FuroTabLayout :tabs="context.tabs"
+        :active-tab-key="context.tabs[0].tabKey"
       >
         <template #contents>
           <div class="alpha">
@@ -126,14 +93,12 @@ export default defineComponent({
     <!-- ///////////////////////////////////////////////////////////////// -->
     <!-- <FuroTabLayout> with change tab event -->
     <!-- ///////////////////////////////////////////////////////////////// -->
-    <section class="unit-section sample-placeholder double">
-      <h3 class="design-header tertiary">
-        &lt;FuroTabLayout&gt; with change tab event
-      </h3>
+    <section class="unit-section">
+      <h3>&lt;FuroTabLayout&gt; with change tab event</h3>
 
-      <FuroTabLayout :tabs="tabs"
-        :active-tab-key="tabs[0].tabKey"
-        @change-tab="changeTab"
+      <FuroTabLayout :tabs="context.tabs"
+        :active-tab-key="context.tabs[0].tabKey"
+        @change-tab="context.changeTab($event)"
       >
         <template #contents>
           <div class="alpha">
@@ -158,16 +123,14 @@ export default defineComponent({
     </section>
 
     <!-- ///////////////////////////////////////////////////////////////// -->
-    <!-- <FuroTabLayout> with customized alpha-design -->
+    <!-- <FuroTabLayout> with customized .design.alpha -->
     <!-- ///////////////////////////////////////////////////////////////// -->
-    <section class="unit-section sample-placeholder double">
-      <h3 class="design-header tertiary">
-        &lt;FuroTabLayout&gt; with customized alpha-design
-      </h3>
+    <section class="unit-section">
+      <h3>&lt;FuroTabLayout&gt; with customized .design.alpha</h3>
 
-      <FuroTabLayout :tabs="tabs"
-        :active-tab-key="tabs[0].tabKey"
-        class="alpha-design"
+      <FuroTabLayout :tabs="context.tabs"
+        :active-tab-key="context.tabs[0].tabKey"
+        class="design alpha"
       >
         <template #contents>
           <div class="alpha">
@@ -188,20 +151,16 @@ export default defineComponent({
     <br>
     <br>
 
-    <h1 class="design-header primary">
-      &lt;AppTabLayout&gt; Samples
-    </h1>
+    <h1>&lt;AppTabLayout&gt; Samples</h1>
 
     <!-- ///////////////////////////////////////////////////////////////// -->
     <!-- <AppTabLayout> with default design -->
     <!-- ///////////////////////////////////////////////////////////////// -->
-    <section class="unit-section sample-placeholder double">
-      <h3 class="design-header tertiary">
-        &lt;AppTabLayout&gt; with default design
-      </h3>
+    <section class="unit-section">
+      <h3>&lt;AppTabLayout&gt; with default design</h3>
 
-      <AppTabLayout :tabs="tabs"
-        :active-tab-key="tabs[0].tabKey"
+      <AppTabLayout :tabs="context.tabs"
+        :active-tab-key="context.tabs[0].tabKey"
       >
         <template #contents>
           <div class="alpha">
@@ -220,16 +179,14 @@ export default defineComponent({
     </section>
 
     <!-- ///////////////////////////////////////////////////////////////// -->
-    <!-- <AppTabLayout> with customized beta-design -->
+    <!-- <AppTabLayout> with customized .design.beta -->
     <!-- ///////////////////////////////////////////////////////////////// -->
-    <section class="unit-section sample-placeholder double">
-      <h3 class="design-header tertiary">
-        &lt;AppTabLayout&gt; with customized beta-design
-      </h3>
+    <section class="unit-section">
+      <h3>&lt;AppTabLayout&gt; with customized .design.beta</h3>
 
-      <AppTabLayout :tabs="tabs"
-        :active-tab-key="tabs[0].tabKey"
-        class="beta-design"
+      <AppTabLayout :tabs="context.tabs"
+        :active-tab-key="context.tabs[0].tabKey"
+        class="design beta"
       >
         <template #contents>
           <div class="alpha">
@@ -249,61 +206,7 @@ export default defineComponent({
   </div>
 </template>
 
-<!-- can not use scoped here -->
-<style>
-/*
- * Common design
- */
-
-.unit-tablayout > .contents {
-  padding-block-start: 0.25rem;
-}
-
-.unit-tablayout > .contents :where(.alpha, .beta, .gamma) {
-  border: var(--size-thinnest) var(--color-text) solid;
-
-  padding-block: 1rem;
-  padding-inline: 2rem;
-}
-
-/* alpha-design */
-
-.unit-tablayout.alpha-design > .tabs > .tab {
-  font-size: 1.5rem;
-
-  border-bottom: 0.25rem solid transparent;
-}
-
-.unit-tablayout.alpha-design > .tabs > .tab.active {
-  border-bottom: 0.25rem solid var(--color-primary);
-
-  background-color: inherit;
-  color: inherit;
-}
-
-/* beta-design */
-
-.unit-tablayout.beta-design > .tabs {
-  margin-block-start: 0;
-
-  gap: 0.25rem;
-}
-
-.unit-tablayout.beta-design > .contents {
-  padding-block-start: 0;
-}
-
-.unit-tablayout.beta-design > .tabs > .tab {
-  border-top: var(--size-thinnest) var(--color-text) solid;
-  border-left: var(--size-thinnest) var(--color-text) solid;
-  border-right: var(--size-thinnest) var(--color-text) solid;
-  border-radius: 0.5rem 0.5rem 0 0;
-
-  font-size: 1.5rem;
-}
-
-/******************************************************************************/
-
+<style scoped>
 .button-reaction-placeholder {
   border: var(--size-thinnest) var(--color-text) solid;
   border-radius: .5rem;
@@ -314,5 +217,69 @@ export default defineComponent({
   padding-inline: 1rem;
 
   font-size: 1.2rem;
+}
+</style>
+
+<!-- NOTE: Never use <style scoped> here -->
+<style>
+/*
+ * common design of contents
+ */
+.furo-layout.tab > .contents > * {
+  margin-block-start: 0.25rem;
+
+  border: var(--size-thinnest) var(--color-text) solid;
+
+  padding-block: 1rem;
+  padding-inline: 2rem;
+
+  background-color: var(--color-background-content);
+}
+
+/*
+ * .design.alpha
+ */
+.furo-layout.tab.alpha > .contents > :first-child {
+  margin-block-start: 0.25rem;
+}
+
+.furo-layout.tab.alpha > .tabs > .tab {
+  font-size: 1.5rem;
+
+  border-bottom: 0.25rem solid transparent;
+}
+
+.furo-layout.tab.alpha > .tabs > .tab.active {
+  border-bottom: 0.25rem solid var(--color-primary);
+
+  background-color: inherit;
+  color: inherit;
+}
+
+/*
+ * .design.beta
+ */
+.furo-layout.tab.beta > .contents > * {
+  margin-block-start: 0;
+}
+
+.furo-layout.tab.beta > .tabs > .tab {
+  border-top: var(--size-thinnest) var(--color-text) solid;
+  border-left: var(--size-thinnest) var(--color-text) solid;
+  border-right: var(--size-thinnest) var(--color-text) solid;
+  border-radius: 0.5rem 0.5rem 0 0;
+
+  font-size: 1.5rem;
+}
+</style>
+
+<style scoped>
+.unit-section {
+  border-style: double;
+  border-width: 0.25rem;
+  border-radius: 0.5rem;
+
+  padding-block: 0.5rem;
+  padding-inline: 1rem;
 }
 </style>
