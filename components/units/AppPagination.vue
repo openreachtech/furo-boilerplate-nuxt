@@ -39,28 +39,27 @@ export default defineComponent({
   </FuroPagination>
 </template>
 
-<!-- can not use scoped here -->
+<!-- NOTE: Never use <style scoped> here -->
 <style>
-/*
- * Can customize the pagination component.
- */
-.unit-pagination.design {
-  gap: 0.25rem;
-}
+@layer app {
+  .furo-pagination.design {
+    gap: 0.25rem;
+  }
 
-.unit-pagination.design > .page {
-  border: 3px double var(--color-primary);
-  border-radius: 0.25rem;
-}
+  .furo-pagination.design > .page {
+    border: 3px double var(--color-primary);
+    border-radius: 0.25rem;
+  }
 
-.unit-pagination.design > .page:hover {
-  border-color: var(--color-primary);
+  .furo-pagination.design > .page:hover {
+    border-color: var(--color-primary);
 
-  background-color: var(--color-primary);
-}
+    background-color: var(--color-primary);
+  }
 
-.unit-pagination.design > :where(.previous, .next):hover {
-  background-color: var(--color-primary);
-  color: var(--color-secondary);
+  .furo-pagination.design > :where(.previous, .next):hover {
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
+  }
 }
 </style>
