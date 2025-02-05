@@ -12,6 +12,11 @@ import FuroDialog from '@openreachtech/furo-nuxt/lib/components/FuroDialog.vue'
 import FuroButtonDialog from '@openreachtech/furo-nuxt/lib/components/FuroButtonDialog.vue'
 import AppDialog from '~/components/units/AppDialog.vue'
 
+import ButtonDialogPageContext from './ButtonDialogPageContext.js'
+import StatusDialogPageContext from './StatusDialogPageContext.js'
+import DesignDialogPageContext from './DesignDialogPageContext.js'
+import FormDialogPageContext from './FormDialogPageContext.js'
+
 export default defineComponent({
   name: 'Furo Dialog Samples',
 
@@ -21,7 +26,10 @@ export default defineComponent({
     AppDialog,
   },
 
-  setup () {
+  setup (
+    props,
+    componentContext
+  ) {
     definePageMeta({
       $furo: {
         pageTitle: 'Furo Dialog Samples',
@@ -29,14 +37,9 @@ export default defineComponent({
       },
     })
 
-    /** @type {import('vue').Ref<FuroDialog | null>} */
-    const messageAndXCloseButtonFuroDialogRef = ref(null)
+    const defaultMessage = '???'
 
-    /** @type {import('vue').Ref<FuroDialog | null>} */
-    const dialogStatusCallbackFuroDialogRef = ref(null)
-
-    /** @type {import('vue').Ref<FuroDialog | null>} */
-    const closeByClickedOnBackdropFuroDialogRef = ref(null)
+    ////////////////////////////////////////////////////////////////////////////
 
     /** @type {import('vue').Ref<FuroDialog | null>} */
     const alertFuroButtonDialogRef = ref(null)
@@ -47,6 +50,39 @@ export default defineComponent({
     /** @type {import('vue').Ref<FuroDialog | null>} */
     const ternaryConfirmFuroButtonDialogRef = ref(null)
 
+    const feedbackMessageRef = ref(defaultMessage)
+
+    const buttonDialogArgs = {
+      props,
+      componentContext,
+      feedbackMessageRef,
+    }
+    const buttonDialogContext = ButtonDialogPageContext.create(buttonDialogArgs)
+      .setupComponent()
+
+    ////////////////////////////////////////////////////////////////////////////
+
+    /** @type {import('vue').Ref<FuroDialog | null>} */
+    const messageAndXCloseButtonFuroDialogRef = ref(null)
+
+    /** @type {import('vue').Ref<FuroDialog | null>} */
+    const dialogStatusCallbackFuroDialogRef = ref(null)
+
+    /** @type {import('vue').Ref<FuroDialog | null>} */
+    const closeByClickedOnBackdropFuroDialogRef = ref(null)
+
+    const statusMessageRef = ref(defaultMessage)
+
+    const args = {
+      props,
+      componentContext,
+      statusMessageRef,
+    }
+    const statusDialogContext = StatusDialogPageContext.create(args)
+      .setupComponent()
+
+    ////////////////////////////////////////////////////////////////////////////
+
     /** @type {import('vue').Ref<FuroDialog | null>} */
     const customDesignedFuroDialogRef = ref(null)
 
@@ -56,137 +92,65 @@ export default defineComponent({
     /** @type {import('vue').Ref<FuroDialog | null>} */
     const customAppDialogRef = ref(null)
 
+    const designedDialogArgs = {
+      props,
+      componentContext,
+    }
+    const designedDialogContext = DesignDialogPageContext.create(designedDialogArgs)
+      .setupComponent()
+
+    ////////////////////////////////////////////////////////////////////////////
+
     /** @type {import('vue').Ref<FuroDialog | null>} */
     const formDialogRef = ref(null)
 
-    ////////////////////////////////////////////////////////////////////////////
-
-    const clickedButtonRef = ref('????')
-    const dialogStatusRef = ref('????')
-
-    ////////////////////////////////////////////////////////////////////////////
-
     /** @type {import('vue').Ref<HTMLFormElement | null>} */
     const formElementRef = ref(null)
+
     const formValuesRef = ref('{}')
 
+    const formDialogArgs = {
+      props,
+      componentContext,
+
+      formDialogRef,
+      formElementRef,
+      formValuesRef,
+    }
+    const formDialogContext = FormDialogPageContext.create(formDialogArgs)
+      .setupComponent()
+
+    ////////////////////////////////////////////////////////////////////////////
+
     return {
-      showDialog,
-      dismissDialog,
-      clickBackdrop,
-
-      onShowDialog () {
-        dialogStatusRef.value = 'Showed'
-      },
-      onDismissDialog () {
-        dialogStatusRef.value = 'Dismissed'
-      },
-
-      onClickPositiveButton () {
-        clickedButtonRef.value = 'Positive'
-      },
-      onClickNegativeButton () {
-        clickedButtonRef.value = 'Negative'
-      },
-      onClickNeutralButton () {
-        clickedButtonRef.value = 'Neutral'
-      },
-
-      messageAndXCloseButtonFuroDialogRef,
-      dialogStatusCallbackFuroDialogRef,
-      closeByClickedOnBackdropFuroDialogRef,
+      buttonDialogContext,
 
       alertFuroButtonDialogRef,
       confirmFuroButtonDialogRef,
       ternaryConfirmFuroButtonDialogRef,
 
+      // -----------------------------------------------------------------------
+
+      statusDialogContext,
+
+      messageAndXCloseButtonFuroDialogRef,
+      dialogStatusCallbackFuroDialogRef,
+      closeByClickedOnBackdropFuroDialogRef,
+
+      // -----------------------------------------------------------------------
+
+      designedDialogContext,
+
       customDesignedFuroDialogRef,
       defaultAppDialogRef,
       customAppDialogRef,
 
+      // -----------------------------------------------------------------------
+
+      formDialogContext,
+
       formDialogRef,
-
-      // dialog click reactive
-      clickedButtonRef,
-      dialogStatusRef,
-
-      // Related to <form> dialog
-      submitForm,
       formElementRef,
-      formValuesRef,
-    }
-
-    /**
-     * Opens dialog.
-     *
-     * @param {{
-     *   dialog: FuroDialog | null
-     * }} params - The parameters.
-     * @returns {void}
-     */
-    function showDialog ({
-      dialog,
-    }) {
-      dialog?.showDialog()
-    }
-
-    /**
-     * Closes dialog.
-     *
-     * @param {{
-     *   dialog: FuroDialog | null
-     * }} params - The parameters.
-     * @returns {void}
-     */
-    function dismissDialog ({
-      dialog,
-    }) {
-      dialog?.dismissDialog()
-    }
-
-    /**
-     * The clickBackdrop callback.
-     *
-     * @param {{
-     *   dialog: FuroDialog | null
-     * }} params - The parameters.
-     * @returns {void}
-     */
-    function clickBackdrop ({
-      dialog,
-    }) {
-      dialogStatusRef.value = 'Clicked on Backdrop'
-
-      dialog?.dismissDialog()
-    }
-
-    /**
-     * The submitForm callback.
-     *
-     * @param {{
-     *   form: HTMLFormElement | null
-     * }} params - The parameters.
-     * @returns {boolean}
-     */
-    function submitForm ({
-      form,
-    }) {
-      const value = form
-        ? Object.fromEntries(
-          new FormData(form) // eslint-disable-line
-        )
-        : null
-
-      formValuesRef.value = JSON.stringify(
-        value,
-        null,
-        2
-      )
-
-      formDialogRef.value
-        ?.dismissDialog()
-
-      return false
     }
   },
 })
@@ -194,32 +158,19 @@ export default defineComponent({
 
 <template>
   <div>
-    <h1 class="design-header primary">
-      Furo Dialog Samples
-    </h1>
+    <h1>Furo Dialog Samples</h1>
 
-    <br>
-    <br>
+    <h2>&lt;FuroButtonDialog&gt; samples</h2>
 
-    <h2 class="design-header secondary">
-      &lt;FuroButtonDialog&gt; samples
-    </h2>
-
-    <div class="button-reaction-placeholder">
-      Clicked [{{ clickedButtonRef }}] button
-    </div>
-
-    <section class="unit-samples">
+    <section class="unit-section">
       <!-- ///////////////////////////////////////////////////////////////// -->
       <!-- Alert Dialog -->
       <!-- ///////////////////////////////////////////////////////////////// -->
-      <div class="unit-item sample-placeholder double">
-        <h3 class="design-header tertiary">
-          Alert Dialog
-        </h3>
+      <div class="unit-item">
+        <h3>Alert Dialog</h3>
 
-        <button class="button usual"
-          @click="showDialog({
+        <button type="button"
+          @click="buttonDialogContext.showDialog({
             dialog: alertFuroButtonDialogRef,
           })"
         >
@@ -227,8 +178,8 @@ export default defineComponent({
         </button>
 
         <FuroButtonDialog ref="alertFuroButtonDialogRef"
-          class="alert simple-dialog"
-          @click-positive-button="onClickPositiveButton"
+          class="alert"
+          @click-positive-button="buttonDialogContext.clickPositiveButton({ dialogType: 'Alert' })"
         >
           <template #contents>
             <div>Alert Dialog</div>
@@ -242,13 +193,11 @@ export default defineComponent({
       <!-- ///////////////////////////////////////////////////////////////// -->
       <!-- Confirm Dialog -->
       <!-- ///////////////////////////////////////////////////////////////// -->
-      <div class="unit-item sample-placeholder double">
-        <h3 class="design-header tertiary">
-          Confirm Dialog
-        </h3>
+      <div class="unit-item">
+        <h3>Confirm Dialog</h3>
 
-        <button class="button usual"
-          @click="showDialog({
+        <button type="button"
+          @click="buttonDialogContext.showDialog({
             dialog: confirmFuroButtonDialogRef,
           })"
         >
@@ -256,9 +205,9 @@ export default defineComponent({
         </button>
 
         <FuroButtonDialog ref="confirmFuroButtonDialogRef"
-          class="confirm simple-dialog"
-          @click-positive-button="onClickPositiveButton"
-          @click-negative-button="onClickNegativeButton"
+          class="confirm"
+          @click-positive-button="buttonDialogContext.clickPositiveButton({ dialogType: 'Confirm' })"
+          @click-negative-button="buttonDialogContext.clickNegativeButton({ dialogType: 'Confirm' })"
         >
           <template #contents>
             <div>Confirm Dialog</div>
@@ -275,13 +224,11 @@ export default defineComponent({
       <!-- ///////////////////////////////////////////////////////////////// -->
       <!-- Ternary Confirm Dialog -->
       <!-- ///////////////////////////////////////////////////////////////// -->
-      <div class="unit-item sample-placeholder double">
-        <h3 class="design-header tertiary">
-          Ternary Confirm Dialog
-        </h3>
+      <div class="unit-item">
+        <h3>Ternary Confirm Dialog</h3>
 
-        <button class="button usual"
-          @click="showDialog({
+        <button type="button"
+          @click="buttonDialogContext.showDialog({
             dialog: ternaryConfirmFuroButtonDialogRef,
           })"
         >
@@ -289,10 +236,10 @@ export default defineComponent({
         </button>
 
         <FuroButtonDialog ref="ternaryConfirmFuroButtonDialogRef"
-          class="ternary simple-dialog"
-          @click-positive-button="onClickPositiveButton"
-          @click-negative-button="onClickNegativeButton"
-          @click-neutral-button="onClickNeutralButton"
+          class="ternary"
+          @click-positive-button="buttonDialogContext.clickPositiveButton({ dialogType: 'TernaryConfirm' })"
+          @click-negative-button="buttonDialogContext.clickNegativeButton({ dialogType: 'TernaryConfirm' })"
+          @click-neutral-button="buttonDialogContext.clickNeutralButton({ dialogType: 'TernaryConfirm' })"
         >
           <template #contents>
             <div>
@@ -312,28 +259,26 @@ export default defineComponent({
       </div>
     </section>
 
-    <br>
-    <br>
-
-    <h2 class="design-header secondary">
-      &lt;FuroDialog&gt; samples
-    </h2>
-
-    <div class="button-reaction-placeholder">
-      Result: {{ dialogStatusRef }}
+    <div class="reaction-placeholder">
+      Clicked button of  {{ buttonDialogContext.feedbackMessageRef }}
     </div>
 
-    <section class="unit-samples">
+    <br>
+    <br>
+
+    <h2>&lt;FuroDialog&gt; samples</h2>
+
+    <section class="unit-section">
       <!-- ///////////////////////////////////////////////////////////////// -->
       <!-- Message with ⊗ (x-close button) -->
       <!-- ///////////////////////////////////////////////////////////////// -->
-      <div class="unit-item sample-placeholder double">
+      <div class="unit-item">
         <h3 class="design-header">
           Message with ⊗<br>(x-close button)
         </h3>
 
-        <button class="button usual"
-          @click="showDialog({
+        <button type="button"
+          @click="statusDialogContext.showDialog({
             dialog: messageAndXCloseButtonFuroDialogRef,
           })"
         >
@@ -341,12 +286,12 @@ export default defineComponent({
         </button>
 
         <FuroDialog ref="messageAndXCloseButtonFuroDialogRef"
-          class="x-close simple-dialog"
+          class="x-close"
+          @show-dialog="statusDialogContext.onShowDialog()"
+          @dismiss-dialog="statusDialogContext.onDismissDialog()"
         >
           <template #contents>
-            <div class="centering">
-              Message with ⊗<br>(x-close button)
-            </div>
+            <span>Message with ⊗<br>(x-close button)</span>
           </template>
         </FuroDialog>
       </div>
@@ -354,13 +299,11 @@ export default defineComponent({
       <!-- ///////////////////////////////////////////////////////////////// -->
       <!-- Dialog Status Callbacks -->
       <!-- ///////////////////////////////////////////////////////////////// -->
-      <div class="unit-item sample-placeholder double">
-        <h3 class="design-header tertiary">
-          Dialog Status Callbacks
-        </h3>
+      <div class="unit-item">
+        <h3>Dialog Status Callbacks</h3>
 
-        <button class="button usual"
-          @click="showDialog({
+        <button type="button"
+          @click="statusDialogContext.showDialog({
             dialog: dialogStatusCallbackFuroDialogRef,
           })"
         >
@@ -368,24 +311,19 @@ export default defineComponent({
         </button>
 
         <FuroDialog ref="dialogStatusCallbackFuroDialogRef"
-          class="simple-dialog"
-          @show-dialog="onShowDialog"
-          @dismiss-dialog="onDismissDialog"
+          @show-dialog="statusDialogContext.onShowDialog()"
+          @dismiss-dialog="statusDialogContext.onDismissDialog()"
         >
           <template #contents>
-            <div class="centering">
-              <div>
-                Dialog Status Callbacks
-              </div>
-              <br>
-              <button class="button usual"
-                @click="dismissDialog({
-                  dialog: dialogStatusCallbackFuroDialogRef,
-                })"
-              >
-                Close
-              </button>
-            </div>
+            <div>Dialog Status Callbacks</div>
+            <br>
+            <button type="button"
+              @click="statusDialogContext.dismissDialog({
+                dialog: dialogStatusCallbackFuroDialogRef,
+              })"
+            >
+              Close
+            </button>
           </template>
         </FuroDialog>
       </div>
@@ -393,13 +331,13 @@ export default defineComponent({
       <!-- ///////////////////////////////////////////////////////////////// -->
       <!-- Close by clicked on Backdrop -->
       <!-- ///////////////////////////////////////////////////////////////// -->
-      <div class="unit-item sample-placeholder double">
+      <div class="unit-item">
         <h3 class="design-header">
           Close by clicked on Backdrop
         </h3>
 
-        <button class="button usual"
-          @click="showDialog({
+        <button type="button"
+          @click="statusDialogContext.showDialog({
             dialog: closeByClickedOnBackdropFuroDialogRef,
           })"
         >
@@ -407,48 +345,43 @@ export default defineComponent({
         </button>
 
         <FuroDialog ref="closeByClickedOnBackdropFuroDialogRef"
-          class="simple-dialog"
-          @click-backdrop="clickBackdrop({
+          @click-backdrop="statusDialogContext.clickOnBackdrop({
             dialog: closeByClickedOnBackdropFuroDialogRef,
           })"
         >
           <template #contents>
-            <div class="centering">
-              <div>
-                Close by clicked on Backdrop
-              </div>
-              <br>
-              <button class="button usual"
-                @click="dismissDialog({
-                  dialog: closeByClickedOnBackdropFuroDialogRef,
-                })"
-              >
-                Close
-              </button>
-            </div>
+            <div>Close by clicked on Backdrop</div>
+            <br>
+            <button type="button"
+              @click="statusDialogContext.dismissDialog({
+                dialog: closeByClickedOnBackdropFuroDialogRef,
+              })"
+            >
+              Close
+            </button>
           </template>
         </FuroDialog>
       </div>
     </section>
 
+    <div class="reaction-placeholder">
+      Status: {{ statusDialogContext.statusMessageRef }}
+    </div>
+
     <br>
     <br>
 
-    <h2 class="design-header secondary">
-      Custom Design samples
-    </h2>
+    <h2>Custom Design samples</h2>
 
-    <section class="unit-samples">
+    <section class="unit-section">
       <!-- ///////////////////////////////////////////////////////////////// -->
       <!-- Custom Design based <FuroDialog> -->
       <!-- ///////////////////////////////////////////////////////////////// -->
-      <div class="unit-item sample-placeholder double">
-        <h3 class="design-header tertiary">
-          Custom Design of &lt;FuroDialog&gt; [alpha]
-        </h3>
+      <div class="unit-item">
+        <h3>Custom Design of &lt;FuroDialog&gt; [alpha]</h3>
 
-        <button class="button usual"
-          @click="showDialog({
+        <button type="button"
+          @click="designedDialogContext.showDialog({
             dialog: customDesignedFuroDialogRef,
           })"
         >
@@ -463,8 +396,8 @@ export default defineComponent({
               Custom Design from &lt;FuroDialog&gt; [alpha]
             </div>
 
-            <button class="button usual"
-              @click="dismissDialog({
+            <button type="button"
+              @click="designedDialogContext.dismissDialog({
                 dialog: customDesignedFuroDialogRef,
               })"
             >
@@ -477,13 +410,11 @@ export default defineComponent({
       <!-- ///////////////////////////////////////////////////////////////// -->
       <!-- Default Design of <AppDialog> -->
       <!-- ///////////////////////////////////////////////////////////////// -->
-      <div class="unit-item sample-placeholder double">
-        <h3 class="design-header tertiary">
-          Default Design of &lt;AppDialog&gt;
-        </h3>
+      <div class="unit-item">
+        <h3>Default Design of &lt;AppDialog&gt;</h3>
 
-        <button class="button usual"
-          @click="showDialog({
+        <button type="button"
+          @click="designedDialogContext.showDialog({
             dialog: defaultAppDialogRef,
           })"
         >
@@ -496,8 +427,8 @@ export default defineComponent({
               Default Design of &lt;AppDialog&gt;
             </div>
 
-            <button class="button usual"
-              @click="dismissDialog({
+            <button type="button"
+              @click="designedDialogContext.dismissDialog({
                 dialog: defaultAppDialogRef,
               })"
             >
@@ -510,13 +441,11 @@ export default defineComponent({
       <!-- ///////////////////////////////////////////////////////////////// -->
       <!-- Custom Design of <AppDialog> -->
       <!-- ///////////////////////////////////////////////////////////////// -->
-      <div class="unit-item sample-placeholder double">
-        <h3 class="design-header tertiary">
-          Custom Design of &lt;AppDialog&gt;
-        </h3>
+      <div class="unit-item">
+        <h3>Custom Design of &lt;AppDialog&gt;</h3>
 
-        <button class="button usual"
-          @click="showDialog({
+        <button type="button"
+          @click="designedDialogContext.showDialog({
             dialog: customAppDialogRef,
           })"
         >
@@ -531,8 +460,8 @@ export default defineComponent({
               Custom Design of &lt;AppDialog&gt;
             </div>
 
-            <button class="button usual"
-              @click="dismissDialog({
+            <button type="button"
+              @click="designedDialogContext.dismissDialog({
                 dialog: customAppDialogRef,
               })"
             >
@@ -546,23 +475,17 @@ export default defineComponent({
     <br>
     <br>
 
-    <h2 class="design-header secondary">
-      Various Samples
-    </h2>
+    <h2>Various Samples</h2>
 
-    <section class="unit-samples">
+    <section class="unit-section">
       <!-- ///////////////////////////////////////////////////////////////// -->
       <!-- <form> Dialog -->
       <!-- ///////////////////////////////////////////////////////////////// -->
-      <div class="unit-item sample-placeholder double">
-        <h3 class="design-header tertiary">
-          &lt;form&gt; Dialog sample
-        </h3>
+      <div class="unit-item">
+        <h3>&lt;form&gt; Dialog sample</h3>
 
-        <button class="button usual"
-          @click="showDialog({
-            dialog: formDialogRef,
-          })"
+        <button type="button"
+          @click="formDialogContext.showDialog()"
         >
           show
         </button>
@@ -577,8 +500,8 @@ export default defineComponent({
 
             <form ref="formElementRef"
               class="form"
-              @submit.prevent="submitForm({
-                form: formElementRef,
+              @submit.prevent="formDialogContext.submitForm({
+                formElement: formElementRef,
               })"
             >
               <input type="text"
@@ -594,9 +517,7 @@ export default defineComponent({
                 value="Who are you?"
               >
 
-              <button class="button usual submit"
-                type="submit"
-              >
+              <button type="submit">
                 Submit
               </button>
             </form>
@@ -606,7 +527,7 @@ export default defineComponent({
         <div class="result unit-form">
           <span>Submit &lt;form&gt; Result:</span>
           <pre class="json">{{
-            formValuesRef
+            formDialogContext.formValues
           }}</pre>
         </div>
       </div>
@@ -617,37 +538,12 @@ export default defineComponent({
   </div>
 </template>
 
-<!-- can not use scoped here -->
-<style>
+<style scoped>
 /******************************************************************************/
 /* page design */
 /******************************************************************************/
 
 .unit-section {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.unit-section > .button {
-  margin-block: .25rem;
-
-  border-radius: .5rem;
-
-  padding-block: .5rem;
-  padding-inline: 1rem;
-
-  font-size: 1.5rem;
-}
-
-.unit-section > :not(.button) {
-  flex-grow: 1;
-}
-
-/******************************************************************************/
-
-.unit-samples {
   display: flex;
   flex-wrap: wrap;
   justify-content: start;
@@ -655,7 +551,14 @@ export default defineComponent({
   gap: 1rem;
 }
 
-.unit-item {
+.unit-section > .unit-item {
+  border-style: double;
+  border-width: 0.25rem;
+  border-radius: 0.5rem;
+
+  padding-block: 0.5rem;
+  padding-inline: 1rem;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -663,118 +566,43 @@ export default defineComponent({
   gap: 1rem;
 }
 
-.unit-item > .button {
-  margin-block: .25rem;
-
-  border-radius: .5rem;
-
-  padding-block: .5rem;
-  padding-inline: 1rem;
-
-  font-size: 1.5rem;
-}
-
 /******************************************************************************/
 /* dialog */
 /******************************************************************************/
 
-.unit-dialog[open] {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: stretch;
-}
-
-.unit-dialog[open].simple-dialog {
-  min-width: 20rem;
-  min-height: 10rem;
-
-  border-radius: .5rem;
-}
-
-.unit-dialog[open] .centering {
-  text-align: center;
-}
-
 /*
- * <button> design in <FuroButtonDialog>
+ * dialog design alpha
  */
-.unit-dialog[open] > .unit-buttons .button {
-  border-radius: 0.3rem;
-  border: var(--size-thinnest) #000 solid;
-
-  padding-block: 0.25rem;
-  padding-inline: 0.5rem;
-}
-
-/******************************************************************************/
-/* dialog design alpha */
-
-.unit-dialog[open].design.alpha {
-  border-radius: 0.5rem;
+.furo-dialog[open].design.alpha {
   border: var(--color-primary) outset 1rem;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-
-  padding-block: 1rem;
-  padding-inline: 2rem;
 
   background-color: var(--color-secondary);
   color: var(--color-black);
+  box-shadow:
+    0.25rem .25rem 1rem #fff,
+    -0.25rem -0.25rem 1rem #bebebe;
 }
 
-.unit-dialog[open].design.alpha::backdrop {
-  background-color: rgba(0, 0, 0, 0.8);
-}
-
-/******************************************************************************/
-/* dialog design beta */
-
-.unit-dialog[open].design.beta {
-  border-radius: .5rem;
+/*
+ * dialog design beta
+ */
+.furo-dialog[open].design.beta {
   border: none;
 
-  background-color: var(--color-primary);
-  color: var(--color-text-primary);
+  background-color: var(--color-secondary);
+  color: var(--color-text-secondary);
 
   text-align: center;
 }
 
-.unit-dialog[open].design.beta::backdrop {
-  background-color: rgba(255, 255, 255, 0.5);
-}
-
-.unit-dialog[open].design.beta .button {
-  border: var(--size-thinnest) var(--color-text-primary) solid;
+.furo-dialog[open].design.beta::backdrop {
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
 /******************************************************************************/
 /* dialog design unit-form */
 
-.unit-dialog[open].design.unit-form {
-  border-radius: 0.5rem;
-
-  padding-block: 1rem;
-  padding-inline: 2rem;
-}
-
-.unit-dialog.design.unit-form > .buttons {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-}
-
-.unit-dialog.design.unit-form > .buttons > * {
-  width: 0;
-
-  flex-grow: 1;
-}
-
-.unit-dialog.design.unit-form .form {
+.furo-dialog.design.unit-form > .form {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -784,14 +612,13 @@ export default defineComponent({
   padding-inline: 1rem;
 }
 
-.unit-dialog.design.unit-form .form > .input {
-  min-width: 15rem;
+.furo-dialog.design.unit-form > .form > .input {
+  width: 15rem;
 }
 
-.unit-dialog.design.unit-form .form > .button.submit {
-  max-width: 50%;
-}
-
+/*
+ * <form> dialog result placeholder
+ */
 .result.unit-form {
   margin-block-start: 1.5rem;
 }
@@ -807,7 +634,7 @@ export default defineComponent({
 
 /******************************************************************************/
 
-.button-reaction-placeholder {
+.reaction-placeholder {
   border: var(--size-thinnest) var(--color-text) solid;
   border-radius: .5rem;
 
