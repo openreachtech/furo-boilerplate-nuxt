@@ -15,7 +15,8 @@ export default defineComponent({
   <div><a href="samples/company-sponsors">Company Sponsors</a></div>
   <div><a href="samples/sign-up">Sign Up</a></div>
   <div><a href="samples/sign-in">Sign In</a></div>
-  <div><a href="samples/upload-customer-forum-post-image">Upload Customer Forum Post Image</a></div>
+  <div><a href="samples/upload-image">Upload Image</a></div>
+  <div><a href="samples/pagination-articles">Pagination Articles</a></div>
   <br>
   <div><a href="samples/form-controls-inspector">Form Controls Inspector</a></div>
   <div><a href="samples/trigger-unlock">Trigger Unlock Sample</a></div>
@@ -23,6 +24,7 @@ export default defineComponent({
   <div><a href="samples/components/furo-pagination">Furo Pagination Sample</a></div>
   <div><a href="samples/components/furo-tab-layout">Furo TabLayout Sample</a></div>
   <div><a href="samples/components/furo-dialog">Furo Dialog Sample</a></div>
+  <div><a href="samples/components/furo-loading-layout">Furo LoadingLayout Sample</a></div>
   <div>1</div>
   <div>2</div>
   <div>3</div>
@@ -55,6 +57,6 @@ export default defineComponent({
   <div>10</div> -->
 </template>
 
-<style>
+<style scoped>
 /* CSS styles here */
 </style>
