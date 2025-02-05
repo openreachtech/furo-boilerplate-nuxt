@@ -1,0 +1,62 @@
+<!-- pages/index.vue -->
+<script>
+import {
+  defineComponent,
+} from 'vue'
+
+export default defineComponent({
+  name: 'IndexPage',
+})
+</script>
+
+<template>
+  <h1>Hello I&#39;m pages/index.vue!</h1>
+  <div><a href="curriculums">Curriculums</a></div>
+  <div><a href="company-sponsors">Company Sponsors</a></div>
+  <div><a href="sign-up">Sign Up</a></div>
+  <div><a href="sign-in">Sign In</a></div>
+  <div><a href="upload-image">Upload Image</a></div>
+  <div><a href="pagination-articles">Pagination Articles</a></div>
+  <br>
+  <div><a href="form-controls-inspector">Form Controls Inspector</a></div>
+  <div><a href="trigger-unlock">Trigger Unlock Sample</a></div>
+  <br>
+  <div><a href="components/furo-pagination">Furo Pagination Sample</a></div>
+  <div><a href="components/furo-tab-layout">Furo TabLayout Sample</a></div>
+  <div><a href="components/furo-dialog">Furo Dialog Sample</a></div>
+  <div><a href="components/furo-loading-layout">Furo LoadingLayout Sample</a></div>
+  <div>1</div>
+  <div>2</div>
+  <div>3</div>
+  <div>4</div>
+  <div>5</div>
+  <!-- <div>6</div>
+  <div>7</div>
+  <div>8</div>
+  <div>9</div>
+  <div>10</div>
+  <div>1</div>
+  <div>2</div>
+  <div>3</div>
+  <div>4</div>
+  <div>5</div>
+  <div>6</div>
+  <div>7</div>
+  <div>8</div>
+  <div>9</div>
+  <div>10</div>
+  <div>1</div>
+  <div>2</div>
+  <div>3</div>
+  <div>4</div>
+  <div>5</div>
+  <div>6</div>
+  <div>7</div>
+  <div>8</div>
+  <div>9</div>
+  <div>10</div> -->
+</template>
+
+<style scoped>
+/* CSS styles here */
+</style>
