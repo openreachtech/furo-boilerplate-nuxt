@@ -15,7 +15,7 @@ export default defineComponent({
   inheritAttrs: false,
 })
 </script>
-waefwafawfa
+
 <template>
   <FuroLoadingLayout class="design"
     v-bind="$attrs"
