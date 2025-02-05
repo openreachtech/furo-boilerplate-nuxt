@@ -1,0 +1,181 @@
+import {
+  BaseFuroContext,
+} from '@openreachtech/furo-nuxt'
+
+/**
+ * Props context class for UploadImagePageContext component.
+ *
+ * @property {import('vue').Ref<HTMLDialogElement | null>} dialogRef - Dialog element.
+ * @extends {BaseFuroContext<null>} - Base class.
+ */
+export default class UploadImagePageContext extends BaseFuroContext {
+  /**
+   * Constructor.
+   *
+   * @param {UploadImagePageContextParams} params - Parameters of this constructor.
+   */
+  constructor ({
+    props,
+    componentContext,
+
+    statusReactive,
+    formElementRef,
+
+    graphqlClient,
+    formClerk,
+  }) {
+    super({
+      props,
+      componentContext,
+    })
+
+    this.statusReactive = statusReactive
+    this.formElementRef = formElementRef
+
+    this.graphqlClient = graphqlClient
+    this.formClerk = formClerk
+  }
+
+  /**
+   * Factory method to create a new instance of this class.
+   *
+   * @template {X extends typeof UploadImagePageContext ? X : never} T, X
+   * @override
+   * @param {UploadImagePageContextFactoryParams} params - Parameters of this factory method.
+   * @returns {InstanceType<T>} - An instance of this class.
+   * @this {T}
+   */
+  static create ({
+    props,
+    componentContext,
+
+    statusReactive,
+    formElementRef,
+
+    graphqlClient,
+    formClerk,
+  }) {
+    return /** @type {InstanceType<T>} */ (
+      new this({
+        props,
+        componentContext,
+
+        statusReactive,
+        formElementRef,
+
+        graphqlClient,
+        formClerk,
+      })
+    )
+  }
+
+  /** @override */
+  setupComponent () {
+    return this
+  }
+
+  /**
+   * get: invoke request on event.
+   *
+   * @returns {import('vue').Ref<*>} - Invoke request on event.
+   */
+  get validationRef () {
+    return this.formClerk.validationRef
+  }
+
+  /**
+   * get: capsule reference.
+   *
+   * @returns {import('vue').Ref<furo.Capsule<*> | null>} - Capsule reference.
+   */
+  get capsuleRef () {
+    return this.graphqlClient.capsuleRef
+  }
+
+  /**
+   * get: launcher hooks.
+   *
+   * @returns {furo.GraphqlLauncherHooks} - Launcher hooks.
+   */
+  get launcherHooks () {
+    return {
+      beforeRequest: async payload => {
+        this.statusReactive.isLoading = true
+
+        return false
+      },
+      afterRequest: async capsule => {
+        this.statusReactive.isLoading = false
+      },
+    }
+  }
+
+  /**
+   * Submit form.
+   *
+   * @returns {Promise<boolean>} - Result
+   */
+  async submitFormWithHooks () {
+    if (!this.formElementRef.value) {
+      return false
+    }
+
+    await this.formClerk
+      .submitForm({
+        formElement: this.formElementRef.value,
+        hooks: this.launcherHooks,
+      })
+
+    return true
+  }
+}
+
+/**
+ * @typedef {import('@openreachtech/furo-nuxt/lib/contexts/BaseFuroContext.js').BaseFuroContextParams & {
+ *   statusReactive: import('vue').Reactive<UploadImageStatusReactive>
+ *   formElementRef: import('vue').Ref<HTMLFormElement | null>
+ *   graphqlClient: FuroGraphqlClient
+ *   formClerk: FormClerkType
+ * }} UploadImagePageContextParams
+ */
+
+/**
+ * @typedef {UploadImagePageContextParams} UploadImagePageContextFactoryParams
+ */
+
+/**
+ * @typedef {{
+ *   capsuleRef: import('vue').Ref<furo.Capsule<*> | null>
+ *   invokeRequestOnEvent: (args?: furo.GraphqlRequestArgs) => Promise<void>
+ *   invokeRequestOnMounted: (args?: furo.GraphqlRequestArgs) => void
+ *   invokeRequestWithFormValueHash?: (args: *) => Promise<void>
+ * }} FuroGraphqlClient
+ */
+
+/**
+ * @typedef {{
+ *   input: {
+ *     pagination?: {
+ *       limit?: number
+ *       offset?: number
+ *       sort?: {
+ *         targetColumn?: string
+ *         orderBy?: string
+ *       }
+ *     }
+ *   }
+ * }} CurriculumsDefaultVariables
+ */
+
+/**
+ * @typedef {{
+ *   isLoading: boolean
+ * }} UploadImageStatusReactive
+ */
+
+/**
+ * @typedef {{
+ *   validationRef: import('vue').Ref<*>
+ *   submitForm: (args?: *) => Promise<boolean>
+ * }} FormClerkType
+ */
