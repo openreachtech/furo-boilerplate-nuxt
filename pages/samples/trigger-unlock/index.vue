@@ -7,10 +7,15 @@ import {
   definePageMeta,
 } from '#imports'
 
+import TriggerUnlockPageContext from './TriggerUnlockPageContext.js'
+
 export default defineComponent({
   name: 'Trigger Unlock',
 
-  setup () {
+  setup (
+    props,
+    componentContext
+  ) {
     definePageMeta({
       $furo: {
         pageTitle: 'Trigger Unlock Samples',
@@ -18,25 +23,28 @@ export default defineComponent({
       },
     })
 
-    return {}
+    const args = {
+      props,
+      componentContext,
+    }
+    const context = TriggerUnlockPageContext.create(args)
+      .setupComponent()
+
+    return {
+      context,
+    }
   },
 })
 </script>
 
 <template>
   <div>
-    <h1 class="design-header primary">
-      Trigger Unlock
-    </h1>
+    <h1>Trigger Unlock</h1>
 
-    <h2 class="design-header secondary">
-      Checkbox Types
-    </h2>
+    <h2>Checkbox Types</h2>
 
-    <section class="unit-section sample-placeholder double">
-      <h3 class="design-header tertiary">
-        one trigger - one aim &lt;label&gt;&lt;input&gt;&lt;/label&gt;
-      </h3>
+    <section class="unit-section">
+      <h3>one trigger - one aim &lt;label&gt;&lt;input&gt;&lt;/label&gt;</h3>
 
       <label class="-trigger-unlock-checkbox">
         <input type="checkbox">
@@ -52,10 +60,8 @@ export default defineComponent({
       </button>
     </section>
 
-    <section class="unit-section sample-placeholder double">
-      <h3 class="design-header tertiary">
-        one trigger - one aim &lt;label for&gt;&lt;input id&gt;
-      </h3>
+    <section class="unit-section">
+      <h3>one trigger - one aim &lt;label for&gt;&lt;input id&gt;</h3>
 
       <input id="labeled-input"
         class="-trigger-unlock-checkbox"
@@ -72,10 +78,8 @@ export default defineComponent({
       </button>
     </section>
 
-    <section class="unit-section sample-placeholder double">
-      <h3 class="design-header tertiary">
-        plural triggers - one aim (Open Type)
-      </h3>
+    <section class="unit-section">
+      <h3>plural triggers - one aim (Open Type)</h3>
 
       <label class="-trigger-unlock-checkbox">
         <input type="checkbox">
@@ -96,12 +100,10 @@ export default defineComponent({
       </button>
     </section>
 
-    <section class="unit-section sample-placeholder double">
-      <h3 class="design-header tertiary">
-        plural triggers - one aim (Unified Type)
-      </h3>
+    <section class="unit-section">
+      <h3>plural triggers - one aim (Unified Type)</h3>
 
-      <div class="-trigger-unlock-checkbox sample-placeholder">
+      <fieldset class="-trigger-unlock-checkbox">
         <label>
           <input type="checkbox">
           <span>I agree it (1)</span>
@@ -111,7 +113,7 @@ export default defineComponent({
           <input type="checkbox">
           <span>I agree it (2)</span>
         </label>
-      </div>
+      </fieldset>
 
       <button class="-aim-unlock button usual"
         type="submit"
@@ -121,14 +123,10 @@ export default defineComponent({
       </button>
     </section>
 
-    <h2 class="design-header secondary">
-      Radio Types
-    </h2>
+    <h2>Radio Types</h2>
 
-    <section class="unit-section sample-placeholder double">
-      <h3 class="design-header tertiary">
-        one radio set - one aim (Open Type)
-      </h3>
+    <section class="unit-section">
+      <h3>one radio set - one aim (Open Type)</h3>
 
       <label class="-trigger-unlock-radio">
         <input type="radio"
@@ -160,12 +158,10 @@ export default defineComponent({
       </button>
     </section>
 
-    <section class="unit-section sample-placeholder double">
-      <h3 class="design-header tertiary">
-        one radio set - one aim (Unified Type)
-      </h3>
+    <section class="unit-section">
+      <h3>one radio set - one aim (Unified Type)</h3>
 
-      <div class="-trigger-unlock-radio sample-placeholder">
+      <fieldset class="-trigger-unlock-radio">
         <label>
           <input type="radio"
             name="radio-group-second"
@@ -186,7 +182,7 @@ export default defineComponent({
           >
           <span>Gamma</span>
         </label>
-      </div>
+      </fieldset>
 
       <button class="-aim-unlock button usual"
         type="submit"
@@ -199,31 +195,33 @@ export default defineComponent({
 </template>
 
 <style scoped>
-.design-header.primary {
-  margin-block-end: 1rem;
-
-  font-size: 2rem;
-}
-
-.design-header.secondary {
-  margin-block-start: 2rem;
-  margin-block-end: 1rem;
-
-  font-size: 1.618rem;
-}
-
-.design-header.tertiary {
-  margin-block-end: 1rem;
-}
-
 .unit-section {
-  margin-block-start: 1rem;
+  border-style: double;
+  border-width: 0.25rem;
+  border-radius: 0.5rem;
 
   padding-block: 0.5rem;
   padding-inline: 1rem;
 }
 
-.unit-section .button {
+.unit-section * + .button.usual {
   margin-block-start: 0.5rem;
+}
+
+.unit-section .button.usual {
+  border: none;
+  border-radius: 0.25rem;
+
+  background-color: var(--color-primary);
+  color: var(--color-text-primary);
+
+  display: inline-block;
+  padding-block: 0.5rem;
+  padding-inline: 1rem;
+}
+
+/* for <h2>Radio Types</h2> */
+.unit-section + :not(.unit-section) {
+  margin-block-start: 3rem;
 }
 </style>
