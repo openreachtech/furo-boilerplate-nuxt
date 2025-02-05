@@ -2,7 +2,7 @@ import {
   BaseFormElementClerk,
 } from '@openreachtech/furo'
 
-import SignUpFormElementClerk from '~/app/domClerk/SignUpFormElementClerk'
+import SignUpFormElementClerk from '~/pages/samples/sign-up/SignUpFormElementClerk.js'
 
 beforeEach(() => {
   localStorage.clear()
