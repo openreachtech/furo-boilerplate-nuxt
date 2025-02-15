@@ -27,15 +27,15 @@ export default defineNuxtConfig({
 
   // Global CSS: https://nuxt.com/docs/api/nuxt-config#css.
   css: [
-    '~/assets/css/variables-palette-color-scale.css',
+    '~/node_modules/@openreachtech/furo-nuxt/lib/assets/css/0000.furo.css',
+    '~/node_modules/@openreachtech/furo-nuxt/lib/assets/css/0010.variables-palette-color-scale.css',
+    '~/node_modules/@openreachtech/furo-nuxt/lib/assets/css/0020.variables-z-index.css',
+    '~/node_modules/@openreachtech/furo-nuxt/lib/assets/css/0100.reset.css',
+    '~/node_modules/@openreachtech/furo-nuxt/lib/assets/css/0200.base.css',
+    '~/node_modules/@openreachtech/furo-nuxt/lib/assets/css/0300.gimmick.css',
+
     '~/assets/css/variables-component-default.css',
     '~/assets/css/variables.css',
-    '~/assets/css/reset.css',
-    '~/assets/css/gimmick.css',
-    '~/assets/css/usuals.css',
-
-    // TODO: Remove this sample CSS file in actual application.
-    '~/assets/css/sample.css',
   ],
 
   // Plugins to run before rendering page: https://nuxt.com/docs/api/nuxt-config#plugins-1.

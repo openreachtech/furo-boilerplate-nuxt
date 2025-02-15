@@ -22,7 +22,7 @@
   "author": "Open Reach Tech inc.",
   "license": "UNLICENSED",
   "dependencies": {
-    "@openreachtech/furo-nuxt": "^1.2.1",
+    "@openreachtech/furo-nuxt": "^1.4.2",
     "@openreachtech/jest-constructor-spy": "^1.1.0",
     "core-js": "^3.36.0",
     "nuxt": "^3.15.0",

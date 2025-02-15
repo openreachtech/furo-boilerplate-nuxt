@@ -90,9 +90,6 @@ describe('BaseAppGraphqlPayload', () => {
           },
           expected: [
             {
-              'content-type': 'application/json',
-            },
-            {
               'x-renchan-access-token': 'fc3ff98e8c6a0d308700000000000001',
             },
           ],
@@ -102,9 +99,6 @@ describe('BaseAppGraphqlPayload', () => {
             accessToken: 'fc3ff98e8c6a0d308700000000000002',
           },
           expected: [
-            {
-              'content-type': 'application/json',
-            },
             {
               'x-renchan-access-token': 'fc3ff98e8c6a0d308700000000000002',
             },
@@ -126,11 +120,8 @@ describe('BaseAppGraphqlPayload', () => {
       test('with no args', () => {
         localStorage.removeItem('access_token')
 
-        const expected = [
-          {
-            'content-type': 'application/json',
-          },
-        ]
+        /** @type {Array<Record<string, string>>} */
+        const expected = []
 
         const actual = BaseAppGraphqlPayload.collectBasedHeadersOptions()
 

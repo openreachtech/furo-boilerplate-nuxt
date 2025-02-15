@@ -32,23 +32,36 @@ export default defineComponent({
   </FuroTabLayout>
 </template>
 
-<!-- can not use scoped here -->
+<!-- NOTE: Never use <style scoped> here -->
 <style>
-/*
- * Can customize the pagination component.
- */
+@layer app {
+  .furo-layout.tab.design > .tabs {
+    gap: 0.25rem;
+  }
 
-.unit-tablayout.design > .tabs > .tab:hover {
-  background-color: var(--color-primary);
-  color: var(--color-secondary);
+  .furo-layout.tab.design > .tabs > .tab:hover {
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
 
-  cursor: pointer;
-}
+    cursor: pointer;
+  }
 
-.unit-tablayout.design > .tabs > .tab.active {
-  background-color: var(--color-primary);
-  color: var(--color-secondary);
+  .furo-layout.tab.design > .tabs > .tab.active {
+    background-color: var(--color-primary);
+    color: var(--color-secondary);
 
-  pointer-events: none;
+    pointer-events: none;
+  }
+
+  .furo-layout.tab.design > .contents > :first-child {
+    margin-block-start: 0.25rem;
+  }
+
+  .furo-layout.tab.design > .contents > * {
+    border: var(--size-thinnest) var(--color-text) solid;
+
+    padding-block: 1rem;
+    padding-inline: 2rem;
+  }
 }
 </style>
