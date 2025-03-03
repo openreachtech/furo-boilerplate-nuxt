@@ -25,36 +25,8 @@ export default defineComponent({
   <div><a href="components/furo-tab-layout">Furo TabLayout Sample</a></div>
   <div><a href="components/furo-dialog">Furo Dialog Sample</a></div>
   <div><a href="components/furo-loading-layout">Furo LoadingLayout Sample</a></div>
-  <div>1</div>
-  <div>2</div>
-  <div>3</div>
-  <div>4</div>
-  <div>5</div>
-  <!-- <div>6</div>
-  <div>7</div>
-  <div>8</div>
-  <div>9</div>
-  <div>10</div>
-  <div>1</div>
-  <div>2</div>
-  <div>3</div>
-  <div>4</div>
-  <div>5</div>
-  <div>6</div>
-  <div>7</div>
-  <div>8</div>
-  <div>9</div>
-  <div>10</div>
-  <div>1</div>
-  <div>2</div>
-  <div>3</div>
-  <div>4</div>
-  <div>5</div>
-  <div>6</div>
-  <div>7</div>
-  <div>8</div>
-  <div>9</div>
-  <div>10</div> -->
+  <br>
+  <div><a href="context/using-computed">computed() via Context</a></div>
 </template>
 
 <style scoped>
