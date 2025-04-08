@@ -91,6 +91,7 @@ describe('BaseAppGraphqlLauncher', () => {
       expect(emptyActual)
         .toEqual({
           ENDPOINT_URL: null,
+          WEBSOCKET_URL: null,
         })
     })
   })
