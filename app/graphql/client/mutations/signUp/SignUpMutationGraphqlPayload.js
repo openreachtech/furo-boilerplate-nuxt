@@ -3,7 +3,7 @@ import BaseAppGraphqlPayload from '~/app/graphql/client/BaseAppGraphqlPayload'
 /**
  * SignUp mutation payload.
  *
- * @extends {BaseAppGraphqlPayload<typeof SignUpMutationGraphqlPayload, SignUpMutationRequestVariables>}
+ * @extends {BaseAppGraphqlPayload<SignUpMutationRequestVariables>}
  */
 export default class SignUpMutationGraphqlPayload extends BaseAppGraphqlPayload {
   /** @override */
