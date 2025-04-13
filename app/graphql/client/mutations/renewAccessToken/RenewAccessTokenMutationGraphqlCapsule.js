@@ -3,7 +3,7 @@ import BaseAppGraphqlCapsule from '~/app/graphql/client/BaseAppGraphqlCapsule'
 /**
  * RenewAccessToken mutation graphql capsule.
  *
- * @extends {BaseAppGraphqlCapsule<typeof RenewAccessTokenMutationGraphqlCapsule, RenewAccessTokenMutationResponseContent>}
+ * @extends {BaseAppGraphqlCapsule<RenewAccessTokenMutationResponseContent>}
  */
 export default class RenewAccessTokenMutationGraphqlCapsule extends BaseAppGraphqlCapsule {
   /**
