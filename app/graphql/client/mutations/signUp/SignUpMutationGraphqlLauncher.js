@@ -5,7 +5,7 @@ import SignUpMutationGraphqlCapsule from '~/app/graphql/client/mutations/signUp/
 /**
  * SignUp mutation graphql launcher.
  *
- * @extends {BaseAppGraphqlLauncher<typeof SignUpMutationGraphqlLauncher>}
+ * @extends {BaseAppGraphqlLauncher}
  */
 export default class SignUpMutationGraphqlLauncher extends BaseAppGraphqlLauncher {
   /** @override */
