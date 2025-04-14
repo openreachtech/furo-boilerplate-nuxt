@@ -1,7 +1,7 @@
 import BaseAppGraphqlPayload from '../../BaseAppGraphqlPayload.js'
 
 /**
- * ChatRooms query payload.
+ * CreateChatRoom mutation graphql payload.
  *
  * @extends {BaseAppGraphqlPayload<CreateChatRoomMutationRequestVariables>}
  */
