@@ -7,9 +7,9 @@ import BaseAppGraphqlCapsule from '../../BaseAppGraphqlCapsule'
  */
 export default class ChatMessagesQueryGraphqlCapsule extends BaseAppGraphqlCapsule {
   /**
-   * get: chat rooms
+   * get: chat messages
    *
-   * @returns {Array<ChatMessageEntity>} Array of curriculum
+   * @returns {Array<ChatMessageEntity>} Array of chat messages.
    */
   get chatMessages () {
     const content = this.extractContent()
