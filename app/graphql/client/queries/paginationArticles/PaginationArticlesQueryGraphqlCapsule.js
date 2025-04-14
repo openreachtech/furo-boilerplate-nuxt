@@ -20,7 +20,7 @@ export default class PaginationArticlesQueryGraphqlCapsule extends BaseAppGraphq
    *     }
    *     totalRecords: number
    *   }
-   * } | null} Array of curriculum
+   * } | null}
    */
   extractPaginationArticles () {
     const content = this.extractContent()
