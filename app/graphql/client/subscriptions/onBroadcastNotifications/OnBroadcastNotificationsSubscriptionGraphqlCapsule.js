@@ -21,7 +21,7 @@ export default class OnBroadcastNotificationsSubscriptionGraphqlCapsule extends 
   /**
    * Extract notification.
    *
-   * @returns {NotificationEntity | null} Has unread messages
+   * @returns {NotificationEntity | null}
    */
   extractNotification () {
     return this.extractValueHash()
