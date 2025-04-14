@@ -4,29 +4,89 @@ import {
   defineComponent,
 } from 'vue'
 
+import {
+  NuxtLink,
+} from '#components'
+
 export default defineComponent({
   name: 'IndexPage',
+
+  components: {
+    NuxtLink,
+  },
 })
 </script>
 
 <template>
   <h1>Hello I&#39;m pages/index.vue!</h1>
-  <div><a href="curriculums">Curriculums</a></div>
-  <div><a href="company-sponsors">Company Sponsors</a></div>
-  <div><a href="sign-up">Sign Up</a></div>
-  <div><a href="sign-in">Sign In</a></div>
-  <div><a href="upload-image">Upload Image</a></div>
-  <div><a href="pagination-articles">Pagination Articles</a></div>
+  <div>
+    <NuxtLink to="curriculums">
+      Curriculums
+    </NuxtLink>
+  </div>
+  <div>
+    <NuxtLink to="company-sponsors">
+      Company Sponsors
+    </NuxtLink>
+  </div>
+  <div>
+    <NuxtLink to="sign-up">
+      Sign Up
+    </NuxtLink>
+  </div>
+  <div>
+    <NuxtLink to="sign-in">
+      Sign In
+    </NuxtLink>
+  </div>
+  <div>
+    <NuxtLink to="upload-image">
+      Upload Image
+    </NuxtLink>
+  </div>
+  <div>
+    <NuxtLink to="pagination-articles">
+      Pagination Articles
+    </NuxtLink>
+  </div>
   <br>
-  <div><a href="form-controls-inspector">Form Controls Inspector</a></div>
-  <div><a href="trigger-unlock">Trigger Unlock Sample</a></div>
+  <div>
+    <NuxtLink to="form-controls-inspector">
+      Form Controls Inspector
+    </NuxtLink>
+  </div>
+  <div>
+    <NuxtLink to="trigger-unlock">
+      Trigger Unlock Sample
+    </NuxtLink>
+  </div>
   <br>
-  <div><a href="components/furo-pagination">Furo Pagination Sample</a></div>
-  <div><a href="components/furo-tab-layout">Furo TabLayout Sample</a></div>
-  <div><a href="components/furo-dialog">Furo Dialog Sample</a></div>
-  <div><a href="components/furo-loading-layout">Furo LoadingLayout Sample</a></div>
+  <div>
+    <NuxtLink to="components/furo-pagination">
+      Furo Pagination Sample
+    </NuxtLink>
+  </div>
+  <div>
+    <NuxtLink to="components/furo-tab-layout">
+      Furo TabLayout Sample
+    </NuxtLink>
+  </div>
+  <div>
+    <NuxtLink to="components/furo-dialog">
+      Furo Dialog Sample
+    </NuxtLink>
+  </div>
+  <div>
+    <NuxtLink to="components/furo-loading-layout">
+      Furo LoadingLayout Sample
+    </NuxtLink>
+  </div>
   <br>
-  <div><a href="context/using-computed">computed() via Context</a></div>
+  <div>
+    <NuxtLink to="context/using-computed">
+      computed() via Context
+    </NuxtLink>
+  </div>
 </template>
 
 <style scoped>
