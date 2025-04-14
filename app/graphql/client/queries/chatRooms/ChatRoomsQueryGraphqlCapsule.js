@@ -9,7 +9,7 @@ export default class ChatRoomsQueryGraphqlCapsule extends BaseAppGraphqlCapsule 
   /**
    * get: chat rooms
    *
-   * @returns {Array<RoomEntity>} Array of curriculum
+   * @returns {Array<RoomEntity>} Array of chat rooms.
    */
   get chatRooms () {
     const content = this.extractContent()
