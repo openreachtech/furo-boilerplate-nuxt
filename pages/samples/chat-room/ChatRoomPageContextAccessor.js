@@ -26,7 +26,7 @@ export default class ChatRoomPagePageContextAccessor extends BaseFuroContextAcce
   /**
    * get: ChatRoomPage.
    *
-   * @returns {Array<import('../../../app/graphql/client/queries/chatRooms/ChatRoomsQueryGraphqlCapsule.js').RoomEntity>} - Array of curriculum.
+   * @returns {Array<import('../../../app/graphql/client/queries/chatRooms/ChatRoomsQueryGraphqlCapsule.js').RoomEntity>}
    */
   get chatRooms () {
     return this.chatRoomsCapsule
@@ -51,7 +51,7 @@ export default class ChatRoomPagePageContextAccessor extends BaseFuroContextAcce
   /**
    * get: ChatRoomPage.
    *
-   * @returns {Array<import('../../../app/graphql/client/queries/chatMessages/ChatMessagesQueryGraphqlCapsule.js').ChatMessageEntity>} - Array of curriculum.
+   * @returns {Array<import('../../../app/graphql/client/queries/chatMessages/ChatMessagesQueryGraphqlCapsule.js').ChatMessageEntity>}
    */
   get chatMessages () {
     return this.chatMessagesCapsule

@@ -1,7 +1,7 @@
 import BaseAppGraphqlCapsule from '../../BaseAppGraphqlCapsule'
 
 /**
- * ChatRooms query graphql capsule.
+ * SendChatMessage mutation graphql capsule.
  *
  * @extends {BaseAppGraphqlCapsule<SendChatMessageMutationResponseContent>}
  */
@@ -9,7 +9,7 @@ export default class SendChatMessageMutationGraphqlCapsule extends BaseAppGraphq
   /**
    * get: chat rooms
    *
-   * @returns {Array<RoomEntity>} Array of curriculum
+   * @returns {Array<RoomEntity>} Array of chat rooms.
    */
   get chatRooms () {
     const content = this.extractContent()
