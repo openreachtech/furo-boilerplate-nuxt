@@ -9,7 +9,7 @@ export default class CurriculumsQueryGraphqlCapsule extends BaseAppGraphqlCapsul
   /**
    * get: curriculums
    *
-   * @returns {Array<CurriculumEntity>} Array of curriculum
+   * @returns {Array<CurriculumEntity>}
    */
   get curriculums () {
     const content = this.extractContent()
