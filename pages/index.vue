@@ -87,6 +87,17 @@ export default defineComponent({
       computed() via Context
     </NuxtLink>
   </div>
+  <br>
+  <div>
+    <NuxtLink to="samples/chat-room?room=1">
+      Chat Room [1]
+    </NuxtLink>
+  </div>
+  <div>
+    <NuxtLink to="samples/chat-room?room=2">
+      Chat Room [2]
+    </NuxtLink>
+  </div>
 </template>
 
 <style scoped>
