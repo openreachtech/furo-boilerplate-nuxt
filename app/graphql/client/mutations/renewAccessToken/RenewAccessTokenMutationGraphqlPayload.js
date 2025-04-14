@@ -3,7 +3,7 @@ import BaseAppGraphqlPayload from '~/app/graphql/client/BaseAppGraphqlPayload'
 /**
  * RenewAccessToken mutation payload.
  *
- * @extends {BaseAppGraphqlPayload<typeof RenewAccessTokenMutationGraphqlPayload, RenewAccessTokenMutationRequestVariables>}
+ * @extends {BaseAppGraphqlPayload<RenewAccessTokenMutationRequestVariables>}
  */
 export default class RenewAccessTokenMutationGraphqlPayload extends BaseAppGraphqlPayload {
   /** @override */

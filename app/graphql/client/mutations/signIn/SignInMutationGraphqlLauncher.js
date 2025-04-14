@@ -5,7 +5,7 @@ import SignInMutationGraphqlCapsule from '~/app/graphql/client/mutations/signIn/
 /**
  * SignIn mutation graphql launcher.
  *
- * @extends {BaseAppGraphqlLauncher<typeof SignInMutationGraphqlLauncher>}
+ * @extends {BaseAppGraphqlLauncher}
  */
 export default class SignInMutationGraphqlLauncher extends BaseAppGraphqlLauncher {
   /** @override */

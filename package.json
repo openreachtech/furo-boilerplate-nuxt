@@ -1,7 +1,7 @@
 {
   "name": "@openreachtech/furo-boilerplate-nuxt",
   "version": "0.0.0",
-  "description": "furo boilerplate for Nuxt as starting to develop frontend",
+  "description": "Based on furo-boilerplate-nuxt version 1.4.0",
   "main": "index.js",
   "scripts": {
     "build": "nuxt build",
@@ -22,7 +22,7 @@
   "author": "Open Reach Tech inc.",
   "license": "UNLICENSED",
   "dependencies": {
-    "@openreachtech/furo-nuxt": "^1.5.0",
+    "@openreachtech/furo-nuxt": "^1.7.1",
     "@openreachtech/jest-constructor-spy": "^1.1.0",
     "core-js": "^3.36.0",
     "nuxt": "^3.15.0",

@@ -5,7 +5,7 @@ import RenewAccessTokenMutationGraphqlCapsule from '~/app/graphql/client/mutatio
 /**
  * RenewAccessToken mutation graphql launcher.
  *
- * @extends {BaseAppGraphqlLauncher<typeof RenewAccessTokenMutationGraphqlLauncher>}
+ * @extends {BaseAppGraphqlLauncher}
  */
 export default class RenewAccessTokenMutationGraphqlLauncher extends BaseAppGraphqlLauncher {
   /** @override */
