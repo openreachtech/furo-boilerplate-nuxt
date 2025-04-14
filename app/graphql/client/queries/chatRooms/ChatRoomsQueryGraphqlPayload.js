@@ -9,7 +9,7 @@ export default class ChatRoomsQueryGraphqlPayload extends BaseAppGraphqlPayload 
   /** @override */
   static get document () {
     return /* GraphQL */ `
-      query ChatRomesQuery {
+      query ChatRoomsQuery {
         chatRooms {
           rooms {
             id
