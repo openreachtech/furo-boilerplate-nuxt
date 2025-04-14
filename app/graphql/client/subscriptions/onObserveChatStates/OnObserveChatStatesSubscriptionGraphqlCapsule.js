@@ -32,11 +32,12 @@ export default class OnObserveChatStatesSubscriptionGraphqlCapsule extends BaseA
   /**
    * Has updated members.
    *
-   * @returns {boolean | null} Has unread messages
+   * @returns {boolean} true: Has updated members
    */
   hasUpdatedMembers () {
     return this.extractValueHash()
       ?.hasUpdatedMembers
+      ?? false
   }
 }
 
