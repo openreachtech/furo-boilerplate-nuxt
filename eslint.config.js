@@ -132,6 +132,10 @@ export default [
           message: 'Never use while',
         },
       ],
+      complexity: [
+        'error',
+        10, // 20
+      ],
     },
   },
 
