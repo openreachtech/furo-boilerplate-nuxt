@@ -19,24 +19,28 @@ export default class OnBroadcastNotificationsSubscriptionGraphqlCapsule extends 
   }
 
   /**
-   * Has unread messages.
+   * Extract notification.
    *
-   * @returns {boolean | null} Has unread messages
+   * @returns {NotificationEntity | null} Has unread messages
    */
-  extractNotifications () {
+  extractNotification () {
     return this.extractValueHash()
-      ?.rooms
-      ?? []
+      ?.notification
+      ?? null
   }
 }
 
 /**
  * @typedef {{
  *   onBroadcastNotifications: {
- *     notification: Array<{
- *       message: string
- *       segment: string
- *     }>
+ *     notification: NotificationEntity
  *   }
  * }} OnBroadcastNotificationsSubscriptionResponseContent
+ */
+
+/**
+ * @typedef {{
+ *   message: string
+ *   segment: string
+ * }} NotificationEntity
  */
