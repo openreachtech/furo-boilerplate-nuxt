@@ -21,11 +21,12 @@ export default class OnObserveChatStatesSubscriptionGraphqlCapsule extends BaseA
   /**
    * Has unread messages.
    *
-   * @returns {boolean | null} Has unread messages
+   * @returns {boolean} true: Has unread messages
    */
   hasUnreadMessages () {
     return this.extractValueHash()
       ?.hasUnreadMessages
+      ?? false
   }
 
   /**
