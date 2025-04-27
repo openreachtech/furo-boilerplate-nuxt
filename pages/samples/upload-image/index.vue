@@ -18,6 +18,7 @@ import UploadImageFormElementClerk from './UploadImageFormElementClerk.js'
 import UploadArrayImagesFormElementClerk from './UploadArrayImagesFormElementClerk.js'
 import UploadDeepPropertyImagesFormElementClerk from './UploadDeepPropertyImagesFormElementClerk.js'
 
+import HydratingContext from './HydratingContext.js'
 import UploadImagePageContext from './UploadImagePageContext.js'
 import UploadDeepPropertyImagesPageContext from './UploadDeepPropertyImagesPageContext.js'
 
@@ -31,6 +32,16 @@ export default defineComponent({
     const statusReactive = reactive({
       isLoading: false,
     })
+
+    // ------------------------------------------------------------------------
+
+    const hydratingContext = HydratingContext.create({
+      props,
+      componentContext,
+
+      statusReactive,
+    })
+      .setupComponent()
 
     // ------------------------------------------------------------------------
 
@@ -110,14 +121,11 @@ export default defineComponent({
     // ------------------------------------------------------------------------
 
     return {
+      hydratingContext,
+
       singleImageContext,
       arrayImagesContext,
       deepPropertyImagesContext,
-      statusReactive,
-
-      singleImageFormElementRef,
-      arrayImagesFormElementRef,
-      deepPropertyImagesFormElementRef,
     }
   },
 })
@@ -134,7 +142,7 @@ export default defineComponent({
     </h2>
 
     <div class="content">
-      <form ref="singleImageFormElementRef"
+      <form :ref="singleImageContext.formElementRef"
         class="unit-form"
         @submit.prevent="singleImageContext.submitFormWithHooks()"
       >
@@ -187,7 +195,7 @@ export default defineComponent({
     </h2>
 
     <div class="content">
-      <form ref="arrayImagesFormElementRef"
+      <form :ref="arrayImagesContext.formElementRef"
         class="unit-form"
         @submit.prevent="arrayImagesContext.submitFormWithHooks()"
       >
@@ -241,7 +249,7 @@ export default defineComponent({
     </h2>
 
     <div class="content">
-      <form ref="deepPropertyImagesFormElementRef"
+      <form :ref="deepPropertyImagesContext.formElementRef"
         class="unit-form"
         @submit.prevent="deepPropertyImagesContext.submitFormWithHooks()"
       >
@@ -349,7 +357,7 @@ export default defineComponent({
     </div>
   </section>
 
-  <div v-if="statusReactive.isLoading"
+  <div v-if="hydratingContext.isLoading"
     class="unit-loading"
   >
     Loading ...
