@@ -55,6 +55,10 @@ export default defineComponent({
     const buttonDialogArgs = {
       props,
       componentContext,
+
+      alertFuroButtonDialogRef,
+      confirmFuroButtonDialogRef,
+      ternaryConfirmFuroButtonDialogRef,
       feedbackMessageRef,
     }
     const buttonDialogContext = ButtonDialogPageContext.create(buttonDialogArgs)
@@ -124,13 +128,6 @@ export default defineComponent({
 
     return {
       buttonDialogContext,
-
-      alertFuroButtonDialogRef,
-      confirmFuroButtonDialogRef,
-      ternaryConfirmFuroButtonDialogRef,
-
-      // -----------------------------------------------------------------------
-
       statusDialogContext,
 
       messageAndXCloseButtonFuroDialogRef,
@@ -169,15 +166,11 @@ export default defineComponent({
       <div class="unit-item">
         <h3>Alert Dialog</h3>
 
-        <button type="button"
-          @click="buttonDialogContext.showDialog({
-            dialog: alertFuroButtonDialogRef,
-          })"
-        >
+        <button @click="buttonDialogContext.showAlertDialog()">
           show
         </button>
 
-        <FuroButtonDialog ref="alertFuroButtonDialogRef"
+        <FuroButtonDialog :ref="buttonDialogContext.alertFuroButtonDialogRef"
           class="alert"
           @click-positive-button="buttonDialogContext.clickPositiveButton({ dialogType: 'Alert' })"
         >
@@ -196,15 +189,11 @@ export default defineComponent({
       <div class="unit-item">
         <h3>Confirm Dialog</h3>
 
-        <button type="button"
-          @click="buttonDialogContext.showDialog({
-            dialog: confirmFuroButtonDialogRef,
-          })"
-        >
+        <button @click="buttonDialogContext.showConfirmDialog()">
           show
         </button>
 
-        <FuroButtonDialog ref="confirmFuroButtonDialogRef"
+        <FuroButtonDialog :ref="buttonDialogContext.confirmFuroButtonDialogRef"
           class="confirm"
           @click-positive-button="buttonDialogContext.clickPositiveButton({ dialogType: 'Confirm' })"
           @click-negative-button="buttonDialogContext.clickNegativeButton({ dialogType: 'Confirm' })"
@@ -227,15 +216,11 @@ export default defineComponent({
       <div class="unit-item">
         <h3>Ternary Confirm Dialog</h3>
 
-        <button type="button"
-          @click="buttonDialogContext.showDialog({
-            dialog: ternaryConfirmFuroButtonDialogRef,
-          })"
-        >
+        <button @click="buttonDialogContext.showTernaryConfirmDialog()">
           show
         </button>
 
-        <FuroButtonDialog ref="ternaryConfirmFuroButtonDialogRef"
+        <FuroButtonDialog :ref="buttonDialogContext.ternaryConfirmFuroButtonDialogRef"
           class="ternary"
           @click-positive-button="buttonDialogContext.clickPositiveButton({ dialogType: 'TernaryConfirm' })"
           @click-negative-button="buttonDialogContext.clickNegativeButton({ dialogType: 'TernaryConfirm' })"
