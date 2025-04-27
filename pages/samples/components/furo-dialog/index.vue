@@ -55,6 +55,10 @@ export default defineComponent({
     const buttonDialogArgs = {
       props,
       componentContext,
+
+      alertFuroButtonDialogRef,
+      confirmFuroButtonDialogRef,
+      ternaryConfirmFuroButtonDialogRef,
       feedbackMessageRef,
     }
     const buttonDialogContext = ButtonDialogPageContext.create(buttonDialogArgs)
@@ -77,6 +81,10 @@ export default defineComponent({
       props,
       componentContext,
       statusMessageRef,
+
+      messageAndXCloseButtonFuroDialogRef,
+      dialogStatusCallbackFuroDialogRef,
+      closeByClickedOnBackdropFuroDialogRef,
     }
     const statusDialogContext = StatusDialogPageContext.create(args)
       .setupComponent()
@@ -95,6 +103,10 @@ export default defineComponent({
     const designedDialogArgs = {
       props,
       componentContext,
+
+      customDesignedFuroDialogRef,
+      defaultAppDialogRef,
+      customAppDialogRef,
     }
     const designedDialogContext = DesignDialogPageContext.create(designedDialogArgs)
       .setupComponent()
@@ -124,13 +136,6 @@ export default defineComponent({
 
     return {
       buttonDialogContext,
-
-      alertFuroButtonDialogRef,
-      confirmFuroButtonDialogRef,
-      ternaryConfirmFuroButtonDialogRef,
-
-      // -----------------------------------------------------------------------
-
       statusDialogContext,
 
       messageAndXCloseButtonFuroDialogRef,
@@ -169,15 +174,11 @@ export default defineComponent({
       <div class="unit-item">
         <h3>Alert Dialog</h3>
 
-        <button type="button"
-          @click="buttonDialogContext.showDialog({
-            dialog: alertFuroButtonDialogRef,
-          })"
-        >
+        <button @click="buttonDialogContext.showAlertDialog()">
           show
         </button>
 
-        <FuroButtonDialog ref="alertFuroButtonDialogRef"
+        <FuroButtonDialog :ref="buttonDialogContext.alertFuroButtonDialogRef"
           class="alert"
           @click-positive-button="buttonDialogContext.clickPositiveButton({ dialogType: 'Alert' })"
         >
@@ -196,15 +197,11 @@ export default defineComponent({
       <div class="unit-item">
         <h3>Confirm Dialog</h3>
 
-        <button type="button"
-          @click="buttonDialogContext.showDialog({
-            dialog: confirmFuroButtonDialogRef,
-          })"
-        >
+        <button @click="buttonDialogContext.showConfirmDialog()">
           show
         </button>
 
-        <FuroButtonDialog ref="confirmFuroButtonDialogRef"
+        <FuroButtonDialog :ref="buttonDialogContext.confirmFuroButtonDialogRef"
           class="confirm"
           @click-positive-button="buttonDialogContext.clickPositiveButton({ dialogType: 'Confirm' })"
           @click-negative-button="buttonDialogContext.clickNegativeButton({ dialogType: 'Confirm' })"
@@ -227,15 +224,11 @@ export default defineComponent({
       <div class="unit-item">
         <h3>Ternary Confirm Dialog</h3>
 
-        <button type="button"
-          @click="buttonDialogContext.showDialog({
-            dialog: ternaryConfirmFuroButtonDialogRef,
-          })"
-        >
+        <button @click="buttonDialogContext.showTernaryConfirmDialog()">
           show
         </button>
 
-        <FuroButtonDialog ref="ternaryConfirmFuroButtonDialogRef"
+        <FuroButtonDialog :ref="buttonDialogContext.ternaryConfirmFuroButtonDialogRef"
           class="ternary"
           @click-positive-button="buttonDialogContext.clickPositiveButton({ dialogType: 'TernaryConfirm' })"
           @click-negative-button="buttonDialogContext.clickNegativeButton({ dialogType: 'TernaryConfirm' })"
@@ -277,15 +270,11 @@ export default defineComponent({
           Message with ⊗<br>(x-close button)
         </h3>
 
-        <button type="button"
-          @click="statusDialogContext.showDialog({
-            dialog: messageAndXCloseButtonFuroDialogRef,
-          })"
-        >
+        <button @click="statusDialogContext.showMessageAndXCloseButtonDialog()">
           show
         </button>
 
-        <FuroDialog ref="messageAndXCloseButtonFuroDialogRef"
+        <FuroDialog :ref="statusDialogContext.messageAndXCloseButtonFuroDialogRef"
           class="x-close"
           @show-dialog="statusDialogContext.onShowDialog()"
           @dismiss-dialog="statusDialogContext.onDismissDialog()"
@@ -302,26 +291,18 @@ export default defineComponent({
       <div class="unit-item">
         <h3>Dialog Status Callbacks</h3>
 
-        <button type="button"
-          @click="statusDialogContext.showDialog({
-            dialog: dialogStatusCallbackFuroDialogRef,
-          })"
-        >
+        <button @click="statusDialogContext.showDialogStatusCallbackDialog()">
           show
         </button>
 
-        <FuroDialog ref="dialogStatusCallbackFuroDialogRef"
+        <FuroDialog :ref="statusDialogContext.dialogStatusCallbackFuroDialogRef"
           @show-dialog="statusDialogContext.onShowDialog()"
           @dismiss-dialog="statusDialogContext.onDismissDialog()"
         >
           <template #contents>
             <div>Dialog Status Callbacks</div>
             <br>
-            <button type="button"
-              @click="statusDialogContext.dismissDialog({
-                dialog: dialogStatusCallbackFuroDialogRef,
-              })"
-            >
+            <button @click="statusDialogContext.dismissDialogStatusCallbackDialog()">
               Close
             </button>
           </template>
@@ -336,27 +317,17 @@ export default defineComponent({
           Close by clicked on Backdrop
         </h3>
 
-        <button type="button"
-          @click="statusDialogContext.showDialog({
-            dialog: closeByClickedOnBackdropFuroDialogRef,
-          })"
-        >
+        <button @click="statusDialogContext.showCloseByClickedOnBackdropDialog()">
           show
         </button>
 
-        <FuroDialog ref="closeByClickedOnBackdropFuroDialogRef"
-          @click-backdrop="statusDialogContext.clickOnBackdrop({
-            dialog: closeByClickedOnBackdropFuroDialogRef,
-          })"
+        <FuroDialog :ref="statusDialogContext.closeByClickedOnBackdropFuroDialogRef"
+          @click-backdrop="statusDialogContext.clickOnBackdrop()"
         >
           <template #contents>
             <div>Close by clicked on Backdrop</div>
             <br>
-            <button type="button"
-              @click="statusDialogContext.dismissDialog({
-                dialog: closeByClickedOnBackdropFuroDialogRef,
-              })"
-            >
+            <button @click="statusDialogContext.dismissCloseByClickedOnBackdropDialog()">
               Close
             </button>
           </template>
@@ -380,15 +351,11 @@ export default defineComponent({
       <div class="unit-item">
         <h3>Custom Design of &lt;FuroDialog&gt; [alpha]</h3>
 
-        <button type="button"
-          @click="designedDialogContext.showDialog({
-            dialog: customDesignedFuroDialogRef,
-          })"
-        >
+        <button @click="designedDialogContext.showCustomDesignedDialog()">
           show
         </button>
 
-        <FuroDialog ref="customDesignedFuroDialogRef"
+        <FuroDialog :ref="designedDialogContext.customDesignedFuroDialogRef"
           class="design alpha"
         >
           <template #contents>
@@ -396,11 +363,7 @@ export default defineComponent({
               Custom Design from &lt;FuroDialog&gt; [alpha]
             </div>
 
-            <button type="button"
-              @click="designedDialogContext.dismissDialog({
-                dialog: customDesignedFuroDialogRef,
-              })"
-            >
+            <button @click="designedDialogContext.dismissCustomDesignedDialog()">
               OK
             </button>
           </template>
@@ -413,25 +376,17 @@ export default defineComponent({
       <div class="unit-item">
         <h3>Default Design of &lt;AppDialog&gt;</h3>
 
-        <button type="button"
-          @click="designedDialogContext.showDialog({
-            dialog: defaultAppDialogRef,
-          })"
-        >
+        <button @click="designedDialogContext.showDefaultAppDialog()">
           show
         </button>
 
-        <AppDialog ref="defaultAppDialogRef">
+        <AppDialog :ref="designedDialogContext.defaultAppDialogRef">
           <template #contents>
             <div>
               Default Design of &lt;AppDialog&gt;
             </div>
 
-            <button type="button"
-              @click="designedDialogContext.dismissDialog({
-                dialog: defaultAppDialogRef,
-              })"
-            >
+            <button @click="designedDialogContext.dismissDefaultAppDialog()">
               OK
             </button>
           </template>
@@ -444,15 +399,11 @@ export default defineComponent({
       <div class="unit-item">
         <h3>Custom Design of &lt;AppDialog&gt;</h3>
 
-        <button type="button"
-          @click="designedDialogContext.showDialog({
-            dialog: customAppDialogRef,
-          })"
-        >
+        <button @click="designedDialogContext.showCustomAppDialog()">
           show
         </button>
 
-        <AppDialog ref="customAppDialogRef"
+        <AppDialog :ref="designedDialogContext.customAppDialogRef"
           class="design beta"
         >
           <template #contents>
@@ -460,11 +411,7 @@ export default defineComponent({
               Custom Design of &lt;AppDialog&gt;
             </div>
 
-            <button type="button"
-              @click="designedDialogContext.dismissDialog({
-                dialog: customAppDialogRef,
-              })"
-            >
+            <button @click="designedDialogContext.dismissCustomAppDialog()">
               OK
             </button>
           </template>
@@ -484,13 +431,11 @@ export default defineComponent({
       <div class="unit-item">
         <h3>&lt;form&gt; Dialog sample</h3>
 
-        <button type="button"
-          @click="formDialogContext.showDialog()"
-        >
+        <button @click="formDialogContext.showDialog()">
           show
         </button>
 
-        <FuroDialog ref="formDialogRef"
+        <FuroDialog :ref="formDialogContext.formDialogRef"
           class="x-close design unit-form"
         >
           <template #contents>
@@ -498,11 +443,9 @@ export default defineComponent({
               &lt;form&gt; Dialog
             </div>
 
-            <form ref="formElementRef"
+            <form :ref="formDialogContext.formElementRef"
               class="form"
-              @submit.prevent="formDialogContext.submitForm({
-                formElement: formElementRef,
-              })"
+              @submit.prevent="formDialogContext.submitForm()"
             >
               <input type="text"
                 class="input id"

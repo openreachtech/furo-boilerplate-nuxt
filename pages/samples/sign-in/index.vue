@@ -67,8 +67,6 @@ export default defineComponent({
 
     return {
       context,
-
-      formElementRef,
     }
   },
 })
@@ -80,7 +78,7 @@ export default defineComponent({
   <section class="unit-section">
     <h2>Sign In &lt;form&gt;</h2>
 
-    <form ref="formElementRef"
+    <form :ref="context.formElementRef"
       @submit.prevent="context.submitFormWithHooks()"
     >
       <span>Account</span>
