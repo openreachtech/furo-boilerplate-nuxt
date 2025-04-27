@@ -16,6 +16,10 @@ export default class ButtonDialogPageContext extends BaseFuroContext {
   constructor ({
     props,
     componentContext,
+
+    alertFuroButtonDialogRef,
+    confirmFuroButtonDialogRef,
+    ternaryConfirmFuroButtonDialogRef,
     feedbackMessageRef,
   }) {
     super({
@@ -23,6 +27,9 @@ export default class ButtonDialogPageContext extends BaseFuroContext {
       componentContext,
     })
 
+    this.alertFuroButtonDialogRef = alertFuroButtonDialogRef
+    this.confirmFuroButtonDialogRef = confirmFuroButtonDialogRef
+    this.ternaryConfirmFuroButtonDialogRef = ternaryConfirmFuroButtonDialogRef
     this.feedbackMessageRef = feedbackMessageRef
   }
 
@@ -38,12 +45,20 @@ export default class ButtonDialogPageContext extends BaseFuroContext {
   static create ({
     props,
     componentContext,
+
+    alertFuroButtonDialogRef,
+    confirmFuroButtonDialogRef,
+    ternaryConfirmFuroButtonDialogRef,
     feedbackMessageRef,
   }) {
     return /** @type {InstanceType<T>} */ (
       new this({
         props,
         componentContext,
+
+        alertFuroButtonDialogRef,
+        confirmFuroButtonDialogRef,
+        ternaryConfirmFuroButtonDialogRef,
         feedbackMessageRef,
       })
     )
@@ -60,6 +75,45 @@ export default class ButtonDialogPageContext extends BaseFuroContext {
     dialog,
   }) {
     dialog.showDialog()
+  }
+
+  /**
+   * Show Alert dialog.
+   */
+  showAlertDialog () {
+    if (!this.alertFuroButtonDialogRef.value) {
+      return
+    }
+
+    this.showDialog({
+      dialog: this.alertFuroButtonDialogRef.value,
+    })
+  }
+
+  /**
+   * Show Confirm dialog.
+   */
+  showConfirmDialog () {
+    if (!this.confirmFuroButtonDialogRef.value) {
+      return
+    }
+
+    this.showDialog({
+      dialog: this.confirmFuroButtonDialogRef.value,
+    })
+  }
+
+  /**
+   * Show Ternary Confirm dialog.
+   */
+  showTernaryConfirmDialog () {
+    if (!this.ternaryConfirmFuroButtonDialogRef.value) {
+      return
+    }
+
+    this.showDialog({
+      dialog: this.ternaryConfirmFuroButtonDialogRef.value,
+    })
   }
 
   /**
@@ -126,6 +180,9 @@ export default class ButtonDialogPageContext extends BaseFuroContext {
 
 /**
  * @typedef {import('@openreachtech/furo-nuxt/lib/contexts/BaseFuroContext.js').BaseFuroContextParams & {
+ *   alertFuroButtonDialogRef: import('vue').Ref<import('@openreachtech/furo-nuxt/lib/components/FuroDialog.vue').default | null>
+ *   confirmFuroButtonDialogRef: import('vue').Ref<import('@openreachtech/furo-nuxt/lib/components/FuroDialog.vue').default | null>
+ *   ternaryConfirmFuroButtonDialogRef: import('vue').Ref<import('@openreachtech/furo-nuxt/lib/components/FuroDialog.vue').default | null>
  *   feedbackMessageRef: import('vue').Ref<string | null>
  * }} ButtonDialogPageContextParams
  */
