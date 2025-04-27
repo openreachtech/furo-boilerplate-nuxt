@@ -31,8 +31,6 @@ export default defineComponent({
 
     return {
       context,
-
-      formElementRef,
     }
   },
 })
@@ -42,7 +40,7 @@ export default defineComponent({
   <h1>&lt;form&gt; Controls Inspector</h1>
 
   <div class="unit-layout">
-    <form ref="formElementRef"
+    <form :ref="context.formElementRef"
       class="unit-form"
       @submit.prevent="context.submitForm()"
     >
