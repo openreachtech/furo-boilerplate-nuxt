@@ -431,13 +431,11 @@ export default defineComponent({
       <div class="unit-item">
         <h3>&lt;form&gt; Dialog sample</h3>
 
-        <button type="button"
-          @click="formDialogContext.showDialog()"
-        >
+        <button @click="formDialogContext.showDialog()">
           show
         </button>
 
-        <FuroDialog ref="formDialogRef"
+        <FuroDialog :ref="formDialogContext.formDialogRef"
           class="x-close design unit-form"
         >
           <template #contents>
@@ -445,11 +443,9 @@ export default defineComponent({
               &lt;form&gt; Dialog
             </div>
 
-            <form ref="formElementRef"
+            <form :ref="formDialogContext.formElementRef"
               class="form"
-              @submit.prevent="formDialogContext.submitForm({
-                formElement: formElementRef,
-              })"
+              @submit.prevent="formDialogContext.submitForm()"
             >
               <input type="text"
                 class="input id"
