@@ -41,14 +41,14 @@ export default defineComponent({
     )
 
     return {
-      dialogComponentRef,
+      context,
     }
   },
 })
 </script>
 
 <template>
-  <FuroDialog ref="dialogComponentRef"
+  <FuroDialog :ref="context.dialogComponentRef"
     class="design"
     v-bind="$attrs"
   >
