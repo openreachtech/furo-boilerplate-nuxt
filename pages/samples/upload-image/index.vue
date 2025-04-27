@@ -115,7 +115,6 @@ export default defineComponent({
       deepPropertyImagesContext,
       statusReactive,
 
-      singleImageFormElementRef,
       arrayImagesFormElementRef,
       deepPropertyImagesFormElementRef,
     }
@@ -134,7 +133,7 @@ export default defineComponent({
     </h2>
 
     <div class="content">
-      <form ref="singleImageFormElementRef"
+      <form :ref="singleImageContext.formElementRef"
         class="unit-form"
         @submit.prevent="singleImageContext.submitFormWithHooks()"
       >
