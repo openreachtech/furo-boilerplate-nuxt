@@ -63,7 +63,6 @@ export default defineComponent({
       invokeRequestWithFormValueHash: sendChatMessagesGraphqlClient.invokeRequestWithFormValueHash,
     })
 
-    const createChatRoomFormRef = shallowRef(null)
     const sendChatMessageFormRef = shallowRef(null)
 
     const args = {
@@ -112,7 +111,6 @@ export default defineComponent({
       context,
       chatStatesContext,
 
-      createChatRoomFormRef,
       sendChatMessageFormRef,
     }
   },
