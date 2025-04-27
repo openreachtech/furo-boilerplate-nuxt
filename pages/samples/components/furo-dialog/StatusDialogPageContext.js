@@ -16,6 +16,10 @@ export default class StatusDialogPageContext extends BaseFuroContext {
   constructor ({
     props,
     componentContext,
+
+    messageAndXCloseButtonFuroDialogRef,
+    dialogStatusCallbackFuroDialogRef,
+    closeByClickedOnBackdropFuroDialogRef,
     statusMessageRef,
   }) {
     super({
@@ -23,6 +27,9 @@ export default class StatusDialogPageContext extends BaseFuroContext {
       componentContext,
     })
 
+    this.messageAndXCloseButtonFuroDialogRef = messageAndXCloseButtonFuroDialogRef
+    this.dialogStatusCallbackFuroDialogRef = dialogStatusCallbackFuroDialogRef
+    this.closeByClickedOnBackdropFuroDialogRef = closeByClickedOnBackdropFuroDialogRef
     this.statusMessageRef = statusMessageRef
   }
 
@@ -38,12 +45,20 @@ export default class StatusDialogPageContext extends BaseFuroContext {
   static create ({
     props,
     componentContext,
+
+    messageAndXCloseButtonFuroDialogRef,
+    dialogStatusCallbackFuroDialogRef,
+    closeByClickedOnBackdropFuroDialogRef,
     statusMessageRef,
   }) {
     return /** @type {InstanceType<T>} */ (
       new this({
         props,
         componentContext,
+
+        messageAndXCloseButtonFuroDialogRef,
+        dialogStatusCallbackFuroDialogRef,
+        closeByClickedOnBackdropFuroDialogRef,
         statusMessageRef,
       })
     )
@@ -63,6 +78,45 @@ export default class StatusDialogPageContext extends BaseFuroContext {
   }
 
   /**
+   * Show message and X-close button dialog.
+   */
+  showMessageAndXCloseButtonDialog () {
+    if (!this.messageAndXCloseButtonFuroDialogRef.value) {
+      return
+    }
+
+    this.showDialog({
+      dialog: this.messageAndXCloseButtonFuroDialogRef.value,
+    })
+  }
+
+  /**
+   * Show dialog with status callback dialog.
+   */
+  showDialogStatusCallbackDialog () {
+    if (!this.dialogStatusCallbackFuroDialogRef.value) {
+      return
+    }
+
+    this.showDialog({
+      dialog: this.dialogStatusCallbackFuroDialogRef.value,
+    })
+  }
+
+  /**
+   * Show dialog with close by clicked on backdrop dialog.
+   */
+  showCloseByClickedOnBackdropDialog () {
+    if (!this.closeByClickedOnBackdropFuroDialogRef.value) {
+      return
+    }
+
+    this.showDialog({
+      dialog: this.closeByClickedOnBackdropFuroDialogRef.value,
+    })
+  }
+
+  /**
    * Dismiss dialog.
    *
    * @param {{
@@ -76,6 +130,32 @@ export default class StatusDialogPageContext extends BaseFuroContext {
   }
 
   /**
+   * Dismiss dialog with status callback dialog.
+   */
+  dismissDialogStatusCallbackDialog () {
+    if (!this.dialogStatusCallbackFuroDialogRef.value) {
+      return
+    }
+
+    this.dismissDialog({
+      dialog: this.dialogStatusCallbackFuroDialogRef.value,
+    })
+  }
+
+  /**
+   * Dismiss dialog with close by clicked on backdrop dialog.
+   */
+  dismissCloseByClickedOnBackdropDialog () {
+    if (!this.closeByClickedOnBackdropFuroDialogRef.value) {
+      return
+    }
+
+    this.dismissDialog({
+      dialog: this.closeByClickedOnBackdropFuroDialogRef.value,
+    })
+  }
+
+  /**
    * get: statusMessage.
    *
    * @type {string | null}
@@ -86,17 +166,17 @@ export default class StatusDialogPageContext extends BaseFuroContext {
 
   /**
    * Click on backdrop.
-   *
-   * @param {{
-   *   dialog: import('@openreachtech/furo-nuxt/lib/components/FuroDialog.vue').default
-   * }} params - Parameters of this method.
    */
-  clickOnBackdrop ({
-    dialog,
-  }) {
+  clickOnBackdrop () {
     this.statusMessageRef.value = 'Clicked on backdrop'
 
-    dialog.dismissDialog()
+    if (!this.closeByClickedOnBackdropFuroDialogRef.value) {
+      return
+    }
+
+    this.dismissDialog({
+      dialog: this.closeByClickedOnBackdropFuroDialogRef.value,
+    })
   }
 
   /**
@@ -116,6 +196,9 @@ export default class StatusDialogPageContext extends BaseFuroContext {
 
 /**
  * @typedef {import('@openreachtech/furo-nuxt/lib/contexts/BaseFuroContext.js').BaseFuroContextParams & {
+ *   messageAndXCloseButtonFuroDialogRef: import('vue').Ref<import('@openreachtech/furo-nuxt/lib/components/FuroDialog.vue').default | null>
+ *   dialogStatusCallbackFuroDialogRef: import('vue').Ref<import('@openreachtech/furo-nuxt/lib/components/FuroDialog.vue').default | null>
+ *   closeByClickedOnBackdropFuroDialogRef: import('vue').Ref<import('@openreachtech/furo-nuxt/lib/components/FuroDialog.vue').default | null>
  *   statusMessageRef: import('vue').Ref<string | null>
  * }} StatusDialogPageContextParams
  */

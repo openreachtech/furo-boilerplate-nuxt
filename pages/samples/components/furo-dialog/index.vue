@@ -81,6 +81,10 @@ export default defineComponent({
       props,
       componentContext,
       statusMessageRef,
+
+      messageAndXCloseButtonFuroDialogRef,
+      dialogStatusCallbackFuroDialogRef,
+      closeByClickedOnBackdropFuroDialogRef,
     }
     const statusDialogContext = StatusDialogPageContext.create(args)
       .setupComponent()
@@ -262,15 +266,11 @@ export default defineComponent({
           Message with ⊗<br>(x-close button)
         </h3>
 
-        <button type="button"
-          @click="statusDialogContext.showDialog({
-            dialog: messageAndXCloseButtonFuroDialogRef,
-          })"
-        >
+        <button @click="statusDialogContext.showMessageAndXCloseButtonDialog()">
           show
         </button>
 
-        <FuroDialog ref="messageAndXCloseButtonFuroDialogRef"
+        <FuroDialog :ref="statusDialogContext.messageAndXCloseButtonFuroDialogRef"
           class="x-close"
           @show-dialog="statusDialogContext.onShowDialog()"
           @dismiss-dialog="statusDialogContext.onDismissDialog()"
@@ -287,26 +287,18 @@ export default defineComponent({
       <div class="unit-item">
         <h3>Dialog Status Callbacks</h3>
 
-        <button type="button"
-          @click="statusDialogContext.showDialog({
-            dialog: dialogStatusCallbackFuroDialogRef,
-          })"
-        >
+        <button @click="statusDialogContext.showDialogStatusCallbackDialog()">
           show
         </button>
 
-        <FuroDialog ref="dialogStatusCallbackFuroDialogRef"
+        <FuroDialog :ref="statusDialogContext.dialogStatusCallbackFuroDialogRef"
           @show-dialog="statusDialogContext.onShowDialog()"
           @dismiss-dialog="statusDialogContext.onDismissDialog()"
         >
           <template #contents>
             <div>Dialog Status Callbacks</div>
             <br>
-            <button type="button"
-              @click="statusDialogContext.dismissDialog({
-                dialog: dialogStatusCallbackFuroDialogRef,
-              })"
-            >
+            <button @click="statusDialogContext.dismissDialogStatusCallbackDialog()">
               Close
             </button>
           </template>
@@ -321,27 +313,17 @@ export default defineComponent({
           Close by clicked on Backdrop
         </h3>
 
-        <button type="button"
-          @click="statusDialogContext.showDialog({
-            dialog: closeByClickedOnBackdropFuroDialogRef,
-          })"
-        >
+        <button @click="statusDialogContext.showCloseByClickedOnBackdropDialog()">
           show
         </button>
 
-        <FuroDialog ref="closeByClickedOnBackdropFuroDialogRef"
-          @click-backdrop="statusDialogContext.clickOnBackdrop({
-            dialog: closeByClickedOnBackdropFuroDialogRef,
-          })"
+        <FuroDialog :ref="statusDialogContext.closeByClickedOnBackdropFuroDialogRef"
+          @click-backdrop="statusDialogContext.clickOnBackdrop()"
         >
           <template #contents>
             <div>Close by clicked on Backdrop</div>
             <br>
-            <button type="button"
-              @click="statusDialogContext.dismissDialog({
-                dialog: closeByClickedOnBackdropFuroDialogRef,
-              })"
-            >
+            <button @click="statusDialogContext.dismissCloseByClickedOnBackdropDialog()">
               Close
             </button>
           </template>
