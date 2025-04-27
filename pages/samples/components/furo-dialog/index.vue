@@ -103,6 +103,10 @@ export default defineComponent({
     const designedDialogArgs = {
       props,
       componentContext,
+
+      customDesignedFuroDialogRef,
+      defaultAppDialogRef,
+      customAppDialogRef,
     }
     const designedDialogContext = DesignDialogPageContext.create(designedDialogArgs)
       .setupComponent()
@@ -347,15 +351,11 @@ export default defineComponent({
       <div class="unit-item">
         <h3>Custom Design of &lt;FuroDialog&gt; [alpha]</h3>
 
-        <button type="button"
-          @click="designedDialogContext.showDialog({
-            dialog: customDesignedFuroDialogRef,
-          })"
-        >
+        <button @click="designedDialogContext.showCustomDesignedDialog()">
           show
         </button>
 
-        <FuroDialog ref="customDesignedFuroDialogRef"
+        <FuroDialog :ref="designedDialogContext.customDesignedFuroDialogRef"
           class="design alpha"
         >
           <template #contents>
@@ -363,11 +363,7 @@ export default defineComponent({
               Custom Design from &lt;FuroDialog&gt; [alpha]
             </div>
 
-            <button type="button"
-              @click="designedDialogContext.dismissDialog({
-                dialog: customDesignedFuroDialogRef,
-              })"
-            >
+            <button @click="designedDialogContext.dismissCustomDesignedDialog()">
               OK
             </button>
           </template>
@@ -380,25 +376,17 @@ export default defineComponent({
       <div class="unit-item">
         <h3>Default Design of &lt;AppDialog&gt;</h3>
 
-        <button type="button"
-          @click="designedDialogContext.showDialog({
-            dialog: defaultAppDialogRef,
-          })"
-        >
+        <button @click="designedDialogContext.showDefaultAppDialog()">
           show
         </button>
 
-        <AppDialog ref="defaultAppDialogRef">
+        <AppDialog :ref="designedDialogContext.defaultAppDialogRef">
           <template #contents>
             <div>
               Default Design of &lt;AppDialog&gt;
             </div>
 
-            <button type="button"
-              @click="designedDialogContext.dismissDialog({
-                dialog: defaultAppDialogRef,
-              })"
-            >
+            <button @click="designedDialogContext.dismissDefaultAppDialog()">
               OK
             </button>
           </template>
@@ -411,15 +399,11 @@ export default defineComponent({
       <div class="unit-item">
         <h3>Custom Design of &lt;AppDialog&gt;</h3>
 
-        <button type="button"
-          @click="designedDialogContext.showDialog({
-            dialog: customAppDialogRef,
-          })"
-        >
+        <button @click="designedDialogContext.showCustomAppDialog()">
           show
         </button>
 
-        <AppDialog ref="customAppDialogRef"
+        <AppDialog :ref="designedDialogContext.customAppDialogRef"
           class="design beta"
         >
           <template #contents>
@@ -427,11 +411,7 @@ export default defineComponent({
               Custom Design of &lt;AppDialog&gt;
             </div>
 
-            <button type="button"
-              @click="designedDialogContext.dismissDialog({
-                dialog: customAppDialogRef,
-              })"
-            >
+            <button @click="designedDialogContext.dismissCustomAppDialog()">
               OK
             </button>
           </template>
