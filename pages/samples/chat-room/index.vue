@@ -2,7 +2,6 @@
 import {
   defineComponent,
   ref,
-  shallowRef,
 } from 'vue'
 
 import {
@@ -63,8 +62,6 @@ export default defineComponent({
       invokeRequestWithFormValueHash: sendChatMessagesGraphqlClient.invokeRequestWithFormValueHash,
     })
 
-    const sendChatMessageFormRef = shallowRef(null)
-
     const args = {
       props,
       componentContext,
@@ -110,8 +107,6 @@ export default defineComponent({
     return {
       context,
       chatStatesContext,
-
-      sendChatMessageFormRef,
     }
   },
 })
@@ -143,8 +138,7 @@ export default defineComponent({
         </div>
       </div>
 
-      <form ref="sendChatMessageFormRef"
-        class="unit-form"
+      <form class="unit-form"
         style="
           width: 100%;
           max-width: 30rem;
@@ -157,7 +151,7 @@ export default defineComponent({
           justify-content: center;
         "
         @submit.prevent="context.submitFormToSendChatMessage({
-          formElement: sendChatMessageFormRef,
+          formElement: /** @type {HTMLFormElement} */ ($event.target),
         })"
       >
         <input type="text"
