@@ -89,12 +89,16 @@ export default class FormDialogPageContext extends BaseFuroContext {
    * Submit form.
    *
    * @param {{
-   *   formElement: HTMLFormElement
-   * }} params - Parameters.
+   *   formElement?: HTMLFormElement | null
+   * }} [params] - Parameters.
    */
   submitForm ({
-    formElement,
-  }) {
+    formElement = this.formElementRef.value,
+  } = {}) {
+    if (!formElement) {
+      return
+    }
+
     const value = formElement
       ? Object.fromEntries(
         new FormData(formElement) // eslint-disable-line
