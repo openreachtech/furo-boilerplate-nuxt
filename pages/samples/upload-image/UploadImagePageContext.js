@@ -20,6 +20,7 @@ export default class UploadImagePageContext extends BaseFuroContext {
 
     statusReactive,
     formElementRef,
+    uploadProgressSizeRef,
 
     graphqlClient,
     formClerk,
@@ -31,6 +32,7 @@ export default class UploadImagePageContext extends BaseFuroContext {
 
     this.statusReactive = statusReactive
     this.formElementRef = formElementRef
+    this.uploadProgressSizeRef = uploadProgressSizeRef
 
     this.graphqlClient = graphqlClient
     this.formClerk = formClerk
@@ -51,6 +53,7 @@ export default class UploadImagePageContext extends BaseFuroContext {
 
     statusReactive,
     formElementRef,
+    uploadProgressSizeRef,
 
     graphqlClient,
     formClerk,
@@ -62,6 +65,7 @@ export default class UploadImagePageContext extends BaseFuroContext {
 
         statusReactive,
         formElementRef,
+        uploadProgressSizeRef,
 
         graphqlClient,
         formClerk,
@@ -69,7 +73,13 @@ export default class UploadImagePageContext extends BaseFuroContext {
     )
   }
 
-  /** @override */
+  /**
+   * Setup component context.
+   *
+   * @template {X extends UploadImagePageContext ? X : never} T, X
+   * @override
+   * @this {T}
+   */
   setupComponent () {
     return this
   }
@@ -102,10 +112,33 @@ export default class UploadImagePageContext extends BaseFuroContext {
       beforeRequest: async payload => {
         this.statusReactive.isLoading = true
 
+        this.uploadProgressSizeRef.value = {
+          contentSize: 0,
+          uploadedSize: 0,
+        }
+
         return false
       },
       afterRequest: async capsule => {
-        this.statusReactive.isLoading = false
+        setTimeout(
+          () => {
+            this.statusReactive.isLoading = false
+          },
+          250
+        )
+      },
+      onUploadProgress: ({
+        request,
+        progressEvent,
+      }) => {
+        if (!progressEvent.lengthComputable) {
+          return
+        }
+
+        this.uploadProgressSizeRef.value = {
+          contentSize: progressEvent.total,
+          uploadedSize: progressEvent.loaded,
+        }
       },
     }
   }
@@ -134,6 +167,10 @@ export default class UploadImagePageContext extends BaseFuroContext {
  * @typedef {import('@openreachtech/furo-nuxt/lib/contexts/BaseFuroContext.js').BaseFuroContextParams & {
  *   statusReactive: import('vue').Reactive<UploadImageStatusReactive>
  *   formElementRef: import('vue').Ref<HTMLFormElement | null>
+ *   uploadProgressSizeRef: import('vue').Ref<{
+ *     contentSize: number
+ *     uploadedSize: number
+ *   }>
  *   graphqlClient: FuroGraphqlClient
  *   formClerk: FormClerkType
  * }} UploadImagePageContextParams
