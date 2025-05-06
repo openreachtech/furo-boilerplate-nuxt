@@ -33,6 +33,11 @@ export default defineComponent({
       isLoading: false,
     })
 
+    const uploadProgressSizeRef = ref({
+      contentSize: 0,
+      uploadedSize: 0,
+    })
+
     // ------------------------------------------------------------------------
 
     const hydratingContext = HydratingContext.create({
@@ -40,6 +45,7 @@ export default defineComponent({
       componentContext,
 
       statusReactive,
+      uploadProgressSizeRef,
     })
       .setupComponent()
 
@@ -63,6 +69,7 @@ export default defineComponent({
 
       statusReactive,
       formElementRef: singleImageFormElementRef,
+      uploadProgressSizeRef,
 
       graphqlClient: singleImageGraphqlClient,
       formClerk: singleImageFormClerk,
@@ -88,6 +95,7 @@ export default defineComponent({
 
       statusReactive,
       formElementRef: arrayImagesFormElementRef,
+      uploadProgressSizeRef,
 
       graphqlClient: arrayImagesGraphqlClient,
       formClerk: arrayImagesFormClerk,
@@ -113,6 +121,7 @@ export default defineComponent({
 
       statusReactive,
       formElementRef: deepPropertyImagesFormElementRef,
+      uploadProgressSizeRef,
 
       graphqlClient: deepPropertyImagesGraphqlClient,
       formClerk: deepPropertyImagesFormClerk,
@@ -360,7 +369,12 @@ export default defineComponent({
   <div v-if="hydratingContext.isLoading"
     class="unit-loading"
   >
-    Loading ...
+    <div>Loading ...</div>
+
+    <progress class="progress"
+      :max="hydratingContext.progressContentSize"
+      :value="hydratingContext.progressUploadedSize"
+    />
   </div>
 </template>
 
@@ -431,5 +445,11 @@ export default defineComponent({
   font-size: 3rem;
 
   z-index: calc(var(--value-z-index-layer-overlay) + 0);
+}
+
+.unit-loading .progress {
+  margin-inline-start: 1rem;
+
+  max-width: 20rem;
 }
 </style>
