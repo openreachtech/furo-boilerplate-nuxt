@@ -33,6 +33,11 @@ export default defineComponent({
       isLoading: false,
     })
 
+    const uploadProgressSizeRef = ref({
+      contentSize: 0,
+      uploadedSize: 0,
+    })
+
     // ------------------------------------------------------------------------
 
     const hydratingContext = HydratingContext.create({
