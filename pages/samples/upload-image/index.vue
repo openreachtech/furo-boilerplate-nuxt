@@ -45,6 +45,7 @@ export default defineComponent({
       componentContext,
 
       statusReactive,
+      uploadProgressSizeRef,
     })
       .setupComponent()
 
@@ -368,8 +369,8 @@ export default defineComponent({
     <div>Loading ...</div>
 
     <progress class="progress"
-      :max="1000000"
-      :value="250000"
+      :max="hydratingContext.progressContentSize"
+      :value="hydratingContext.progressUploadedSize"
     />
   </div>
 </template>

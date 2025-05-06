@@ -19,6 +19,7 @@ export default class HydratingContext extends BaseFuroContext {
     componentContext,
 
     statusReactive,
+    uploadProgressSizeRef,
   }) {
     super({
       props,
@@ -26,6 +27,7 @@ export default class HydratingContext extends BaseFuroContext {
     })
 
     this.statusReactive = statusReactive
+    this.uploadProgressSizeRef = uploadProgressSizeRef
   }
 
   /**
@@ -42,6 +44,7 @@ export default class HydratingContext extends BaseFuroContext {
     componentContext,
 
     statusReactive,
+    uploadProgressSizeRef,
   }) {
     return /** @type {InstanceType<T>} */ (
       new this({
@@ -49,6 +52,7 @@ export default class HydratingContext extends BaseFuroContext {
         componentContext,
 
         statusReactive,
+        uploadProgressSizeRef,
       })
     )
   }
@@ -72,11 +76,35 @@ export default class HydratingContext extends BaseFuroContext {
   get isLoading () {
     return this.statusReactive.isLoading
   }
+
+  /**
+   * get: Progress content size.
+   *
+   * @returns {number}
+   */
+  get progressContentSize () {
+    return this.uploadProgressSizeRef.value
+      .contentSize
+  }
+
+  /**
+   * get: Progress uploaded size.
+   *
+   * @returns {number}
+   */
+  get progressUploadedSize () {
+    return this.uploadProgressSizeRef.value
+      .uploadedSize
+  }
 }
 
 /**
  * @typedef {import('@openreachtech/furo-nuxt/lib/contexts/BaseFuroContext').BaseFuroContextParams<> & {
  *   statusReactive: import('vue').Reactive<UploadImageStatusReactive>
+ *   uploadProgressSizeRef: import('vue').Ref<{
+ *     contentSize: number
+ *     uploadedSize: number
+ *   }>
  * }} HydratingContextParams
  */
 
