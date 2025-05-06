@@ -69,6 +69,7 @@ export default defineComponent({
 
       statusReactive,
       formElementRef: singleImageFormElementRef,
+      uploadProgressSizeRef,
 
       graphqlClient: singleImageGraphqlClient,
       formClerk: singleImageFormClerk,
@@ -94,6 +95,7 @@ export default defineComponent({
 
       statusReactive,
       formElementRef: arrayImagesFormElementRef,
+      uploadProgressSizeRef,
 
       graphqlClient: arrayImagesGraphqlClient,
       formClerk: arrayImagesFormClerk,
