@@ -121,6 +121,7 @@ export default defineComponent({
 
       statusReactive,
       formElementRef: deepPropertyImagesFormElementRef,
+      uploadProgressSizeRef,
 
       graphqlClient: deepPropertyImagesGraphqlClient,
       formClerk: deepPropertyImagesFormClerk,
