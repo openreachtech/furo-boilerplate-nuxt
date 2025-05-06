@@ -73,7 +73,13 @@ export default class UploadDeepPropertyImagesPageContext extends BaseFuroContext
     )
   }
 
-  /** @override */
+  /**
+   * Setup component context.
+   *
+   * @template {X extends UploadDeepPropertyImagesPageContext ? X : never} T, X
+   * @override
+   * @this {T}
+   */
   setupComponent () {
     return this
   }
