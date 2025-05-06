@@ -56,7 +56,13 @@ export default class CurriculumsPageContext extends BaseFuroContext {
     )
   }
 
-  /** @override */
+  /**
+   * Setup component context.
+   *
+   * @template {X extends CurriculumsPageContext ? X : never} T, X
+   * @override
+   * @this {T}
+   */
   setupComponent () {
     this.graphqlClient
       .invokeRequestOnMounted({
