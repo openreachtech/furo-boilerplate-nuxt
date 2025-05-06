@@ -360,7 +360,12 @@ export default defineComponent({
   <div v-if="hydratingContext.isLoading"
     class="unit-loading"
   >
-    Loading ...
+    <div>Loading ...</div>
+
+    <progress class="progress"
+      :max="1000000"
+      :value="250000"
+    />
   </div>
 </template>
 
@@ -431,5 +436,11 @@ export default defineComponent({
   font-size: 3rem;
 
   z-index: calc(var(--value-z-index-layer-overlay) + 0);
+}
+
+.unit-loading .progress {
+  margin-inline-start: 1rem;
+
+  max-width: 20rem;
 }
 </style>
