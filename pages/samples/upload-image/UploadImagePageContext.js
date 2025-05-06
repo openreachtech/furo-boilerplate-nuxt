@@ -114,7 +114,12 @@ export default class UploadImagePageContext extends BaseFuroContext {
         return false
       },
       afterRequest: async capsule => {
-        this.statusReactive.isLoading = false
+        setTimeout(
+          () => {
+            this.statusReactive.isLoading = false
+          },
+          250
+        )
       },
       onUploadProgress: ({
         request,
