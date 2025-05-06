@@ -49,7 +49,13 @@ export default class PaginationArticlesPageContext extends BaseFuroContext {
     )
   }
 
-  /** @override */
+  /**
+   * Setup component context.
+   *
+   * @template {X extends PaginationArticlesPageContext ? X : never} T, X
+   * @override
+   * @this {T}
+   */
   setupComponent () {
     this.graphqlClient
       .invokeRequestOnMounted({
