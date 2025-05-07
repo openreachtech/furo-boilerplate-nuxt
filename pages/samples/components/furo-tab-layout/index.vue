@@ -71,7 +71,8 @@ export default defineComponent({
     <section class="unit-section">
       <h3>&lt;FuroTabLayout&gt; with default design</h3>
 
-      <FuroTabLayout :tabs="context.tabs"
+      <FuroTabLayout
+        :tabs="context.tabs"
         :active-tab-key="context.tabs[0].tabKey"
       >
         <template #contents>
@@ -96,7 +97,8 @@ export default defineComponent({
     <section class="unit-section">
       <h3>&lt;FuroTabLayout&gt; with change tab event</h3>
 
-      <FuroTabLayout :tabs="context.tabs"
+      <FuroTabLayout
+        :tabs="context.tabs"
         :active-tab-key="context.tabs[0].tabKey"
         @change-tab="context.changeTab($event)"
       >
@@ -128,7 +130,8 @@ export default defineComponent({
     <section class="unit-section">
       <h3>&lt;FuroTabLayout&gt; with customized .design.alpha</h3>
 
-      <FuroTabLayout :tabs="context.tabs"
+      <FuroTabLayout
+        :tabs="context.tabs"
         :active-tab-key="context.tabs[0].tabKey"
         class="design alpha"
       >
@@ -159,7 +162,8 @@ export default defineComponent({
     <section class="unit-section">
       <h3>&lt;AppTabLayout&gt; with default design</h3>
 
-      <AppTabLayout :tabs="context.tabs"
+      <AppTabLayout
+        :tabs="context.tabs"
         :active-tab-key="context.tabs[0].tabKey"
       >
         <template #contents>
@@ -184,7 +188,8 @@ export default defineComponent({
     <section class="unit-section">
       <h3>&lt;AppTabLayout&gt; with customized .design.beta</h3>
 
-      <AppTabLayout :tabs="context.tabs"
+      <AppTabLayout
+        :tabs="context.tabs"
         :active-tab-key="context.tabs[0].tabKey"
         class="design beta"
       >

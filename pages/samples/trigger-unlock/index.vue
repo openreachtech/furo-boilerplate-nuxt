@@ -52,7 +52,8 @@ export default defineComponent({
       </label>
       <br>
 
-      <button class="-aim-unlock button usual"
+      <button
+        class="-aim-unlock button usual"
         type="submit"
         onclick="alert('Submit!')"
       >
@@ -63,14 +64,16 @@ export default defineComponent({
     <section class="unit-section">
       <h3>one trigger - one aim &lt;label for&gt;&lt;input id&gt;</h3>
 
-      <input id="labeled-input"
+      <input
+        id="labeled-input"
         class="-trigger-unlock-checkbox"
         type="checkbox"
       >
       <label for="labeled-input">I agree it</label>
       <br>
 
-      <button class="-aim-unlock button usual"
+      <button
+        class="-aim-unlock button usual"
         type="submit"
         onclick="alert('Submit!')"
       >
@@ -92,7 +95,8 @@ export default defineComponent({
       </label>
       <br>
 
-      <button class="-aim-unlock button usual"
+      <button
+        class="-aim-unlock button usual"
         type="submit"
         onclick="alert('Submit!')"
       >
@@ -115,7 +119,8 @@ export default defineComponent({
         </label>
       </fieldset>
 
-      <button class="-aim-unlock button usual"
+      <button
+        class="-aim-unlock button usual"
         type="submit"
         onclick="alert('Submit!')"
       >
@@ -129,28 +134,32 @@ export default defineComponent({
       <h3>one radio set - one aim (Open Type)</h3>
 
       <label class="-trigger-unlock-radio">
-        <input type="radio"
+        <input
+          type="radio"
           name="radio-group-first"
         >
         <span>Alpha</span>
       </label>
       <br>
       <label class="-trigger-unlock-radio">
-        <input type="radio"
+        <input
+          type="radio"
           name="radio-group-first"
         >
         <span>Beta</span>
       </label>
       <br>
       <label class="-trigger-unlock-radio">
-        <input type="radio"
+        <input
+          type="radio"
           name="radio-group-first"
         >
         <span>Gamma</span>
       </label>
       <br>
 
-      <button class="-aim-unlock button usual"
+      <button
+        class="-aim-unlock button usual"
         type="submit"
         onclick="alert('Submit!')"
       >
@@ -163,28 +172,32 @@ export default defineComponent({
 
       <fieldset class="-trigger-unlock-radio">
         <label>
-          <input type="radio"
+          <input
+            type="radio"
             name="radio-group-second"
           >
           <span>Alpha</span>
         </label>
         <br>
         <label>
-          <input type="radio"
+          <input
+            type="radio"
             name="radio-group-second"
           >
           <span>Beta</span>
         </label>
         <br>
         <label>
-          <input type="radio"
+          <input
+            type="radio"
             name="radio-group-second"
           >
           <span>Gamma</span>
         </label>
       </fieldset>
 
-      <button class="-aim-unlock button usual"
+      <button
+        class="-aim-unlock button usual"
         type="submit"
         onclick="alert('Submit!')"
       >

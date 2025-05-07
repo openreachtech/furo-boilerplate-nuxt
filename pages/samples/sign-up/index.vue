@@ -69,13 +69,15 @@ export default defineComponent({
   <h1>Sign Up Sample</h1>
 
   <section class="unit-section">
-    <form :ref="context.formElementRef"
+    <form
+      :ref="context.formElementRef"
       class="unit-form"
       @submit.prevent="context.submitFormWithHooks()"
     >
       <label class="control">
         <span>メールアドレス</span>
-        <input name="email"
+        <input
+          name="email"
           type="text"
           placeholder="メールアドレスを入力してください。"
           value="stew.eucen@openreach.tech"
@@ -85,7 +87,8 @@ export default defineComponent({
 
       <label class="control">
         <span>ユーザ名</span>
-        <input name="username"
+        <input
+          name="username"
           type="text"
           placeholder="ユーザ名を入力してください。"
           value="John Doe"
@@ -95,7 +98,8 @@ export default defineComponent({
 
       <label class="control">
         <span>First Name</span>
-        <input name="firstName"
+        <input
+          name="firstName"
           type="text"
           placeholder="Please enter your first name."
           value="Eucen"
@@ -105,7 +109,8 @@ export default defineComponent({
 
       <label class="control">
         <span>First Name</span>
-        <input name="lastName"
+        <input
+          name="lastName"
           type="text"
           placeholder="Please enter your last name."
           value="Stew"
@@ -115,7 +120,8 @@ export default defineComponent({
 
       <label class="control">
         <span>パスワード</span>
-        <input name="password"
+        <input
+          name="password"
           type="password"
           placeholder="パスワードを入力してください。"
         >
@@ -124,7 +130,8 @@ export default defineComponent({
 
       <label class="control">
         <span>パスワード (確認用)</span>
-        <input name="password-confirmation"
+        <input
+          name="password-confirmation"
           type="password"
           placeholder="パスワードを入力してください。"
         >
@@ -132,13 +139,15 @@ export default defineComponent({
       </label>
 
       <label class="column">
-        <input v-model="context.statusReactive.allowsToSubmit"
+        <input
+          v-model="context.statusReactive.allowsToSubmit"
           type="checkbox"
         >
         <span>利用規約に同意する</span>
       </label>
 
-      <button type="submit"
+      <button
+        type="submit"
         :disabled="!context.statusReactive.allowsToSubmit"
       >
         新規登録
@@ -166,7 +175,8 @@ export default defineComponent({
     }}</pre>
   </section>
 
-  <div v-if="context.statusReactive.isLoading"
+  <div
+    v-if="context.statusReactive.isLoading"
     class="unit-loading"
   >
     Loading ...

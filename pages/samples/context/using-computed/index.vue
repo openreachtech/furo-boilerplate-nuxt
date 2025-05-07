@@ -46,7 +46,8 @@ export default defineComponent({
     <h1>Using computed</h1>
 
     <section class="unit-section">
-      <input v-model="context.messageRef.value"
+      <input
+        v-model="context.messageRef.value"
         class="textfield"
         type="text"
         placeholder="Input message here"
@@ -67,7 +68,8 @@ export default defineComponent({
         </dd>
       </dl>
 
-      <button class="button"
+      <button
+        class="button"
         @click="context.updateMessage({
           message: 'Updated message',
         })"

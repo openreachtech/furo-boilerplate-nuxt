@@ -29,7 +29,8 @@ export default {
     </template>
 
     <template #toggle-menu>
-      <img class="toggle-navigation-image"
+      <img
+        class="toggle-navigation-image"
         src="/assets/img/samples/hanburger-menu.png"
         alt="Logo"
       >
