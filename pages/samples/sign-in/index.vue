@@ -78,11 +78,13 @@ export default defineComponent({
   <section class="unit-section">
     <h2>Sign In &lt;form&gt;</h2>
 
-    <form :ref="context.formElementRef"
+    <form
+      :ref="context.formElementRef"
       @submit.prevent="context.submitFormWithHooks()"
     >
       <span>Account</span>
-      <input name="email"
+      <input
+        name="email"
         type="email"
         placeholder="Please input email address here."
         value="customer.100001@example.com"
@@ -97,7 +99,8 @@ export default defineComponent({
       </div>
 
       <span>Password</span>
-      <input name="password"
+      <input
+        name="password"
         type="password"
         placeholder="Please input password here."
         value="pAsswOrd$01"
@@ -161,7 +164,8 @@ export default defineComponent({
     }}</pre>
   </section>
 
-  <div v-if="context.isLoading"
+  <div
+    v-if="context.isLoading"
     class="unit-loading"
   >
     Loading ...

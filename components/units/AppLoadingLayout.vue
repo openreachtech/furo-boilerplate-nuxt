@@ -17,7 +17,8 @@ export default defineComponent({
 </script>
 
 <template>
-  <FuroLoadingLayout class="design"
+  <FuroLoadingLayout
+    class="design"
     v-bind="$attrs"
   >
     <template #contents>

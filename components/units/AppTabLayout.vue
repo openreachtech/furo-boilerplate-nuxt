@@ -23,7 +23,8 @@ export default defineComponent({
 </script>
 
 <template>
-  <FuroTabLayout class="design"
+  <FuroTabLayout
+    class="design"
     v-bind="$attrs"
   >
     <template #contents>

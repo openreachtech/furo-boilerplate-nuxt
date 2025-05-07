@@ -23,7 +23,8 @@ export default defineComponent({
 </script>
 
 <template>
-  <FuroPagination class="design"
+  <FuroPagination
+    class="design"
     v-bind="$attrs"
   >
     <template #previous>

@@ -151,13 +151,15 @@ export default defineComponent({
     </h2>
 
     <div class="content">
-      <form :ref="singleImageContext.formElementRef"
+      <form
+        :ref="singleImageContext.formElementRef"
         class="unit-form"
         @submit.prevent="singleImageContext.submitFormWithHooks()"
       >
         <label class="control">
           <span class="title">File Input</span>
-          <input name="image"
+          <input
+            name="image"
             type="file"
           >
           <div class="validation-message">{{
@@ -204,13 +206,15 @@ export default defineComponent({
     </h2>
 
     <div class="content">
-      <form :ref="arrayImagesContext.formElementRef"
+      <form
+        :ref="arrayImagesContext.formElementRef"
         class="unit-form"
         @submit.prevent="arrayImagesContext.submitFormWithHooks()"
       >
         <label class="control">
           <span class="title">File Input</span>
-          <input name="images"
+          <input
+            name="images"
             type="file"
             multiple
           >
@@ -258,7 +262,8 @@ export default defineComponent({
     </h2>
 
     <div class="content">
-      <form :ref="deepPropertyImagesContext.formElementRef"
+      <form
+        :ref="deepPropertyImagesContext.formElementRef"
         class="unit-form"
         @submit.prevent="deepPropertyImagesContext.submitFormWithHooks()"
       >
@@ -268,7 +273,8 @@ export default defineComponent({
 
           <label class="control">
             <span class="title">Nickname</span>
-            <input name="nickname"
+            <input
+              name="nickname"
               type="text"
               value="John Doe"
             >
@@ -281,7 +287,8 @@ export default defineComponent({
 
           <label class="control">
             <span class="title">Bio</span>
-            <textarea name="bio"
+            <textarea
+              name="bio"
               rows="3"
             >John Doe is a software engineer.</textarea>
             <div class="validation-message">{{
@@ -293,7 +300,8 @@ export default defineComponent({
 
           <label class="control">
             <span class="title">Avatar Image</span>
-            <input name="avatar-image"
+            <input
+              name="avatar-image"
               type="file"
               accept="image/*"
             >
@@ -311,7 +319,8 @@ export default defineComponent({
 
           <label class="control">
             <span class="title">Theme Color</span>
-            <input name="theme-color"
+            <input
+              name="theme-color"
               type="color"
             >
             <div class="validation-message">{{
@@ -323,7 +332,8 @@ export default defineComponent({
 
           <label class="control">
             <span class="title">Cover Image</span>
-            <input name="cover-image"
+            <input
+              name="cover-image"
               type="file"
               accept="image/*"
             >
@@ -366,12 +376,14 @@ export default defineComponent({
     </div>
   </section>
 
-  <div v-if="hydratingContext.isLoading"
+  <div
+    v-if="hydratingContext.isLoading"
     class="unit-loading"
   >
     <div>Loading ...</div>
 
-    <progress class="progress"
+    <progress
+      class="progress"
       :max="hydratingContext.progressContentSize"
       :value="hydratingContext.progressUploadedSize"
     />

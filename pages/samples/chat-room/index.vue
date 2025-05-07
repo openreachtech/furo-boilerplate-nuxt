@@ -117,28 +117,32 @@ export default defineComponent({
     <h1>Chat Room</h1>
 
     <section class="unit-section">
-      <div id="messages"
+      <div
+        id="messages"
         class="unit-messages"
       >
-        <div v-for="it in chatStatesContext.generateDisplayMessageEntities()"
+        <div
+          v-for="it in chatStatesContext.generateDisplayMessageEntities()"
           :key="it.id"
         >
           <div>
             <strong>{{ it.sender }}</strong>
-            <span style="
-              width: 1rem;
+            <span
+              style="
+                width: 1rem;
 
-              display: inline-block;
+                display: inline-block;
 
-              text-align: center;
-            "
+                text-align: center;
+              "
             >:</span>
             <span>{{ it.content }}</span>
           </div>
         </div>
       </div>
 
-      <form class="unit-form"
+      <form
+        class="unit-form"
         style="
           width: 100%;
           max-width: 30rem;
@@ -154,7 +158,8 @@ export default defineComponent({
           formElement: /** @type {HTMLFormElement} */ ($event.target),
         })"
       >
-        <input type="text"
+        <input
+          type="text"
           name="content"
           required
           placeholder="Input chat message"

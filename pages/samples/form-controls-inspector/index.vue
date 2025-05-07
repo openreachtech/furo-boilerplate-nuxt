@@ -40,7 +40,8 @@ export default defineComponent({
   <h1>&lt;form&gt; Controls Inspector</h1>
 
   <div class="unit-layout">
-    <form :ref="context.formElementRef"
+    <form
+      :ref="context.formElementRef"
       class="unit-form"
       @submit.prevent="context.submitForm()"
     >
@@ -50,7 +51,8 @@ export default defineComponent({
 
       <label class="control">
         <span>Test</span>
-        <input name="text"
+        <input
+          name="text"
           type="text"
           value="default text"
         >
@@ -59,11 +61,13 @@ export default defineComponent({
       <fieldset class="control">
         <legend>Double Text</legend>
 
-        <input name="double-text"
+        <input
+          name="double-text"
           type="text"
           value="double 001"
         >
-        <input name="double-text"
+        <input
+          name="double-text"
           type="text"
           value="double 002"
         >
@@ -71,7 +75,8 @@ export default defineComponent({
 
       <label class="control">
         <span>Password</span>
-        <input name="password"
+        <input
+          name="password"
           type="password"
           value="password123"
         >
@@ -79,7 +84,8 @@ export default defineComponent({
 
       <label class="control">
         <span>Email</span>
-        <input name="email"
+        <input
+          name="email"
           type="email"
           value="example@example.com"
         >
@@ -87,7 +93,8 @@ export default defineComponent({
 
       <label class="control">
         <span>Website</span>
-        <input name="url"
+        <input
+          name="url"
           type="url"
           value="https://www.example.com"
         >
@@ -95,7 +102,8 @@ export default defineComponent({
 
       <label class="control">
         <span>Telephone Number</span>
-        <input name="tel"
+        <input
+          name="tel"
           type="tel"
           value="090-1234-5678"
         >
@@ -107,7 +115,8 @@ export default defineComponent({
 
       <label class="control">
         <span>Color</span>
-        <input name="color"
+        <input
+          name="color"
           type="color"
           value="#ff00ff"
         >
@@ -115,7 +124,8 @@ export default defineComponent({
 
       <label class="control">
         <span>Number</span>
-        <input name="number"
+        <input
+          name="number"
           type="number"
           min="1"
           max="10"
@@ -125,7 +135,8 @@ export default defineComponent({
 
       <label class="control">
         <span>Range</span>
-        <input name="range"
+        <input
+          name="range"
           type="range"
           min="0"
           max="100"
@@ -135,7 +146,8 @@ export default defineComponent({
 
       <label class="control">
         <span>Date</span>
-        <input name="date"
+        <input
+          name="date"
           type="date"
           value="2024-01-01"
         >
@@ -143,7 +155,8 @@ export default defineComponent({
 
       <label class="control">
         <span>Time</span>
-        <input name="time"
+        <input
+          name="time"
           type="time"
           value="11:22:33"
           step="1"
@@ -152,7 +165,8 @@ export default defineComponent({
 
       <label class="control">
         <span>DateTime</span>
-        <input name="datetime-local"
+        <input
+          name="datetime-local"
           type="datetime-local"
           value="2024-01-31T11:22:33"
           step="1"
@@ -161,7 +175,8 @@ export default defineComponent({
 
       <label class="control">
         <span>Year Month</span>
-        <input name="month"
+        <input
+          name="month"
           type="month"
           value="2024-01"
         >
@@ -169,7 +184,8 @@ export default defineComponent({
 
       <label class="control">
         <span>File</span>
-        <input name="file"
+        <input
+          name="file"
           type="file"
         >
       </label>
@@ -182,7 +198,8 @@ export default defineComponent({
         <legend>Emotion</legend>
 
         <label>
-          <input name="emotion"
+          <input
+            name="emotion"
             type="radio"
             value="happy"
           >
@@ -190,7 +207,8 @@ export default defineComponent({
         </label>
         <br>
         <label>
-          <input name="emotion"
+          <input
+            name="emotion"
             type="radio"
             value="sad"
           >
@@ -198,7 +216,8 @@ export default defineComponent({
         </label>
         <br>
         <label>
-          <input name="emotion"
+          <input
+            name="emotion"
             type="radio"
             value="angry"
           >
@@ -210,7 +229,8 @@ export default defineComponent({
         <legend>Interest</legend>
 
         <label>
-          <input name="interest"
+          <input
+            name="interest"
             type="checkbox"
             value="coding"
             checked
@@ -219,7 +239,8 @@ export default defineComponent({
         </label>
         <br>
         <label>
-          <input name="interest"
+          <input
+            name="interest"
             type="checkbox"
             value="music"
           >
@@ -227,7 +248,8 @@ export default defineComponent({
         </label>
         <br>
         <label>
-          <input name="interest"
+          <input
+            name="interest"
             type="checkbox"
             value="sports"
             checked
@@ -238,7 +260,8 @@ export default defineComponent({
 
       <label class="control">
         <span>Message</span>
-        <textarea class="textarea"
+        <textarea
+          class="textarea"
           name="message"
           rows="4"
           cols="50"
@@ -247,7 +270,8 @@ export default defineComponent({
 
       <label class="control">
         <span>City</span>
-        <select name="city"
+        <select
+          name="city"
           style="
             min-width: 10rem;
           "
@@ -260,12 +284,14 @@ export default defineComponent({
 
       <label class="control">
         <span>Amount (Optional)</span>
-        <select name="amount"
+        <select
+          name="amount"
           style="
             min-width: 10rem;
           "
         >
-          <option value=""
+          <option
+            value=""
             disabled
             selected
           >Please select</option>
@@ -276,18 +302,21 @@ export default defineComponent({
 
       <label class="control">
         <span>Greek</span>
-        <select name="greek"
+        <select
+          name="greek"
           multiple
           style="
             height: 5rem;
             min-width: 10rem;
           "
         >
-          <option value="alpha"
+          <option
+            value="alpha"
             selected
           >alpha</option>
           <option value="beta">beta</option>
-          <option value="gamma"
+          <option
+            value="gamma"
             selected
           >gamma</option>
           <option value="delta">delta</option>

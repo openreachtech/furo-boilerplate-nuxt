@@ -48,7 +48,8 @@ export default defineComponent({
 </script>
 
 <template>
-  <FuroDialog :ref="context.dialogComponentRef"
+  <FuroDialog
+    :ref="context.dialogComponentRef"
     class="design"
     v-bind="$attrs"
   >

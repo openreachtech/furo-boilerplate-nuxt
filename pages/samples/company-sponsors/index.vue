@@ -58,7 +58,8 @@ export default defineComponent({
     <h1>Company Sponsors</h1>
 
     <section class="companysponsors">
-      <div v-for="it in context.companySponsors"
+      <div
+        v-for="it in context.companySponsors"
         :key="it.id"
         class="unit-companysponsor"
       >
@@ -72,7 +73,8 @@ export default defineComponent({
     </section>
   </div>
 
-  <div v-if="context.isLoading"
+  <div
+    v-if="context.isLoading"
     class="unit-loading"
   >
     Loading ...
