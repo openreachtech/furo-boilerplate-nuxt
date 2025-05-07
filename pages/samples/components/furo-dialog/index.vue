@@ -178,7 +178,8 @@ export default defineComponent({
           show
         </button>
 
-        <FuroButtonDialog :ref="buttonDialogContext.alertFuroButtonDialogRef"
+        <FuroButtonDialog
+          :ref="buttonDialogContext.alertFuroButtonDialogRef"
           class="alert"
           @click-positive-button="buttonDialogContext.clickPositiveButton({ dialogType: 'Alert' })"
         >
@@ -201,7 +202,8 @@ export default defineComponent({
           show
         </button>
 
-        <FuroButtonDialog :ref="buttonDialogContext.confirmFuroButtonDialogRef"
+        <FuroButtonDialog
+          :ref="buttonDialogContext.confirmFuroButtonDialogRef"
           class="confirm"
           @click-positive-button="buttonDialogContext.clickPositiveButton({ dialogType: 'Confirm' })"
           @click-negative-button="buttonDialogContext.clickNegativeButton({ dialogType: 'Confirm' })"
@@ -228,7 +230,8 @@ export default defineComponent({
           show
         </button>
 
-        <FuroButtonDialog :ref="buttonDialogContext.ternaryConfirmFuroButtonDialogRef"
+        <FuroButtonDialog
+          :ref="buttonDialogContext.ternaryConfirmFuroButtonDialogRef"
           class="ternary"
           @click-positive-button="buttonDialogContext.clickPositiveButton({ dialogType: 'TernaryConfirm' })"
           @click-negative-button="buttonDialogContext.clickNegativeButton({ dialogType: 'TernaryConfirm' })"
@@ -274,7 +277,8 @@ export default defineComponent({
           show
         </button>
 
-        <FuroDialog :ref="statusDialogContext.messageAndXCloseButtonFuroDialogRef"
+        <FuroDialog
+          :ref="statusDialogContext.messageAndXCloseButtonFuroDialogRef"
           class="x-close"
           @show-dialog="statusDialogContext.onShowDialog()"
           @dismiss-dialog="statusDialogContext.onDismissDialog()"
@@ -295,7 +299,8 @@ export default defineComponent({
           show
         </button>
 
-        <FuroDialog :ref="statusDialogContext.dialogStatusCallbackFuroDialogRef"
+        <FuroDialog
+          :ref="statusDialogContext.dialogStatusCallbackFuroDialogRef"
           @show-dialog="statusDialogContext.onShowDialog()"
           @dismiss-dialog="statusDialogContext.onDismissDialog()"
         >
@@ -321,7 +326,8 @@ export default defineComponent({
           show
         </button>
 
-        <FuroDialog :ref="statusDialogContext.closeByClickedOnBackdropFuroDialogRef"
+        <FuroDialog
+          :ref="statusDialogContext.closeByClickedOnBackdropFuroDialogRef"
           @click-backdrop="statusDialogContext.clickOnBackdrop()"
         >
           <template #contents>
@@ -355,7 +361,8 @@ export default defineComponent({
           show
         </button>
 
-        <FuroDialog :ref="designedDialogContext.customDesignedFuroDialogRef"
+        <FuroDialog
+          :ref="designedDialogContext.customDesignedFuroDialogRef"
           class="design alpha"
         >
           <template #contents>
@@ -403,7 +410,8 @@ export default defineComponent({
           show
         </button>
 
-        <AppDialog :ref="designedDialogContext.customAppDialogRef"
+        <AppDialog
+          :ref="designedDialogContext.customAppDialogRef"
           class="design beta"
         >
           <template #contents>
@@ -435,7 +443,8 @@ export default defineComponent({
           show
         </button>
 
-        <FuroDialog :ref="formDialogContext.formDialogRef"
+        <FuroDialog
+          :ref="formDialogContext.formDialogRef"
           class="x-close design unit-form"
         >
           <template #contents>
@@ -443,17 +452,20 @@ export default defineComponent({
               &lt;form&gt; Dialog
             </div>
 
-            <form :ref="formDialogContext.formElementRef"
+            <form
+              :ref="formDialogContext.formElementRef"
               class="form"
               @submit.prevent="formDialogContext.submitForm()"
             >
-              <input type="text"
+              <input
+                type="text"
                 class="input id"
                 name="id"
                 placeholder="Please input id here"
                 value="JohnDoe"
               >
-              <input type="text"
+              <input
+                type="text"
                 class="input message"
                 name="message"
                 placeholder="Please input message here"

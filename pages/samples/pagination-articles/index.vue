@@ -55,12 +55,14 @@ export default defineComponent({
     <h1>Pagination with GraphQL</h1>
 
     <section>
-      <FuroPagination :pagination="context.pagination"
+      <FuroPagination
+        :pagination="context.pagination"
         @change-page="context.changePage($event)"
       />
 
       <div class="unit-articles">
-        <div v-for="article in context.articles"
+        <div
+          v-for="article in context.articles"
           :key="article.id"
           class="unit-article"
         >
@@ -77,7 +79,8 @@ export default defineComponent({
         </div>
       </div>
 
-      <FuroPagination :pagination="context.pagination"
+      <FuroPagination
+        :pagination="context.pagination"
         @change-page="context.changePage($event)"
       />
     </section>

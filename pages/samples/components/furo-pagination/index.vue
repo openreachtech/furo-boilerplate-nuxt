@@ -58,7 +58,8 @@ export default defineComponent({
     <section class="unit-section">
       <h3>with pageKey &quot;p&quot;<br>(design: &lt;FuroPagination&gt;)</h3>
 
-      <FuroPagination page-key="p"
+      <FuroPagination
+        page-key="p"
         :pagination="context.pagination"
       />
     </section>
@@ -66,7 +67,8 @@ export default defineComponent({
     <section class="unit-section">
       <h3>with maxPageRange = 7 (design: &lt;FuroPagination&gt;)</h3>
 
-      <FuroPagination page-key="p"
+      <FuroPagination
+        page-key="p"
         :pagination="{
           limit: 5,
           totalRecords: 100,
@@ -78,27 +80,32 @@ export default defineComponent({
     <section class="unit-section">
       <h3>with SVG image for previous and next<br>(design: alpha)</h3>
 
-      <FuroPagination class="alpha-design"
+      <FuroPagination
+        class="alpha-design"
         :pagination="context.pagination"
       >
         <template #previous>
-          <svg xmlns="http://www.w3.org/2000/svg"
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
             viewBox="0 0 24 24"
           >
-            <path d="M17 4.5L8 12L17 19.5V4.5Z"
+            <path
+              d="M17 4.5L8 12L17 19.5V4.5Z"
               fill="currentColor"
             />
           </svg>
         </template>
         <template #next>
-          <svg xmlns="http://www.w3.org/2000/svg"
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
             viewBox="0 0 24 24"
           >
-            <path d="M7 4.5L16 12L7 19.5V4.5Z"
+            <path
+              d="M7 4.5L16 12L7 19.5V4.5Z"
               fill="currentColor"
             />
           </svg>
@@ -114,7 +121,8 @@ export default defineComponent({
     <section class="unit-section">
       <h3>with Last Page 5</h3>
 
-      <FuroPagination page-key="pg"
+      <FuroPagination
+        page-key="pg"
         :pagination="{
           limit: 5,
           totalRecords: 24,
@@ -125,7 +133,8 @@ export default defineComponent({
     <section class="unit-section">
       <h3>with Last Page 3</h3>
 
-      <FuroPagination page-key="pg"
+      <FuroPagination
+        page-key="pg"
         :pagination="{
           limit: 5,
           totalRecords: 14,
@@ -136,7 +145,8 @@ export default defineComponent({
     <section class="unit-section">
       <h3>with Last Page 1</h3>
 
-      <FuroPagination page-key="pg"
+      <FuroPagination
+        page-key="pg"
         :pagination="{
           limit: 5,
           totalRecords: 3,
@@ -158,7 +168,8 @@ export default defineComponent({
     <section class="unit-section">
       <h3>with pageKey &quot;pg&quot;<br>(design: &lt;AppPagination&gt;)</h3>
 
-      <AppPagination page-key="pg"
+      <AppPagination
+        page-key="pg"
         :pagination="{
           limit: 5,
           totalRecords: 53,
@@ -169,7 +180,8 @@ export default defineComponent({
     <section class="unit-section">
       <h3>with Emoji for previous and next<br>(design: beta)</h3>
 
-      <AppPagination class="beta-design"
+      <AppPagination
+        class="beta-design"
         :pagination="context.pagination"
       >
         <template #previous>

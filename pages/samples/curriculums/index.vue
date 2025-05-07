@@ -64,9 +64,10 @@ export default defineComponent({
     <br>
     <br>
 
-    <button @click="context.requestCurriculums({
-      offset: 2,
-    })"
+    <button
+      @click="context.requestCurriculums({
+        offset: 2,
+      })"
     >
       Fetch curriculums with offset 2
     </button>
@@ -74,9 +75,10 @@ export default defineComponent({
     <br>
     <br>
 
-    <button @click="context.requestCurriculums({
-      offset: 4,
-    })"
+    <button
+      @click="context.requestCurriculums({
+        offset: 4,
+      })"
     >
       Fetch curriculums with offset 4
     </button>
@@ -90,7 +92,8 @@ export default defineComponent({
     }}</pre>
   </div>
 
-  <div v-if="context.isLoading"
+  <div
+    v-if="context.isLoading"
     class="unit-loading"
   >
     Loading ...

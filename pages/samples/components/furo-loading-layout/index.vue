@@ -74,7 +74,8 @@ export default defineComponent({
         </template>
       </FuroLoadingLayout>
 
-      <button :disabled="context.statusReactive.isLoadingFuro"
+      <button
+        :disabled="context.statusReactive.isLoadingFuro"
         @click="context.emulateLoading({
           statusLoadingKey: 'isLoadingFuro',
           durationInMs: 2000,
@@ -101,7 +102,8 @@ export default defineComponent({
         </template>
       </AppLoadingLayout>
 
-      <button :disabled="context.statusReactive.isLoadingApp"
+      <button
+        :disabled="context.statusReactive.isLoadingApp"
         @click="context.emulateLoading({
           statusLoadingKey: 'isLoadingApp',
           durationInMs: 2000,
