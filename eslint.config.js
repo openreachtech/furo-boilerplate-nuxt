@@ -220,8 +220,8 @@ export default [
       'vue/first-attribute-linebreak': [
         'error',
         {
-          singleline: 'beside', // ignore
-          multiline: 'beside', // below
+          singleline: 'ignore',
+          multiline: 'below',
         },
       ],
       'vue/html-closing-bracket-newline': [
