@@ -19,7 +19,7 @@
     "furo",
     "boilerplate"
   ],
-  "author": "Open Reach Tech inc.",
+  "author": "Open Reach Tech Inc.",
   "license": "UNLICENSED",
   "dependencies": {
     "@openreachtech/furo-nuxt": "^1.8.0",
