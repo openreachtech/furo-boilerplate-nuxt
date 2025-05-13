@@ -78,8 +78,12 @@ export default defineNuxtConfig({
   // To enable Server-Side Rendering or not: https://nuxt.com/docs/api/nuxt-config#ssr
   ssr: false,
 
+  // Vite: https://nuxt.com/docs/api/nuxt-config#vite
   vite: {
     build: {
+      // 'esnext' is chosen as the build target to leverage the latest JavaScript features
+      // and ensure compatibility with modern browsers. This helps optimize performance
+      // and reduce polyfill usage in the final build.
       target: 'esnext',
     },
   },
