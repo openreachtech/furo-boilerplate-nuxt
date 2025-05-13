@@ -40,3 +40,6 @@ jobs:
 
       - name: 🧪 Run tests
         run: npm test
+
+      - name: 🏗️ Run build Nuxt
+        run: npm run build
