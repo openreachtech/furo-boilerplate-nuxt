@@ -1,3 +1,5 @@
+import globals from 'globals'
+
 import openreachtechConfig from '@openreachtech/eslint-config'
 import pluginVue from 'eslint-plugin-vue'
 
@@ -13,26 +15,8 @@ export default [
   {
     languageOptions: {
       globals: {
-        Headers: 'readonly',
-        fetch: 'readonly',
-        localStorage: 'readonly',
-        Request: 'readonly',
-        RequestInfo: 'readonly', // eslint-disable-line no-restricted-syntax
-        RequestInit: 'readonly',
-        Response: 'readonly',
-        sessionStorage: 'readonly',
-        Storage: 'readonly',
-        URL: 'readonly',
-
-        // DOM
-        window: 'readonly',
-        document: 'readonly',
-        HTMLButtonElement: 'readonly',
-        HTMLInputElement: 'readonly',
-        HTMLOptionElement: 'readonly',
-        HTMLSelectElement: 'readonly',
-        HTMLTextAreaElement: 'readonly',
-        RadioNodeList: 'readonly', // eslint-disable-line no-restricted-syntax
+        ...globals.browser,
+        ...globals.node,
       },
       sourceType: 'module',
     },
