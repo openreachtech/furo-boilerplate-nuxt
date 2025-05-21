@@ -1,3 +1,5 @@
+import globals from 'globals'
+
 import openreachtechConfig from '@openreachtech/eslint-config'
 import pluginVue from 'eslint-plugin-vue'
 
@@ -13,26 +15,8 @@ export default [
   {
     languageOptions: {
       globals: {
-        Headers: 'readonly',
-        fetch: 'readonly',
-        localStorage: 'readonly',
-        Request: 'readonly',
-        RequestInfo: 'readonly', // eslint-disable-line no-restricted-syntax
-        RequestInit: 'readonly',
-        Response: 'readonly',
-        sessionStorage: 'readonly',
-        Storage: 'readonly',
-        URL: 'readonly',
-
-        // DOM
-        window: 'readonly',
-        document: 'readonly',
-        HTMLButtonElement: 'readonly',
-        HTMLInputElement: 'readonly',
-        HTMLOptionElement: 'readonly',
-        HTMLSelectElement: 'readonly',
-        HTMLTextAreaElement: 'readonly',
-        RadioNodeList: 'readonly', // eslint-disable-line no-restricted-syntax
+        ...globals.browser,
+        ...globals.node,
       },
       sourceType: 'module',
     },
@@ -111,7 +95,7 @@ export default [
           message: 'Never use for',
         },
         {
-          selector: 'Identifier[name=/.+(Data|Info|(<?![gs]et)Item|List|Manager)$/]', // 'Identifier[name=/.+(Data|Info|Item|List|Manager)$/]'
+          selector: 'Identifier[name=/.+((?<!Form)Data|(?<!Request)Info|(?<![gs]et|named|remove)Item|(?<!class|RadioNode)List|Manager)$/]', // 'Identifier[name=/.+(Data|Info|Item|List|Manager)$/]'
           message: 'Not allowed to use "Data", "Info", "Item", "List", and "Manager" as suffix of identifier.',
         },
         {
@@ -670,6 +654,252 @@ export default [
         'error',
       ],
       'vue/valid-next-tick': [
+        'error',
+      ],
+
+      // These are extension rules of eslint-plugin-vue. They wrap around core or stylistic rules and mostly share the same options.
+      'vue/array-bracket-newline': [
+        'error',
+        'consistent', // { multiline: true, minItems: null }
+      ],
+      'vue/array-bracket-spacing': [
+        'error',
+      ],
+      'vue/array-element-newline': [
+        'error',
+        'consistent', // 'always'
+        {
+          multiline: true, // false
+          minItems: null,
+        },
+      ],
+      'vue/arrow-spacing': [
+        'error',
+      ],
+      'vue/block-spacing': [
+        'error',
+      ],
+      'vue/brace-style': [
+        'error',
+        '1tbs', // = One True Brace Style
+        {
+          allowSingleLine: false,
+        },
+      ],
+      'vue/camelcase': [
+        'error',
+      ],
+      'vue/comma-dangle': [
+        'error',
+        {
+          arrays: 'always-multiline', // 'never'
+          objects: 'always-multiline', // 'never'
+          imports: 'always-multiline', // 'never'
+          exports: 'always-multiline', // 'never'
+          functions: 'never',
+        },
+      ],
+      'vue/comma-spacing': [
+        'error',
+      ],
+      'vue/comma-style': [
+        'error',
+      ],
+      'vue/dot-location': [
+        'error',
+        'property', // 'object'
+      ],
+      'vue/dot-notation': [
+        'off', // 'error'
+        {
+          allowKeywords: true,
+          allowPattern: '',
+        },
+      ],
+      'vue/eqeqeq': [
+        'error',
+      ],
+      'vue/func-call-spacing': [
+        'error',
+      ],
+      'vue/key-spacing': [
+        'error',
+      ],
+      'vue/keyword-spacing': [
+        'error',
+      ],
+      'vue/max-len': [
+        'off', // 'error'
+        {
+          code: 80,
+          tabWidth: 4,
+        },
+      ],
+      'vue/multiline-ternary': [
+        'error',
+      ],
+      'vue/no-console': [
+        'error',
+        {
+          allow: undefined, // When disable `allow` field, give undefined instead of empty array
+        },
+      ],
+      'vue/no-constant-condition': [
+        'error',
+      ],
+      'vue/no-empty-pattern': [
+        'error',
+      ],
+      'vue/no-extra-parens': [
+        'off', // 'error'
+        'all',
+        {
+          conditionalAssign: false,
+          returnAssign: false,
+          nestedBinaryExpressions: false,
+          ignoreJSX: 'none',
+          enforceForArrowConditionals: false,
+          enforceForSequenceExpressions: false,
+          enforceForNewInMemberExpressions: false,
+          enforceForFunctionPrototypeMethods: false,
+          allowParensAfterCommentPattern: '',
+        },
+      ],
+      'vue/no-irregular-whitespace': [
+        'error',
+        {
+          skipComments: false,
+          skipHTMLAttributeValues: false,
+          skipHTMLTextContents: false,
+          // skipJSXText: false, // NOTE: This option exists in core rule but not in eslint-plugin-vue.
+          skipRegExps: false,
+          skipStrings: false, // true
+          skipTemplates: false,
+        },
+      ],
+      'vue/no-loss-of-precision': [
+        'error',
+      ],
+      'vue/no-restricted-syntax': [
+        'error',
+        // There are 0 or more rest parameters in the array
+        // string | { selector: string, message: string }
+        // NOTE: It's ok to use Array#forEach if there's only one statement in the callback function.
+        // {
+        //   selector: 'CallExpression[callee.property.name=forEach]',
+        //   message: 'Never use forEach method',
+        // },
+        {
+          selector: 'CallExpression[callee.type=MemberExpression][callee.property.name=/^(every|filter|find|findIndex|findLast|findLastIndex|flatMap|forEach|group|groupToMap|map|reduce|reduceRight|some)$/] IfStatement',
+          message: 'Never use if in higher-order function',
+        },
+        {
+          selector: 'DoWhileStatement',
+          message: 'Never use do-while',
+        },
+        {
+          selector: 'ForInStatement',
+          message: 'Never use for-in',
+        },
+        {
+          selector: 'ForOfStatement',
+          message: 'Never use for-of',
+        },
+        {
+          selector: 'ForStatement',
+          message: 'Never use for',
+        },
+        {
+          selector: 'Identifier[name=/.+((?<!Form)Data|(?<!Request)Info|(?<![gs]et|named|remove)Item|(?<!class|RadioNode)List|Manager)$/]', // 'Identifier[name=/.+(Data|Info|Item|List|Manager)$/]'
+          message: 'Not allowed to use "Data", "Info", "Item", "List", and "Manager" as suffix of identifier.',
+        },
+        {
+          selector: 'IfStatement IfStatement',
+          message: 'Never use nested-if including else-if',
+        },
+        {
+          selector: 'SwitchStatement',
+          message: 'Never use switch',
+        },
+        // FIXME: below is not required by other rules
+        {
+          selector: 'VariableDeclaration[kind=let]',
+          message: 'Never use let',
+        },
+        {
+          selector: 'WhileStatement',
+          message: 'Never use while',
+        },
+      ],
+      'vue/no-sparse-arrays': [
+        'error',
+      ],
+      'vue/no-useless-concat': [
+        'error',
+      ],
+      'vue/object-curly-newline': [
+        'error',
+      ],
+      'vue/object-curly-spacing': [
+        'error',
+        'always', // 'never'
+        {
+          arraysInObjects: true, // false
+          objectsInObjects: true, // false
+        },
+      ],
+      'vue/object-property-newline': [
+        'error',
+        {
+          allowAllPropertiesOnSameLine: true, // false
+        },
+      ],
+      'vue/object-shorthand': [
+        'error',
+      ],
+      'vue/operator-linebreak': [
+        'error',
+        'before', // 'after'
+        {
+          overrides: { // {}
+            '=': 'after',
+            '+=': 'after',
+            '-=': 'after',
+            '*=': 'after',
+            '/=': 'after',
+            '%=': 'after',
+            '**=': 'after',
+            '<<=': 'after',
+            '>>=': 'after',
+            '>>>=': 'after',
+            '&=': 'after',
+            '|=': 'after',
+            '^=': 'after',
+          },
+        },
+      ],
+      'vue/prefer-template': [
+        'error',
+      ],
+      'vue/quote-props': [
+        'error',
+        'as-needed', // 'always'
+        {
+          keywords: false,
+          unnecessary: true,
+          numbers: false,
+        },
+      ],
+      'vue/space-in-parens': [
+        'error',
+      ],
+      'vue/space-infix-ops': [
+        'error',
+      ],
+      'vue/space-unary-ops': [
+        'error',
+      ],
+      'vue/template-curly-spacing': [
         'error',
       ],
     },
