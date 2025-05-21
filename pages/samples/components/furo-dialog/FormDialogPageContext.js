@@ -101,7 +101,7 @@ export default class FormDialogPageContext extends BaseFuroContext {
 
     const value = formElement
       ? Object.fromEntries(
-        new FormData(formElement) // eslint-disable-line
+        new FormData(formElement)
       )
       : null
 

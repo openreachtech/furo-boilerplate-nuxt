@@ -95,7 +95,7 @@ export default [
           message: 'Never use for',
         },
         {
-          selector: 'Identifier[name=/.+(Data|Info|(<?![gs]et)Item|List|Manager)$/]', // 'Identifier[name=/.+(Data|Info|Item|List|Manager)$/]'
+          selector: 'Identifier[name=/.+((?<!Form)Data|(?<!Request)Info|(?<![gs]et|named|remove)Item|(?<!class|RadioNode)List|Manager)$/]', // 'Identifier[name=/.+(Data|Info|Item|List|Manager)$/]'
           message: 'Not allowed to use "Data", "Info", "Item", "List", and "Manager" as suffix of identifier.',
         },
         {
