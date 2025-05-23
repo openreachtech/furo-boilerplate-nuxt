@@ -12,7 +12,7 @@
     "cache": "node -e \"require('fs').rm('./node_modules/.cache', { recursive: true, force: true }, err => { if (err) console.error(err); console.log('Cache cleared'); })\"",
     "l": "npm run lint",
     "lint": "eslint .",
-    "test": "export NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\"; jest --forceExit --maxWorkers=5"
+    "test": "export NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\"; jest --maxWorkers=5"
   },
   "type": "module",
   "keywords": [
