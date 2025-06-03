@@ -11,10 +11,11 @@ import {
   useGraphqlClient,
 } from '@openreachtech/furo-nuxt'
 
-import PaginationArticlesQueryGraphqlLauncher from '~/app/graphql/client/queries/paginationArticles/PaginationArticlesQueryGraphqlLauncher.js'
-
 import FuroPagination from '@openreachtech/furo-nuxt/lib/components/FuroPagination.vue'
+
 import FuroPaginationWithGraphqlPageContext from './PaginationArticlesPageContext.js'
+
+import PaginationArticlesQueryGraphqlLauncher from '~/app/graphql/client/queries/paginationArticles/PaginationArticlesQueryGraphqlLauncher.js'
 
 export default defineComponent({
   components: {

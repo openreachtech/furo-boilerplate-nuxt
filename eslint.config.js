@@ -1,7 +1,8 @@
-import globals from 'globals'
-
 import openreachtechConfig from '@openreachtech/eslint-config'
+// @ts-expect-error: Import is correct but type are not available
+import pluginImport from 'eslint-plugin-import'
 import pluginVue from 'eslint-plugin-vue'
+import globals from 'globals'
 
 /**
  * ESLint Config
@@ -119,6 +120,91 @@ export default [
       complexity: [
         'error',
         10, // 20
+      ],
+    },
+  },
+
+  {
+    plugins: {
+      import: pluginImport,
+    },
+    files: [
+      '**/*.{js,mjs,cjs,vue}',
+    ],
+    languageOptions: {
+      sourceType: 'module',
+    },
+    rules: {
+      'import/no-relative-parent-imports': [
+        'error',
+      ],
+      'import/order': [
+        'error',
+        {
+          groups: [
+            'builtin',
+            'external',
+            'internal',
+            [
+              'parent',
+              'sibling',
+              'index',
+            ],
+            'object',
+            'type',
+          ],
+          pathGroups: [
+            {
+              pattern: '{vue,pinia}',
+              group: 'external',
+              position: 'before',
+            },
+            {
+              pattern: 'vue-router',
+              group: 'external',
+              position: 'before',
+            },
+            {
+              pattern: '{#imports,#app,nuxt/app}',
+              group: 'external',
+              position: 'before',
+            },
+            {
+              pattern: '#components',
+              group: 'external',
+              position: 'before',
+            },
+            {
+              pattern: '{./**,../**,**}/*.vue',
+              group: 'parent',
+              position: 'before',
+            },
+            {
+              pattern: '{./**,../**,**}/*Context.{js,mjs,cjs}',
+              group: 'parent',
+              position: 'before',
+            },
+            {
+              pattern: '{./**,../**,**}/*Launcher.{js,mjs,cjs}',
+              group: 'parent',
+              position: 'before',
+            },
+            {
+              pattern: '~/**',
+              group: 'parent',
+              // position: 'same', There is no such option in the plugin. 'same' equals to `undefined`.
+            },
+          ],
+          distinctGroup: true,
+          pathGroupsExcludedImportTypes: [], // ['builtin', 'external', 'object']
+          alphabetize: {
+            order: 'asc',
+            orderImportKind: 'asc',
+            caseInsensitive: true, // false
+          },
+          // NOTE: This must be kebab-case, not camelCase due to how the plugin is written.
+          'newlines-between': 'always', // 'ignore'
+        },
       ],
     },
   },

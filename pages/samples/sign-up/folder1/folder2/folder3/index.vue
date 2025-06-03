@@ -26,10 +26,9 @@ import {
 
 import AppDialog from '~/components/units/AppDialog.vue'
 
-import SignUpPageContext from './SignUpPageContext.js'
-
 import SignUpMutationGraphqlLauncher from '~/app/graphql/client/mutations/signUp/SignUpMutationGraphqlLauncher.js'
 
+import SignUpPageContext from '../../../SignUpPageContext.js'
 import something from '~/app/something.js'
 import SignUpFormElementClerk from '~/pages/samples/sign-up/SignUpFormElementClerk.js'
 
