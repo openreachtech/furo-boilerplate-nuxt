@@ -1,5 +1,7 @@
 import globals from 'globals'
 
+import eslintPluginComments from 'eslint-plugin-eslint-comments'
+
 import openreachtechConfig from '@openreachtech/eslint-config'
 import pluginVue from 'eslint-plugin-vue'
 
@@ -60,6 +62,18 @@ export default [
       'unicorn/error-message': 'off',
 
       'vue/no-multiple-template-root': 'off',
+    },
+  },
+
+  {
+    plugins: {
+      'eslint-comments': eslintPluginComments,
+    },
+    rules: {
+      'eslint-comments/no-restricted-disable': [
+        'error',
+        '*',
+      ],
     },
   },
 
