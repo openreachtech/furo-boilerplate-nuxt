@@ -3,7 +3,7 @@ import globals from 'globals'
 import eslintPluginComments from 'eslint-plugin-eslint-comments'
 
 import openreachtechConfig from '@openreachtech/eslint-config'
-import pluginVue from 'eslint-plugin-vue'
+import vuePluginConfig from './eslint/plugin-vue.js'
 
 /**
  * ESLint Config
@@ -136,4 +136,6 @@ export default [
       ],
     },
   },
+
+  ...vuePluginConfig,
 ]
