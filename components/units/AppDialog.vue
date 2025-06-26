@@ -37,10 +37,6 @@ export default defineComponent({
     })
       .setupComponent()
 
-    componentContext.expose(
-      context.generateExposeHash()
-    )
-
     return {
       context,
     }
