@@ -35,10 +35,7 @@ export default defineComponent({
       componentContext,
       dialogComponentRef,
     })
-
-    componentContext.expose(
-      context.generateExposeHash()
-    )
+      .setupComponent()
 
     return {
       context,
