@@ -31,7 +31,7 @@ export default {
     <template #toggle-menu>
       <img
         class="toggle-navigation-image"
-        src="/assets/img/samples/hanburger-menu.png"
+        src="/assets/img/samples/hamburger-menu.png"
         alt="Logo"
       >
     </template>
