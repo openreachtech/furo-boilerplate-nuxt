@@ -1,7 +1,7 @@
 {
   "name": "@openreachtech/furo-boilerplate-nuxt",
   "version": "0.0.0",
-  "description": "Based on furo-boilerplate-nuxt version 1.5.5",
+  "description": "Based on furo-boilerplate-nuxt version 1.6.0",
   "main": "index.js",
   "scripts": {
     "build": "nuxt build",
@@ -12,7 +12,7 @@
     "cache": "node -e \"require('fs').rm('./node_modules/.cache', { recursive: true, force: true }, err => { if (err) console.error(err); console.log('Cache cleared'); })\"",
     "l": "npm run lint",
     "lint": "eslint .",
-    "test": "export NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\"; jest --forceExit --maxWorkers=5"
+    "test": "export NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\"; jest --maxWorkers=5"
   },
   "type": "module",
   "keywords": [
@@ -22,7 +22,7 @@
   "author": "Open Reach Tech Inc.",
   "license": "UNLICENSED",
   "dependencies": {
-    "@openreachtech/furo-nuxt": "^1.8.0",
+    "@openreachtech/furo-nuxt": "^1.10.0",
     "@openreachtech/jest-constructor-spy": "^1.1.0",
     "core-js": "^3.36.0",
     "nuxt": "^3.15.0",

@@ -6,6 +6,8 @@ import {
 
 import FuroOffCanvasMenuLayout from '@openreachtech/furo-nuxt/lib/components/FuroOffCanvasMenuLayout.vue'
 
+import AppOffCanvasMenu from '~/components/AppOffCanvasMenu/AppOffCanvasMenu.vue'
+
 export default {
   name: 'DefaultLayout',
 
@@ -14,6 +16,7 @@ export default {
     NuxtPage,
 
     FuroOffCanvasMenuLayout,
+    AppOffCanvasMenu,
   },
 }
 </script>
@@ -31,14 +34,14 @@ export default {
     <template #toggle-menu>
       <img
         class="toggle-navigation-image"
-        src="/assets/img/samples/hanburger-menu.png"
+        src="/assets/img/samples/hamburger-menu.png"
         alt="Logo"
       >
     </template>
 
     <template #navigation>
       <div class="navigation">
-        I am Navigation
+        <AppOffCanvasMenu />
       </div>
     </template>
 
@@ -52,8 +55,8 @@ export default {
 <style>
 @layer app {
   .furo-layout.off-canvas-menu > .unit-nav {
-    padding-block: 1rem;
-    padding-inline: 1.5rem;
+    padding-block: 0;
+    padding-inline: 0;
   }
 
   .furo-layout.off-canvas-menu > .unit-main {
