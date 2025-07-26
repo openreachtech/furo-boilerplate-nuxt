@@ -31,7 +31,7 @@
   "devDependencies": {
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.24.0",
-    "@openreachtech/eslint-config": "^3.0.2",
+    "@openreachtech/eslint-config": "^4.1.1",
     "@openreachtech/renchan-test-tools": "^1.0.0",
     "@types/jest": "^29.5.12",
     "@vue/test-utils": "^2.4.5",
