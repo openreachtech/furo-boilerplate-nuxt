@@ -36,6 +36,8 @@ export default [
   // Turn off some rules temporarily
   {
     rules: {
+      'no-undefined': 'off',
+
       '@stylistic/lines-around-comment': 'off',
 
       'import/default': 'off',
