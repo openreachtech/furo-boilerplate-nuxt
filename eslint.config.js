@@ -13,5 +13,12 @@ export default [
     ],
   },
 
+  // Turn off the rules temporarily.
+  {
+    rules: {
+      '@stylistic/lines-around-comment': 'off',
+    },
+  },
+
   ...vuePluginConfig,
 ]
