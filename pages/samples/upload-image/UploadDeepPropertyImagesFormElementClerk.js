@@ -3,7 +3,7 @@ import {
 } from '@openreachtech/furo'
 
 /**
- * @extends {BaseFormElementClerk<typeof UploadDeepPropertyImagesFormElementClerk, UploadDeepPropertyImagesFormValueHash, SchemaVariableHash>}
+ * @extends {BaseFormElementClerk<UploadDeepPropertyImagesFormValueHash>}
  */
 export default class UploadDeepPropertyImagesFormElementClerk extends BaseFormElementClerk {
   /** @override */
