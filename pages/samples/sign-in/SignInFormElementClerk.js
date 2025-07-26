@@ -5,7 +5,7 @@ import {
 /**
  * Clerk class of sign-up form element.
  *
- * @extends {BaseFormElementClerk<typeof SignInFormElementClerk, SignUpFormValueHash, SchemaVariableHash>}
+ * @extends {BaseFormElementClerk<SignUpFormValueHash>}
  */
 export default class SignInFormElementClerk extends BaseFormElementClerk {
   /** @override */
