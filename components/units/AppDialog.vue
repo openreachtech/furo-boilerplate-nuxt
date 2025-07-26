@@ -1,8 +1,7 @@
+<!--
+<AppDialog> is defined to unify the design of dialogs used throughout the application.
+-->
 <script>
-/*
- * <AppDialog> is defined to unify the design of dialogs used throughout the application.
- */
-
 import {
   defineComponent,
   ref,
