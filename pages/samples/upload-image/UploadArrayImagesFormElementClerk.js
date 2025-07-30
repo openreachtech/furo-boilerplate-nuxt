@@ -5,7 +5,7 @@ import {
 /**
  * Clerk class of upload image form element.
  *
- * @extends {BaseFormElementClerk<typeof UploadArrayImagesFormElementClerk, UploadArrayImagesFormValueHash, SchemaVariableHash>}
+ * @extends {BaseFormElementClerk<UploadArrayImagesFormValueHash>}
  */
 export default class UploadArrayImagesFormElementClerk extends BaseFormElementClerk {
   /** @override */

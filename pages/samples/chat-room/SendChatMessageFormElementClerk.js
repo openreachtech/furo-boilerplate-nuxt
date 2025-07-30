@@ -5,7 +5,7 @@ import {
 /**
  * Clerk class of send chat message form element.
  *
- * @extends {BaseFormElementClerk<typeof SendChatMessageFormElementClerk, SendChatMessageFormValueHash, SchemaVariableHash>}
+ * @extends {BaseFormElementClerk<SendChatMessageFormValueHash>}
  */
 export default class SendChatMessageFormElementClerk extends BaseFormElementClerk {
   /** @override */
