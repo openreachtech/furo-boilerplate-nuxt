@@ -1,6 +1,4 @@
-import {
-  BaseFuroContext,
-} from '@openreachtech/furo-nuxt'
+import BaseAppContext from '~/app/vue/contexts/BaseAppContext.js'
 
 /**
  * Context class for <AppOffCanvasMenu>
@@ -9,10 +7,10 @@ import {
  * @template {import('vue').ComponentCustomProps} [P = {}] - Props.
  * @template {string | null} [EE = null] - emit() event names.
  * @property {import('vue').Ref<HTMLDialogElement | null>} dialogRef - Dialog element.
- * @extends {BaseFuroContext<A, P, EE>} - Base class <Accessor, Props, Emit>
+ * @extends {BaseAppContext<A, P, EE>} - Base class <Accessor, Props, Emit>
  */
 
-export default class AppOffCanvasMenuContext extends BaseFuroContext {
+export default class AppOffCanvasMenuContext extends BaseAppContext {
   /**
    * Constructor.
    *
