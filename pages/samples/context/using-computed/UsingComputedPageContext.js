@@ -2,16 +2,14 @@ import {
   computed,
 } from 'vue'
 
-import {
-  BaseFuroContext,
-} from '@openreachtech/furo-nuxt'
+import BaseAppContext from '~/app/vue/contexts/BaseAppContext.js'
 
 /**
  * UsingComputedPageContext.
  *
- * @extends {BaseFuroContext<>} - Base class <Accessor, Props, Emit>
+ * @extends {BaseAppContext<>} - Base class <Accessor, Props, Emit>
  */
-export default class UsingComputedPageContext extends BaseFuroContext {
+export default class UsingComputedPageContext extends BaseAppContext {
   /**
    * Constructor.
    *

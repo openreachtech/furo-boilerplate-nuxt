@@ -1,13 +1,11 @@
-import {
-  BaseFuroContext,
-} from '@openreachtech/furo-nuxt'
+import BaseAppContext from '~/app/vue/contexts/BaseAppContext.js'
 
 /**
  * PaginationArticlesPageContext.
  *
- * @extends {BaseFuroContext<null>} - Base class.
+ * @extends {BaseAppContext<null>} - Base class.
  */
-export default class PaginationArticlesPageContext extends BaseFuroContext {
+export default class PaginationArticlesPageContext extends BaseAppContext {
   /**
    * Constructor.
    *

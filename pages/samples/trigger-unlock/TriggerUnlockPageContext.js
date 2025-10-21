@@ -1,12 +1,10 @@
-import {
-  BaseFuroContext,
-} from '@openreachtech/furo-nuxt'
+import BaseAppContext from '~/app/vue/contexts/BaseAppContext.js'
 
 /**
  * TriggerUnlockPageContext.
  *
- * @extends {BaseFuroContext<null>} - Base class.
+ * @extends {BaseAppContext<null>} - Base class.
  */
-export default class TriggerUnlockPageContext extends BaseFuroContext {
+export default class TriggerUnlockPageContext extends BaseAppContext {
 
 }

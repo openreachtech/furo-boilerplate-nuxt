@@ -1,14 +1,12 @@
-import {
-  BaseFuroContext,
-} from '@openreachtech/furo-nuxt'
+import BaseAppContext from '~/app/vue/contexts/BaseAppContext.js'
 
 /**
  * Props context class for UploadDeepPropertyImagesPageContext component.
  *
  * @property {import('vue').Ref<HTMLDialogElement | null>} dialogRef - Dialog element.
- * @extends {BaseFuroContext<null>} - Base class.
+ * @extends {BaseAppContext<null>} - Base class.
  */
-export default class UploadDeepPropertyImagesPageContext extends BaseFuroContext {
+export default class UploadDeepPropertyImagesPageContext extends BaseAppContext {
   /**
    * Constructor.
    *

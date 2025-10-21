@@ -1,13 +1,11 @@
-import {
-  BaseFuroContext,
-} from '@openreachtech/furo-nuxt'
+import BaseAppContext from '~/app/vue/contexts/BaseAppContext.js'
 
 /**
  * FuroTabLayoutPageContext.
  *
- * @extends {BaseFuroContext<null>} - Base class.
+ * @extends {BaseAppContext<null>} - Base class.
  */
-export default class FuroTabLayoutPageContext extends BaseFuroContext {
+export default class FuroTabLayoutPageContext extends BaseAppContext {
   /**
    * Constructor.
    *
