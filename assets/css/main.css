@@ -1,0 +1,7 @@
+/* Make sure iOS's input font-size is at least `1rem` to avoid zoom-on-focus behavior. */
+@supports (-webkit-touch-callout: none) {
+  input,
+  textarea {
+    font-size: 1rem;
+  }
+}
