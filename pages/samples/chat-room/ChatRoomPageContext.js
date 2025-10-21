@@ -1,15 +1,13 @@
-import {
-  BaseFuroContext,
-} from '@openreachtech/furo-nuxt'
+import BaseAppContext from '~/app/vue/contexts/BaseAppContext.js'
 
 import ChatRoomPageContextAccessor from './ChatRoomPageContextAccessor.js'
 
 /**
  * ChatRoomPageContext.
  *
- * @extends {BaseFuroContext<typeof ChatRoomPageContextAccessor>} - Base class <Accessor, Props, Emit>
+ * @extends {BaseAppContext<typeof ChatRoomPageContextAccessor>} - Base class <Accessor, Props, Emit>
  */
-export default class ChatRoomPageContext extends BaseFuroContext {
+export default class ChatRoomPageContext extends BaseAppContext {
   /**
    * Constructor.
    *

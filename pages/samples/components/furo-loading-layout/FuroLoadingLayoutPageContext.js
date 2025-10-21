@@ -1,14 +1,12 @@
-import {
-  BaseFuroContext,
-} from '@openreachtech/furo-nuxt'
+import BaseAppContext from '~/app/vue/contexts/BaseAppContext.js'
 
 /**
  * Page context for FuroLoadingLayout.
  *
  * @property {StatusReactiveProperty} statusReactive - Reactive object of status.
- * @extends BaseFuroContext<null>
+ * @extends BaseAppContext<null>
  */
-export default class FuroLoadingLayoutPageContext extends BaseFuroContext {
+export default class FuroLoadingLayoutPageContext extends BaseAppContext {
   /**
    * Constructor
    *

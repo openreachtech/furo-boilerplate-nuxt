@@ -1,13 +1,11 @@
-import {
-  BaseFuroContext,
-} from '@openreachtech/furo-nuxt'
+import BaseAppContext from '~/app/vue/contexts/BaseAppContext.js'
 
 /**
  * RESTful API sample page context.
  *
- * @extends {BaseFuroContext<>} - Base class <Accessor, Props, Emit>
+ * @extends {BaseAppContext<>} - Base class <Accessor, Props, Emit>
  */
-export default class RestfulApiSamplePageContext extends BaseFuroContext {
+export default class RestfulApiSamplePageContext extends BaseAppContext {
   /**
    * Constructor.
    *
