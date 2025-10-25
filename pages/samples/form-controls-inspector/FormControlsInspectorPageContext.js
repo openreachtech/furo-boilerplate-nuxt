@@ -1,6 +1,4 @@
-import {
-  BaseFuroContext,
-} from '@openreachtech/furo-nuxt'
+import BaseAppContext from '~/app/vue/contexts/BaseAppContext.js'
 
 import SampleFormElementClerk from './SampleFormElementClerk.js'
 
@@ -9,9 +7,9 @@ const Timber = console
 /**
  * FormControlsInspectorPageContext.
  *
- * @extends {BaseFuroContext<null>} - Base class.
+ * @extends {BaseAppContext<null>} - Base class.
  */
-export default class FormControlsInspectorPageContext extends BaseFuroContext {
+export default class FormControlsInspectorPageContext extends BaseAppContext {
   /**
    * Constructor.
    *

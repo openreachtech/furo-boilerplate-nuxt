@@ -1,13 +1,11 @@
-import {
-  BaseFuroContext,
-} from '@openreachtech/furo-nuxt'
+import BaseAppContext from '~/app/vue/contexts/BaseAppContext.js'
 
 /**
  * DesignDialogPageContext.
  *
- * @extends {BaseFuroContext<>} - Base class.
+ * @extends {BaseAppContext<>} - Base class.
  */
-export default class DesignDialogPageContext extends BaseFuroContext {
+export default class DesignDialogPageContext extends BaseAppContext {
   /**
    * Constructor.
    *

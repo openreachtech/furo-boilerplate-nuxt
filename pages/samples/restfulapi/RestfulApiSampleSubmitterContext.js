@@ -1,16 +1,17 @@
 import {
   BaseFormClerk,
-  BaseFuroContext,
 } from '@openreachtech/furo-nuxt'
+
+import BaseAppContext from '~/app/vue/contexts/BaseAppContext.js'
 
 import BetaExternalCallbackSuccessSubmitter from './BetaExternalCallbackSuccessSubmitter.js'
 
 /**
  * RESTful API sample page context.
  *
- * @extends {BaseFuroContext<>} - Base class <Accessor, Props, Emit>
+ * @extends {BaseAppContext<>} - Base class <Accessor, Props, Emit>
  */
-export default class RestfulApiSampleSubmitterContext extends BaseFuroContext {
+export default class RestfulApiSampleSubmitterContext extends BaseAppContext {
   /**
    * Constructor.
    *

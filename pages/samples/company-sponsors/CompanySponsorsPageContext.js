@@ -1,13 +1,11 @@
-import {
-  BaseFuroContext,
-} from '@openreachtech/furo-nuxt'
+import BaseAppContext from '~/app/vue/contexts/BaseAppContext.js'
 
 /**
  * CompanySponsorsPageContext.
  *
- * @extends {BaseFuroContext<null>} - Base class.
+ * @extends {BaseAppContext<null>} - Base class.
  */
-export default class CompanySponsorsPageContext extends BaseFuroContext {
+export default class CompanySponsorsPageContext extends BaseAppContext {
   /**
    * Constructor.
    *

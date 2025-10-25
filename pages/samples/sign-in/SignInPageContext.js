@@ -1,14 +1,15 @@
 import {
   AccessTokenClerk,
-  BaseFuroContext,
 } from '@openreachtech/furo-nuxt'
+
+import BaseAppContext from '~/app/vue/contexts/BaseAppContext.js'
 
 /**
  * SignInPageContext.
  *
- * @extends {BaseFuroContext<null>} - Base class.
+ * @extends {BaseAppContext<null>} - Base class.
  */
-export default class SignInPageContext extends BaseFuroContext {
+export default class SignInPageContext extends BaseAppContext {
   /**
    * Constructor.
    *
