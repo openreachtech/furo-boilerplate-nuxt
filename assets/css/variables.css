@@ -26,6 +26,8 @@
   /* Sizes */
   --size-thinnest: 1px;
 
+  --size-radius-rounded: 625rem;
+
   --size-screen-height: 100dvh;
   --size-header-height: 4.5rem;
   --size-footer-height: 6rem;
