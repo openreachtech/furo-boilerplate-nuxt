@@ -58,6 +58,7 @@ export default defineNuxtConfig({
 
   // Modules: https://nuxt.com/docs/api/nuxt-config#modules-1.
   modules: [
+    '@nuxt/icon',
   ],
 
   // Shared build configuration: https://nuxt.com/docs/api/nuxt-config#build.

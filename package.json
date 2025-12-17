@@ -1,7 +1,7 @@
 {
   "name": "@openreachtech/furo-boilerplate-nuxt",
   "version": "0.0.0",
-  "description": "Based on furo-boilerplate-nuxt version 1.10.0",
+  "description": "Based on furo-boilerplate-nuxt version 1.11.0",
   "main": "index.js",
   "scripts": {
     "build": "nuxt build",
@@ -31,6 +31,7 @@
   "devDependencies": {
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.24.0",
+    "@nuxt/icon": "^1.15.0",
     "@openreachtech/eslint-config": "^4.3.0",
     "@openreachtech/renchan-test-tools": "^1.0.0",
     "@types/jest": "^29.5.12",
