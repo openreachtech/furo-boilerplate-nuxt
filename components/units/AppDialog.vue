@@ -56,7 +56,7 @@ export default defineComponent({
 </template>
 
 <style scoped>
-.unit-dialog[open].design {
+.furo-dialog[open].design {
   border-radius: 1.5rem;
 
   min-height: 10rem;
@@ -74,7 +74,7 @@ export default defineComponent({
     -8px -8px 16px #ffffff;
 }
 
-.unit-dialog[open].design::backdrop {
+.furo-dialog[open].design::backdrop {
   background-color: rgba(255, 255, 255, 0.5);
 }
 </style>
