@@ -1,6 +1,7 @@
 # dotenv environment variables file
 .env
 .furo-env
+.furo-env.development
 
 # Dependency directories
 node_modules/
