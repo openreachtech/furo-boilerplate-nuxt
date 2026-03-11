@@ -1,7 +1,7 @@
 {
   "name": "@openreachtech/furo-boilerplate-nuxt",
   "version": "0.0.0",
-  "description": "Based on furo-boilerplate-nuxt version 1.11.1",
+  "description": "Based on furo-boilerplate-nuxt version 1.11.2",
   "main": "index.js",
   "scripts": {
     "build": "nuxt build",
