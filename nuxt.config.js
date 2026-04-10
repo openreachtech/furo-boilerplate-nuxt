@@ -67,6 +67,14 @@ export default defineNuxtConfig({
     ],
   },
 
+  hooks: {
+    'pages:extend' (pages) {
+      kickOutJsFilesFromPages({
+        pages,
+      })
+    },
+  },
+
   // Runtime configuration: https://nuxt.com/docs/api/nuxt-config#runtimeconfig
   runtimeConfig: {
     // on server
@@ -96,3 +104,46 @@ export default defineNuxtConfig({
     '.furo-env.development',
   ],
 })
+
+/**
+ * Kick out `.js` files from `/pages`.
+ *
+ * @param {{
+ *   pages: Array<import('@nuxt/schema').NuxtPage>
+ * }} params - Parameters.
+ * @returns {void}
+ */
+function kickOutJsFilesFromPages ({
+  pages,
+}) {
+  pages.splice(
+    0,
+    pages.length,
+    ...filterJsPages({
+      pages,
+    })
+  )
+}
+
+/**
+ * Filter js pages.
+ *
+ * @param {{
+ *   pages: Array<import('@nuxt/schema').NuxtPage>
+ * }} params - Parameters.
+ * @returns {Array<import('@nuxt/schema').NuxtPage>}
+ */
+function filterJsPages ({
+  pages,
+}) {
+  return pages
+    .filter(page => !page.file?.endsWith('.js'))
+    .map(page => ({
+      ...page,
+      children: Array.isArray(page.children)
+        ? filterJsPages({
+          pages: page.children,
+        })
+        : page.children,
+    }))
+}
