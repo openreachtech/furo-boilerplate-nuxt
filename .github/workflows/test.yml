@@ -1,18 +1,20 @@
 name: Node.js CI
 
 on:
-  push:
-    branches:
-      - dev
-      - env
-      - main
   pull_request:
     branches:
       - '**'
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, light]
 
     strategy:
       matrix:
@@ -25,8 +27,6 @@ jobs:
       - name: 🏗 Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v4
         with:
-          cache: 'npm'
-          cache-dependency-path: '**/package-lock.json'
           node-version: ${{ matrix.node-version }}
           registry-url: https://npm.pkg.github.com
 
@@ -35,7 +35,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.TO_REPO_OF_ORT_PRIVATE }}
 
-      - name: 🔍 Run linter
+      - name: 🧵 Run linter
         run: npm run lint
 
       - name: 🧪 Run tests
