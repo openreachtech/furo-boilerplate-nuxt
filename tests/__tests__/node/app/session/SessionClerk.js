@@ -1,6 +1,6 @@
 import SessionClerk from '~/app/session/SessionClerk.js'
 
-import sessionStore from '~/app/modules/sessionStore.js'
+import sessionConfig from '~/app/session/session.config.js'
 
 describe('SessionClerk', () => {
   describe('constructor', () => {
@@ -107,7 +107,7 @@ describe('SessionClerk', () => {
         const clerk = SessionClerk.create()
 
         expect(clerk.store)
-          .toBe(sessionStore) // same reference
+          .toBe(sessionConfig) // same reference
       })
     })
   })

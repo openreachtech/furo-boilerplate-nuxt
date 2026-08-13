@@ -1,7 +1,7 @@
-import sessionStore from '~/app/modules/sessionStore.js'
+import sessionConfig from '~/app/session/session.config.js'
 
 /**
- * The single gate to the in-memory access token, backed by the `sessionStore` singleton. Every read
+ * The single gate to the in-memory access token, backed by the `sessionConfig` singleton. Every read
  * / write / clear of the token goes through here — no component or request payload touches the store
  * directly.
  */
@@ -24,7 +24,7 @@ export default class SessionClerk {
    * @returns {SessionClerk} - Instance of this class.
    */
   static create ({
-    store = sessionStore,
+    store = sessionConfig,
   } = {}) {
     return new this({
       store,
@@ -103,12 +103,12 @@ export default class SessionClerk {
 
 /**
  * @typedef {{
- *   store: import('~/app/modules/sessionStore.js').SessionStore
+ *   store: import('~/app/session/session.config.js').SessionConfig
  * }} SessionClerkParams
  */
 
 /**
  * @typedef {{
- *   store?: import('~/app/modules/sessionStore.js').SessionStore
+ *   store?: import('~/app/session/session.config.js').SessionConfig
  * }} SessionClerkFactoryParams
  */
