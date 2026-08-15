@@ -1,18 +1,9 @@
-/**
- * Session config.
- *
- * The single in-memory holder of the access token, and of the in-flight renew promise used to
- * deduplicate concurrent refreshes. Mutated in place — the same plain-singleton pattern as
- * `app/graphql/graphql.config.js` — so nothing else ever touches token storage.
- *
- * @typedef {{
- *   accessToken: string | null
- *   renewingPromise: Promise<string | null> | null
- * }} SessionConfig
- */
+import SessionStore from '~/app/session/SessionStore.js'
 
-/** @type {SessionConfig} */
-export default {
-  accessToken: null,
-  renewingPromise: null,
-}
+/**
+ * The shared session store singleton — one `SessionStore` instance for the whole app, injected by
+ * default into `SessionClerk` and `SessionRenewer`. It lives here (the same module-singleton wiring
+ * as `app/graphql/graphql.config.js`) so both share the one holder; the state itself is owned by the
+ * `SessionStore` class, not a plain object.
+ */
+export default SessionStore.create()

@@ -103,12 +103,12 @@ export default class SessionClerk {
 
 /**
  * @typedef {{
- *   store: import('~/app/session/session.config.js').SessionConfig
+ *   store: import('~/app/session/session.config.js').default
  * }} SessionClerkParams
  */
 
 /**
  * @typedef {{
- *   store?: import('~/app/session/session.config.js').SessionConfig
+ *   store?: import('~/app/session/session.config.js').default
  * }} SessionClerkFactoryParams
  */
