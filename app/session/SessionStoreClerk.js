@@ -1,33 +1,33 @@
 import sessionConfig from '~/app/session/session.config.js'
 
 /**
- * The single gate to the in-memory access token, backed by the `sessionConfig` singleton. Every read
- * / write / clear of the token goes through here — no component or request payload touches the store
- * directly.
+ * The single gate to the in-memory access token, backed by the `sessionConfig` singleton (a
+ * `SessionStore`). Every read / write / clear of the token goes through here — no component or
+ * request payload touches the store directly.
  */
-export default class SessionClerk {
+export default class SessionStoreClerk {
   /**
    * Constructor.
    *
-   * @param {SessionClerkParams} params - Parameters.
+   * @param {SessionStoreClerkParams} params - Parameters.
    */
   constructor ({
-    store,
+    storeConfig,
   }) {
-    this.store = store
+    this.storeConfig = storeConfig
   }
 
   /**
    * Factory method.
    *
-   * @param {SessionClerkFactoryParams} [params] - Parameters.
-   * @returns {SessionClerk} - Instance of this class.
+   * @param {SessionStoreClerkFactoryParams} [params] - Parameters.
+   * @returns {SessionStoreClerk} - Instance of this class.
    */
   static create ({
-    store = sessionConfig,
+    storeConfig = sessionConfig,
   } = {}) {
     return new this({
-      store,
+      storeConfig,
     })
   }
 
@@ -58,10 +58,10 @@ export default class SessionClerk {
   /**
    * Clear the access token.
    *
-   * @returns {SessionClerk} - For method chaining.
+   * @returns {SessionStoreClerk} - For method chaining.
    */
   clearToken () {
-    this.store.accessToken = null
+    this.storeConfig.accessToken = null
 
     return this
   }
@@ -72,12 +72,12 @@ export default class SessionClerk {
    * @param {{
    *   token: string
    * }} params - Parameters.
-   * @returns {SessionClerk} - For method chaining.
+   * @returns {SessionStoreClerk} - For method chaining.
    */
   recordToken ({
     token,
   }) {
-    this.store.accessToken = token
+    this.storeConfig.accessToken = token
 
     return this
   }
@@ -88,7 +88,7 @@ export default class SessionClerk {
    * @returns {string | null} - The access token, or null when none is held.
    */
   retrieveToken () {
-    return this.store.accessToken
+    return this.storeConfig.accessToken
   }
 
   /**
@@ -103,12 +103,12 @@ export default class SessionClerk {
 
 /**
  * @typedef {{
- *   store: import('~/app/session/session.config.js').default
- * }} SessionClerkParams
+ *   storeConfig: import('~/app/session/session.config.js').default
+ * }} SessionStoreClerkParams
  */
 
 /**
  * @typedef {{
- *   store?: import('~/app/session/session.config.js').default
- * }} SessionClerkFactoryParams
+ *   storeConfig?: import('~/app/session/session.config.js').default
+ * }} SessionStoreClerkFactoryParams
  */

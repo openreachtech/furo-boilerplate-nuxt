@@ -3,7 +3,7 @@
  *
  * A store — a class that owns the mutable session state — not a plain object. It holds the access
  * token and the in-flight renew promise used to deduplicate concurrent refreshes. Its single
- * instance (`session.config.js`) is shared by `SessionClerk` and `SessionRenewer`, which read and
+ * instance (`session.config.js`) is shared by `SessionStoreClerk` and `SessionRenewer`, which read and
  * write these fields. Nothing is ever written to `localStorage` / `sessionStorage`.
  *
  * It is a plain class (not a Nuxt `useState()` store) on purpose: the token is read from

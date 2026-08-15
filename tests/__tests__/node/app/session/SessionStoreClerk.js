@@ -1,15 +1,15 @@
-import SessionClerk from '~/app/session/SessionClerk.js'
+import SessionStoreClerk from '~/app/session/SessionStoreClerk.js'
 
 import sessionConfig from '~/app/session/session.config.js'
 
-describe('SessionClerk', () => {
+describe('SessionStoreClerk', () => {
   describe('constructor', () => {
     describe('to keep properties', () => {
-      describe('#store', () => {
+      describe('#storeConfig', () => {
         const cases = [
           {
             params: {
-              store: {
+              storeConfig: {
                 accessToken: 'access-token-01',
                 renewingPromise: null,
               },
@@ -17,7 +17,7 @@ describe('SessionClerk', () => {
           },
           {
             params: {
-              store: {
+              storeConfig: {
                 accessToken: null,
                 renewingPromise: null,
               },
@@ -25,26 +25,26 @@ describe('SessionClerk', () => {
           },
         ]
 
-        test.each(cases)('accessToken: $params.store.accessToken', ({
+        test.each(cases)('accessToken: $params.storeConfig.accessToken', ({
           params,
         }) => {
-          const clerk = SessionClerk.create(params)
+          const clerk = SessionStoreClerk.create(params)
 
           expect(clerk)
-            .toHaveProperty('store', params.store)
+            .toHaveProperty('storeConfig', params.storeConfig)
         })
       })
     })
   })
 })
 
-describe('SessionClerk', () => {
+describe('SessionStoreClerk', () => {
   describe('.create()', () => {
     describe('should be instance of own class', () => {
       const cases = [
         {
           factoryParams: {
-            store: {
+            storeConfig: {
               accessToken: 'access-token-11',
               renewingPromise: null,
             },
@@ -52,7 +52,7 @@ describe('SessionClerk', () => {
         },
         {
           factoryParams: {
-            store: {
+            storeConfig: {
               accessToken: 'access-token-12',
               renewingPromise: null,
             },
@@ -60,13 +60,13 @@ describe('SessionClerk', () => {
         },
       ]
 
-      test.each(cases)('accessToken: $factoryParams.store.accessToken', ({
+      test.each(cases)('accessToken: $factoryParams.storeConfig.accessToken', ({
         factoryParams,
       }) => {
-        const clerk = SessionClerk.create(factoryParams)
+        const clerk = SessionStoreClerk.create(factoryParams)
 
         expect(clerk)
-          .toBeInstanceOf(SessionClerk)
+          .toBeInstanceOf(SessionStoreClerk)
       })
     })
 
@@ -74,7 +74,7 @@ describe('SessionClerk', () => {
       const cases = [
         {
           factoryParams: {
-            store: {
+            storeConfig: {
               accessToken: 'access-token-13',
               renewingPromise: null,
             },
@@ -82,7 +82,7 @@ describe('SessionClerk', () => {
         },
         {
           factoryParams: {
-            store: {
+            storeConfig: {
               accessToken: 'access-token-14',
               renewingPromise: null,
             },
@@ -90,10 +90,10 @@ describe('SessionClerk', () => {
         },
       ]
 
-      test.each(cases)('accessToken: $factoryParams.store.accessToken', ({
+      test.each(cases)('accessToken: $factoryParams.storeConfig.accessToken', ({
         factoryParams,
       }) => {
-        const SpyClass = globalThis.constructorSpy.spyOn(SessionClerk)
+        const SpyClass = globalThis.constructorSpy.spyOn(SessionStoreClerk)
 
         SpyClass.create(factoryParams)
 
@@ -102,24 +102,24 @@ describe('SessionClerk', () => {
       })
     })
 
-    describe('should use default store value', () => {
+    describe('should use default storeConfig value', () => {
       test('to be the shared singleton', () => {
-        const clerk = SessionClerk.create()
+        const clerk = SessionStoreClerk.create()
 
-        expect(clerk.store)
+        expect(clerk.storeConfig)
           .toBe(sessionConfig) // same reference
       })
     })
   })
 })
 
-describe('SessionClerk', () => {
+describe('SessionStoreClerk', () => {
   describe('#saveToken()', () => {
     describe('with a present token', () => {
       const cases = [
         {
           factoryParams: {
-            store: {
+            storeConfig: {
               accessToken: null,
               renewingPromise: null,
             },
@@ -131,7 +131,7 @@ describe('SessionClerk', () => {
         },
         {
           factoryParams: {
-            store: {
+            storeConfig: {
               accessToken: 'access-token-old-22',
               renewingPromise: null,
             },
@@ -148,11 +148,11 @@ describe('SessionClerk', () => {
         params,
         expected,
       }) => {
-        const clerk = SessionClerk.create(factoryParams)
+        const clerk = SessionStoreClerk.create(factoryParams)
 
         clerk.saveToken(params)
 
-        expect(factoryParams.store.accessToken)
+        expect(factoryParams.storeConfig.accessToken)
           .toBe(expected)
       })
     })
@@ -161,7 +161,7 @@ describe('SessionClerk', () => {
       const cases = [
         {
           factoryParams: {
-            store: {
+            storeConfig: {
               accessToken: null,
               renewingPromise: null,
             },
@@ -172,7 +172,7 @@ describe('SessionClerk', () => {
         },
         {
           factoryParams: {
-            store: {
+            storeConfig: {
               accessToken: null,
               renewingPromise: null,
             },
@@ -187,7 +187,7 @@ describe('SessionClerk', () => {
         factoryParams,
         params,
       }) => {
-        const clerk = SessionClerk.create(factoryParams)
+        const clerk = SessionStoreClerk.create(factoryParams)
 
         const received = clerk.saveToken(params)
 
@@ -200,7 +200,7 @@ describe('SessionClerk', () => {
       const cases = [
         {
           factoryParams: {
-            store: {
+            storeConfig: {
               accessToken: 'access-token-25',
               renewingPromise: null,
             },
@@ -211,7 +211,7 @@ describe('SessionClerk', () => {
         },
         {
           factoryParams: {
-            store: {
+            storeConfig: {
               accessToken: 'access-token-26',
               renewingPromise: null,
             },
@@ -226,7 +226,7 @@ describe('SessionClerk', () => {
         factoryParams,
         params,
       }) => {
-        const clerk = SessionClerk.create(factoryParams)
+        const clerk = SessionStoreClerk.create(factoryParams)
 
         const received = clerk.saveToken(params)
 
@@ -235,11 +235,11 @@ describe('SessionClerk', () => {
       })
     })
 
-    describe('to clear the store on an empty token', () => {
+    describe('to clear the storeConfig on an empty token', () => {
       const cases = [
         {
           factoryParams: {
-            store: {
+            storeConfig: {
               accessToken: 'access-token-27',
               renewingPromise: null,
             },
@@ -250,7 +250,7 @@ describe('SessionClerk', () => {
         },
         {
           factoryParams: {
-            store: {
+            storeConfig: {
               accessToken: 'access-token-28',
               renewingPromise: null,
             },
@@ -265,24 +265,24 @@ describe('SessionClerk', () => {
         factoryParams,
         params,
       }) => {
-        const clerk = SessionClerk.create(factoryParams)
+        const clerk = SessionStoreClerk.create(factoryParams)
 
         clerk.saveToken(params)
 
-        expect(factoryParams.store.accessToken)
+        expect(factoryParams.storeConfig.accessToken)
           .toBeNull()
       })
     })
   })
 })
 
-describe('SessionClerk', () => {
+describe('SessionStoreClerk', () => {
   describe('#recordToken()', () => {
-    describe('to store the token into the store', () => {
+    describe('to storeConfig the token into the storeConfig', () => {
       const cases = [
         {
           factoryParams: {
-            store: {
+            storeConfig: {
               accessToken: null,
               renewingPromise: null,
             },
@@ -294,7 +294,7 @@ describe('SessionClerk', () => {
         },
         {
           factoryParams: {
-            store: {
+            storeConfig: {
               accessToken: 'access-token-old-62',
               renewingPromise: null,
             },
@@ -311,24 +311,24 @@ describe('SessionClerk', () => {
         params,
         expected,
       }) => {
-        const clerk = SessionClerk.create(factoryParams)
+        const clerk = SessionStoreClerk.create(factoryParams)
 
         clerk.recordToken(params)
 
-        expect(factoryParams.store.accessToken)
+        expect(factoryParams.storeConfig.accessToken)
           .toBe(expected)
       })
     })
   })
 })
 
-describe('SessionClerk', () => {
+describe('SessionStoreClerk', () => {
   describe('#clearToken()', () => {
-    describe('to set the stored token to null', () => {
+    describe('to set the storeConfigd token to null', () => {
       const cases = [
         {
           factoryParams: {
-            store: {
+            storeConfig: {
               accessToken: 'access-token-31',
               renewingPromise: null,
             },
@@ -336,7 +336,7 @@ describe('SessionClerk', () => {
         },
         {
           factoryParams: {
-            store: {
+            storeConfig: {
               accessToken: 'access-token-32',
               renewingPromise: null,
             },
@@ -344,27 +344,27 @@ describe('SessionClerk', () => {
         },
       ]
 
-      test.each(cases)('accessToken: $factoryParams.store.accessToken', ({
+      test.each(cases)('accessToken: $factoryParams.storeConfig.accessToken', ({
         factoryParams,
       }) => {
-        const clerk = SessionClerk.create(factoryParams)
+        const clerk = SessionStoreClerk.create(factoryParams)
 
         clerk.clearToken()
 
-        expect(factoryParams.store.accessToken)
+        expect(factoryParams.storeConfig.accessToken)
           .toBeNull()
       })
     })
   })
 })
 
-describe('SessionClerk', () => {
+describe('SessionStoreClerk', () => {
   describe('#existsToken()', () => {
     describe('with a held token', () => {
       const cases = [
         {
           factoryParams: {
-            store: {
+            storeConfig: {
               accessToken: 'access-token-41',
               renewingPromise: null,
             },
@@ -372,7 +372,7 @@ describe('SessionClerk', () => {
         },
         {
           factoryParams: {
-            store: {
+            storeConfig: {
               accessToken: 'access-token-42',
               renewingPromise: null,
             },
@@ -380,10 +380,10 @@ describe('SessionClerk', () => {
         },
       ]
 
-      test.each(cases)('accessToken: $factoryParams.store.accessToken', ({
+      test.each(cases)('accessToken: $factoryParams.storeConfig.accessToken', ({
         factoryParams,
       }) => {
-        const clerk = SessionClerk.create(factoryParams)
+        const clerk = SessionStoreClerk.create(factoryParams)
 
         const received = clerk.existsToken()
 
@@ -396,7 +396,7 @@ describe('SessionClerk', () => {
       const cases = [
         {
           factoryParams: {
-            store: {
+            storeConfig: {
               accessToken: null,
               renewingPromise: null,
             },
@@ -404,7 +404,7 @@ describe('SessionClerk', () => {
         },
         {
           factoryParams: {
-            store: {
+            storeConfig: {
               accessToken: null,
               renewingPromise: 'renewing-promise-44',
             },
@@ -412,10 +412,10 @@ describe('SessionClerk', () => {
         },
       ]
 
-      test.each(cases)('renewingPromise: $factoryParams.store.renewingPromise', ({
+      test.each(cases)('renewingPromise: $factoryParams.storeConfig.renewingPromise', ({
         factoryParams,
       }) => {
-        const clerk = SessionClerk.create(factoryParams)
+        const clerk = SessionStoreClerk.create(factoryParams)
 
         const received = clerk.existsToken()
 
@@ -426,13 +426,13 @@ describe('SessionClerk', () => {
   })
 })
 
-describe('SessionClerk', () => {
+describe('SessionStoreClerk', () => {
   describe('#retrieveToken()', () => {
     describe('with a held token', () => {
       const cases = [
         {
           factoryParams: {
-            store: {
+            storeConfig: {
               accessToken: 'access-token-51',
               renewingPromise: null,
             },
@@ -441,7 +441,7 @@ describe('SessionClerk', () => {
         },
         {
           factoryParams: {
-            store: {
+            storeConfig: {
               accessToken: 'access-token-52',
               renewingPromise: null,
             },
@@ -450,11 +450,11 @@ describe('SessionClerk', () => {
         },
       ]
 
-      test.each(cases)('accessToken: $factoryParams.store.accessToken', ({
+      test.each(cases)('accessToken: $factoryParams.storeConfig.accessToken', ({
         factoryParams,
         expected,
       }) => {
-        const clerk = SessionClerk.create(factoryParams)
+        const clerk = SessionStoreClerk.create(factoryParams)
 
         const received = clerk.retrieveToken()
 
@@ -467,7 +467,7 @@ describe('SessionClerk', () => {
       const cases = [
         {
           factoryParams: {
-            store: {
+            storeConfig: {
               accessToken: null,
               renewingPromise: null,
             },
@@ -475,7 +475,7 @@ describe('SessionClerk', () => {
         },
         {
           factoryParams: {
-            store: {
+            storeConfig: {
               accessToken: null,
               renewingPromise: 'renewing-promise-54',
             },
@@ -483,10 +483,10 @@ describe('SessionClerk', () => {
         },
       ]
 
-      test.each(cases)('renewingPromise: $factoryParams.store.renewingPromise', ({
+      test.each(cases)('renewingPromise: $factoryParams.storeConfig.renewingPromise', ({
         factoryParams,
       }) => {
-        const clerk = SessionClerk.create(factoryParams)
+        const clerk = SessionStoreClerk.create(factoryParams)
 
         const received = clerk.retrieveToken()
 
