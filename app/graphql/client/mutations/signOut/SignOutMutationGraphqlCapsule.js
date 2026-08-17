@@ -12,9 +12,7 @@ export default class SignOutMutationGraphqlCapsule extends BaseAppGraphqlCapsule
    * @returns {boolean | null} Whether the session was signed out.
    */
   get isSignedOut () {
-    const content = this.extractContent()
-
-    return content
+    return this.content
       ?.signOut
       ?.isSignedOut
       ?? null
