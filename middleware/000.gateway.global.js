@@ -7,20 +7,12 @@ import {
 } from '#app'
 
 import {
-  useGraphqlClient,
-
   AccessTokenClerk,
   FuroMeta,
 } from '@openreachtech/furo-nuxt'
 
-import RenewAccessTokenMutationGraphqlLauncher from '~/app/graphql/client/mutations/renewAccessToken/RenewAccessTokenMutationGraphqlLauncher.js'
-
-const {
-  invokeRequestOnEvent,
-} = useGraphqlClient(RenewAccessTokenMutationGraphqlLauncher)
-
 // TODO: should be moved to configuration
-const SIGN_IN_PATH = '/samples/sign-in'
+const SIGN_IN_PATH = '/sign-in'
 
 /**
  * Gateway middleware (global)
@@ -30,13 +22,6 @@ const SIGN_IN_PATH = '/samples/sign-in'
  */
 export default defineNuxtRouteMiddleware(async (to, from) => {
   const accessTokenClerk = AccessTokenClerk.create()
-
-  // overwrite access token by received access token ---------------------------
-  const accessToken = await sendRenewAccessToken()
-
-  accessTokenClerk.saveToken({
-    token: accessToken,
-  })
 
   if (accessTokenClerk.existsToken()) {
     return goNextAsIs()
@@ -58,25 +43,6 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
 
   return navigateTo(`${SIGN_IN_PATH}?redirect=${to.fullPath}`)
 })
-
-/**
- * Send renew access token.
- *
- * @returns {Promise<string>}
- */
-async function sendRenewAccessToken () {
-  const accessToken = await new Promise(resolve => {
-    invokeRequestOnEvent({
-      hooks: {
-        async afterRequest (capsule) {
-          resolve(capsule.accessToken)
-        },
-      },
-    })
-  })
-
-  return accessToken
-}
 
 /**
  * Go next as is.
