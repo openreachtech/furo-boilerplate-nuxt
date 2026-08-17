@@ -1,14 +1,6 @@
 <script>
-import {
-  NuxtPage,
-} from '#components'
-
 export default {
   name: 'GatewayLayout',
-
-  components: {
-    NuxtPage,
-  },
 }
 </script>
 
@@ -19,7 +11,7 @@ export default {
     </header>
 
     <main class="unit-main">
-      <NuxtPage />
+      <slot />
     </main>
 
     <footer class="unit-footer">
