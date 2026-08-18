@@ -7,3 +7,7 @@ export const STORAGE_KEY = {
 
   ACCESS_TOKEN: 'access_token',
 }
+
+export const ROUTE_PATH = {
+  SIGN_IN: '/samples/sign-in',
+}

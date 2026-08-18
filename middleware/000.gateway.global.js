@@ -7,75 +7,93 @@ import {
 } from '#app'
 
 import {
-  useGraphqlClient,
-
-  AccessTokenClerk,
   FuroMeta,
 } from '@openreachtech/furo-nuxt'
 
-import RenewAccessTokenMutationGraphqlLauncher from '~/app/graphql/client/mutations/renewAccessToken/RenewAccessTokenMutationGraphqlLauncher.js'
+import {
+  ROUTE_PATH,
+} from '~/app/constants.js'
 
-const {
-  invokeRequestOnEvent,
-} = useGraphqlClient(RenewAccessTokenMutationGraphqlLauncher)
+import {
+  useSessionStore,
+} from '~/app/session/useSessionStore.js'
 
-// TODO: should be moved to configuration
-const SIGN_IN_PATH = '/samples/sign-in'
+import SessionStoreClerk from '~/app/session/SessionStoreClerk.js'
+import SessionRenewer from '~/app/session/SessionRenewer.js'
+import SessionGatekeeper from '~/app/session/SessionGatekeeper.js'
 
 /**
- * Gateway middleware (global)
+ * Gateway middleware (global).
  *
- * @param {import('nuxt/app').RouteMiddleware} context - The context
- * @returns {Promise<import('nuxt/app').RouteMiddleware>}
+ * Ensures a usable session on every guarded navigation: a public route passes through untouched; a
+ * guarded route proceeds when `SessionGatekeeper` can establish a session (a token is held, or one is
+ * renewed from the refresh cookie), otherwise it redirects to sign-in with a `redirect` back-link.
+ *
+ * @type {import('nuxt/app').RouteMiddleware}
  */
-export default defineNuxtRouteMiddleware(async (to, from) => {
-  const accessTokenClerk = AccessTokenClerk.create()
-
-  // overwrite access token by received access token ---------------------------
-  const accessToken = await sendRenewAccessToken()
-
-  accessTokenClerk.saveToken({
-    token: accessToken,
-  })
-
-  if (accessTokenClerk.existsToken()) {
+export default defineNuxtRouteMiddleware(async to => {
+  if (
+    isPublicRoute({
+      routeTo: to,
+    })
+  ) {
     return goNextAsIs()
   }
 
-  // should skip if sign-in page -----------------------------------------------
-  if (to.path === SIGN_IN_PATH) {
+  const gatekeeper = createSessionGatekeeper()
+
+  const hasSession = await gatekeeper.establishesSession()
+
+  if (hasSession) {
     return goNextAsIs()
   }
 
-  // should skip to confirm authentication -------------------------------------
-  const furoMeta = FuroMeta.create({
-    routeTo: to,
-  })
-
-  if (furoMeta.skipFilter) {
-    return goNextAsIs()
-  }
-
-  return navigateTo(`${SIGN_IN_PATH}?redirect=${to.fullPath}`)
+  return navigateTo(`${ROUTE_PATH.SIGN_IN}?redirect=${to.fullPath}`)
 })
 
 /**
- * Send renew access token.
+ * Check whether a route is public (requires no session).
  *
- * @returns {Promise<string>}
+ * @param {{
+ *   routeTo: import('vue-router').RouteLocationNormalized
+ * }} params - Parameters.
+ * @returns {boolean} - true when the route needs no session.
  */
-async function sendRenewAccessToken () {
-  const accessToken = await new Promise(resolve => {
-    invokeRequestOnEvent({
-      hooks: {
-        async afterRequest (capsule) {
-          resolve(capsule.accessToken)
-        },
-      },
-    })
+function isPublicRoute ({
+  routeTo,
+}) {
+  if (routeTo.path === ROUTE_PATH.SIGN_IN) {
+    return true
+  }
+
+  const furoMeta = FuroMeta.create({
+    routeTo,
   })
 
-  return accessToken
+  return furoMeta.skipFilter
+}
+
+/**
+ * Create the session gatekeeper, wiring the store through the clerk and the renewer.
+ *
+ * @returns {SessionGatekeeper} - The gatekeeper.
+ */
+function createSessionGatekeeper () {
+  const sessionStore = useSessionStore()
+
+  const sessionClerk = SessionStoreClerk.create({
+    sessionStore,
+  })
+
+  const sessionRenewer = SessionRenewer.create({
+    sessionStore,
+    sessionClerk,
+  })
+
+  return SessionGatekeeper.create({
+    sessionClerk,
+    sessionRenewer,
+  })
 }
 
 /**
