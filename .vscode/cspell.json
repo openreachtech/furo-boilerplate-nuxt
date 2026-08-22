@@ -9,6 +9,8 @@
     "restfulapi",
     "nuxt",
 
-    "tablayout"
+    "tablayout",
+
+    "esac"
   ]
 }
