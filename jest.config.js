@@ -1,5 +1,6 @@
 const sharedConfig = {
   setupFilesAfterEnv: [
+    '@openreachtech/jest-deep-containing/lib/setup-expect-deepContaining.js',
     '<rootDir>/tests/setupAfterEnv.js',
   ],
   moduleFileExtensions: [
