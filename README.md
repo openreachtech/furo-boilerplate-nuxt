@@ -75,7 +75,7 @@ npm test -- --watch
 | `runtimeConfig` | the environment file's values, spread into the server config and into `public` alike |
 | `watch` | editing `.furo-env.development` restarts the dev server |
 
-Global CSS is loaded in one order: furo-nuxt's three structural stylesheets — the cascade layer declaration, the z-index layers and the reset — then `assets/css/main.css`.
+Global CSS is loaded in one order: furo-nuxt's three structural stylesheets — the cascade layer declaration, the z-index layers and the reset — then `assets/css/variables.css` and `assets/css/main.css`.
 
 furo-nuxt ships three more stylesheets that this boilerplate deliberately does not load, because what they decide belongs to the application:
 
@@ -87,7 +87,7 @@ furo-nuxt ships three more stylesheets that this boilerplate deliberately does n
 
 Nothing stops you from adding one back to `css` in `nuxt.config.js`, but the intent is that the application writes its own.
 
-Some custom properties furo-nuxt reads it never declares, so the application has to. The reset needs `--value-golden-ratio` for the `<p>` line height; the rest are needed only by the component that reads them.
+Some custom properties furo-nuxt reads it never declares, so the application has to. `assets/css/variables.css` is where they go: it names every one of them and sets none of them — each is commented out, waiting for the application to choose a value. The reset reads `--value-golden-ratio` and so is always in effect; the rest matter only when the component that reads them is used.
 
 | what reads it | custom properties |
 | :-- | :-- |
@@ -98,7 +98,7 @@ Some custom properties furo-nuxt reads it never declares, so the application has
 | `<FuroPagination>` | `--color-background-highlight`, `--color-text-highlight`, `--color-background-hover`, `--color-text-hover`, `--color-disabled` |
 | `<FuroTabLayout>` | `--color-background-highlight`, `--color-text-highlight` |
 
-Declare them in a stylesheet of your own and add it to `css` in `nuxt.config.js`, after furo-nuxt's three and before `main.css`.
+None of this is the application's whole set of variables — it is the contract with furo-nuxt and no more. A palette and the sizes the application chooses for itself belong in a stylesheet of their own, added to `css` in `nuxt.config.js`.
 
 ### Where the application code goes
 
@@ -112,7 +112,9 @@ Declare them in a stylesheet of your own and add it to `css` in `nuxt.config.js`
 │   ├── restfulapi/renchan/       # base classes for a renchan RESTful API
 │   ├── shares/AppShare.js        # the object provided as `$furo`
 │   └── vue/                      # the context base class and the page component factory
-├── assets/css/main.css           # the one application-wide stylesheet
+├── assets/css/
+│   ├── variables.css             # the custom properties furo-nuxt expects, none of them set
+│   └── main.css                  # application-wide styles
 ├── components/                   # write the components here
 ├── composables/                  # write the composables here
 ├── layouts/default.vue           # an empty layout — a slot and nothing else

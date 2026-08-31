@@ -40,24 +40,16 @@ export default defineNuxtConfig({
   //                                              classes, and locking <body> behind an
   //                                              open <dialog>
   //
-  // Define your own in a stylesheet of your own and add it below, after furo-nuxt's three
-  // and before `main.css`. These are the custom properties furo-nuxt reads but never
-  // declares, so the application has to:
-  //
-  //   `0100.reset.css`              --value-golden-ratio
-  //   <FuroButtonDialog>            --size-thinnest
-  //   <FuroDialog>                  --color-background-highlight, --color-text-highlight
-  //   <FuroOffCanvasMenuLayout>     --color-background-header, --color-background-nav,
-  //                                 --size-header-height, --size-nav-width,
-  //                                 --size-screen-height
-  //   <FuroPagination>              --color-background-highlight, --color-text-highlight,
-  //                                 --color-background-hover, --color-text-hover,
-  //                                 --color-disabled
-  //   <FuroTabLayout>               --color-background-highlight, --color-text-highlight
+  // Add one back here if the application wants it, but the intent is that the application
+  // writes its own. `~/assets/css/variables.css` is where that starts: it names the custom
+  // properties furo-nuxt reads but never declares, every one of them commented out and
+  // waiting for the application to choose a value.
   css: [
     '~/node_modules/@openreachtech/furo-nuxt/lib/assets/css/0000.furo.css',
     '~/node_modules/@openreachtech/furo-nuxt/lib/assets/css/0020.variables-z-index.css',
     '~/node_modules/@openreachtech/furo-nuxt/lib/assets/css/0100.reset.css',
+
+    '~/assets/css/variables.css',
 
     '~/assets/css/main.css',
   ],

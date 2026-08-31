@@ -75,7 +75,7 @@ npm test -- --watch
 | `runtimeConfig` | 環境ファイルの値を、サーバー側の設定と `public` の両方に展開する |
 | `watch` | `.furo-env.development` を編集すると開発サーバーが再起動する |
 
-グローバル CSS の読み込み順は 1 つに決まっています。furo-nuxt の骨組みとなる 3 枚 — カスケードレイヤーの宣言、z-index の階層、リセット — 次に `assets/css/main.css`。
+グローバル CSS の読み込み順は 1 つに決まっています。furo-nuxt の骨組みとなる 3 枚 — カスケードレイヤーの宣言、z-index の階層、リセット — 次に `assets/css/variables.css`、最後に `assets/css/main.css`。
 
 furo-nuxt はさらに 3 枚のスタイルシートを同梱していますが、このボイラープレートでは意図的に読み込みません。これらが決めることは、アプリケーションが決めるべきことだからです。
 
@@ -87,7 +87,7 @@ furo-nuxt はさらに 3 枚のスタイルシートを同梱していますが�
 
 `nuxt.config.js` の `css` に戻すことは妨げませんが、アプリケーションが自前で書くことを意図しています。
 
-furo-nuxt が読むだけで定義していないカスタムプロパティがあります。アプリケーション側で定義してください。リセットは `<p>` の行の高さに `--value-golden-ratio` を必要とします。残りは、それを読むコンポーネントを使う場合にだけ必要です。
+furo-nuxt が読むだけで定義していないカスタムプロパティがあります。その置き場所が `assets/css/variables.css` です。名前だけを並べ、値は 1 つも決めていません。すべてコメントアウトした状態で、アプリケーションが値を選ぶのを待っています。リセットが読む `--value-golden-ratio` は常に効きます。残りは、それを読むコンポーネントを使う場合にだけ必要です。
 
 | 読んでいるもの | カスタムプロパティ |
 | :-- | :-- |
@@ -98,7 +98,7 @@ furo-nuxt が読むだけで定義していないカスタムプロパティが�
 | `<FuroPagination>` | `--color-background-highlight`, `--color-text-highlight`, `--color-background-hover`, `--color-text-hover`, `--color-disabled` |
 | `<FuroTabLayout>` | `--color-background-highlight`, `--color-text-highlight` |
 
-自前のスタイルシートで定義し、`nuxt.config.js` の `css` に、furo-nuxt の 3 枚より後・`main.css` より前で追加してください。
+これはアプリケーションの変数のすべてではありません。furo-nuxt との契約であって、それ以上ではありません。アプリケーションが自分で決めるパレットやサイズは、自前のスタイルシートに置き、`nuxt.config.js` の `css` に追加してください。
 
 ### アプリケーションのコードを置く場所
 
@@ -112,7 +112,9 @@ furo-nuxt が読むだけで定義していないカスタムプロパティが�
 │   ├── restfulapi/renchan/       # renchan の RESTful API 向けの基底クラス
 │   ├── shares/AppShare.js        # `$furo` として provide されるオブジェクト
 │   └── vue/                      # コンテキストの基底クラスとページコンポーネントのファクトリー
-├── assets/css/main.css           # アプリケーション全体のスタイルシート 1 枚
+├── assets/css/
+│   ├── variables.css             # furo-nuxt が要求するカスタムプロパティ。値は未設定
+│   └── main.css                  # アプリケーション全体のスタイル
 ├── components/                   # コンポーネントはここに書く
 ├── composables/                  # composable はここに書く
 ├── layouts/default.vue           # 空のレイアウト。slot だけ

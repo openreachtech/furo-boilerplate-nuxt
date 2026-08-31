@@ -1,0 +1,38 @@
+/*
+ * The custom properties furo-nuxt reads but never declares.
+ *
+ * Every one of them is commented out on purpose. What a colour or a size should
+ * be is the application's decision, and the boilerplate does not make it — fill
+ * in the ones you need and leave the rest alone.
+ *
+ * Nothing here is a complete list of the application's variables. It is the
+ * contract with furo-nuxt, and no more; the application's own palette and its
+ * own sizes belong in a stylesheet of their own.
+ */
+
+:root {
+  /*
+   * Read by `0100.reset.css`, and so always in effect.
+   * Until it is given a value, `<p>` falls back to `line-height: normal`.
+   */
+  /* --value-golden-ratio: ; */
+
+  /* Read by <FuroButtonDialog> */
+  /* --size-thinnest: ; */
+
+  /* Read by <FuroDialog>, <FuroPagination> and <FuroTabLayout> */
+  /* --color-background-highlight: ; */
+  /* --color-text-highlight: ; */
+
+  /* Read by <FuroPagination> */
+  /* --color-background-hover: ; */
+  /* --color-text-hover: ; */
+  /* --color-disabled: ; */
+
+  /* Read by <FuroOffCanvasMenuLayout> */
+  /* --color-background-header: ; */
+  /* --color-background-nav: ; */
+  /* --size-header-height: ; */
+  /* --size-nav-width: ; */
+  /* --size-screen-height: ; */
+}
