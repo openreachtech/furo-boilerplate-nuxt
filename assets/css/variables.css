@@ -1,38 +1,13 @@
+/*
+ * The application's custom properties.
+ *
+ * Nothing is declared here yet, on purpose. What a colour, a size or a ratio should
+ * be is the application's decision, and the boilerplate does not make it.
+ *
+ * This file is loaded before `main.css`, so a value declared here is readable from
+ * every stylesheet and every component that follows.
+ */
+
 :root {
-  /* Palette */
-  --palette-black: #000;
-  --palette-blue: #37f;
-  --palette-blue-light: #69f;
-  --palette-gray: #bcbcbc;
-  --palette-gray-light: #f7f7f7;
-  --palette-white: #fff;
-
-  --palette-ivory: #fefefe;
-
-  /* Colors */
-  --color-primary: var(--palette-blue);
-  --color-secondary: var(--palette-yellow-300);
-
-  /* Backgrounds */
-  --color-background: var(--palette-gray-light);
-
-  --color-background-header: var(--palette-ivory);
-  --color-background-nav: var(--palette-ivory);
-
-  /* Text */
-  --color-text: var(--palette-black);
-  --color-text-primary: var(--palette-white);
-
-  /* Sizes */
-  --size-thinnest: 1px;
-
-  --size-radius-rounded: 625rem;
-
-  --size-screen-height: 100dvh;
-  --size-header-height: 4.5rem;
-  --size-footer-height: 6rem;
-  --size-nav-width: 15rem;
-
-  /* Values */
-  --value-golden-ratio: 1.618;
+  /* Declare the application's colours, sizes and ratios here. */
 }

@@ -26,15 +26,29 @@ export default defineNuxtConfig({
   },
 
   // Global CSS: https://nuxt.com/docs/api/nuxt-config#css.
+  //
+  // furo-nuxt 2.0.0 ships no stylesheet at all, so nothing here comes from the package.
+  // Every entry is the application's own file, and no design decision is inherited.
+  //
+  // Nothing declares `@layer` either. If the application writes layered CSS, it states
+  // its own layer order first; without a declaration, layers order by first appearance.
+  //
+  // furo-nuxt 1.12.0's stylesheets are the last version that shipped any, and they are
+  // still readable if one of them is wanted as a starting point:
+  //
+  //   https://github.com/openreachtech/furo-nuxt/tree/1.12.0/lib/assets/css
+  //
+  //   `0000.furo.css`                          - a `reset, base, furo, app` @layer declaration
+  //   `0010.variables-palette-color-scale.css` - a palette of named colour scales
+  //   `0020.variables-z-index.css`             - z-index custom properties
+  //   `0100.reset.css`                         - a reset for native HTML elements
+  //   `0200.base.css`                          - a design for bare <button>, <h1>~<h3>,
+  //                                              <input>, <p> and <section>
+  //   `0300.gimmick.css`                       - locking <body> behind an open <dialog>
+  //
+  // The boilerplate copies none of them in. What a reset, a palette or a z-index scale
+  // should be is the application's to decide.
   css: [
-    '~/node_modules/@openreachtech/furo-nuxt/lib/assets/css/0000.furo.css',
-    '~/node_modules/@openreachtech/furo-nuxt/lib/assets/css/0010.variables-palette-color-scale.css',
-    '~/node_modules/@openreachtech/furo-nuxt/lib/assets/css/0020.variables-z-index.css',
-    '~/node_modules/@openreachtech/furo-nuxt/lib/assets/css/0100.reset.css',
-    '~/node_modules/@openreachtech/furo-nuxt/lib/assets/css/0200.base.css',
-    '~/node_modules/@openreachtech/furo-nuxt/lib/assets/css/0300.gimmick.css',
-
-    '~/assets/css/variables-component-default.css',
     '~/assets/css/variables.css',
 
     '~/assets/css/main.css',

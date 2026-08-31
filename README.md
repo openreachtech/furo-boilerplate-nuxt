@@ -75,7 +75,30 @@ npm test -- --watch
 | `runtimeConfig` | the environment file's values, spread into the server config and into `public` alike |
 | `watch` | editing `.furo-env.development` restarts the dev server |
 
-Global CSS is loaded in one order: furo-nuxt's six stylesheets, then `assets/css/variables-component-default.css` and `assets/css/variables.css`, then `assets/css/main.css`. The application's own variables come after the ones they override.
+Global CSS is loaded in one order: furo-nuxt's three structural stylesheets — the cascade layer declaration, the z-index layers and the reset — then `assets/css/variables.css` and `assets/css/main.css`.
+
+furo-nuxt ships three more stylesheets that this boilerplate deliberately does not load, because what they decide belongs to the application:
+
+| stylesheet | what it would decide |
+| :-- | :-- |
+| `0010.variables-palette-color-scale.css` | a palette of named colour scales |
+| `0200.base.css` | a design for bare `<button>`, `<h1>`~`<h3>`, `<input>`, `<p>` and `<section>` |
+| `0300.gimmick.css` | the `.-trigger-unlock-*` / `.-aim-unlock` classes, and locking `<body>` behind an open `<dialog>` |
+
+Nothing stops you from adding one back to `css` in `nuxt.config.js`, but the intent is that the application writes its own.
+
+Some custom properties furo-nuxt reads it never declares, so the application has to. `assets/css/variables.css` is where they go: it names every one of them and sets none of them — each is commented out, waiting for the application to choose a value. The reset reads `--value-golden-ratio` and so is always in effect; the rest matter only when the component that reads them is used.
+
+| what reads it | custom properties |
+| :-- | :-- |
+| `0100.reset.css` | `--value-golden-ratio` |
+| `<FuroButtonDialog>` | `--size-thinnest` |
+| `<FuroDialog>` | `--color-background-highlight`, `--color-text-highlight` |
+| `<FuroOffCanvasMenuLayout>` | `--color-background-header`, `--color-background-nav`, `--size-header-height`, `--size-nav-width`, `--size-screen-height` |
+| `<FuroPagination>` | `--color-background-highlight`, `--color-text-highlight`, `--color-background-hover`, `--color-text-hover`, `--color-disabled` |
+| `<FuroTabLayout>` | `--color-background-highlight`, `--color-text-highlight` |
+
+None of this is the application's whole set of variables — it is the contract with furo-nuxt and no more. A palette and the sizes the application chooses for itself belong in a stylesheet of their own, added to `css` in `nuxt.config.js`.
 
 ### Where the application code goes
 
@@ -89,10 +112,12 @@ Global CSS is loaded in one order: furo-nuxt's six stylesheets, then `assets/css
 │   ├── restfulapi/renchan/       # base classes for a renchan RESTful API
 │   ├── shares/AppShare.js        # the object provided as `$furo`
 │   └── vue/                      # the context base class and the page component factory
-├── assets/css/                   # application-wide variables and styles
+├── assets/css/
+│   ├── variables.css             # the custom properties furo-nuxt expects, none of them set
+│   └── main.css                  # application-wide styles
 ├── components/                   # write the components here
 ├── composables/                  # write the composables here
-├── layouts/                      # default (off-canvas menu) and gateway
+├── layouts/default.vue           # an empty layout — a slot and nothing else
 ├── middleware/                   # global middlewares, run in file name order
 ├── pages/                        # write the pages here
 ├── plugins/000.furo.js           # wires the configs, and provides `$furo`
@@ -134,7 +159,7 @@ Neither config object is filled in by hand. `plugins/000.furo.js` copies the end
 
 ### Contexts and page components
 
-Component logic goes into a context class rather than into `setup()`. `BaseAppContext` extends furo-nuxt's `BaseFuroContext` and is where a helper every context needs belongs. `components/AppOffCanvasMenu/` is the worked example: the component creates its context, and the template reads from that alone.
+Component logic goes into a context class rather than into `setup()`. `BaseAppContext` extends furo-nuxt's `BaseFuroContext` and is where a helper every context needs belongs. A component creates its context in `setup()` and exposes it under one name, and the template reads from that alone.
 
 `app/vue/defineAppPageComponent.js` builds a `defineComponent` whose shared setup options run before the component's own `setup()`. The list ships empty, and `app/vue/shared-component-options.js` is the option waiting to be registered in it — on mount it writes `runtimeConfig.public` into session storage under `furoEnv`.
 
@@ -156,7 +181,7 @@ definePageMeta({
 })
 ```
 
-`skipFilter` is what a page reachable without signing in declares. `composables/useRedirect.js` is the other half of the gateway: once signed in, it sends the visitor to the `redirect` query the middleware attached. `layouts/gateway.vue` ships for that page — a header, a slot and a footer, and no menu.
+`skipFilter` is what a page reachable without signing in declares. `composables/useRedirect.js` is the other half of the gateway: once signed in, it sends the visitor to the `redirect` query the middleware attached.
 
 ### Environment variables
 
