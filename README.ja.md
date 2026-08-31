@@ -75,7 +75,7 @@ npm test -- --watch
 | `runtimeConfig` | 環境ファイルの値を、サーバー側の設定と `public` の両方に展開する |
 | `watch` | `.furo-env.development` を編集すると開発サーバーが再起動する |
 
-グローバル CSS の読み込み順は 1 つに決まっています。furo-nuxt の 6 つのスタイルシート、次に `assets/css/variables-component-default.css` と `assets/css/variables.css`、最後に `assets/css/main.css`。アプリケーション側の変数は、上書きする対象より後に来ます。
+グローバル CSS の読み込み順は 1 つに決まっています。furo-nuxt の 6 つのスタイルシート、次に `assets/css/main.css`。パレットもデザイン変数も、ボイラープレートは一切定義しません。アプリケーションが決めることだからです。例外は 3 つのカスタムプロパティで、furo-nuxt 自身のスタイルシートがこれらを読みます。`--color-primary` と `--color-text-primary` は class の付かない `<button>` の配色、`--value-golden-ratio` は `<p>` の行の高さです。自前のスタイルシートで定義し、`nuxt.config.js` の `css` に、furo-nuxt の 6 つより後・`main.css` より前で追加してください。
 
 ### アプリケーションのコードを置く場所
 
@@ -89,10 +89,10 @@ npm test -- --watch
 │   ├── restfulapi/renchan/       # renchan の RESTful API 向けの基底クラス
 │   ├── shares/AppShare.js        # `$furo` として provide されるオブジェクト
 │   └── vue/                      # コンテキストの基底クラスとページコンポーネントのファクトリー
-├── assets/css/                   # アプリケーション全体の変数とスタイル
+├── assets/css/main.css           # アプリケーション全体のスタイルシート 1 枚
 ├── components/                   # コンポーネントはここに書く
 ├── composables/                  # composable はここに書く
-├── layouts/                      # default（オフキャンバスメニュー）と gateway
+├── layouts/default.vue           # 空のレイアウト。slot だけ
 ├── middleware/                   # グローバルミドルウェア。ファイル名順に実行される
 ├── pages/                        # ページはここに書く
 ├── plugins/000.furo.js           # 各 config を結線し、`$furo` を provide する
@@ -134,7 +134,7 @@ app/graphql/client/
 
 ### コンテキストとページコンポーネント
 
-コンポーネントのロジックは `setup()` ではなくコンテキストクラスに置きます。`BaseAppContext` は furo-nuxt の `BaseFuroContext` を継承したクラスで、すべてのコンテキストに必要なヘルパーはここに置きます。`components/AppOffCanvasMenu/` がその実例です。コンポーネントは自分のコンテキストを生成し、テンプレートはそこからだけ読みます。
+コンポーネントのロジックは `setup()` ではなくコンテキストクラスに置きます。`BaseAppContext` は furo-nuxt の `BaseFuroContext` を継承したクラスで、すべてのコンテキストに必要なヘルパーはここに置きます。コンポーネントは `setup()` で自分のコンテキストを生成して 1 つの名前で公開し、テンプレートはそこからだけ読みます。
 
 `app/vue/defineAppPageComponent.js` は、共有の setup オプションをコンポーネント自身の `setup()` より先に実行する `defineComponent` を組み立てます。そのリストは空の状態で同梱されており、`app/vue/shared-component-options.js` が、そこへの登録を待っているオプションです。マウント時に `runtimeConfig.public` をセッションストレージの `furoEnv` へ書き込みます。
 
@@ -156,7 +156,7 @@ definePageMeta({
 })
 ```
 
-`skipFilter` は、サインインせずに到達できるページが宣言するものです。`composables/useRedirect.js` はゲートウェイのもう半分で、サインイン後に、ミドルウェアが付けた `redirect` クエリの先へ送り出します。`layouts/gateway.vue` はそのページのために同梱されています。ヘッダー・スロット・フッターだけで、メニューはありません。
+`skipFilter` は、サインインせずに到達できるページが宣言するものです。`composables/useRedirect.js` はゲートウェイのもう半分で、サインイン後に、ミドルウェアが付けた `redirect` クエリの先へ送り出します。
 
 ### 環境変数
 
