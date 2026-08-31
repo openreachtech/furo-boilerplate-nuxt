@@ -22,7 +22,7 @@
   "author": "Open Reach Tech Inc.",
   "license": "Apache-2.0",
   "dependencies": {
-    "@openreachtech/furo-nuxt": "^1.11.0",
+    "@openreachtech/furo-nuxt": "^2.0.0",
     "@openreachtech/jest-constructor-spy": "^1.1.2",
     "core-js": "^3.50.0",
     "graphql": "^17.0.2",
