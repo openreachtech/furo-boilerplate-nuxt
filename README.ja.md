@@ -75,7 +75,30 @@ npm test -- --watch
 | `runtimeConfig` | 環境ファイルの値を、サーバー側の設定と `public` の両方に展開する |
 | `watch` | `.furo-env.development` を編集すると開発サーバーが再起動する |
 
-グローバル CSS の読み込み順は 1 つに決まっています。furo-nuxt の 6 つのスタイルシート、次に `assets/css/main.css`。パレットもデザイン変数も、ボイラープレートは一切定義しません。アプリケーションが決めることだからです。例外は 3 つのカスタムプロパティで、furo-nuxt 自身のスタイルシートがこれらを読みます。`--color-primary` と `--color-text-primary` は class の付かない `<button>` の配色、`--value-golden-ratio` は `<p>` の行の高さです。自前のスタイルシートで定義し、`nuxt.config.js` の `css` に、furo-nuxt の 6 つより後・`main.css` より前で追加してください。
+グローバル CSS の読み込み順は 1 つに決まっています。furo-nuxt の骨組みとなる 3 枚 — カスケードレイヤーの宣言、z-index の階層、リセット — 次に `assets/css/main.css`。
+
+furo-nuxt はさらに 3 枚のスタイルシートを同梱していますが、このボイラープレートでは意図的に読み込みません。これらが決めることは、アプリケーションが決めるべきことだからです。
+
+| スタイルシート | 何を決めてしまうか |
+| :-- | :-- |
+| `0010.variables-palette-color-scale.css` | 名前付きカラースケールのパレット |
+| `0200.base.css` | 素の `<button>` `<h1>`〜`<h3>` `<input>` `<p>` `<section>` のデザイン |
+| `0300.gimmick.css` | `.-trigger-unlock-*` / `.-aim-unlock` クラスと、`<dialog>` が開いている間の `<body>` のロック |
+
+`nuxt.config.js` の `css` に戻すことは妨げませんが、アプリケーションが自前で書くことを意図しています。
+
+furo-nuxt が読むだけで定義していないカスタムプロパティがあります。アプリケーション側で定義してください。リセットは `<p>` の行の高さに `--value-golden-ratio` を必要とします。残りは、それを読むコンポーネントを使う場合にだけ必要です。
+
+| 読んでいるもの | カスタムプロパティ |
+| :-- | :-- |
+| `0100.reset.css` | `--value-golden-ratio` |
+| `<FuroButtonDialog>` | `--size-thinnest` |
+| `<FuroDialog>` | `--color-background-highlight`, `--color-text-highlight` |
+| `<FuroOffCanvasMenuLayout>` | `--color-background-header`, `--color-background-nav`, `--size-header-height`, `--size-nav-width`, `--size-screen-height` |
+| `<FuroPagination>` | `--color-background-highlight`, `--color-text-highlight`, `--color-background-hover`, `--color-text-hover`, `--color-disabled` |
+| `<FuroTabLayout>` | `--color-background-highlight`, `--color-text-highlight` |
+
+自前のスタイルシートで定義し、`nuxt.config.js` の `css` に、furo-nuxt の 3 枚より後・`main.css` より前で追加してください。
 
 ### アプリケーションのコードを置く場所
 

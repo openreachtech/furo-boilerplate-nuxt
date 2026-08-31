@@ -75,7 +75,30 @@ npm test -- --watch
 | `runtimeConfig` | the environment file's values, spread into the server config and into `public` alike |
 | `watch` | editing `.furo-env.development` restarts the dev server |
 
-Global CSS is loaded in one order: furo-nuxt's six stylesheets, then `assets/css/main.css`. The boilerplate declares no palette and no design variables of its own — those are the application's to decide. Three custom properties are the exception, because furo-nuxt's own stylesheets read them: `--color-primary` and `--color-text-primary` colour an unclassed `<button>`, and `--value-golden-ratio` is the `<p>` line height. Declare them in a stylesheet of your own and add it to `css` in `nuxt.config.js`, after furo-nuxt's six and before `main.css`.
+Global CSS is loaded in one order: furo-nuxt's three structural stylesheets — the cascade layer declaration, the z-index layers and the reset — then `assets/css/main.css`.
+
+furo-nuxt ships three more stylesheets that this boilerplate deliberately does not load, because what they decide belongs to the application:
+
+| stylesheet | what it would decide |
+| :-- | :-- |
+| `0010.variables-palette-color-scale.css` | a palette of named colour scales |
+| `0200.base.css` | a design for bare `<button>`, `<h1>`~`<h3>`, `<input>`, `<p>` and `<section>` |
+| `0300.gimmick.css` | the `.-trigger-unlock-*` / `.-aim-unlock` classes, and locking `<body>` behind an open `<dialog>` |
+
+Nothing stops you from adding one back to `css` in `nuxt.config.js`, but the intent is that the application writes its own.
+
+Some custom properties furo-nuxt reads it never declares, so the application has to. The reset needs `--value-golden-ratio` for the `<p>` line height; the rest are needed only by the component that reads them.
+
+| what reads it | custom properties |
+| :-- | :-- |
+| `0100.reset.css` | `--value-golden-ratio` |
+| `<FuroButtonDialog>` | `--size-thinnest` |
+| `<FuroDialog>` | `--color-background-highlight`, `--color-text-highlight` |
+| `<FuroOffCanvasMenuLayout>` | `--color-background-header`, `--color-background-nav`, `--size-header-height`, `--size-nav-width`, `--size-screen-height` |
+| `<FuroPagination>` | `--color-background-highlight`, `--color-text-highlight`, `--color-background-hover`, `--color-text-hover`, `--color-disabled` |
+| `<FuroTabLayout>` | `--color-background-highlight`, `--color-text-highlight` |
+
+Declare them in a stylesheet of your own and add it to `css` in `nuxt.config.js`, after furo-nuxt's three and before `main.css`.
 
 ### Where the application code goes
 
