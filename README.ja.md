@@ -75,7 +75,30 @@ npm test -- --watch
 | `runtimeConfig` | 環境ファイルの値を、サーバー側の設定と `public` の両方に展開する |
 | `watch` | `.furo-env.development` を編集すると開発サーバーが再起動する |
 
-グローバル CSS の読み込み順は 1 つに決まっています。furo-nuxt の 6 つのスタイルシート、次に `assets/css/variables-component-default.css` と `assets/css/variables.css`、最後に `assets/css/main.css`。アプリケーション側の変数は、上書きする対象より後に来ます。
+グローバル CSS の読み込み順は 1 つに決まっています。furo-nuxt の骨組みとなる 3 枚 — カスケードレイヤーの宣言、z-index の階層、リセット — 次に `assets/css/variables.css`、最後に `assets/css/main.css`。
+
+furo-nuxt はさらに 3 枚のスタイルシートを同梱していますが、このボイラープレートでは意図的に読み込みません。これらが決めることは、アプリケーションが決めるべきことだからです。
+
+| スタイルシート | 何を決めてしまうか |
+| :-- | :-- |
+| `0010.variables-palette-color-scale.css` | 名前付きカラースケールのパレット |
+| `0200.base.css` | 素の `<button>` `<h1>`〜`<h3>` `<input>` `<p>` `<section>` のデザイン |
+| `0300.gimmick.css` | `.-trigger-unlock-*` / `.-aim-unlock` クラスと、`<dialog>` が開いている間の `<body>` のロック |
+
+`nuxt.config.js` の `css` に戻すことは妨げませんが、アプリケーションが自前で書くことを意図しています。
+
+furo-nuxt が読むだけで定義していないカスタムプロパティがあります。その置き場所が `assets/css/variables.css` です。名前だけを並べ、値は 1 つも決めていません。すべてコメントアウトした状態で、アプリケーションが値を選ぶのを待っています。リセットが読む `--value-golden-ratio` は常に効きます。残りは、それを読むコンポーネントを使う場合にだけ必要です。
+
+| 読んでいるもの | カスタムプロパティ |
+| :-- | :-- |
+| `0100.reset.css` | `--value-golden-ratio` |
+| `<FuroButtonDialog>` | `--size-thinnest` |
+| `<FuroDialog>` | `--color-background-highlight`, `--color-text-highlight` |
+| `<FuroOffCanvasMenuLayout>` | `--color-background-header`, `--color-background-nav`, `--size-header-height`, `--size-nav-width`, `--size-screen-height` |
+| `<FuroPagination>` | `--color-background-highlight`, `--color-text-highlight`, `--color-background-hover`, `--color-text-hover`, `--color-disabled` |
+| `<FuroTabLayout>` | `--color-background-highlight`, `--color-text-highlight` |
+
+これはアプリケーションの変数のすべてではありません。furo-nuxt との契約であって、それ以上ではありません。アプリケーションが自分で決めるパレットやサイズは、自前のスタイルシートに置き、`nuxt.config.js` の `css` に追加してください。
 
 ### アプリケーションのコードを置く場所
 
@@ -89,10 +112,12 @@ npm test -- --watch
 │   ├── restfulapi/renchan/       # renchan の RESTful API 向けの基底クラス
 │   ├── shares/AppShare.js        # `$furo` として provide されるオブジェクト
 │   └── vue/                      # コンテキストの基底クラスとページコンポーネントのファクトリー
-├── assets/css/                   # アプリケーション全体の変数とスタイル
+├── assets/css/
+│   ├── variables.css             # furo-nuxt が要求するカスタムプロパティ。値は未設定
+│   └── main.css                  # アプリケーション全体のスタイル
 ├── components/                   # コンポーネントはここに書く
 ├── composables/                  # composable はここに書く
-├── layouts/                      # default（オフキャンバスメニュー）と gateway
+├── layouts/default.vue           # 空のレイアウト。slot だけ
 ├── middleware/                   # グローバルミドルウェア。ファイル名順に実行される
 ├── pages/                        # ページはここに書く
 ├── plugins/000.furo.js           # 各 config を結線し、`$furo` を provide する
@@ -134,7 +159,7 @@ app/graphql/client/
 
 ### コンテキストとページコンポーネント
 
-コンポーネントのロジックは `setup()` ではなくコンテキストクラスに置きます。`BaseAppContext` は furo-nuxt の `BaseFuroContext` を継承したクラスで、すべてのコンテキストに必要なヘルパーはここに置きます。`components/AppOffCanvasMenu/` がその実例です。コンポーネントは自分のコンテキストを生成し、テンプレートはそこからだけ読みます。
+コンポーネントのロジックは `setup()` ではなくコンテキストクラスに置きます。`BaseAppContext` は furo-nuxt の `BaseFuroContext` を継承したクラスで、すべてのコンテキストに必要なヘルパーはここに置きます。コンポーネントは `setup()` で自分のコンテキストを生成して 1 つの名前で公開し、テンプレートはそこからだけ読みます。
 
 `app/vue/defineAppPageComponent.js` は、共有の setup オプションをコンポーネント自身の `setup()` より先に実行する `defineComponent` を組み立てます。そのリストは空の状態で同梱されており、`app/vue/shared-component-options.js` が、そこへの登録を待っているオプションです。マウント時に `runtimeConfig.public` をセッションストレージの `furoEnv` へ書き込みます。
 
@@ -156,7 +181,7 @@ definePageMeta({
 })
 ```
 
-`skipFilter` は、サインインせずに到達できるページが宣言するものです。`composables/useRedirect.js` はゲートウェイのもう半分で、サインイン後に、ミドルウェアが付けた `redirect` クエリの先へ送り出します。`layouts/gateway.vue` はそのページのために同梱されています。ヘッダー・スロット・フッターだけで、メニューはありません。
+`skipFilter` は、サインインせずに到達できるページが宣言するものです。`composables/useRedirect.js` はゲートウェイのもう半分で、サインイン後に、ミドルウェアが付けた `redirect` クエリの先へ送り出します。
 
 ### 環境変数
 

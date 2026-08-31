@@ -1,38 +1,38 @@
+/*
+ * The custom properties furo-nuxt reads but never declares.
+ *
+ * Every one of them is commented out on purpose. What a colour or a size should
+ * be is the application's decision, and the boilerplate does not make it — fill
+ * in the ones you need and leave the rest alone.
+ *
+ * Nothing here is a complete list of the application's variables. It is the
+ * contract with furo-nuxt, and no more; the application's own palette and its
+ * own sizes belong in a stylesheet of their own.
+ */
+
 :root {
-  /* Palette */
-  --palette-black: #000;
-  --palette-blue: #37f;
-  --palette-blue-light: #69f;
-  --palette-gray: #bcbcbc;
-  --palette-gray-light: #f7f7f7;
-  --palette-white: #fff;
+  /*
+   * Read by `0100.reset.css`, and so always in effect.
+   * Until it is given a value, `<p>` falls back to `line-height: normal`.
+   */
+  /* --value-golden-ratio: ; */
 
-  --palette-ivory: #fefefe;
+  /* Read by <FuroButtonDialog> */
+  /* --size-thinnest: ; */
 
-  /* Colors */
-  --color-primary: var(--palette-blue);
-  --color-secondary: var(--palette-yellow-300);
+  /* Read by <FuroDialog>, <FuroPagination> and <FuroTabLayout> */
+  /* --color-background-highlight: ; */
+  /* --color-text-highlight: ; */
 
-  /* Backgrounds */
-  --color-background: var(--palette-gray-light);
+  /* Read by <FuroPagination> */
+  /* --color-background-hover: ; */
+  /* --color-text-hover: ; */
+  /* --color-disabled: ; */
 
-  --color-background-header: var(--palette-ivory);
-  --color-background-nav: var(--palette-ivory);
-
-  /* Text */
-  --color-text: var(--palette-black);
-  --color-text-primary: var(--palette-white);
-
-  /* Sizes */
-  --size-thinnest: 1px;
-
-  --size-radius-rounded: 625rem;
-
-  --size-screen-height: 100dvh;
-  --size-header-height: 4.5rem;
-  --size-footer-height: 6rem;
-  --size-nav-width: 15rem;
-
-  /* Values */
-  --value-golden-ratio: 1.618;
+  /* Read by <FuroOffCanvasMenuLayout> */
+  /* --color-background-header: ; */
+  /* --color-background-nav: ; */
+  /* --size-header-height: ; */
+  /* --size-nav-width: ; */
+  /* --size-screen-height: ; */
 }

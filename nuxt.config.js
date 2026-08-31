@@ -26,15 +26,29 @@ export default defineNuxtConfig({
   },
 
   // Global CSS: https://nuxt.com/docs/api/nuxt-config#css.
+  //
+  // Only furo-nuxt's structural stylesheets are loaded: the cascade layer declaration,
+  // the z-index layers and the reset.
+  //
+  // Three of furo-nuxt's stylesheets are deliberately left out, because what they decide
+  // is the application's to decide, not the boilerplate's:
+  //
+  //   `0010.variables-palette-color-scale.css` - a palette of named colour scales
+  //   `0200.base.css`                          - a design for bare <button>, <h1>~<h3>,
+  //                                              <input>, <p> and <section>
+  //   `0300.gimmick.css`                       - the `.-trigger-unlock-*` / `.-aim-unlock`
+  //                                              classes, and locking <body> behind an
+  //                                              open <dialog>
+  //
+  // Add one back here if the application wants it, but the intent is that the application
+  // writes its own. `~/assets/css/variables.css` is where that starts: it names the custom
+  // properties furo-nuxt reads but never declares, every one of them commented out and
+  // waiting for the application to choose a value.
   css: [
     '~/node_modules/@openreachtech/furo-nuxt/lib/assets/css/0000.furo.css',
-    '~/node_modules/@openreachtech/furo-nuxt/lib/assets/css/0010.variables-palette-color-scale.css',
     '~/node_modules/@openreachtech/furo-nuxt/lib/assets/css/0020.variables-z-index.css',
     '~/node_modules/@openreachtech/furo-nuxt/lib/assets/css/0100.reset.css',
-    '~/node_modules/@openreachtech/furo-nuxt/lib/assets/css/0200.base.css',
-    '~/node_modules/@openreachtech/furo-nuxt/lib/assets/css/0300.gimmick.css',
 
-    '~/assets/css/variables-component-default.css',
     '~/assets/css/variables.css',
 
     '~/assets/css/main.css',
