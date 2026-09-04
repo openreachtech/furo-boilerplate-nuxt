@@ -13,7 +13,7 @@ permissions:
   contents: read
 
 jobs:
-  test:
+  ci:
     # ⚠️ Keep this name fixed. Required status checks are configured per-organization
     # by check name, so renaming the job here silently exempts this repository
     # from the merge gate.
