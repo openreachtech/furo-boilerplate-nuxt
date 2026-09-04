@@ -52,7 +52,7 @@ jobs:
           echo "node  : $(node -v)"
           echo "npm   : $(npm -v)"
 
-      - name: 📦 Install dependencies
+      - name: 📦 Install packages
         run: npm ci --legacy-peer-deps
 
       - name: 🧵 ESLint
