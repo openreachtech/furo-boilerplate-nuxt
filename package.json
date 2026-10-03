@@ -45,6 +45,7 @@
     "globals": "^16.1.0",
     "jest": "^30.5.2",
     "jest-environment-jsdom": "^30.5.2",
+    "playwright": "^1.63.0",
     "whatwg-fetch": "^3.6.20"
   },
   "overrides": {
