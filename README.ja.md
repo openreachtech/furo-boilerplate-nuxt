@@ -53,6 +53,7 @@ ES モジュール（`"type": "module"`）です。import は ESM の `import` �
 | `npm test` | `tests/` に対して Jest を実行する |
 | `npm run lint` | リポジトリ全体に ESLint をかける（別名: `npm run l`） |
 | `npm run cache` | `node_modules/.cache` を削除する |
+| `npm run e2e:browser` | Playwright が操作する Chromium を取得する（マシンごとに一度） |
 
 `npm test` は Jest と同じ引数を取ります。
 
