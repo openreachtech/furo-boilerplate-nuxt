@@ -65,6 +65,8 @@
   "allowScripts": {
     "core-js": false,
     "esbuild": false,
-    "fsevents": false
+    "fsevents": false,
+    "@parcel/watcher": false,
+    "unrs-resolver": false
   }
 }
