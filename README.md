@@ -53,6 +53,7 @@ The project is an ES module (`"type": "module"`); write imports with ESM `import
 | `npm test` | run Jest over `tests/` |
 | `npm run lint` | ESLint over the repository (alias: `npm run l`) |
 | `npm run cache` | delete `node_modules/.cache` |
+| `npm run e2e:browser` | fetch the Chromium build Playwright drives, once per machine |
 
 `npm test` takes the same arguments as Jest.
 
