@@ -76,16 +76,6 @@ npm test -- --watch
 
 Global CSS is loaded in one order: `assets/css/variables.css`, then `assets/css/main.css`. furo-nuxt ships no stylesheet, so both are the application's own. The comment above `css` in `nuxt.config.js` names the stylesheets furo-nuxt `1.12.0` shipped, for an application that wants one as a starting point.
 
-furo-nuxt ships three more stylesheets that this boilerplate deliberately does not load, because what they decide belongs to the application:
-
-| stylesheet | what it would decide |
-| :-- | :-- |
-| `0010.variables-palette-color-scale.css` | a palette of named colour scales |
-| `0200.base.css` | a design for bare `<button>`, `<h1>`~`<h3>`, `<input>`, `<p>` and `<section>` |
-| `0300.gimmick.css` | the `.-trigger-unlock-*` / `.-aim-unlock` classes, and locking `<body>` behind an open `<dialog>` |
-
-Nothing stops you from adding one back to `css` in `nuxt.config.js`, but the intent is that the application writes its own.
-
 Some custom properties furo-nuxt reads it never declares, so the application has to. `assets/css/variables.css` is where they go: it names every one of them and sets none of them — each is commented out, waiting for the application to choose a value. The reset reads `--value-golden-ratio` and so is always in effect; the rest matter only when the component that reads them is used.
 
 | what reads it | custom properties |
