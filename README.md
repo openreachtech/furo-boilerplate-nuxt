@@ -89,7 +89,7 @@ Global CSS is loaded in one order: `assets/css/variables.css`, then `assets/css/
 │   ├── shares/AppShare.js        # the object provided as `$furo`
 │   └── vue/                      # the context base class and the page component factory
 ├── assets/css/
-│   ├── variables.css             # the custom properties furo-nuxt expects, none of them set
+│   ├── variables.css             # the application's custom properties, none declared yet
 │   └── main.css                  # application-wide styles
 ├── components/                   # write the components here
 ├── composables/                  # write the composables here

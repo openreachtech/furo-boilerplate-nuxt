@@ -89,7 +89,7 @@ npm test -- --watch
 │   ├── shares/AppShare.js        # `$furo` として provide されるオブジェクト
 │   └── vue/                      # コンテキストの基底クラスとページコンポーネントのファクトリー
 ├── assets/css/
-│   ├── variables.css             # furo-nuxt が要求するカスタムプロパティ。値は未設定
+│   ├── variables.css             # アプリケーションのカスタムプロパティ。まだ何も宣言していない
 │   └── main.css                  # アプリケーション全体のスタイル
 ├── components/                   # コンポーネントはここに書く
 ├── composables/                  # composable はここに書く
