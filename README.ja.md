@@ -34,8 +34,6 @@ cp .furo-env.example .furo-env.development
 npm run dev
 ```
 
-CI は `npm ci --legacy-peer-deps` で install します。クリーンな install が peer dependency で止まるときは、同じフラグを使ってください。
-
 `package.json` の `name` / `version` / `description` は `TODO` のプレースホルダーのまま同梱されています。最初に埋めてください。
 
 ES モジュール（`"type": "module"`）です。import は ESM の `import` 構文で記述してください。
@@ -76,30 +74,7 @@ npm test -- --watch
 | `runtimeConfig` | 環境ファイルの値を、サーバー側の設定と `public` の両方に展開する |
 | `watch` | `.furo-env.development` を編集すると開発サーバーが再起動する |
 
-グローバル CSS の読み込み順は 1 つに決まっています。furo-nuxt の骨組みとなる 3 枚 — カスケードレイヤーの宣言、z-index の階層、リセット — 次に `assets/css/variables.css`、最後に `assets/css/main.css`。
-
-furo-nuxt はさらに 3 枚のスタイルシートを同梱していますが、このボイラープレートでは意図的に読み込みません。これらが決めることは、アプリケーションが決めるべきことだからです。
-
-| スタイルシート | 何を決めてしまうか |
-| :-- | :-- |
-| `0010.variables-palette-color-scale.css` | 名前付きカラースケールのパレット |
-| `0200.base.css` | 素の `<button>` `<h1>`〜`<h3>` `<input>` `<p>` `<section>` のデザイン |
-| `0300.gimmick.css` | `.-trigger-unlock-*` / `.-aim-unlock` クラスと、`<dialog>` が開いている間の `<body>` のロック |
-
-`nuxt.config.js` の `css` に戻すことは妨げませんが、アプリケーションが自前で書くことを意図しています。
-
-furo-nuxt が読むだけで定義していないカスタムプロパティがあります。その置き場所が `assets/css/variables.css` です。名前だけを並べ、値は 1 つも決めていません。すべてコメントアウトした状態で、アプリケーションが値を選ぶのを待っています。リセットが読む `--value-golden-ratio` は常に効きます。残りは、それを読むコンポーネントを使う場合にだけ必要です。
-
-| 読んでいるもの | カスタムプロパティ |
-| :-- | :-- |
-| `0100.reset.css` | `--value-golden-ratio` |
-| `<FuroButtonDialog>` | `--size-thinnest` |
-| `<FuroDialog>` | `--color-background-highlight`, `--color-text-highlight` |
-| `<FuroOffCanvasMenuLayout>` | `--color-background-header`, `--color-background-nav`, `--size-header-height`, `--size-nav-width`, `--size-screen-height` |
-| `<FuroPagination>` | `--color-background-highlight`, `--color-text-highlight`, `--color-background-hover`, `--color-text-hover`, `--color-disabled` |
-| `<FuroTabLayout>` | `--color-background-highlight`, `--color-text-highlight` |
-
-これはアプリケーションの変数のすべてではありません。furo-nuxt との契約であって、それ以上ではありません。アプリケーションが自分で決めるパレットやサイズは、自前のスタイルシートに置き、`nuxt.config.js` の `css` に追加してください。
+グローバル CSS の読み込み順は 1 つに決まっています。`assets/css/variables.css`、次に `assets/css/main.css`。furo-nuxt はスタイルシートを同梱していないので、どちらもアプリケーション自身のファイルです。furo-nuxt `1.12.0` が同梱していたスタイルシートは `nuxt.config.js` の `css` の上のコメントに並んでいます。たたき台が欲しいときに参照してください。
 
 ### アプリケーションのコードを置く場所
 
@@ -114,7 +89,7 @@ furo-nuxt が読むだけで定義していないカスタムプロパティが�
 │   ├── shares/AppShare.js        # `$furo` として provide されるオブジェクト
 │   └── vue/                      # コンテキストの基底クラスとページコンポーネントのファクトリー
 ├── assets/css/
-│   ├── variables.css             # furo-nuxt が要求するカスタムプロパティ。値は未設定
+│   ├── variables.css             # アプリケーションのカスタムプロパティ。まだ何も宣言していない
 │   └── main.css                  # アプリケーション全体のスタイル
 ├── components/                   # コンポーネントはここに書く
 ├── composables/                  # composable はここに書く
