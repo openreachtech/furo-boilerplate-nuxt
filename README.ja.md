@@ -76,19 +76,6 @@ npm test -- --watch
 
 グローバル CSS の読み込み順は 1 つに決まっています。`assets/css/variables.css`、次に `assets/css/main.css`。furo-nuxt はスタイルシートを同梱していないので、どちらもアプリケーション自身のファイルです。furo-nuxt `1.12.0` が同梱していたスタイルシートは `nuxt.config.js` の `css` の上のコメントに並んでいます。たたき台が欲しいときに参照してください。
 
-furo-nuxt が読むだけで定義していないカスタムプロパティがあります。その置き場所が `assets/css/variables.css` です。名前だけを並べ、値は 1 つも決めていません。すべてコメントアウトした状態で、アプリケーションが値を選ぶのを待っています。リセットが読む `--value-golden-ratio` は常に効きます。残りは、それを読むコンポーネントを使う場合にだけ必要です。
-
-| 読んでいるもの | カスタムプロパティ |
-| :-- | :-- |
-| `0100.reset.css` | `--value-golden-ratio` |
-| `<FuroButtonDialog>` | `--size-thinnest` |
-| `<FuroDialog>` | `--color-background-highlight`, `--color-text-highlight` |
-| `<FuroOffCanvasMenuLayout>` | `--color-background-header`, `--color-background-nav`, `--size-header-height`, `--size-nav-width`, `--size-screen-height` |
-| `<FuroPagination>` | `--color-background-highlight`, `--color-text-highlight`, `--color-background-hover`, `--color-text-hover`, `--color-disabled` |
-| `<FuroTabLayout>` | `--color-background-highlight`, `--color-text-highlight` |
-
-これはアプリケーションの変数のすべてではありません。furo-nuxt との契約であって、それ以上ではありません。アプリケーションが自分で決めるパレットやサイズは、自前のスタイルシートに置き、`nuxt.config.js` の `css` に追加してください。
-
 ### アプリケーションのコードを置く場所
 
 ```

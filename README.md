@@ -76,19 +76,6 @@ npm test -- --watch
 
 Global CSS is loaded in one order: `assets/css/variables.css`, then `assets/css/main.css`. furo-nuxt ships no stylesheet, so both are the application's own. The comment above `css` in `nuxt.config.js` names the stylesheets furo-nuxt `1.12.0` shipped, for an application that wants one as a starting point.
 
-Some custom properties furo-nuxt reads it never declares, so the application has to. `assets/css/variables.css` is where they go: it names every one of them and sets none of them — each is commented out, waiting for the application to choose a value. The reset reads `--value-golden-ratio` and so is always in effect; the rest matter only when the component that reads them is used.
-
-| what reads it | custom properties |
-| :-- | :-- |
-| `0100.reset.css` | `--value-golden-ratio` |
-| `<FuroButtonDialog>` | `--size-thinnest` |
-| `<FuroDialog>` | `--color-background-highlight`, `--color-text-highlight` |
-| `<FuroOffCanvasMenuLayout>` | `--color-background-header`, `--color-background-nav`, `--size-header-height`, `--size-nav-width`, `--size-screen-height` |
-| `<FuroPagination>` | `--color-background-highlight`, `--color-text-highlight`, `--color-background-hover`, `--color-text-hover`, `--color-disabled` |
-| `<FuroTabLayout>` | `--color-background-highlight`, `--color-text-highlight` |
-
-None of this is the application's whole set of variables — it is the contract with furo-nuxt and no more. A palette and the sizes the application chooses for itself belong in a stylesheet of their own, added to `css` in `nuxt.config.js`.
-
 ### Where the application code goes
 
 ```
