@@ -74,7 +74,7 @@ npm test -- --watch
 | `runtimeConfig` | the environment file's values, spread into the server config and into `public` alike |
 | `watch` | editing `.furo-env.development` restarts the dev server |
 
-Global CSS is loaded in one order: furo-nuxt's three structural stylesheets — the cascade layer declaration, the z-index layers and the reset — then `assets/css/variables.css` and `assets/css/main.css`.
+Global CSS is loaded in one order: `assets/css/variables.css`, then `assets/css/main.css`. furo-nuxt ships no stylesheet, so both are the application's own. The comment above `css` in `nuxt.config.js` names the stylesheets furo-nuxt `1.12.0` shipped, for an application that wants one as a starting point.
 
 furo-nuxt ships three more stylesheets that this boilerplate deliberately does not load, because what they decide belongs to the application:
 

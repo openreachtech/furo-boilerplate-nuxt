@@ -74,7 +74,7 @@ npm test -- --watch
 | `runtimeConfig` | 環境ファイルの値を、サーバー側の設定と `public` の両方に展開する |
 | `watch` | `.furo-env.development` を編集すると開発サーバーが再起動する |
 
-グローバル CSS の読み込み順は 1 つに決まっています。furo-nuxt の骨組みとなる 3 枚 — カスケードレイヤーの宣言、z-index の階層、リセット — 次に `assets/css/variables.css`、最後に `assets/css/main.css`。
+グローバル CSS の読み込み順は 1 つに決まっています。`assets/css/variables.css`、次に `assets/css/main.css`。furo-nuxt はスタイルシートを同梱していないので、どちらもアプリケーション自身のファイルです。furo-nuxt `1.12.0` が同梱していたスタイルシートは `nuxt.config.js` の `css` の上のコメントに並んでいます。たたき台が欲しいときに参照してください。
 
 furo-nuxt はさらに 3 枚のスタイルシートを同梱していますが、このボイラープレートでは意図的に読み込みません。これらが決めることは、アプリケーションが決めるべきことだからです。
 
