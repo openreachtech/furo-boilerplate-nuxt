@@ -34,8 +34,6 @@ cp .furo-env.example .furo-env.development
 npm run dev
 ```
 
-CI installs with `npm ci --legacy-peer-deps`. Reach for the same flag if a peer dependency stops a clean install.
-
 `package.json` ships `name`, `version` and `description` as `TODO` placeholders — fill them in first.
 
 The project is an ES module (`"type": "module"`); write imports with ESM `import` syntax.

@@ -34,8 +34,6 @@ cp .furo-env.example .furo-env.development
 npm run dev
 ```
 
-CI は `npm ci --legacy-peer-deps` で install します。クリーンな install が peer dependency で止まるときは、同じフラグを使ってください。
-
 `package.json` の `name` / `version` / `description` は `TODO` のプレースホルダーのまま同梱されています。最初に埋めてください。
 
 ES モジュール（`"type": "module"`）です。import は ESM の `import` 構文で記述してください。
