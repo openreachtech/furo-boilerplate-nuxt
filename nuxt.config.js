@@ -75,6 +75,7 @@ export default defineNuxtConfig({
   // Modules: https://nuxt.com/docs/api/nuxt-config#modules-1.
   modules: [
     '@nuxt/icon',
+    '@openreachtech/furo-vue/nuxt',
   ],
 
   // Shared build configuration: https://nuxt.com/docs/api/nuxt-config#build.
