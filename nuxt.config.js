@@ -49,6 +49,8 @@ export default defineNuxtConfig({
   // The boilerplate copies none of them in. What a reset, a palette or a z-index scale
   // should be is the application's to decide.
   css: [
+    '@openreachtech/furo-vue/lib/assets/css/furo.css',
+
     '~/assets/css/variables.css',
 
     '~/assets/css/main.css',
