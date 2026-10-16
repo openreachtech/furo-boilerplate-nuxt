@@ -13,6 +13,34 @@
       "path": "nuxt > @nuxt/cli | nitropack > listhen > node-forge",
       "reason": "No patched release: the advisory covers node-forge <=1.4.0, and 1.4.0 is the latest. The flaw is in RSA PKCS#1 v1.5 signature verification; listhen only generates and serializes a self-signed certificate for an HTTPS dev server, and never calls verify.",
       "removeWhen": "node-forge publishes a release outside <=1.4.0, or listhen leaves the Nuxt toolchain"
+    },
+    {
+      "id": "GHSA-x6jw-m9v5-85vh",
+      "package": "simple-git",
+      "path": "nuxt > @nuxt/devtools > simple-git",
+      "reason": "Patched only in simple-git 4, whose missing default export breaks the `import Git from 'simple-git'` of @nuxt/devtools 3.4.1. @nuxt/devtools runs on the developer's machine during `nuxt dev` and `nuxt prepare`, never ships with the build, and hands simple-git fixed arguments over this repository's own checkout.",
+      "removeWhen": "@nuxt/devtools 3.4.3, which no longer depends on simple-git (published 2026-10-14), clears the release-age quarantine and lands in the lockfile"
+    },
+    {
+      "id": "GHSA-g4wm-2vf7-vfgr",
+      "package": "simple-git",
+      "path": "nuxt > @nuxt/devtools > simple-git",
+      "reason": "Patched only in simple-git 4, whose missing default export breaks the `import Git from 'simple-git'` of @nuxt/devtools 3.4.1. @nuxt/devtools runs on the developer's machine during `nuxt dev` and `nuxt prepare`, never ships with the build, and hands simple-git fixed arguments over this repository's own checkout.",
+      "removeWhen": "@nuxt/devtools 3.4.3, which no longer depends on simple-git (published 2026-10-14), clears the release-age quarantine and lands in the lockfile"
+    },
+    {
+      "id": "GHSA-858h-whjf-mvg5",
+      "package": "simple-git",
+      "path": "nuxt > @nuxt/devtools > simple-git",
+      "reason": "Patched only in simple-git 4, whose missing default export breaks the `import Git from 'simple-git'` of @nuxt/devtools 3.4.1. @nuxt/devtools runs on the developer's machine during `nuxt dev` and `nuxt prepare`, never ships with the build, and hands simple-git fixed arguments over this repository's own checkout.",
+      "removeWhen": "@nuxt/devtools 3.4.3, which no longer depends on simple-git (published 2026-10-14), clears the release-age quarantine and lands in the lockfile"
+    },
+    {
+      "id": "GHSA-v5rq-49vh-5v5c",
+      "package": "@simple-git/argv-parser",
+      "path": "nuxt > @nuxt/devtools > simple-git > @simple-git/argv-parser",
+      "reason": "Patched only in 2.0.1, which simple-git 4 alone declares. @nuxt/devtools runs on the developer's machine during `nuxt dev` and `nuxt prepare`, never ships with the build, and hands simple-git fixed arguments over this repository's own checkout.",
+      "removeWhen": "@nuxt/devtools 3.4.3, which no longer depends on simple-git (published 2026-10-14), clears the release-age quarantine and lands in the lockfile"
     }
   ]
 }
