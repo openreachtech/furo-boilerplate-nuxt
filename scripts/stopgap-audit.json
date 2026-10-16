@@ -41,6 +41,13 @@
       "path": "nuxt > @nuxt/devtools > simple-git > @simple-git/argv-parser",
       "reason": "Patched only in 2.0.1, which simple-git 4 alone declares. @nuxt/devtools runs on the developer's machine during `nuxt dev` and `nuxt prepare`, never ships with the build, and hands simple-git fixed arguments over this repository's own checkout.",
       "removeWhen": "@nuxt/devtools 3.4.3, which no longer depends on simple-git (published 2026-10-14), clears the release-age quarantine and lands in the lockfile"
+    },
+    {
+      "id": "GHSA-hp3w-g68c-fv3c",
+      "package": "sprintf-js",
+      "path": "babel-jest > babel-plugin-istanbul > @istanbuljs/load-nyc-config > js-yaml > argparse > sprintf-js",
+      "reason": "No patched release: the advisory covers sprintf-js <=1.1.3, and 1.1.3 is the latest. The path is a development dependency that reads this repository's own coverage configuration when Jest runs, and never ships with the build.",
+      "removeWhen": "sprintf-js publishes a release outside <=1.1.3, or babel-plugin-istanbul stops depending on @istanbuljs/load-nyc-config"
     }
   ]
 }
