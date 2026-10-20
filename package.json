@@ -24,7 +24,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@openreachtech/furo-nuxt": "^2.0.0",
-    "@openreachtech/furo-vue": "^1.5.0",
+    "@openreachtech/furo-vue": "^1.6.0",
     "core-js": "^3.50.0",
     "graphql": "^17.0.2",
     "nuxt": "^3.21.11",
