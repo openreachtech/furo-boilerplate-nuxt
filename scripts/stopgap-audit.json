@@ -6,6 +6,13 @@
       "path": "nuxt > @nuxt/cli | nitropack > listhen > node-forge",
       "reason": "No patched release: the advisory covers node-forge <=1.4.0, and 1.4.0 is the latest. The flaw is in RSA PKCS#1 v1.5 signature verification; listhen only generates and serializes a self-signed certificate for an HTTPS dev server, and never calls verify.",
       "removeWhen": "node-forge publishes a release outside <=1.4.0, or listhen leaves the Nuxt toolchain"
+    },
+    {
+      "id": "GHSA-vjh5-4x84-xrqp",
+      "package": "nuxt",
+      "path": "nuxt",
+      "reason": "Patched only in nuxt 4; the latest 3.x release is 3.21.11 and furo-nuxt 2.0.0 pins nuxt@^3.21.11. The flaw skips `routeRules` for case-variant paths, and this repository declares no `routeRules` and has no `server/` directory, so there is no rule to skip.",
+      "removeWhen": "`nuxt` 4 is adopted by this boilerplate, once @openreachtech/furo-nuxt, which pins `nuxt@^3.21.11`, supports it"
     }
   ]
 }
