@@ -13,6 +13,13 @@
       "path": "nuxt",
       "reason": "Patched only in nuxt 4; the latest 3.x release is 3.21.11 and furo-nuxt 2.0.0 pins nuxt@^3.21.11. The flaw skips `routeRules` for case-variant paths, and this repository declares no `routeRules` and has no `server/` directory, so there is no rule to skip.",
       "removeWhen": "`nuxt` 4 is adopted by this boilerplate, once @openreachtech/furo-nuxt, which pins `nuxt@^3.21.11`, supports it"
+    },
+    {
+      "id": "GHSA-xfq5-w38q-pc2x",
+      "package": "nuxt",
+      "path": "nuxt",
+      "reason": "Patched only in nuxt 4.6.2; the latest 3.x release is 3.21.11 and furo-nuxt 2.0.0 pins nuxt@^3.21.11. The flaw is in server islands rendering `useHeadSafe` input, and this repository sets `ssr: false` and uses neither `NuxtIsland` nor `useHeadSafe`.",
+      "removeWhen": "`nuxt` 4 is adopted by this boilerplate, once @openreachtech/furo-nuxt, which pins `nuxt@^3.21.11`, supports it"
     }
   ]
 }
