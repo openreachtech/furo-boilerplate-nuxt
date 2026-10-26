@@ -52,6 +52,7 @@
   },
   "overrides": {
     "@humanfs/node": "^0.16.8",
+    "@nuxt/devtools": "^3.4.4",
     "@vue/vue3-jest": {
       "babel-jest": "$babel-jest",
       "jest": "$jest"
