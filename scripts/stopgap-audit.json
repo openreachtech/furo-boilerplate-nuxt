@@ -20,6 +20,13 @@
       "path": "nuxt",
       "reason": "Patched only in nuxt 4.6.2; the latest 3.x release is 3.21.11 and furo-nuxt 2.0.0 pins nuxt@^3.21.11. The flaw is in server islands rendering `useHeadSafe` input, and this repository sets `ssr: false` and uses neither `NuxtIsland` nor `useHeadSafe`.",
       "removeWhen": "`nuxt` 4 is adopted by this boilerplate, once @openreachtech/furo-nuxt, which pins `nuxt@^3.21.11`, supports it"
+    },
+    {
+      "id": "GHSA-jjm6-p2m9-9w4x",
+      "package": "nuxt",
+      "path": "nuxt",
+      "reason": "Patched only in nuxt 4.6.0; the latest 3.x release is 3.21.11 and furo-nuxt 2.0.0 pins nuxt@^3.21.11. The flaw runs a `javascript:` URL from `<NuxtLink>` when `pages` is disabled, and this repository keeps `pages` enabled and uses no `<NuxtLink>`.",
+      "removeWhen": "`nuxt` 4 is adopted by this boilerplate, once @openreachtech/furo-nuxt, which pins `nuxt@^3.21.11`, supports it"
     }
   ]
 }
