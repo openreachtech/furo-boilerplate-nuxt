@@ -1,13 +1,6 @@
 {
   "advisories": [
     {
-      "id": "GHSA-vfj7-8cjw-p6xm",
-      "package": "braces",
-      "path": "nuxt > @nuxt/nitro-server > nitropack > globby > fast-glob > micromatch > braces",
-      "reason": "No patched release: the advisory covers braces <=3.0.3, and 3.0.3 is the latest. Every package on the path is at its latest release too. braces expands glob patterns the Nuxt toolchain builds from this repository's own configuration, never one a visitor supplies.",
-      "removeWhen": "braces publishes a release outside <=3.0.3, or nitropack stops depending on globby / fast-glob"
-    },
-    {
       "id": "GHSA-86w9-cpqp-85rv",
       "package": "node-forge",
       "path": "nuxt > @nuxt/cli | nitropack > listhen > node-forge",
