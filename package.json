@@ -4,6 +4,7 @@
   "description": "TODO: fulfill here",
   "main": "index.js",
   "scripts": {
+    "audit:actions": "node node_modules/@openreachtech/mentsu-github-actions-inspector/scripts/audit-action-version.js",
     "audit:npm": "node node_modules/@openreachtech/mentsu-npm-audit-gate/scripts/npm-audit-gate.js scripts/stopgap-audit/IGNORED_ADVISORIES.js",
     "build": "nuxt build",
     "dev": "npm run cache; nuxt dev",
