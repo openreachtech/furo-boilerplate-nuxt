@@ -9,6 +9,13 @@
  */
 const IGNORED_ADVISORIES = [
   {
+    id: 'GHSA-648h-gw55-m2g7',
+    package: '@nuxt/vite-builder',
+    path: 'nuxt > @nuxt/vite-builder',
+    reason: 'Patched only in @nuxt/vite-builder 4.6.3, which ships with nuxt 4; the latest 3.x release is 3.21.11. The flaw lets anyone with HTTP access to the `nuxt dev` server read the Nitro dev bundle, which inlines `runtimeConfig`. Production builds are not affected. The dev script passes no `--host`, so the server listens on localhost, and `nuxt.config.js` spreads the same values into `runtimeConfig` and `runtimeConfig.public`, so the bundle holds nothing the client bundle does not already carry.',
+    removeWhen: '`nuxt` 4 is adopted by this boilerplate, since the fix ships in @nuxt/vite-builder 4.6.3 and the 3.x line gets no patched release',
+  },
+  {
     id: 'GHSA-gcqx-w48m-w2h4',
     package: 'deepmerge',
     path: 'jest > @jest/core > jest-config > deepmerge | nuxt > @nuxt/nitro-server > nitropack > @rollup/plugin-node-resolve > deepmerge',
