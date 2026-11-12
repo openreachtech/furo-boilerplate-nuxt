@@ -6,6 +6,13 @@ import furoEnv from './app/globals/furo-env'
 
 // Reference: https://nuxt.com/docs/api/nuxt-config.
 export default defineNuxtConfig({
+  // `app/` holds the application code of furo, so the Nuxt directories stay at the root.
+  // Reference: https://nuxt.com/docs/getting-started/upgrade#new-directory-structure.
+  srcDir: '.',
+  dir: {
+    app: 'app',
+  },
+
   // Nuxt App configuration: https://nuxt.com/docs/api/nuxt-config#app.
   app: {
     head: {
