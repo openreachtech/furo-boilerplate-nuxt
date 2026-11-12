@@ -29,7 +29,7 @@
     "@openreachtech/furo-vue": "^1.6.0",
     "core-js": "^3.51.0",
     "graphql": "^17.0.2",
-    "nuxt": "^3.21.11",
+    "nuxt": "^4.6.4",
     "vue": "^3.5.44"
   },
   "devDependencies": {
