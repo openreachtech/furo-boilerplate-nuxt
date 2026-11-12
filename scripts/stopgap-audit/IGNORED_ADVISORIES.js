@@ -15,13 +15,6 @@ const IGNORED_ADVISORIES = [
     reason: 'No patched release: the advisory covers deepmerge >=4.2.0 <=4.3.1, and 4.3.1 is the latest. The flaw is prototype poisoning through mergeObject() when a source object carries malicious keys. deepmerge is reached by jest-config and by the Rollup node-resolve plugin of nitropack alone, tools that run on a developer machine or in CI over the configuration of this repository, so it is not shipped and nothing it merges comes from outside.',
     removeWhen: 'deepmerge publishes a release outside <=4.3.1, or jest-config and @rollup/plugin-node-resolve stop depending on deepmerge',
   },
-  {
-    id: 'GHSA-jjm6-p2m9-9w4x',
-    package: 'nuxt',
-    path: 'nuxt',
-    reason: 'Patched only in nuxt 4.6.0; the 3.x line gets no patched release and its latest is 3.21.11. furo-nuxt 2.1.0 accepts nuxt 4 as a peer, but this boilerplate declares nuxt@^3.21.11. The flaw runs a `javascript:` URL from `<NuxtLink>` when `pages` is disabled, and this repository keeps `pages` enabled and uses no `<NuxtLink>`.',
-    removeWhen: '`nuxt` 4 is adopted by this boilerplate',
-  },
 ]
 
 export default IGNORED_ADVISORIES
