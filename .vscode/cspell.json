@@ -15,5 +15,8 @@
     "tablayout",
 
     "esac"
+  ],
+  "ignoreWords": [
+    "gcqx"
   ]
 }
