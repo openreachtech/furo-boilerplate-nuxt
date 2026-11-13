@@ -24,6 +24,10 @@
   ],
   "author": "Open Reach Tech Inc.",
   "license": "Apache-2.0",
+  "engines": {
+    "node": ">=24.19.0",
+    "npm": ">=11.17.0"
+  },
   "dependencies": {
     "@openreachtech/furo-nuxt": "^2.1.0",
     "@openreachtech/furo-vue": "^1.6.0",
