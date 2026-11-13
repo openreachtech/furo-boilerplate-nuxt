@@ -3,6 +3,9 @@ const sharedConfig = {
     '@openreachtech/jest-deep-containing/lib/setup-expect-deepContaining.js',
     '<rootDir>/tests/setupAfterEnv.js',
   ],
+  testPathIgnorePatterns: [
+    '/node_modules/',
+  ],
   moduleFileExtensions: [
     'js',
     'vue',
