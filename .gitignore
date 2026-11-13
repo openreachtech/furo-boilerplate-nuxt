@@ -30,6 +30,22 @@ yarn.lock
 pnpm-lock.yaml
 bun.lockb
 
+#### Secrets
+
+# not authored here, but a repo cloned from this one will have them
+# a secret committed once lives as long as the history does
+*.pem
+*.key
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.gpg
+id_rsa
+id_dsa
+id_ecdsa
+id_ed25519
+
 ################################################################################
 
 # Created by .ignore support plugin (hsz.mobi)
