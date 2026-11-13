@@ -13,6 +13,15 @@ export default [
     ],
   },
 
+  {
+    files: [
+      'tests/**/*.js',
+    ],
+    rules: {
+      'jsdoc/require-jsdoc': 'off',
+    },
+  },
+
   // Turn off the rules temporarily.
   {
     rules: {
