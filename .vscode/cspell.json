@@ -9,6 +9,9 @@
     "restfulapi",
     "nuxt",
 
+    "ehthumbs",
+    "encryptable",
+
     "tablayout",
 
     "esac"
